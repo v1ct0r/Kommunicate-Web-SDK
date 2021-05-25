@@ -16,7 +16,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
                 new Payload('PLATFORM_UNSPECIFIED', [
                     {
                         message: 'This is the sample json for card template',
-                        platform: 'kommunicate',
+                        platform: 'snap',
                         metadata: {
                             contentType: '300',
                             templateId: '10',

@@ -1,21 +1,21 @@
 (function (window) {
     'use strict';
-    function define_KommunicateKB() {
-        var KommunicateKB = {};
-        var KM_API_URL = 'https://api.kommunicate.io';
+    function define_SnapKB() {
+        var SnapKB = {};
+        var KM_API_URL = 'https://api.snap.io';
         var KB_URL = '/kb/search?appId=:appId';
-        var SOURCES = { kommunicate: 'KOMMUNICATE' };
+        var SOURCES = { snap: 'SNAP' };
         var SEARCH_ELASTIC = '/kb/_search';
 
-        //KommunicateKB.init("https://api.kommunicate.io");
-        KommunicateKB.init = function (url) {
+        //SnapKB.init("https://api.snap.io");
+        SnapKB.init = function (url) {
             KM_API_URL = url;
         };
 
-        KommunicateKB.getArticles = function (options) {
+        SnapKB.getArticles = function (options) {
             try {
                 var articles = [];
-                KommunicateKB.getFaqs({
+                SnapKB.getFaqs({
                     data: options.data,
                     success: function (response) {
                         for (var i = 0; i < response.data.length; i++) {
@@ -26,7 +26,7 @@
                                 description: article.content,
                                 status: article.status,
                                 body: article.content,
-                                source: SOURCES.kommunicate,
+                                source: SOURCES.snap,
                             });
                         }
                         if (options.success) {
@@ -47,8 +47,8 @@
             }
         };
 
-        KommunicateKB.getArticle = function (options) {
-            KommunicateKB.getFaq({
+        SnapKB.getArticle = function (options) {
+            SnapKB.getFaq({
                 data: options.data,
                 success: function (response) {
                     var faq = response.data.data[0];
@@ -59,7 +59,7 @@
                         description: faq.content,
                         body: faq.content,
                         status: faq.status,
-                        source: SOURCES.kommunicate,
+                        source: SOURCES.snap,
                     };
 
                     if (options.success) {
@@ -75,15 +75,15 @@
             });
         };
 
-        //KommunicateKB.getFaqs({data: {appId: 'kommunicate-support', query: 'apns'}, success: function(response) {console.log(response);}, error: function() {}});
-        KommunicateKB.getFaqs = function (options) {
+        //SnapKB.getFaqs({data: {appId: 'snap-support', query: 'apns'}, success: function(response) {console.log(response);}, error: function() {}});
+        SnapKB.getFaqs = function (options) {
             var url = KM_API_URL + KB_URL.replace(':appId', options.data.appId);
             if (options.data.query) {
                 url = url + '&query=' + options.data.query;
             }
 
             //Todo: if query is present then call machine learning server to get answer ids.
-            //curl -H "Content-Type: application/json" -d '{ "text":"how to setup notification", "appId":"kommunicate-support" }' https://machine.kommunicate.io/queries.json
+            //curl -H "Content-Type: application/json" -d '{ "text":"how to setup notification", "appId":"snap-support" }' https://machine.snap.io/queries.json
 
             var response = new Object();
             KMCommonUtils.ajax({
@@ -108,7 +108,7 @@
             });
         };
 
-        KommunicateKB.searchFaqs = function (options) {
+        SnapKB.searchFaqs = function (options) {
             var data = {
                 query: {
                     bool: {
@@ -176,9 +176,9 @@
             });
         };
 
-        //KommunicateKB.getFaq({data: {appId: 'kommunicate-support', articleId: 1}, success: function(response) {console.log(response);}, error: function() {}});
+        //SnapKB.getFaq({data: {appId: 'snap-support', articleId: 1}, success: function(response) {console.log(response);}, error: function() {}});
         //Note: server side not supported yet
-        KommunicateKB.getFaq = function (options) {
+        SnapKB.getFaq = function (options) {
             var response = new Object();
 
             var url = KM_API_URL + KB_URL.replace(':appId', options.data.appId);
@@ -208,12 +208,12 @@
             });
         };
 
-        return KommunicateKB;
+        return SnapKB;
     }
     //define globally if it doesn't already exist
-    if (typeof KommunicateKB === 'undefined') {
-        window.KommunicateKB = define_KommunicateKB();
+    if (typeof SnapKB === 'undefined') {
+        window.SnapKB = define_SnapKB();
     } else {
-        console.log('KommunicateKB already defined.');
+        console.log('SnapKB already defined.');
     }
 })(window);

@@ -11,7 +11,7 @@ exports.dialogflowfullfilment = functions.https.onRequest(
         const agent = new WebhookClient({ request, response });
 
         /**
-         * This method create a suggested replies  in Kommunicate chat widget
+         * This method create a suggested replies  in Snap chat widget
          * @param {*} agent
          */
         function generateSuggestedReplies(agent) {
@@ -19,7 +19,7 @@ exports.dialogflowfullfilment = functions.https.onRequest(
                 new Payload('PLATFORM_UNSPECIFIED', [
                     {
                         message: 'Do you want more updates?',
-                        platform: 'kommunicate',
+                        platform: 'snap',
                         metadata: {
                             contentType: '300',
                             templateId: '6',
@@ -40,7 +40,7 @@ exports.dialogflowfullfilment = functions.https.onRequest(
         }
 
         /**
-         * This method create link buttons in Kommunicate chat widget
+         * This method create link buttons in Snap chat widget
          * @param {*} agent
          */
         function generateLinkButtons(agent) {
@@ -48,7 +48,7 @@ exports.dialogflowfullfilment = functions.https.onRequest(
                 new Payload('PLATFORM_UNSPECIFIED', [
                     {
                         message: 'click the pay button',
-                        platform: 'kommunicate',
+                        platform: 'snap',
                         metadata: {
                             contentType: '300',
                             templateId: '3',
@@ -72,7 +72,7 @@ exports.dialogflowfullfilment = functions.https.onRequest(
         }
 
         /**
-         * This method create submit buttons in Kommunicate chat widget
+         * This method create submit buttons in Snap chat widget
          * @param {*} agent
          */
         function generateSubmitButtons(agent) {
@@ -80,7 +80,7 @@ exports.dialogflowfullfilment = functions.https.onRequest(
                 new Payload('PLATFORM_UNSPECIFIED', [
                     {
                         message: 'click the pay button',
-                        platform: 'kommunicate',
+                        platform: 'snap',
                         metadata: {
                             contentType: '300',
                             templateId: '3',

@@ -7,14 +7,14 @@
 <script>
           var link = document.querySelector('link[rel="import"]');
           var content = link.import;
-          var el = content.querySelector('#kommunicate');
+          var el = content.querySelector('#snap');
           document.body.appendChild(el.cloneNode(true));
           $(document).ready(function () {
-            var kommunicateSettings = {"appId":  "kommunicate-support",
+            var snapSettings = {"appId":  "snap-support",
            "userId": "testaccount",
-           "conversationTitle":"Kommunicate Support"
+           "conversationTitle":"Snap Support"
            };
-              kmLogin(kommunicateSettings);
+              kmLogin(snapSettings);
           });
           </script>
 </body>

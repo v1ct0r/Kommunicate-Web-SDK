@@ -17,6 +17,6 @@ Here are the code samples  to for different message. These samples are tested in
 - [Cards](dialogflow-fulfillment/cards.js) 
 
 ## Rich message using `action-on-google` library
-if you are working with Google assistant and using `action-on-google` library, You don't need to configure the rich messages  separately for Kommunicate. Kommunicate supports the rich messages from `action-on-google library`as well. 
-Make sure you have not set any default response(both text and custom payload). If it is set Kommunicate gives priority to the default responses and the response from `action on google` library will be ignored.
+if you are working with Google assistant and using `action-on-google` library, You don't need to configure the rich messages  separately for Snap. Snap supports the rich messages from `action-on-google library`as well. 
+Make sure you have not set any default response(both text and custom payload). If it is set Snap gives priority to the default responses and the response from `action on google` library will be ignored.
 [Here](https://github.com/actions-on-google/dialogflow-conversation-components-nodejs/blob/master/functions/index.js) is the code sample for setting rich messages response using `action-on-google` library.   

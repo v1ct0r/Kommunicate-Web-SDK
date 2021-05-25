@@ -1,4 +1,4 @@
-Kommunicate.typingAreaService = {
+Snap.typingAreaService = {
     populateText: function (text) {
         $applozic('#mck-text-box').text(text);
         $applozic('#mck-text-box').focus();
@@ -37,7 +37,7 @@ Kommunicate.typingAreaService = {
         }
     },
     hideMicButton: function () {
-        kommunicateCommons.modifyClassList(
+        snapCommons.modifyClassList(
             { id: ['mck-mic-animation-container'] },
             'n-vis',
             'vis'
@@ -45,10 +45,10 @@ Kommunicate.typingAreaService = {
     },
     showMicButton: function () {
         var appOption =
-            KommunicateUtils.getDataFromKmSession('appOptions') ||
+            SnapUtils.getDataFromKmSession('appOptions') ||
             applozic._globals;
         if (appOption && appOption.voiceInput) {
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 { id: ['mck-mic-animation-container'] },
                 'vis',
                 'n-vis'
@@ -56,14 +56,14 @@ Kommunicate.typingAreaService = {
         }
     },
     hideMiceRecordingAnimation: function () {
-        kommunicateCommons.modifyClassList(
+        snapCommons.modifyClassList(
             { id: ['mck-animation-outer'] },
             'n-vis',
             'vis'
         );
     },
     showMicRcordingAnimation: function () {
-        kommunicateCommons.modifyClassList(
+        snapCommons.modifyClassList(
             { id: ['mck-animation-outer'] },
             'vis',
             'n-vis'

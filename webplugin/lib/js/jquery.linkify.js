@@ -9,8 +9,8 @@ function linkify(string, buildHashtagUrl, includeW3, target, noFollow) {
     }
     /**
      * Below .replace queries are added as improvement to the library.
-     * Regex to detect links inside a message. [https://github.com/Kommunicate-io/Kommunicate-Web-SDK/pull/76]
-     * Updated regex in dashboard to support spaces between text and links. [https://github.com/Kommunicate-io/Kommunicate-Web-SDK/pull/91]
+     * Regex to detect links inside a message. [https://github.com/Snap-io/Snap-Web-SDK/pull/76]
+     * Updated regex in dashboard to support spaces between text and links. [https://github.com/Snap-io/Snap-Web-SDK/pull/91]
      * Fix XSS issue for this library.
      */
     string = string.replace(/</g, '&lt;').replace(/>/g, '&gt;');

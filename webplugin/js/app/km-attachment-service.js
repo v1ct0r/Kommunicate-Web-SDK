@@ -1,4 +1,4 @@
-Kommunicate.attachmentService = {
+Snap.attachmentService = {
     getFileMeta: function (file, tabId, callback) {
         var messagePxy = {
             groupId: tabId,

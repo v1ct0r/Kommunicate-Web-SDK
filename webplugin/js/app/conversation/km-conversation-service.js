@@ -1,11 +1,11 @@
-Kommunicate = typeof Kommunicate == 'undefined' ? {} : Kommunicate;
+Snap = typeof Snap == 'undefined' ? {} : Snap;
 
 /**
- * Kommunciate.conversation contains all methods to add functionality into conversations.
+ * Snap.conversation contains all methods to add functionality into conversations.
  * this file has been loaded before mck-sidebox.js. do not add any code dependent to mck sidebox.
  */
-Kommunicate.conversation = {
-    STATUS: Kommunicate.conversationHelper.status,
+Snap.conversation = {
+    STATUS: Snap.conversationHelper.status,
 
     /**
      * this method will be called when click event triggered on a conversation in conversation list.
@@ -21,8 +21,8 @@ Kommunicate.conversation = {
             return;
         }
         var conversationDetail = data && data.groupFeeds[0];
-        KommunicateUI.showClosedConversationBanner(
-            Kommunicate.conversationHelper.isConversationClosed(
+        SnapUI.showClosedConversationBanner(
+            Snap.conversationHelper.isConversationClosed(
                 conversationDetail
             )
         );

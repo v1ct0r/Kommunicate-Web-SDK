@@ -1,10 +1,10 @@
 /**
  * all network call.
  * methods take parameters, make network call, and execute call back on success/error.
- * all methods are attached to Kommunicate.client
+ * all methods are attached to Snap.client
  */
 
-Kommunicate.client = {
+Snap.client = {
     /**
      * Get the group detail by type.
      * @param {object} options
@@ -37,7 +37,7 @@ Kommunicate.client = {
     },
 
     /**
-     * create a group in applozic and Kommunicate db
+     * create a group in applozic and Snap db
      * @param {Object} conversationDetail
      * @param {String} conversationDetail.groupName
      * @param {Number} conversationDetail.type
@@ -49,13 +49,13 @@ Kommunicate.client = {
      */
     createConversation: function (conversationDetail, callback) {
         var chatContext = $applozic.extend(
-            Kommunicate.getSettings('KM_CHAT_CONTEXT'),
+            Snap.getSettings('KM_CHAT_CONTEXT'),
             conversationDetail.metadata
                 ? conversationDetail.metadata['KM_CHAT_CONTEXT']
                 : {}
         );
 
-        var userLocale = kommunicate._globals.userLocale;
+        var userLocale = snap._globals.userLocale;
         var currentLanguage = {
             kmUserLocale: userLocale
                 ? userLocale.split('-')[0]
@@ -86,7 +86,7 @@ Kommunicate.client = {
                 ? conversationDetail.skipRouting
                 : false,
             KM_CHAT_CONTEXT: JSON.stringify(chatContext),
-            GROUP_CREATION_URL: window.kommunicate.IFRAME_OVERRIDES ? window.kommunicate.IFRAME_OVERRIDES.GROUP_CREATION_URL : parent.location.href,
+            GROUP_CREATION_URL: window.snap.IFRAME_OVERRIDES ? window.snap.IFRAME_OVERRIDES.GROUP_CREATION_URL : parent.location.href,
         };
         typeof conversationDetail.teamId != 'undefined' &&
             (groupMetadata.KM_TEAM_ID = conversationDetail.teamId);
@@ -105,7 +105,7 @@ Kommunicate.client = {
                 conversationDetail.metadata.WELCOME_MESSAGE);
 
         var groupOptions = {
-            //createUrl:Kommunicate.getBaseUrl()+"/conversations/create",
+            //createUrl:Snap.getBaseUrl()+"/conversations/create",
             groupName: conversationDetail.groupName,
             type: conversationDetail.type,
             admin: conversationDetail.agentId,
@@ -124,14 +124,14 @@ Kommunicate.client = {
                     if (typeof callback == 'function') {
                         callback(response.data.value);
                     }
-                    KommunicateUI.hideFaq();
-                    KommunicateUI.showClosedConversationBanner(false);
+                    SnapUI.hideFaq();
+                    SnapUI.showClosedConversationBanner(false);
                     /* conversation table migrated to Applozic
-                     Kommunicate.createNewConversation({
+                     Snap.createNewConversation({
                          "groupId": response.data.value,
-                         "participantUserId": kommunicate._globals.userId,
+                         "participantUserId": snap._globals.userId,
                          "defaultAgentId": conversationDetail.agentId,
-                         "applicationId": kommunicate._globals.appId
+                         "applicationId": snap._globals.appId
                      }, function (err, result) {
                          console.log(err, result);
                          if (!err) {
@@ -143,7 +143,7 @@ Kommunicate.client = {
                     conversationDetail.clientGroupId &&
                     response.errorMessage === 'group already exists'
                 ) {
-                    Kommunicate.openConversation(null, {
+                    Snap.openConversation(null, {
                         clientGroupId: conversationDetail.clientGroupId,
                     });
                     if (typeof callback == 'function') {
@@ -174,7 +174,7 @@ Kommunicate.client = {
     getThirdPartySettings: function (options, callback) {
         $applozic.ajax({
             url:
-                Kommunicate.getBaseUrl() +
+                Snap.getBaseUrl() +
                 '/integration/settings/' +
                 options.appId +
                 '?type=' +

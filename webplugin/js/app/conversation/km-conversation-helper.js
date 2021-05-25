@@ -1,11 +1,11 @@
-Kommunicate = typeof Kommunicate == 'undefined' ? {} : Kommunicate;
+Snap = typeof Snap == 'undefined' ? {} : Snap;
 /**
- * Kommunciate.conversationHelper is a supporting file to conversation service.
+ * Snap.conversationHelper is a supporting file to conversation service.
  * It is being loaded before conversation service.
  * Do not call conversation service from her to avoid circular dependency.
  *
  */
-Kommunicate.conversationHelper = {
+Snap.conversationHelper = {
     status: {
         INITIAL: -1,
         OPEN: 0,
@@ -23,7 +23,7 @@ Kommunicate.conversationHelper = {
             return (
                 group.metadata &&
                 group.metadata['CONVERSATION_STATUS'] ==
-                    Kommunicate.conversationHelper.status.CLOSED
+                    Snap.conversationHelper.status.CLOSED
             );
         }
         return;

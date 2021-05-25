@@ -1,8 +1,8 @@
 /* .
- Initilize all global variables used in kommunicate 
+ Initilize all global variables used in snap
 */
 
-KommunicateConstants = {
+SnapConstants = {
     KM_WIDGET_RELEASE_VERSION: "6.3",
     EVENT_IDS: {
         WELCOME_MESSAGE: '3',
@@ -11,7 +11,7 @@ KommunicateConstants = {
             ANONYMOUS: '1',
         },
     },
-    KOMMUNICATE_SESSION_KEY: 'kommunicate',
+    SNAP_SESSION_KEY: 'snap',
     PRICING_PACKAGE: {
         STARTUP: 101,
         PER_AGENT_MONTHLY: 102,
@@ -31,18 +31,18 @@ KommunicateConstants = {
         CUSTOM: 'custom',
     },
     KM_NOTIFICATION_TONE_URL:
-        'https://cdn.kommunicate.io/kommunicate/notification_tone.mp3',
+        'https://cdn.snap.io/snap/notification_tone.mp3',
     NOTIFICATION_RINGTONES: {
-        default: 'https://cdn.kommunicate.io/kommunicate/notification_tone.mp3', // renamed to eventually
-        choose_me: 'https://cdn.kommunicate.io/kommunicate/choose_me.mp3', // renamed to subtle
-        eventually: 'https://cdn.kommunicate.io/kommunicate/eventually.mp3',
-        subtle: 'https://cdn.kommunicate.io/kommunicate/subtle.mp3',
-        intuition: 'https://cdn.kommunicate.io/kommunicate/intuition.mp3',
-        light: 'https://cdn.kommunicate.io/kommunicate/light.mp3',
-        open_ended: 'https://cdn.kommunicate.io/kommunicate/open_ended.mp3',
+        default: 'https://cdn.snap.io/snap/notification_tone.mp3', // renamed to eventually
+        choose_me: 'https://cdn.snap.io/snap/choose_me.mp3', // renamed to subtle
+        eventually: 'https://cdn.snap.io/snap/eventually.mp3',
+        subtle: 'https://cdn.snap.io/snap/subtle.mp3',
+        intuition: 'https://cdn.snap.io/snap/intuition.mp3',
+        light: 'https://cdn.snap.io/snap/light.mp3',
+        open_ended: 'https://cdn.snap.io/snap/open_ended.mp3',
     },
     KM_CHAT_POPUP_NOTIFICATION_URL:
-        'https://cdn.kommunicate.io/kommunicate/chat-popup-notification-tone.mp3',
+        'https://cdn.snap.io/snap/chat-popup-notification-tone.mp3',
     CUSTOM_WIDGETS_SVG: {
         1: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 20"><path fill="#FFF" d="M21.25 18.48V7.31a7.3 7.3 0 0 0-7.3-7.3H7.31a7.3 7.3 0 1 0 0 14.6h7.2s.58.04.93.17c.34.12.71.42.71.42l4.44 3.66s.4.34.55.27c.15-.07.11-.65.11-.65zM7.51 8.8c0 .49-.42.88-.95.88-.52 0-.95-.4-.95-.88V5.67c0-.49.43-.88.95-.88.53 0 .95.4.95.88V8.8zm4.07 1.48c0 .49-.43.88-.95.88s-.95-.39-.95-.88v-6.1c0-.48.43-.88.95-.88s.95.4.95.88v6.1zm4.06-1.48c0 .49-.42.88-.95.88-.52 0-.94-.4-.94-.88V5.67c0-.49.42-.88.94-.88.53 0 .95.4.95.88V8.8z"/></svg>',
         2: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 18"><path fill="#FFF" d="M3.35 18a.48.48 0 0 1-.44-.3.47.47 0 0 1 .1-.5c.53-.53 1.49-1.82 2.12-3.21C1.95 12.61 0 10.19 0 7.58 0 3.4 4.93 0 11 0s11 3.4 11 7.58-4.93 7.58-11 7.58c-.4 0-.78-.02-1.16-.05A8.63 8.63 0 0 1 3.34 18z"/></svg>',
@@ -112,7 +112,7 @@ KommunicateConstants = {
         CALL_OUTGOING: 7,
     },
     DEFAULT_PROFILE_IMAGE: {
-        URL: 'https://s3.amazonaws.com/kommunicate.io/default-avatar-image.png',
+        URL: 'https://s3.amazonaws.com/snap.io/default-avatar-image.png',
     },
     ACTIONABLE_MESSAGE_TEMPLATE: {
         ROOM_COUNT: '1',
@@ -140,8 +140,8 @@ KommunicateConstants = {
     ],
     FORM_POST_BACK_MESSAGE_UNSUPPORTED_FIELDS: ['password', 'hidden'],
     COOKIES: {
-        KOMMUNICATE_LOGGED_IN_ID: 'km_id',
-        KOMMUNICATE_LOGGED_IN_USERNAME: 'km_user_name',
+        SNAP_LOGGED_IN_ID: 'km_id',
+        SNAP_LOGGED_IN_USERNAME: 'km_user_name',
         IS_USER_ID_FOR_LEAD_COLLECTION: 'km_lead_collection',
         ACCESS_TOKEN: 'km_ac_tn',
     },
@@ -189,14 +189,14 @@ KommunicateConstants = {
         LEFT: 'left',
         RIGHT: 'right',
     },
-    KOMMUNICATE_DOMAINS: ['kommunicate.io'],
+    SNAP_DOMAINS: ['snap.io'],
 };
 
 /**
- * Kommunicate stores all Exposed functions to user.
+ * Snap stores all Exposed functions to user.
  *
  */
-Kommunicate = {
+Snap = {
     settings: {},
     internetStatus: true,
 };
@@ -204,10 +204,10 @@ Kommunicate = {
 /**
  * stores all UI manipulation
  */
-KommunicateUI = {};
+SnapUI = {};
 
 /**all  utilities*/
-KommunicateUtils = {
+SnapUtils = {
     getCookie: function (cname, skipPrefix) {
         var cookiePrefix = this.getCookiePrefix();
         var name = (skipPrefix ? cname : cookiePrefix + cname) + '=';
@@ -266,9 +266,9 @@ KommunicateUtils = {
     },
     getCookiePrefix: function () {
         var appOptions =
-            KommunicateUtils.getDataFromKmSession('appOptions') ||
+            SnapUtils.getDataFromKmSession('appOptions') ||
             applozic._globals;
-        var cookiePrefix = KommunicateUtils.getSubDomain();
+        var cookiePrefix = SnapUtils.getSubDomain();
         if (appOptions && appOptions.domainKey) {
             cookiePrefix = appOptions.domainKey;
         }
@@ -308,41 +308,41 @@ KommunicateUtils = {
         return text;
     },
     getDataFromKmSession: function (key) {
-        if (KommunicateUtils.isSessionStorageAvailable()) {
+        if (SnapUtils.isSessionStorageAvailable()) {
             var session = sessionStorage.getItem(
-                KommunicateConstants.KOMMUNICATE_SESSION_KEY
+                SnapConstants.SNAP_SESSION_KEY
             );
             return session ? JSON.parse(session)[key] : '';
         }
     },
     storeDataIntoKmSession: function (key, data) {
-        if (KommunicateUtils.isSessionStorageAvailable()) {
+        if (SnapUtils.isSessionStorageAvailable()) {
             var session =
                 typeof sessionStorage !== 'undefined' &&
                 sessionStorage.getItem(
-                    KommunicateConstants.KOMMUNICATE_SESSION_KEY
+                    SnapConstants.SNAP_SESSION_KEY
                 );
             session = session ? JSON.parse(session) : {};
             session[key] = data;
             typeof sessionStorage !== 'undefined' &&
                 sessionStorage.setItem(
-                    KommunicateConstants.KOMMUNICATE_SESSION_KEY,
+                    SnapConstants.SNAP_SESSION_KEY,
                     JSON.stringify(session)
                 );
         }
     },
     deleteDataFromKmSession: function (key) {
-        if (KommunicateUtils.isSessionStorageAvailable()) {
+        if (SnapUtils.isSessionStorageAvailable()) {
             var session =
                 typeof sessionStorage !== 'undefined' &&
                 sessionStorage.getItem(
-                    KommunicateConstants.KOMMUNICATE_SESSION_KEY
+                    SnapConstants.SNAP_SESSION_KEY
                 );
             session = session ? JSON.parse(session) : {};
             delete session[key];
             typeof sessionStorage !== 'undefined' &&
                 sessionStorage.setItem(
-                    KommunicateConstants.KOMMUNICATE_SESSION_KEY,
+                    SnapConstants.SNAP_SESSION_KEY,
                     JSON.stringify(session)
                 );
         }
@@ -379,40 +379,40 @@ KommunicateUtils = {
         }
     },
     getSettings: function (key) {
-        var settings = KommunicateUtils.getDataFromKmSession('settings');
+        var settings = SnapUtils.getDataFromKmSession('settings');
         settings = settings ? settings : null;
         return key && settings ? settings[key] : settings ? settings : '';
     },
     getItemFromLocalStorage: function (key) {
-        if (KommunicateUtils.isSessionStorageAvailable()) {
+        if (SnapUtils.isSessionStorageAvailable()) {
             var session = localStorage.getItem(
-                KommunicateConstants.KOMMUNICATE_SESSION_KEY
+                SnapConstants.SNAP_SESSION_KEY
             );
             return session ? JSON.parse(session)[key] : '';
         }
     },
     removeItemFromLocalStorage: function (key) {
-        if (KommunicateUtils.isSessionStorageAvailable()) {
+        if (SnapUtils.isSessionStorageAvailable()) {
             var session = localStorage.getItem(
-                KommunicateConstants.KOMMUNICATE_SESSION_KEY
+                SnapConstants.SNAP_SESSION_KEY
             );
             session = session ? JSON.parse(session) : {};
             delete session[key];
             localStorage.setItem(
-                KommunicateConstants.KOMMUNICATE_SESSION_KEY,
+                SnapConstants.SNAP_SESSION_KEY,
                 JSON.stringify(session)
             );
         }
     },
     setItemToLocalStorage: function (key, data) {
-        if (KommunicateUtils.isSessionStorageAvailable()) {
+        if (SnapUtils.isSessionStorageAvailable()) {
             var session = localStorage.getItem(
-                KommunicateConstants.KOMMUNICATE_SESSION_KEY
+                SnapConstants.SNAP_SESSION_KEY
             );
             session = session ? JSON.parse(session) : {};
             session[key] = data;
             localStorage.setItem(
-                KommunicateConstants.KOMMUNICATE_SESSION_KEY,
+                SnapConstants.SNAP_SESSION_KEY,
                 JSON.stringify(session)
             );
         }
@@ -447,20 +447,20 @@ KommunicateUtils = {
         return subDomain;
     },
     deleteUserCookiesOnLogout: function () {
-        KommunicateUtils.deleteCookie({
-            name: KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_ID,
+        SnapUtils.deleteCookie({
+            name: SnapConstants.COOKIES.SNAP_LOGGED_IN_ID,
             domain: MCK_COOKIE_DOMAIN,
         });
-        KommunicateUtils.deleteCookie({
-            name: KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_USERNAME,
+        SnapUtils.deleteCookie({
+            name: SnapConstants.COOKIES.SNAP_LOGGED_IN_USERNAME,
             domain: MCK_COOKIE_DOMAIN,
         });
-        KommunicateUtils.deleteCookie({
-            name: KommunicateConstants.COOKIES.IS_USER_ID_FOR_LEAD_COLLECTION,
+        SnapUtils.deleteCookie({
+            name: SnapConstants.COOKIES.IS_USER_ID_FOR_LEAD_COLLECTION,
             domain: MCK_COOKIE_DOMAIN,
         });
-        KommunicateUtils.deleteCookie({
-            name: KommunicateConstants.COOKIES.ACCESS_TOKEN,
+        SnapUtils.deleteCookie({
+            name: SnapConstants.COOKIES.ACCESS_TOKEN,
             domain: MCK_COOKIE_DOMAIN,
         });
     },
@@ -486,8 +486,8 @@ KommunicateUtils = {
         activeConversationInfo,
         data
     ) {
-        var userId = KommunicateUtils.getCookie(
-            KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_ID
+        var userId = SnapUtils.getCookie(
+            SnapConstants.COOKIES.SNAP_LOGGED_IN_ID
         );
         return (
             activeConversationInfo &&

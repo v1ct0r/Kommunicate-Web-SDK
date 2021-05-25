@@ -1,8 +1,8 @@
-Kommunicate.initilizeEventListners = function () {
+Snap.initilizeEventListners = function () {
     w.addEventListener('online', function () {
-        Kommunicate.internetStatus = true;
+        Snap.internetStatus = true;
     });
     w.addEventListener('offline', function () {
-        Kommunicate.internetStatus = false;
+        Snap.internetStatus = false;
     });
 };

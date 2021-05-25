@@ -21,8 +21,8 @@ const PLUGIN_SETTING = config.pluginProperties;
 const MCK_THIRD_PARTY_INTEGRATION = config.thirdPartyIntegration;
 const CDN_HOST_URL = MCK_THIRD_PARTY_INTEGRATION.aws.cdnUrl;
 const pluginVersions = ['v1', 'v2'];
-PLUGIN_SETTING.kommunicateApiUrl =
-    PLUGIN_SETTING.kommunicateApiUrl || config.urls.kommunicateBaseUrl;
+PLUGIN_SETTING.snapApiUrl =
+    PLUGIN_SETTING.snapApiUrl || config.urls.snapBaseUrl;
 PLUGIN_SETTING.botPlatformApi =
     PLUGIN_SETTING.botPlatformApi || config.urls.botPlatformApi;
 PLUGIN_SETTING.applozicBaseUrl =
@@ -68,7 +68,7 @@ const compressAndOptimize = () => {
         ],
         output: path.resolve(
             __dirname,
-            `${buildDir}/kommunicateThirdParty.min.js`
+            `${buildDir}/snapThirdParty.min.js`
         ),
         options: {
             compilationLevel: 'WHITESPACE_ONLY',
@@ -76,11 +76,11 @@ const compressAndOptimize = () => {
         callback: function (err, min) {
             if (!err) {
                 console.log(
-                    `kommunicateThirdParty.min.js combined successfully`
+                    `snapThirdParty.min.js combined successfully`
                 );
             } else {
                 console.log(
-                    `err while minifying kommunicateThirdParty.min.js`,
+                    `err while minifying snapThirdParty.min.js`,
                     err
                 );
             }
@@ -100,7 +100,7 @@ const compressAndOptimize = () => {
         ],
         output: path.resolve(
             __dirname,
-            `${buildDir}/kommunicate.${version}.min.css`
+            `${buildDir}/snap.${version}.min.css`
         ),
         options: {
             level: 1, // (default)
@@ -109,11 +109,11 @@ const compressAndOptimize = () => {
         callback: function (err, min) {
             if (!err) {
                 console.log(
-                    `kommunicate.${version}.min.css combined successfully`
+                    `snap.${version}.min.css combined successfully`
                 );
             } else {
                 console.log(
-                    `err while minifying kommunicate.${version}.min.css`,
+                    `err while minifying snap.${version}.min.css`,
                     err
                 );
             }
@@ -129,7 +129,7 @@ const compressAndOptimize = () => {
             path.resolve(__dirname, 'knowledgebase/common.js'),
             path.resolve(__dirname, 'knowledgebase/kb.js'),
             path.resolve(__dirname, 'js/app/labels/default-labels.js'),
-            path.resolve(__dirname, 'js/app/kommunicate-client.js'),
+            path.resolve(__dirname, 'js/app/snap-client.js'),
             path.resolve(
                 __dirname,
                 'js/app/conversation/km-conversation-helper.js'
@@ -138,16 +138,16 @@ const compressAndOptimize = () => {
                 __dirname,
                 'js/app/conversation/km-conversation-service.js'
             ),
-            path.resolve(__dirname, 'js/app/kommunicate.js'),
+            path.resolve(__dirname, 'js/app/snap.js'),
             path.resolve(__dirname, 'js/app/km-richtext-markup-1.0.js'),
             path.resolve(__dirname, 'js/app/km-message-markup-1.0.js'),
             path.resolve(__dirname, 'js/app/km-event-listner.js'),
             path.resolve(__dirname, 'js/app/km-attachment-service.js'),
             path.resolve(__dirname, 'js/app/mck-sidebox-1.0.js'),
-            path.resolve(__dirname, 'js/app/kommunicate.custom.theme.js'),
-            path.resolve(__dirname, 'js/app/kommunicateCommons.js'),
+            path.resolve(__dirname, 'js/app/snap.custom.theme.js'),
+            path.resolve(__dirname, 'js/app/snapCommons.js'),
             path.resolve(__dirname, 'js/app/km-rich-text-event-handler.js'),
-            path.resolve(__dirname, 'js/app/kommunicate-ui.js'),
+            path.resolve(__dirname, 'js/app/snap-ui.js'),
             path.resolve(__dirname, 'js/app/events/applozic-event-handler.js'),
             path.resolve(__dirname, 'js/app/km-post-initialization.js'),
             path.resolve(__dirname, 'js/app/mck-ringtone-service.js'),
@@ -162,14 +162,14 @@ const compressAndOptimize = () => {
         },
         output: path.resolve(
             __dirname,
-            `${buildDir}/kommunicate-plugin.min.js`
+            `${buildDir}/snap-plugin.min.js`
         ),
         callback: function (err, min) {
             if (!err)
-                console.log(`kommunicate-plugin.min.js combined successfully`);
+                console.log(`snap-plugin.min.js combined successfully`);
             else {
                 console.log(
-                    `err while minifying kommunicate-plugin.min.js`,
+                    `err while minifying snap-plugin.min.js`,
                     err
                 );
             }
@@ -180,8 +180,8 @@ const compressAndOptimize = () => {
 const combineJsFiles = () => {
     var paths = [
         path.resolve(__dirname, `${buildDir}/mck-app.js`),
-        path.resolve(__dirname, `${buildDir}/kommunicateThirdParty.min.js`),
-        path.resolve(__dirname, `${buildDir}/kommunicate-plugin.min.js`),
+        path.resolve(__dirname, `${buildDir}/snapThirdParty.min.js`),
+        path.resolve(__dirname, `${buildDir}/snap-plugin.min.js`),
     ];
     minify({
         compressor: terserCompressor,
@@ -197,18 +197,18 @@ const combineJsFiles = () => {
         },
         output: path.resolve(
             __dirname,
-            `${buildDir}/kommunicate.${version}.min.js`
+            `${buildDir}/snap.${version}.min.js`
         ),
         callback: function (err, min) {
             if (!err) {
-                console.log(`kommunicate.${version}.js combined successfully`);
+                console.log(`snap.${version}.js combined successfully`);
                 paths.forEach(async function (value) {
                     await deleteFilesUsingPath(value);
                 });
                 isAwsUploadEnabled && uploadFilesToCdn(buildDir, version);
             } else {
                 console.log(
-                    `err while minifying kommunicate.${version}.js`,
+                    `err while minifying snap.${version}.js`,
                     err
                 );
             }
@@ -237,8 +237,8 @@ const generateBuildFiles = () => {
                 console.log('error while generating plugin.js', err);
             }
             var mckApp = data.replace(
-                'KOMMUNICATE_MIN_JS',
-                `"${BUILD_URL}/kommunicate.${version}.min.js"`
+                'SNAP_MIN_JS',
+                `"${BUILD_URL}/snap.${version}.min.js"`
             );
             fs.writeFile(`${buildDir}/plugin.js`, mckApp, function (err) {
                 if (err) {
@@ -258,8 +258,8 @@ const generateBuildFiles = () => {
             }
             var mckApp = data
                 .replace(
-                    'KOMMUNICATE_MIN_CSS',
-                    `"${BUILD_URL}/kommunicate.${version}.min.css"`
+                    'SNAP_MIN_CSS',
+                    `"${BUILD_URL}/snap.${version}.min.css"`
                 )
                 .replace(
                     'MCK_SIDEBOX_HTML',
@@ -288,7 +288,7 @@ const generateFilesByVersion = (location) => {
                     JSON.stringify(MCK_THIRD_PARTY_INTEGRATION)
                 )
                 .replace(':MCK_STATICPATH', MCK_STATIC_PATH)
-                .replace(':PRODUCT_ID', 'kommunicate')
+                .replace(':PRODUCT_ID', 'snap')
                 .replace(':PLUGIN_SETTINGS', JSON.stringify(PLUGIN_SETTING));
 
             for (var i = 0; i < pluginVersions.length; i++) {

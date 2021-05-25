@@ -1,25 +1,25 @@
 // Below added function are accessible in mck-sidebox-1.0.js but are not exposed globally.
 
-function KommunicateCommons() {
+function SnapCommons() {
     var _this = this;
     var CUSTOMER_CREATED_AT;
     var USE_BRANDING;
     var WIDGET_SETTINGS;
-    KommunicateCommons.CONNECT_SOCKET_ON_WIDGET_CLICK;
-    KommunicateCommons.IS_WIDGET_OPEN = false;
+    SnapCommons.CONNECT_SOCKET_ON_WIDGET_CLICK;
+    SnapCommons.IS_WIDGET_OPEN = false;
     _this.init = function (optns) {
         CUSTOMER_CREATED_AT = optns.customerCreatedAt;
         USE_BRANDING =
             typeof optns.useBranding == 'boolean' ? optns.useBranding : true;
         WIDGET_SETTINGS = optns.widgetSettings;
-        KommunicateCommons.CONNECT_SOCKET_ON_WIDGET_CLICK =
+        SnapCommons.CONNECT_SOCKET_ON_WIDGET_CLICK =
             optns.connectSocketOnWidgetClick || false;
     };
 
     _this.isTrialPlan = function (pricingPackage) {
         var isTrialPlan = false;
-        if (pricingPackage === KommunicateConstants.PRICING_PACKAGE.TRIAL) {
-            KommunicateCommons.CONNECT_SOCKET_ON_WIDGET_CLICK = true; // remove this line if same thing is removed from mck-sidebox-1.0.js
+        if (pricingPackage === SnapConstants.PRICING_PACKAGE.TRIAL) {
+            SnapCommons.CONNECT_SOCKET_ON_WIDGET_CLICK = true; // remove this line if same thing is removed from mck-sidebox-1.0.js
             isTrialPlan = true;
         }
         return isTrialPlan;
@@ -29,11 +29,11 @@ function KommunicateCommons() {
         return (
             data &&
             data.pricingPackage &&
-            data.pricingPackage === KommunicateConstants.PRICING_PACKAGE.STARTUP
+            data.pricingPackage === SnapConstants.PRICING_PACKAGE.STARTUP
         );
     };
 
-    _this.isKommunicatePlanExpired = function (data) {
+    _this.isSnapPlanExpired = function (data) {
         return _this.getDaysCount() > 31 && _this.isStartupPlan(data);
     };
 
@@ -46,16 +46,16 @@ function KommunicateCommons() {
     };
 
     _this.showPoweredBy = function (data) {
-        var isKommunicateAccountExpired = _this.isKommunicatePlanExpired(data);
+        var isSnapAccountExpired = _this.isSnapPlanExpired(data);
         // Preference given to use  paramater useBranding as some customers might be passing this parameter
         if (!USE_BRANDING) {
             return false;
         }
         // If account gets expired after startup plan, it will automatically add poweredBy until he purchases growth / enterprise plan
-        else if (isKommunicateAccountExpired) {
+        else if (isSnapAccountExpired) {
             return true;
         } else if (
-            kommunicateCommons.isObject(WIDGET_SETTINGS) &&
+            snapCommons.isObject(WIDGET_SETTINGS) &&
             typeof WIDGET_SETTINGS.showPoweredBy !== 'undefined'
         ) {
             return WIDGET_SETTINGS.showPoweredBy;
@@ -63,9 +63,9 @@ function KommunicateCommons() {
             data &&
             data.pricingPackage &&
             (data.pricingPackage ==
-                KommunicateConstants.PRICING_PACKAGE.ENTERPRISE_MONTHLY ||
+                SnapConstants.PRICING_PACKAGE.ENTERPRISE_MONTHLY ||
                 data.pricingPackage ==
-                    KommunicateConstants.PRICING_PACKAGE.ENTERPRISE_YEARLY)
+                    SnapConstants.PRICING_PACKAGE.ENTERPRISE_YEARLY)
         ) {
             return false;
         } else {
@@ -159,12 +159,12 @@ function KommunicateCommons() {
     };
 
     _this.setWidgetStateOpen = function (isWidgetOpen) {
-        if (KommunicateCommons.IS_WIDGET_OPEN === isWidgetOpen) return; // return if same value is already assigned to IS_WIDGET_OPEN.
-        KommunicateCommons.IS_WIDGET_OPEN = isWidgetOpen;
+        if (SnapCommons.IS_WIDGET_OPEN === isWidgetOpen) return; // return if same value is already assigned to IS_WIDGET_OPEN.
+        SnapCommons.IS_WIDGET_OPEN = isWidgetOpen;
         if (IS_SOCKET_CONNECTED) {
             window.Applozic.SOCKET_DISCONNECT_PROCEDURE.stop();
         } else {
-            KommunicateCommons.CONNECT_SOCKET_ON_WIDGET_CLICK
+            SnapCommons.CONNECT_SOCKET_ON_WIDGET_CLICK
                 ? $applozic.fn.applozic('initializeSocketConnection', false)
                 : window.Applozic.SOCKET_DISCONNECT_PROCEDURE.DISCONNECTED &&
                   window.Applozic.ALSocket.checkConnected(true);
@@ -172,7 +172,7 @@ function KommunicateCommons() {
     };
 
     _this.isWidgetOpen = function () {
-        return KommunicateCommons.IS_WIDGET_OPEN;
+        return SnapCommons.IS_WIDGET_OPEN;
     };
 
     _this.checkIfDeviceIsHandheld = function () {
@@ -215,7 +215,7 @@ function KommunicateCommons() {
             return (
                 filtered[0] &&
                 filtered[0].role ==
-                    KommunicateConstants.APPLOZIC_USER_ROLE_TYPE.BOT
+                    SnapConstants.APPLOZIC_USER_ROLE_TYPE.BOT
             );
         } else {
             return false;
@@ -223,10 +223,10 @@ function KommunicateCommons() {
     };
 
     _this.getRatingSmilies = function (rating) {
-        return KommunicateConstants.RATINGS_SVG[rating];
+        return SnapConstants.RATINGS_SVG[rating];
     };
 
     _this.getDefaultAvatarImageSvg = function () {
-        return KommunicateConstants.DEFAULT_AVATAR_IMAGE;
+        return SnapConstants.DEFAULT_AVATAR_IMAGE;
     };
 }

@@ -3,7 +3,7 @@
   "version": "3.0.0-sasuke",
   "description": "",
   "main": "app.js",
-  "author": "Abhinav <abhinav@kommunicate.io>",
+  "author": "Abhinav <abhinav@snap.io>",
   "license": "ISC",
   "scripts": {
     "postinstall": "husky install",

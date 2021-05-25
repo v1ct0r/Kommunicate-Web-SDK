@@ -1,4 +1,4 @@
-Kommunicate.mediaService = {
+Snap.mediaService = {
     capitalizeFirstCharacter: function (str) {
         var firstCharRegex = /\S/;
         return str.replace(firstCharRegex, function (m) {
@@ -11,7 +11,7 @@ Kommunicate.mediaService = {
         } else {
             var recognition = new webkitSpeechRecognition();
             var appOptions =
-                KommunicateUtils.getDataFromKmSession('appOptions') ||
+                SnapUtils.getDataFromKmSession('appOptions') ||
                 applozic._globals;
             recognition.continuous = false; // The default value for continuous is false, meaning that when the user stops talking, speech recognition will end.
             recognition.interimResults = true; // The default value for interimResults is false, meaning that the only results returned by the recognizer are final and will not change. Set it to true so we get early, interim results that may change.
@@ -20,7 +20,7 @@ Kommunicate.mediaService = {
             recognition.start();
             recognition.onstart = function () {
                 // when recognition.start() method is called it begins capturing audio and calls the onstart event handler
-                Kommunicate.typingAreaService.showMicRcordingAnimation();
+                Snap.typingAreaService.showMicRcordingAnimation();
             };
             recognition.onresult = function (event) {
                 //get called for each new set of results captured by recognizer
@@ -32,8 +32,8 @@ Kommunicate.mediaService = {
                         interimTranscript += event.results[i][0].transcript;
                     }
                 }
-                Kommunicate.typingAreaService.populateText(
-                    Kommunicate.mediaService.capitalizeFirstCharacter(
+                Snap.typingAreaService.populateText(
+                    Snap.mediaService.capitalizeFirstCharacter(
                         finalTranscript || interimTranscript
                     )
                 );
@@ -43,7 +43,7 @@ Kommunicate.mediaService = {
             };
             recognition.onend = function () {
                 // stop mic effect
-                Kommunicate.typingAreaService.hideMiceRecordingAnimation();
+                Snap.typingAreaService.hideMiceRecordingAnimation();
                 window.$applozic.fn.applozic('toggleMediaOptions');
             };
         }
@@ -51,11 +51,11 @@ Kommunicate.mediaService = {
     voiceOutputIncomingMessage: function (message) {
         // get appoptions
         var appOptions =
-            KommunicateUtils.getDataFromKmSession('appOptions') ||
+            SnapUtils.getDataFromKmSession('appOptions') ||
             applozic._globals;
         // If the message isn't part of the UI, it's not included
         // in voiceoutput either
-        if (!appOptions || !Kommunicate.visibleMessage(message)) return;
+        if (!appOptions || !Snap.visibleMessage(message)) return;
 
         // if voiceoutput is enabled and browser supports it
         if (appOptions.voiceOutput && 'speechSynthesis' in window) {
@@ -65,7 +65,7 @@ Kommunicate.mediaService = {
                 textToSpeak += message.fileMeta.name;
             } else if (
                 message.contentType ==
-                KommunicateConstants.MESSAGE_CONTENT_TYPE.LOCATION
+                SnapConstants.MESSAGE_CONTENT_TYPE.LOCATION
             ) {
                 coord = JSON.parse(message.message);
                 textToSpeak += MCK_LABELS['voice.output'].location.init;
@@ -78,7 +78,7 @@ Kommunicate.mediaService = {
             } else if (
                 message.message &&
                 message.contentType ==
-                    KommunicateConstants.MESSAGE_CONTENT_TYPE.DEFAULT
+                    SnapConstants.MESSAGE_CONTENT_TYPE.DEFAULT
             ) {
                 textToSpeak += message.message;
             }

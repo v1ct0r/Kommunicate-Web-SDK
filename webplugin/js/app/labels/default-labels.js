@@ -1,6 +1,6 @@
-Kommunicate = typeof Kommunicate == 'undefined' ? {} : Kommunicate;
+Snap = typeof Snap == 'undefined' ? {} : Snap;
 
-Kommunicate.defaultLabels = {
+Snap.defaultLabels = {
     'input.message': 'Type your message...',
     'conversations.title': 'Conversations',
     'start.new': 'Start New Conversation',

@@ -36,7 +36,7 @@ If you see the line ```The server is running on port: 3000``` that means our app
 
 You can host this server globally using services like [ngrok](https://www.npmjs.com/package/ngrok) or [localtunnel](https://www.npmjs.com/package/localtunnel).
 
-### Integrating with Kommunicate :muscle:
+### Integrating with Snap :muscle:
 
 Once the server is live you can just paste the url in custom bot integration to create your bot. 
 
@@ -47,7 +47,7 @@ After the bot is integrated you can go and test the bot by sending any message. 
 ![Bot test](./images/working_bot.png)
 
 
-> Read more about custom bot Integration with Kommunicate [here.](https://docs.kommunicate.io/docs/bot-custom-integration)
+> Read more about custom bot Integration with Snap [here.](https://docs.snap.io/docs/bot-custom-integration)
 
 ### Built With
 

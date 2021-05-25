@@ -17,7 +17,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
                     {
                         message:
                             'I have created a list of wild animals with detail.  It is built with the images, buttons, text and other components. Check the docs to build your own list.',
-                        platform: 'kommunicate',
+                        platform: 'snap',
                         metadata: {
                             contentType: '300',
                             templateId: '7',

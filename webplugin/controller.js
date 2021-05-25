@@ -24,8 +24,8 @@ const generatePluginFile = async (req, res) => {
     const PLUGIN_SETTING = config.pluginProperties;
     const MCK_THIRD_PARTY_INTEGRATION = config.thirdPartyIntegration;
     const MCK_PLUGIN_VERSION = req.params.version;
-    PLUGIN_SETTING.kommunicateApiUrl =
-        PLUGIN_SETTING.kommunicateApiUrl || config.urls.kommunicateBaseUrl;
+    PLUGIN_SETTING.snapApiUrl =
+        PLUGIN_SETTING.snapApiUrl || config.urls.snapBaseUrl;
     PLUGIN_SETTING.applozicBaseUrl =
         PLUGIN_SETTING.applozicBaseUrl || config.urls.applozicBaseUrl;
 
@@ -43,7 +43,7 @@ const generatePluginFile = async (req, res) => {
         .replace(':MCK_PLUGIN_VERSION', MCK_PLUGIN_VERSION)
         .replace(':PLUGIN_SETTINGS', JSON.stringify(PLUGIN_SETTING))
         .replace(':MCK_STATICPATH', MCK_STATICPATH)
-        .replace(':PRODUCT_ID', 'kommunicate');
+        .replace(':PRODUCT_ID', 'snap');
     return plugin;
 };
 

@@ -29,7 +29,7 @@ var userOverride = {
     }
     var default_options = {
         baseUrl:
-            KM_PLUGIN_SETTINGS.applozicBaseUrl || 'https://chat.kommunicate.io',
+            KM_PLUGIN_SETTINGS.applozicBaseUrl || 'https://chat.snap.io',
         fileBaseUrl: 'https://applozic.appspot.com',
         customFileUrl: 'https://googleupload.applozic.com', // google cloud file upload url
         genereateCloudFileUrl:
@@ -64,7 +64,7 @@ var userOverride = {
         agentId: '',
         agentName: '',
         msgTriggerTimeout: 0,
-        labels: Kommunicate.defaultLabels,
+        labels: Snap.defaultLabels,
         useBranding: true,
         openGroupSettings: {
             deleteChatAccess: 0, // NONE(0), ADMIN(1), ALL_GROUP_MEMBER(2)
@@ -83,7 +83,7 @@ var userOverride = {
         var $mck_sidebox = $applozic('#mck-sidebox');
         if ($applozic.type(appOptions) === 'object') {
             // storing custom appOptions into session Storage.
-            KommunicateUtils.storeDataIntoKmSession('appOptions', appOptions);
+            SnapUtils.storeDataIntoKmSession('appOptions', appOptions);
             appOptions = $applozic.extend(
                 true,
                 {},
@@ -360,10 +360,10 @@ var userOverride = {
         var CUSTOMER_CREATED_AT = appOptions.customerCreatedAt;
         var OPEN_CONVERSATION_ON_NEW_MESSAGE =
             appOptions.openConversationOnNewMessage;
-        var KOMMUNICATE_VERSION = appOptions.KM_VER ? appOptions.KM_VER : '';
-        KOMMUNICATE_VERSION === 'v2' && (parent.KommunicateGlobal = window);
-        KOMMUNICATE_VERSION === 'v2' &&
-            (parent.Kommunicate = window.Kommunicate);
+        var SNAP_VERSION = appOptions.KM_VER ? appOptions.KM_VER : '';
+        SNAP_VERSION === 'v2' && (parent.SnapGlobal = window);
+        SNAP_VERSION === 'v2' &&
+            (parent.Snap = window.Snap);
         var WIDGET_SETTINGS = appOptions.widgetSettings;
         var EMOJI_LIBRARY = appOptions.emojilibrary;
         var CSAT_ENABLED = appOptions.collectFeedback;
@@ -422,13 +422,13 @@ var userOverride = {
                 : 1; // Volume range for howler library is from 0->1.
         var MCK_NOTIFICATION_TONE_LINK =
             WIDGET_SETTINGS && WIDGET_SETTINGS.notificationTone
-                ? KommunicateConstants.NOTIFICATION_RINGTONES[
+                ? SnapConstants.NOTIFICATION_RINGTONES[
                       WIDGET_SETTINGS.notificationTone
                   ]
-                : KommunicateConstants.NOTIFICATION_RINGTONES['subtle'];
+                : SnapConstants.NOTIFICATION_RINGTONES['subtle'];
         var MCK_CHAT_POPUP_NOTIFICATION_TONE_LINK = appOptions.chatPopupSoundNotificationLink
             ? appOptions.chatPopupSoundNotificationLink
-            : KommunicateConstants.KM_CHAT_POPUP_NOTIFICATION_URL;
+            : SnapConstants.KM_CHAT_POPUP_NOTIFICATION_URL;
         var MCK_USER_ID = IS_MCK_VISITOR
             ? 'guest'
             : $applozic.trim(appOptions.userId);
@@ -558,7 +558,7 @@ var userOverride = {
         var alMessageService = new AlMessageService();
         var alFileService = new AlFileService();
         var kmCustomTheme = new KmCustomTheme();
-        var kommunicateCommons = new KommunicateCommons();
+        var snapCommons = new SnapCommons();
         var mckNotificationUtils = new MckNotificationUtils();
         var alNotificationService = new AlNotificationService();
         var alUserService = new AlUserService();
@@ -606,10 +606,10 @@ var userOverride = {
             WIDGET_SETTINGS && WIDGET_SETTINGS.customBranding;
         var WIDGET_POSITION =
             WIDGET_SETTINGS &&
-            kommunicateCommons.isObject(WIDGET_SETTINGS) &&
+            snapCommons.isObject(WIDGET_SETTINGS) &&
             WIDGET_SETTINGS.hasOwnProperty('position')
                 ? WIDGET_SETTINGS.position
-                : KommunicateConstants.POSITION.RIGHT;
+                : SnapConstants.POSITION.RIGHT;
         window.Applozic.SOCKET_DISCONNECT_PROCEDURE = {
             SOCKET_DISCONNECT_TIMER_VALUE: 120000, // 2 minutes : 120000 milliSeconds
             DISCONNECTED: false,
@@ -640,7 +640,7 @@ var userOverride = {
             appOptions.connectSocketOnWidgetClick;
         var SUBSCRIBE_TO_EVENTS_BACKUP = {};
         var DEFAULT_ENCRYPTED_APP_VERSION = 111; // Update it to 112 to enable encryption for socket messages.
-        kommunicateCommons.checkIfDeviceIsHandheld() &&
+        snapCommons.checkIfDeviceIsHandheld() &&
             (MCK_MAINTAIN_ACTIVE_CONVERSATION_STATE = false);
 
         _this.toggleMediaOptions = function () {
@@ -653,14 +653,14 @@ var userOverride = {
         };
 
         _this.mckLaunchSideboxChat = function () {
-            kommunicateCommons.setWidgetStateOpen(true);
+            snapCommons.setWidgetStateOpen(true);
             !POPUP_WIDGET &&
                 $applozic('#mck-sidebox-launcher')
                     .removeClass('vis')
                     .addClass('n-vis');
-            KOMMUNICATE_VERSION === 'v2' &&
-                Kommunicate.setDefaultIframeConfigForOpenChat(POPUP_WIDGET);
-            KommunicateUI.showChat();
+            SNAP_VERSION === 'v2' &&
+                Snap.setDefaultIframeConfigForOpenChat(POPUP_WIDGET);
+            SnapUI.showChat();
             $applozic('#mck-away-msg-box').removeClass('vis').addClass('n-vis');
             mckMessageService.loadConversationWithAgents(
                 {
@@ -670,7 +670,7 @@ var userOverride = {
                 },
                 function (data) {
                     console.log('conversation created successfully');
-                    KommunicateUI.activateTypingField();
+                    SnapUI.activateTypingField();
                 }
             );
             $applozic('#mck-msg-preview-visual-indicator').hasClass('vis')
@@ -694,7 +694,7 @@ var userOverride = {
             },
             onConnect: function (resp) {
                 IS_SOCKET_CONNECTED = true;
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { id: ['km-local-file-system-warning'] },
                     'n-vis',
                     'vis'
@@ -759,7 +759,7 @@ var userOverride = {
             alFileService.get(appOptions);
             alMessageService.init(appOptions);
             kmCustomTheme.init(appOptions);
-            kommunicateCommons.init(appOptions);
+            snapCommons.init(appOptions);
             alNotificationService.init(appOptions);
             mckMessageLayout.init();
             notificationToneOption.loop = false;
@@ -776,7 +776,7 @@ var userOverride = {
                 }
             }
             if (
-                kommunicateCommons.isObject(WIDGET_SETTINGS) &&
+                snapCommons.isObject(WIDGET_SETTINGS) &&
                 WIDGET_SETTINGS.popup
             ) {
                 ringToneService = new RingToneService();
@@ -802,20 +802,20 @@ var userOverride = {
             mckNotificationService.init();
             mckMapLayout.init();
             !MCK_ATTACHMENT &&
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { id: ['mck-attachfile-box', 'mck-file-up'] },
                     'n-vis',
                     'vis'
                 );
             VOICE_INPUT_ENABLED &&
-                Kommunicate.typingAreaService.showMicIfSpeechRecognitionSupported();
+                Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
 
             if (
-                KOMMUNICATE_VERSION === 'v2' &&
+                SNAP_VERSION === 'v2' &&
                 window.frameElement.getAttribute('data-protocol') == 'file:' &&
                 !window.top.hasOwnProperty('cordova')
             ) {
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { id: ['km-local-file-system-warning'] },
                     'vis',
                     'n-vis'
@@ -841,7 +841,7 @@ var userOverride = {
         };
         _this.reInit = function (optns) {
             // storing custum appOptions into session Storage.
-            KommunicateUtils.storeDataIntoKmSession('appOptions', optns);
+            SnapUtils.storeDataIntoKmSession('appOptions', optns);
             if ($applozic.type(optns) === 'object') {
                 optns = $applozic.extend(true, {}, default_options, optns);
                 appOptions.conversationTitle =
@@ -1233,26 +1233,26 @@ var userOverride = {
         _this.logout = function () {
             if (typeof window.Applozic.ALSocket !== 'undefined') {
                 window.Applozic.ALSocket.disconnect();
-                sessionStorage.removeItem('kommunicate');
+                sessionStorage.removeItem('snap');
                 window.Applozic.ALApiService.setAjaxHeaders('', '', '', '', '');
                 // Below function will clearMckMessageArray, clearAppHeaders, clearMckContactNameArray, removeEncryptionKey
                 ALStorage.clearSessionStorageElements();
                 $applozic.fn.applozic('reset', appOptions);
-                KommunicateUtils.deleteCookie({
+                SnapUtils.deleteCookie({
                     name:
-                        KommunicateConstants.COOKIES
-                            .KOMMUNICATE_LOGGED_IN_USERNAME,
+                        SnapConstants.COOKIES
+                            .SNAP_LOGGED_IN_USERNAME,
                     domain: MCK_COOKIE_DOMAIN,
                 });
-                KommunicateUtils.deleteCookie({
-                    name: KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_ID,
+                SnapUtils.deleteCookie({
+                    name: SnapConstants.COOKIES.SNAP_LOGGED_IN_ID,
                     domain: MCK_COOKIE_DOMAIN,
                 });
                 $applozic('#mck-sidebox').hide();
                 $applozic('#mck-sidebox-launcher').hide();
-                parent.document.getElementById('kommunicate-widget-iframe') &&
+                parent.document.getElementById('snap-widget-iframe') &&
                     (parent.document.getElementById(
-                        'kommunicate-widget-iframe'
+                        'snap-widget-iframe'
                     ).style.display = 'none');
             }
             IS_LOGGED_IN = false;
@@ -1742,7 +1742,7 @@ var userOverride = {
                 tabId: '',
                 isGroup: false,
             };
-            kommunicateCommons.setWidgetStateOpen(true);
+            snapCommons.setWidgetStateOpen(true);
             mckMessageService.loadMessageList(params, function (data) {
                 if (
                     data &&
@@ -1759,14 +1759,14 @@ var userOverride = {
                         return item.groupId == latestGroupId;
                     })[0]; // It returns array of messages for the latestGroupId, so from array we're selecting the latest message for the group
                     latestGroupMessage.type !==
-                        KommunicateConstants.MESSAGE_TYPE.SENT &&
+                        SnapConstants.MESSAGE_TYPE.SENT &&
                         mckNotificationService.notifyUser(latestGroupMessage);
                 } else {
                     // startConversation function will create a new conversation.
                     var conversationDetail = mckGroupLayout.createGroupDefaultSettings();
                     conversationDetail.isMessage = false;
                     conversationDetail.isInternal = true;
-                    Kommunicate.startConversation(conversationDetail);
+                    Snap.startConversation(conversationDetail);
                 }
             });
         };
@@ -1967,7 +1967,7 @@ var userOverride = {
                         '<div class="mck-close-btn-container">' +
                         '<div class="mck-close-btn"><span class="mck-close-icon-svg"><svg viewBox="0 0 64 64" width="8" xmlns="http://www.w3.org/2000/svg" height="8"><path fill="#fff" d="M28.941 31.786L.613 60.114a2.014 2.014 0 1 0 2.848 2.849l28.541-28.541 28.541 28.541c.394.394.909.59 1.424.59a2.014 2.014 0 0 0 1.424-3.439L35.064 31.786 63.41 3.438A2.014 2.014 0 1 0 60.562.589L32.003 29.15 3.441.59A2.015 2.015 0 0 0 .593 3.439l28.348 28.347z"/></svg></span><span class="mck-close-text">Close</span></div></div>' +
                         '<div class="mck-msg-preview-visual-indicator-text  applozic-launcher"></div></div></div>' +
-                        Kommunicate.popupChatTemplate.getPopupChatTemplate(
+                        Snap.popupChatTemplate.getPopupChatTemplate(
                             MCK_POPUP_WIDGET_CONTENT,
                             WIDGET_SETTINGS
                         ) +
@@ -2034,13 +2034,13 @@ var userOverride = {
                 window.Applozic.ALApiService.AUTH_TOKEN = null;
                 USER_DEVICE_KEY = '';
                 if (
-                    KommunicateUtils.getCookie(
-                        KommunicateConstants.COOKIES
+                    SnapUtils.getCookie(
+                        SnapConstants.COOKIES
                             .IS_USER_ID_FOR_LEAD_COLLECTION
                     ) &&
                     !JSON.parse(
-                        KommunicateUtils.getCookie(
-                            KommunicateConstants.COOKIES
+                        SnapUtils.getCookie(
+                            SnapConstants.COOKIES
                                 .IS_USER_ID_FOR_LEAD_COLLECTION
                         )
                     ) &&
@@ -2060,24 +2060,24 @@ var userOverride = {
                     ) {
                         $applozic('#km-userId').val(MCK_USER_ID);
                         if (
-                            KommunicateUtils.getCookie(
-                                KommunicateConstants.COOKIES
-                                    .KOMMUNICATE_LOGGED_IN_ID
+                            SnapUtils.getCookie(
+                                SnapConstants.COOKIES
+                                    .SNAP_LOGGED_IN_ID
                             ) &&
-                            KommunicateUtils.getCookie(
-                                KommunicateConstants.COOKIES
+                            SnapUtils.getCookie(
+                                SnapConstants.COOKIES
                                     .IS_USER_ID_FOR_LEAD_COLLECTION
                             ) &&
                             JSON.parse(
-                                KommunicateUtils.getCookie(
-                                    KommunicateConstants.COOKIES
+                                SnapUtils.getCookie(
+                                    SnapConstants.COOKIES
                                         .IS_USER_ID_FOR_LEAD_COLLECTION
                                 )
                             )
                         ) {
-                            var userId = KommunicateUtils.getCookie(
-                                KommunicateConstants.COOKIES
-                                    .KOMMUNICATE_LOGGED_IN_ID
+                            var userId = SnapUtils.getCookie(
+                                SnapConstants.COOKIES
+                                    .SNAP_LOGGED_IN_ID
                             );
                             var options = {
                                 userId: userId,
@@ -2092,7 +2092,7 @@ var userOverride = {
                             mckInit.initialize(options);
                             return false;
                         }
-                        Kommunicate.popupChatTemplate.getPopupChatTemplate(
+                        Snap.popupChatTemplate.getPopupChatTemplate(
                             MCK_POPUP_WIDGET_CONTENT,
                             WIDGET_SETTINGS,
                             true
@@ -2107,9 +2107,9 @@ var userOverride = {
                             'km-chat-login-modal'
                         );
 
-                        if (KOMMUNICATE_VERSION === 'v2') {
+                        if (SNAP_VERSION === 'v2') {
                             WIDGET_POSITION ===
-                            KommunicateConstants.POSITION.LEFT
+                            SnapConstants.POSITION.LEFT
                                 ? (kmAnonymousChatLauncher.style.left = '10px')
                                 : (kmAnonymousChatLauncher.style.right =
                                       '10px');
@@ -2148,12 +2148,12 @@ var userOverride = {
                                 'click',
                                 function (event) {
                                     event.preventDefault();
-                                    if (KOMMUNICATE_VERSION === 'v2') {
-                                        Kommunicate.setDefaultIframeConfigForOpenChat(
+                                    if (SNAP_VERSION === 'v2') {
+                                        Snap.setDefaultIframeConfigForOpenChat(
                                             POPUP_WIDGET
                                         );
                                         WIDGET_POSITION ===
-                                        KommunicateConstants.POSITION.LEFT
+                                        SnapConstants.POSITION.LEFT
                                             ? (kmAnonymousChatLauncher.style.left =
                                                   '10px')
                                             : (kmAnonymousChatLauncher.style.right =
@@ -2163,11 +2163,11 @@ var userOverride = {
                                         kmChatLoginModal.classList.add(
                                             'km-iframe-sidebox-border-radius'
                                         );
-                                        var kommunicateIframe = parent.document.getElementById(
-                                            'kommunicate-widget-iframe'
+                                        var snapIframe = parent.document.getElementById(
+                                            'snap-widget-iframe'
                                         );
                                         !POPUP_WIDGET &&
-                                            (kommunicateIframe.style.boxShadow =
+                                            (snapIframe.style.boxShadow =
                                                 '0 1.5rem 2rem rgba(0,0,0,.3)');
                                     }
                                     kmChatLoginModal.style.display = 'block';
@@ -2192,7 +2192,7 @@ var userOverride = {
                                 '#km-form-chat-login .km-form-group .km-form-control.n-vis'
                             ).prop('required', null);
                         }
-                        KommunicateUI.displayPopupChatTemplate(
+                        SnapUI.displayPopupChatTemplate(
                             MCK_POPUP_WIDGET_CONTENT,
                             WIDGET_SETTINGS,
                             mckChatPopupNotificationTone
@@ -2206,7 +2206,7 @@ var userOverride = {
                 window.Applozic.ALApiService.login({
                     data: { alUser: userPxy, baseUrl: MCK_BASE_URL },
                     success: function (result) {
-                        if (window.applozic.PRODUCT_ID == 'kommunicate') {
+                        if (window.applozic.PRODUCT_ID == 'snap') {
                             //$applozic("#km-chat-login-modal").removeClass('vis').addClass('n-vis');
                             $applozic('#km-chat-login-modal').css(
                                 'display',
@@ -2216,8 +2216,8 @@ var userOverride = {
                         ALStorage.clearMckMessageArray();
                         ALStorage.clearMckContactNameArray();
                         if (result === 'INVALID_PASSWORD') {
-                            KommunicateUtils.deleteUserCookiesOnLogout();
-                            Kommunicate.displayKommunicateWidget(false);
+                            SnapUtils.deleteUserCookiesOnLogout();
+                            Snap.displaySnapWidget(false);
                             if (typeof MCK_ON_PLUGIN_INIT === 'function') {
                                 MCK_ON_PLUGIN_INIT({
                                     status: 'error',
@@ -2226,7 +2226,7 @@ var userOverride = {
                             }
                             throw new Error('INVALID_PASSWORD');
                         } else if (result === 'INVALID_APPID') {
-                            Kommunicate.displayKommunicateWidget(false);
+                            Snap.displaySnapWidget(false);
                             if (typeof MCK_ON_PLUGIN_INIT === 'function') {
                                 MCK_ON_PLUGIN_INIT({
                                     status: 'error',
@@ -2238,7 +2238,7 @@ var userOverride = {
                             result === 'error' ||
                             result === 'USER_NOT_FOUND'
                         ) {
-                            Kommunicate.displayKommunicateWidget(false);
+                            Snap.displaySnapWidget(false);
                             if (typeof MCK_ON_PLUGIN_INIT === 'function') {
                                 MCK_ON_PLUGIN_INIT({
                                     status: 'error',
@@ -2247,7 +2247,7 @@ var userOverride = {
                             }
                             throw new Error('USER_NOT_FOUND');
                         } else if (result === 'APPMODULE_NOT_FOUND') {
-                            Kommunicate.displayKommunicateWidget(false);
+                            Snap.displaySnapWidget(false);
                             if (typeof MCK_ON_PLUGIN_INIT === 'function') {
                                 MCK_ON_PLUGIN_INIT({
                                     status: 'error',
@@ -2269,7 +2269,7 @@ var userOverride = {
                             _this.onInitApp(result);
                             // mckUtils.manageIdleTime();
                         } else {
-                            Kommunicate.displayKommunicateWidget(false);
+                            Snap.displaySnapWidget(false);
                             if (typeof MCK_ON_PLUGIN_INIT === 'function') {
                                 MCK_ON_PLUGIN_INIT({
                                     status: 'error',
@@ -2281,7 +2281,7 @@ var userOverride = {
                     },
                     error: function () {
                         ALStorage.clearMckMessageArray();
-                        Kommunicate.displayKommunicateWidget(false);
+                        Snap.displaySnapWidget(false);
                         if (typeof MCK_ON_PLUGIN_INIT === 'function') {
                             MCK_ON_PLUGIN_INIT({
                                 status: 'error',
@@ -2301,23 +2301,23 @@ var userOverride = {
                     'km-anonymous-chat-launcher'
                 );
 
-                if (KOMMUNICATE_VERSION === 'v2') {
-                    var kommunicateIframe = parent.document.getElementById(
-                        'kommunicate-widget-iframe'
+                if (SNAP_VERSION === 'v2') {
+                    var snapIframe = parent.document.getElementById(
+                        'snap-widget-iframe'
                     );
                     var popUpcloseButton = document.getElementById(
                         'km-popup-close-button'
                     );
-                    kommunicateIframe.style.boxShadow = 'none';
+                    snapIframe.style.boxShadow = 'none';
                     POPUP_WIDGET && (popUpcloseButton.style.display = 'none');
-                    kommunicateIframe.classList.add('km-iframe-closed');
-                    kommunicateIframe.classList.remove(
-                        'kommunicate-iframe-enable-media-query'
+                    snapIframe.classList.add('km-iframe-closed');
+                    snapIframe.classList.remove(
+                        'snap-iframe-enable-media-query'
                     );
-                    kommunicateIframe.classList.remove(
+                    snapIframe.classList.remove(
                         'km-iframe-dimension-with-popup'
                     );
-                    kommunicateIframe.classList.remove(
+                    snapIframe.classList.remove(
                         'km-iframe-dimension-no-popup'
                     );
                 }
@@ -2331,7 +2331,7 @@ var userOverride = {
                 var $mck_sidebox = $applozic('#mck-sidebox');
                 _this.appendLauncher();
                 _this.setLabels();
-                if (KOMMUNICATE_VERSION === 'v2') {
+                if (SNAP_VERSION === 'v2') {
                     _this.configureIframe();
                     _this.restrictScrollOnHandHeldDevices();
                 }
@@ -2352,7 +2352,7 @@ var userOverride = {
                 IS_MCK_USER_DEACTIVATED = data.deactivated;
                 // For trial plan connect to socket only when someone opens the chat or have some existing chat thread
                 CONNECT_SOCKET_ON_WIDGET_CLICK == null &&
-                    (CONNECT_SOCKET_ON_WIDGET_CLICK = kommunicateCommons.isTrialPlan(
+                    (CONNECT_SOCKET_ON_WIDGET_CLICK = snapCommons.isTrialPlan(
                         data.pricingPackage
                     ));
                 AUTH_CODE = btoa(data.userId + ':' + data.deviceKey);
@@ -2444,7 +2444,7 @@ var userOverride = {
                 mckInit.tabFocused();
                 w.addEventListener('online', function () {
                     console.log('online');
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         { id: ['km-internet-disconnect-msg'] },
                         'n-vis',
                         'vis'
@@ -2452,7 +2452,7 @@ var userOverride = {
                     window.Applozic.ALSocket.reconnect();
                 });
                 w.addEventListener('offline', function () {
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         { id: ['km-internet-disconnect-msg'] },
                         'vis',
                         'n-vis'
@@ -2484,7 +2484,7 @@ var userOverride = {
                     PRE_CHAT_LEAD_COLLECTION_POPUP_ON &&
                         $applozic.fn.applozic('mckLaunchSideboxChat');
                     !PRE_CHAT_LEAD_COLLECTION_POPUP_ON &&
-                        KommunicateUI.displayPopupChatTemplate(
+                        SnapUI.displayPopupChatTemplate(
                             MCK_POPUP_WIDGET_CONTENT,
                             WIDGET_SETTINGS,
                             mckChatPopupNotificationTone
@@ -2492,7 +2492,7 @@ var userOverride = {
                 } else {
                     $applozic.fn.applozic('triggerMsgNotification');
                     !MCK_TRIGGER_MSG_NOTIFICATION_TIMEOUT &&
-                        KommunicateUI.displayPopupChatTemplate(
+                        SnapUI.displayPopupChatTemplate(
                             MCK_POPUP_WIDGET_CONTENT,
                             WIDGET_SETTINGS,
                             mckChatPopupNotificationTone
@@ -2502,8 +2502,8 @@ var userOverride = {
                     }
                 }
 
-                Kommunicate.initilizeEventListners();
-                var activeConversationInfo = KommunicateUtils.getItemFromLocalStorage(
+                Snap.initilizeEventListners();
+                var activeConversationInfo = SnapUtils.getItemFromLocalStorage(
                     'mckActiveConversationInfo'
                 );
 
@@ -2520,7 +2520,7 @@ var userOverride = {
                             isGroup: false,
                         },
                         function (data) {
-                            KommunicateUI.checkSingleThreadedConversationSettings(
+                            SnapUI.checkSingleThreadedConversationSettings(
                                 data &&
                                     data.groupFeeds &&
                                     data.groupFeeds.length > 1
@@ -2528,32 +2528,32 @@ var userOverride = {
                         }
                     );
                 } else {
-                    KommunicateUI.checkSingleThreadedConversationSettings();
+                    SnapUI.checkSingleThreadedConversationSettings();
                 }
 
                 MCK_MAINTAIN_ACTIVE_CONVERSATION_STATE &&
-                    KommunicateUtils.isActiveConversationNeedsToBeOpened(
+                    SnapUtils.isActiveConversationNeedsToBeOpened(
                         activeConversationInfo,
                         data
                     ) &&
-                    Kommunicate.openConversation(
+                    Snap.openConversation(
                         activeConversationInfo.groupId
                     );
                 MCK_MAINTAIN_ACTIVE_CONVERSATION_STATE &&
-                    !KommunicateUtils.isActiveConversationNeedsToBeOpened(
+                    !SnapUtils.isActiveConversationNeedsToBeOpened(
                         activeConversationInfo,
                         data
                     ) &&
-                    KommunicateUtils.removeItemFromLocalStorage(
+                    SnapUtils.removeItemFromLocalStorage(
                         'mckActiveConversationInfo'
                     );
 
                 // dispatch an event "kmInitilized".
                 //w.dispatchEvent(new CustomEvent("kmInitilized",{detail:data,bubbles: true,cancelable: true}));
-                KommunicateUtils.triggerCustomEvent(
+                SnapUtils.triggerCustomEvent(
                     'kmInitilized',
                     { detail: data, bubbles: true, cancelable: true },
-                    KOMMUNICATE_VERSION
+                    SNAP_VERSION
                 );
 
                 if (typeof MCK_ON_PLUGIN_INIT === 'function') {
@@ -2570,25 +2570,25 @@ var userOverride = {
             _this.loadDataPostInitialization = function () {
                 IS_PLUGIN_INITIALIZATION_PROCESS_COMPLETED = true;
                 var data = INIT_APP_DATA;
-                // calling Kommunicate for post initialization processing. error first style.
-                Kommunicate.postPluginInitialization(null, data);
+                // calling Snap for post initialization processing. error first style.
+                Snap.postPluginInitialization(null, data);
                 mckMessageLayout.createContactWithDetail({
                     userId: MCK_USER_ID,
                     displayName: data.displayName,
                     photoLink: data.imageLink,
                 });
-                // Showing powered by kommunicate for all, will be removed incase of white label enterprises.
-                var showPoweredBy = kommunicateCommons.showPoweredBy(data);
+                // Showing powered by snap for all, will be removed incase of white label enterprises.
+                var showPoweredBy = snapCommons.showPoweredBy(data);
                 if (showPoweredBy) {
-                    var kommunicateIframe = parent.document.getElementById(
-                        'kommunicate-widget-iframe'
+                    var snapIframe = parent.document.getElementById(
+                        'snap-widget-iframe'
                     );
-                    var utmSourceUrl = kommunicateIframe
-                        ? kommunicateIframe.getAttribute('data-url') ||
+                    var utmSourceUrl = snapIframe
+                        ? snapIframe.getAttribute('data-url') ||
                           parent.window.location.href
                         : w.location.href;
                     var poweredByUrl =
-                        'https://www.kommunicate.io/poweredby?utm_source=' +
+                        'https://www.snap.io/poweredby?utm_source=' +
                         utmSourceUrl +
                         '&utm_medium=webplugin&utm_campaign=poweredby';
                     $applozic('.mck-running-on a').attr('href', poweredByUrl);
@@ -2629,8 +2629,8 @@ var userOverride = {
             };
 
             _this.configurePopupWidget = function () {
-                !kommunicateCommons.checkIfDeviceIsHandheld() &&
-                    kommunicateCommons.modifyClassList(
+                !snapCommons.checkIfDeviceIsHandheld() &&
+                    snapCommons.modifyClassList(
                         { id: ['mck-sidebox'] },
                         'popup-enabled',
                         ''
@@ -2638,16 +2638,16 @@ var userOverride = {
             };
 
             _this.configureIframe = function () {
-                // update sidebox css for kommunicate v2 version
+                // update sidebox css for snap v2 version
                 var chatbox = document.getElementById('mck-sidebox-launcher');
-                var kommunicateIframe = parent.document.getElementById(
-                    'kommunicate-widget-iframe'
+                var snapIframe = parent.document.getElementById(
+                    'snap-widget-iframe'
                 );
 
-                if (WIDGET_POSITION === KommunicateConstants.POSITION.LEFT) {
+                if (WIDGET_POSITION === SnapConstants.POSITION.LEFT) {
                     chatbox.style.left = '10px';
-                    kommunicateIframe.classList.add('align-left');
-                    kommunicateCommons.modifyClassList(
+                    snapIframe.classList.add('align-left');
+                    snapCommons.modifyClassList(
                         { id: ['mck-sidebox'] },
                         'align-left'
                     );
@@ -2666,28 +2666,28 @@ var userOverride = {
                 badgeCount.classList.add('km-iframe-badge-count');
 
                 // handle click events for openning and closing of sidebox
-                kommunicateIframe.style.display = 'block';
+                snapIframe.style.display = 'block';
                 var popUpcloseButton = document.getElementById(
                     'km-popup-close-button'
                 );
                 chatbox.addEventListener('click', function () {
-                    kommunicateCommons.setWidgetStateOpen(true);
-                    kommunicateIframe.classList.remove('km-iframe-closed');
-                    kommunicateIframe.classList.add(
-                        'kommunicate-iframe-enable-media-query'
+                    snapCommons.setWidgetStateOpen(true);
+                    snapIframe.classList.remove('km-iframe-closed');
+                    snapIframe.classList.add(
+                        'snap-iframe-enable-media-query'
                     );
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         { id: ['applozic-badge-count'] },
                         'n-vis',
                         ''
                     );
-                    kommunicateIframe.style.width = '';
+                    snapIframe.style.width = '';
                     POPUP_WIDGET
-                        ? (kommunicateIframe.classList.add(
+                        ? (snapIframe.classList.add(
                               'km-iframe-dimension-with-popup'
                           ),
                           (popUpcloseButton.style.display = 'flex'))
-                        : kommunicateIframe.classList.add(
+                        : snapIframe.classList.add(
                               'km-iframe-dimension-no-popup'
                           );
                     POPUP_WIDGET && _this.configurePopupWidget();
@@ -2696,20 +2696,20 @@ var userOverride = {
                     'km-chat-widget-close-button'
                 );
                 function closeChatBox() {
-                    kommunicateCommons.setWidgetStateOpen(false);
+                    snapCommons.setWidgetStateOpen(false);
                     mckMessageService.closeSideBox();
                     popUpcloseButton.style.display = 'none';
-                    kommunicateIframe.classList.add('km-iframe-closed');
-                    kommunicateIframe.classList.remove(
-                        'kommunicate-iframe-enable-media-query'
+                    snapIframe.classList.add('km-iframe-closed');
+                    snapIframe.classList.remove(
+                        'snap-iframe-enable-media-query'
                     );
-                    kommunicateIframe.classList.remove(
+                    snapIframe.classList.remove(
                         'km-iframe-dimension-with-popup'
                     );
-                    kommunicateIframe.classList.remove(
+                    snapIframe.classList.remove(
                         'km-iframe-dimension-no-popup'
                     );
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         { id: ['applozic-badge-count'] },
                         '',
                         'n-vis'
@@ -2754,14 +2754,14 @@ var userOverride = {
                     parent && parent.document.getElementsByTagName('html')[0];
 
                 sideboxLauncher.addEventListener('click', function () {
-                    kommunicateCommons.checkIfDeviceIsHandheld() &&
+                    snapCommons.checkIfDeviceIsHandheld() &&
                         (parentBody &&
                             parentBody.classList.add('mck-restrict-scroll'),
                         parentHtmlTag &&
                             parentHtmlTag.classList.add('mck-restrict-scroll'));
                 });
                 sideboxCloseButton.addEventListener('click', function () {
-                    kommunicateCommons.checkIfDeviceIsHandheld() &&
+                    snapCommons.checkIfDeviceIsHandheld() &&
                         (parentBody &&
                             parentBody.classList.remove('mck-restrict-scroll'),
                         parentHtmlTag &&
@@ -2787,8 +2787,8 @@ var userOverride = {
                 };
 
                 restartConversation.addEventListener('click', function () {
-                    KommunicateUI.showClosedConversationBanner(false);
-                    KommunicateUI.isConvJustResolved = false;
+                    SnapUI.showClosedConversationBanner(false);
+                    SnapUI.isConvJustResolved = false;
                 });
 
                 sendFeedbackComment.addEventListener('click', function () {
@@ -2826,22 +2826,22 @@ var userOverride = {
                 });
                 for (var i = 0; i < ratingSmilies.length; i++) {
                     ratingSmilies[i].addEventListener('click', function (e) {
-                        kommunicateCommons.modifyClassList(
+                        snapCommons.modifyClassList(
                             { id: ['csat-2'] },
                             '',
                             'n-vis'
                         );
-                        kommunicateCommons.modifyClassList(
+                        snapCommons.modifyClassList(
                             { id: ['mck-rate-conversation'] },
                             'n-vis',
                             ''
                         );
-                        kommunicateCommons.modifyClassList(
+                        snapCommons.modifyClassList(
                             { class: ['mck-rating-box'] },
                             '',
                             'selected'
                         );
-                        kommunicateCommons.modifyClassList(
+                        snapCommons.modifyClassList(
                             { class: ['mck-feedback-text-wrapper'] },
                             '',
                             'n-vis'
@@ -2854,7 +2854,7 @@ var userOverride = {
                 mckUtils.ajax({
                     type: 'POST',
                     url:
-                        Kommunicate.getBaseUrl() +
+                        Snap.getBaseUrl() +
                         FEEDBACK_UPDATE_URL +
                         '?sendAsMessage=true',
                     global: false,
@@ -2864,11 +2864,11 @@ var userOverride = {
                         if (result && result.data) {
                             CURRENT_GROUP_DATA.currentGroupFeedback =
                                 result.data.data;
-                            KommunicateUI.showClosedConversationBanner(true);
+                            SnapUI.showClosedConversationBanner(true);
                             document.getElementById(
                                 'mck-feedback-comment'
                             ).value = '';
-                            kommunicateCommons.modifyClassList(
+                            snapCommons.modifyClassList(
                                 { class: ['mck-feedback-text-wrapper'] },
                                 'n-vis',
                                 ''
@@ -2986,7 +2986,7 @@ var userOverride = {
                         .split('-')[1];
                 selectElement.appendChild(dropDownOption);
                 options.forEach(function (element) {
-                    if (kommunicateCommons.isObject(element)) {
+                    if (snapCommons.isObject(element)) {
                         dropDownOption = document.createElement('option');
                         dropDownOption.setAttribute('value',element.value);
                         dropDownOption.textContent =
@@ -3147,11 +3147,11 @@ var userOverride = {
                 document.getElementById('wq-msg-last-part').innerHTML = MCK_LABELS['waiting.queue.message']['last.part'];
                 document.getElementById('km-csat-trigger-text').innerText = MCK_LABELS['conversation.header.dropdown'].CSAT_RATING_TEXT;
             };
-            $applozic(d).on('click', '.fancybox-kommunicate', function (e) {
+            $applozic(d).on('click', '.fancybox-snap', function (e) {
                 e.preventDefault();
                 var $this = $applozic(this);
                 var href = $this.data('url');
-                var title = kommunicateCommons.formatHtmlTag(
+                var title = snapCommons.formatHtmlTag(
                     $this.data('name')
                 );
                 if (href === '') {
@@ -3331,14 +3331,14 @@ var userOverride = {
             _this.clearMsgTriggerAndChatPopuTimeouts = function () {
                 clearTimeout(MCK_TRIGGER_MSG_NOTIFICATION_PARAM);
                 clearTimeout(MCK_CHAT_POPUP_TEMPLATE_TIMER);
-                KommunicateUI.togglePopupChatTemplate();
+                SnapUI.togglePopupChatTemplate();
             };
 
             $applozic(d).on(
                 'click',
                 '.chat-popup-widget-close-btn-container',
                 function () {
-                    KommunicateUI.togglePopupChatTemplate();
+                    SnapUI.togglePopupChatTemplate();
                 }
             );
         }
@@ -3461,12 +3461,12 @@ var userOverride = {
             };
 
             _this.showSendButton = function () {
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { id: ['send-button-wrapper'] },
                     'vis',
                     'n-vis'
                 );
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     {
                         id: [
                             'mck-file-up',
@@ -3479,7 +3479,7 @@ var userOverride = {
                 );
                 IS_MCK_LOCSHARE
                     ? ''
-                    : kommunicateCommons.modifyClassList(
+                    : snapCommons.modifyClassList(
                           { id: ['mck-file-up2'] },
                           'n-vis',
                           'vis'
@@ -3487,31 +3487,31 @@ var userOverride = {
             };
 
             _this.hideSendButton = function () {
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { id: ['send-button-wrapper'] },
                     'n-vis',
                     'vis'
                 );
                 MCK_ATTACHMENT &&
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         { id: ['mck-file-up'] },
                         'vis',
                         'n-vis'
                     );
                 !IS_MCK_LOCSHARE
-                    ? kommunicateCommons.modifyClassList(
+                    ? snapCommons.modifyClassList(
                           { id: ['mck-file-up2'] },
                           'vis',
                           'n-vis'
                       )
-                    : kommunicateCommons.modifyClassList(
+                    : snapCommons.modifyClassList(
                           { id: ['mck-btn-loc'] },
                           'vis',
                           'n-vis'
                       );
                 !EMOJI_LIBRARY
                     ? ''
-                    : kommunicateCommons.modifyClassList(
+                    : snapCommons.modifyClassList(
                           { id: ['mck-btn-smiley-box'] },
                           'vis',
                           'n-vis'
@@ -3526,10 +3526,10 @@ var userOverride = {
                 }
                 if (text == '' || !text.replace(/\s/g, '').length) {
                     _this.hideSendButton();
-                    Kommunicate.typingAreaService.showMicIfSpeechRecognitionSupported();
+                    Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
                 } else {
                     _this.showSendButton();
-                    Kommunicate.typingAreaService.hideMicButton();
+                    Snap.typingAreaService.hideMicButton();
                 }
             };
 
@@ -3555,10 +3555,10 @@ var userOverride = {
                 return metadata;
             };
             _this.createNewConversation = function (params, callback) {
-                Kommunicate.startConversation(params, callback);
+                Snap.startConversation(params, callback);
             };
             _this.openChatbox = function (params, callback) {
-                kommunicateCommons.setWidgetStateOpen(true);
+                snapCommons.setWidgetStateOpen(true);
                 if ($mck_sidebox.css('display') === 'none') {
                     $applozic('.mckModal').mckModal('hide');
                     $mck_sidebox.mckModal();
@@ -3568,7 +3568,7 @@ var userOverride = {
             };
             _this.loadConversationWithAgents = function (params, callback) {
                 _this.openChatbox();
-                if (window.applozic.PRODUCT_ID == 'kommunicate') {
+                if (window.applozic.PRODUCT_ID == 'snap') {
                     $mck_btn_leave_group.removeClass('vis').addClass('n-vis');
                 }
 
@@ -3578,7 +3578,7 @@ var userOverride = {
                     limit: 10,
                 };
                 //TO DO: set group detail data in session and fetch from their instead of making call every time.
-                Kommunicate.client.getGroupDetailByType(
+                Snap.client.getGroupDetailByType(
                     options,
                     function (err, result) {
                         if (err) {
@@ -3592,7 +3592,7 @@ var userOverride = {
                             mckMessageService.createNewConversation(
                                 conversationDetail,
                                 function (groupId) {
-                                    /* Kommunicate.triggerEvent(KommunicateConstants.EVENT_IDS.WELCOME_MESSAGE, { "groupId": groupId, "applicationId": MCK_APP_ID });*/
+                                    /* Snap.triggerEvent(SnapConstants.EVENT_IDS.WELCOME_MESSAGE, { "groupId": groupId, "applicationId": MCK_APP_ID });*/
                                     callback();
                                 }
                             );
@@ -3686,7 +3686,7 @@ var userOverride = {
                     mckMessageService.createNewConversation(
                         conversationDetail,
                         function (conversationId) {
-                            // Kommunicate.triggerEvent(KommunicateConstants.EVENT_IDS.WELCOME_MESSAGE, { groupId: conversationId, applicationId: MCK_APP_ID });
+                            // Snap.triggerEvent(SnapConstants.EVENT_IDS.WELCOME_MESSAGE, { groupId: conversationId, applicationId: MCK_APP_ID });
                         }
                     );
                     $applozic('#mck-msg-new').attr('disabled', true);
@@ -3713,20 +3713,20 @@ var userOverride = {
                 });
                 $applozic(d).on('click', '#talk-to-human-link', function () {
                     var conversationDetail = mckGroupLayout.createGroupDefaultSettings();
-                    KommunicateUI.hideFaq();
-                    KommunicateUI.showChat();
+                    SnapUI.hideFaq();
+                    SnapUI.showChat();
                     if ($applozic('#km-faq-search-input').val() === '') {
                         mckMessageService.createNewConversation(
                             conversationDetail,
                             function (conversationId) {
-                                // Kommunicate.triggerEvent(KommunicateConstants.EVENT_IDS.WELCOME_MESSAGE, { groupId: conversationId, applicationId: MCK_APP_ID });
+                                // Snap.triggerEvent(SnapConstants.EVENT_IDS.WELCOME_MESSAGE, { groupId: conversationId, applicationId: MCK_APP_ID });
                             }
                         );
                     } else {
                         mckMessageService.createNewConversation(
                             conversationDetail,
                             function (conversationId) {
-                                KommunicateUI.sendFaqQueryAsMsg(conversationId);
+                                SnapUI.sendFaqQueryAsMsg(conversationId);
                             }
                         );
                     }
@@ -4296,15 +4296,15 @@ var userOverride = {
                                     mckMessageService.openChat(elem);
                                 }, 600);
                             } else {
-                                // callback method 'Kommunicate.conversation.processConversationOpnedFromList' will be called when conversation clicked from the cpnversation list.
+                                // callback method 'Snap.conversation.processConversationOpnedFromList' will be called when conversation clicked from the cpnversation list.
                                 // use this method to perform all post conversation opned operations i.e. populate welcome and away message, show lead collection template etc.
                                 mckMessageService.openChat(elem);
                             }
                             return;
                         }
                         $applozic.fn.applozic('mckLaunchSideboxChat');
-                        // var kommunicateIframe = parent.document.getElementById("kommunicate-widget-iframe");
-                        // kommunicateIframe.style.boxShadow="0 1.5rem 2rem rgba(0,0,0,.3)";
+                        // var snapIframe = parent.document.getElementById("snap-widget-iframe");
+                        // snapIframe.style.boxShadow="0 1.5rem 2rem rgba(0,0,0,.3)";
                         mckInit.clearMsgTriggerAndChatPopuTimeouts();
                     }
                 );
@@ -4315,7 +4315,7 @@ var userOverride = {
                     e
                 ) {
                     e.preventDefault();
-                    KommunicateUI.triggerCSAT();
+                    SnapUI.triggerCSAT();
                 };
 
                 // Voice Output Override trigger
@@ -4324,7 +4324,7 @@ var userOverride = {
                 ).onclick = function (e) {
                     e.preventDefault();
                     userOverride.voiceOutput = !userOverride.voiceOutput;
-                    KommunicateUI.toggleVoiceOutputOverride(
+                    SnapUI.toggleVoiceOutputOverride(
                         userOverride.voiceOutput
                     );
                 };
@@ -4354,17 +4354,17 @@ var userOverride = {
                     }
                     if (email) {
                         userId = email;
-                        KommunicateUtils.setCookie({
+                        SnapUtils.setCookie({
                             name:
-                                KommunicateConstants.COOKIES
-                                    .KOMMUNICATE_LOGGED_IN_ID,
+                                SnapConstants.COOKIES
+                                    .SNAP_LOGGED_IN_ID,
                             value: email,
                             expiresInDays: 30,
                             domain: MCK_COOKIE_DOMAIN,
                         });
-                        KommunicateUtils.setCookie({
+                        SnapUtils.setCookie({
                             name:
-                                KommunicateConstants.COOKIES
+                                SnapConstants.COOKIES
                                     .IS_USER_ID_FOR_LEAD_COLLECTION,
                             value: true,
                             expiresInDays: 30,
@@ -4403,7 +4403,7 @@ var userOverride = {
                 });
 
                 var loadChat = function () {
-                    if (window.applozic.PRODUCT_ID === 'kommunicate') {
+                    if (window.applozic.PRODUCT_ID === 'snap') {
                         $mck_btn_leave_group
                             .removeClass('vis')
                             .addClass('n-vis');
@@ -4427,11 +4427,11 @@ var userOverride = {
                         var $this = $applozic(this);
                         var currTabId = $mck_msg_inner.data('mck-id');
                         var isGroup = $mck_msg_inner.data('isgroup');
-                        KommunicateUI.hideAwayMessage();
-                        KommunicateUI.hideLeadCollectionTemplate();
-                        KommunicateUI.showClosedConversationBanner(false);
+                        SnapUI.hideAwayMessage();
+                        SnapUI.hideLeadCollectionTemplate();
+                        SnapUI.showClosedConversationBanner(false);
                         !MCK_ATTACHMENT &&
-                            kommunicateCommons.modifyClassList(
+                            snapCommons.modifyClassList(
                                 { id: ['mck-attachfile-box', 'mck-file-up'] },
                                 'n-vis',
                                 'vis'
@@ -4863,14 +4863,14 @@ var userOverride = {
                     //Lead Collection -Email Validation
                     if (
                         sendMsgCount == 1 &&
-                        ((KommunicateUI.leadCollectionEnabledOnAwayMessage &&
-                            KommunicateUI.awayMessageInfo.isEnabled &&
-                            KommunicateUI.awayMessageInfo.eventId == 1) ||
-                            (KommunicateUI.welcomeMessageEnabled &&
-                                KommunicateUI.leadCollectionEnabledOnWelcomeMessage &&
-                                KommunicateUI.anonymousUser))
+                        ((SnapUI.leadCollectionEnabledOnAwayMessage &&
+                            SnapUI.awayMessageInfo.isEnabled &&
+                            SnapUI.awayMessageInfo.eventId == 1) ||
+                            (SnapUI.welcomeMessageEnabled &&
+                                SnapUI.leadCollectionEnabledOnWelcomeMessage &&
+                                SnapUI.anonymousUser))
                     ) {
-                        var isValid = KommunicateUI.validateEmail(
+                        var isValid = SnapUI.validateEmail(
                             messagePxy.message
                         );
                         if (!isValid) {
@@ -4878,7 +4878,7 @@ var userOverride = {
                         }
                     }
                     _this.hideSendButton();
-                    Kommunicate.typingAreaService.showMicIfSpeechRecognitionSupported();
+                    Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
                     _this.sendMessage(messagePxy);
                     return false;
                 });
@@ -4963,14 +4963,14 @@ var userOverride = {
                 }
             );
             _this.closeSideBox = function () {
-                kommunicateCommons.setWidgetStateOpen(false);
+                snapCommons.setWidgetStateOpen(false);
                 MCK_MAINTAIN_ACTIVE_CONVERSATION_STATE &&
-                    KommunicateUtils.removeItemFromLocalStorage(
+                    SnapUtils.removeItemFromLocalStorage(
                         'mckActiveConversationInfo'
                     );
-                KommunicateUI.hideAwayMessage();
-                KommunicateUI.hideLeadCollectionTemplate();
-                KommunicateUI.showClosedConversationBanner(false);
+                SnapUI.hideAwayMessage();
+                SnapUI.hideLeadCollectionTemplate();
+                SnapUI.showClosedConversationBanner(false);
                 $mck_sidebox.mckModal('hide');
                 $applozic('#mck-sidebox-launcher')
                     .removeClass('n-vis')
@@ -5042,7 +5042,7 @@ var userOverride = {
                     conversationId !== ''
                         ? conversationId.toString()
                         : '';
-                KommunicateUI.checkSingleThreadedConversationSettings(
+                SnapUI.checkSingleThreadedConversationSettings(
                     Object.keys(MCK_GROUP_MAP).length > 1
                 );
                 if (topicId && !conversationId) {
@@ -5081,7 +5081,7 @@ var userOverride = {
                 var key;
                 var message;
                 if (
-                    Kommunicate.internetStatus &&
+                    Snap.internetStatus &&
                     $applozic(
                         "#mck-message-cell .mck-message-inner div[name='message']:last-child"
                     ).data('msgkey') !== undefined
@@ -5311,17 +5311,17 @@ var userOverride = {
                             tabId: contact.contactId,
                             isTopPanelAdded: isTopPanelAdded,
                         };
-                        var stopUpload = KommunicateUI.getAttachmentStopUploadStatus(
+                        var stopUpload = SnapUI.getAttachmentStopUploadStatus(
                             messagePxy.key
                         );
-                        if (!Kommunicate.internetStatus || stopUpload) {
+                        if (!Snap.internetStatus || stopUpload) {
                             KM_PENDING_ATTACHMENT_FILE[messagePxy.key] = file;
                             file.type.indexOf('image/') != -1 &&
-                                KommunicateUI.displayUploadIconForAttachment(
+                                SnapUI.displayUploadIconForAttachment(
                                     messagePxy.key,
                                     false
                                 );
-                            KommunicateUI.updateAttachmentStopUploadStatus(
+                            SnapUI.updateAttachmentStopUploadStatus(
                                 messagePxy.key,
                                 true
                             );
@@ -5329,7 +5329,7 @@ var userOverride = {
                         }
                         if (
                             FILE_META &&
-                            KommunicateUI.isAttachmentV2(
+                            SnapUI.isAttachmentV2(
                                 FILE_META[0].contentType
                             )
                         ) {
@@ -5337,10 +5337,10 @@ var userOverride = {
                                 .removeClass('vis')
                                 .addClass('n-vis');
                             FILE_META[0].contentType.indexOf('image/') != -1 &&
-                                KommunicateUI.displayProgressMeter(
+                                SnapUI.displayProgressMeter(
                                     messagePxy.key
                                 );
-                            KommunicateUI.updateAttachmentTemplate(
+                            SnapUI.updateAttachmentTemplate(
                                 messagePxy,
                                 messagePxy.key
                             );
@@ -5460,8 +5460,8 @@ var userOverride = {
                     typeof msgProxy.metadata['KM_CHAT_CONTEXT'] == 'object'
                         ? msgProxy.metadata['KM_CHAT_CONTEXT']
                         : {};
-                // chat context in setting can be updated by user using Kommunicate.updateSetting()
-                var chatContext = KommunicateUtils.getSettings(
+                // chat context in setting can be updated by user using Snap.updateSetting()
+                var chatContext = SnapUtils.getSettings(
                     'KM_CHAT_CONTEXT'
                 );
                 chatContext = typeof chatContext == 'object' ? chatContext : {};
@@ -5518,21 +5518,21 @@ var userOverride = {
                         if (
                             messagePxy &&
                             typeof messagePxy.fileMeta === 'object' &&
-                            KommunicateUI.isAttachmentV2(
+                            SnapUI.isAttachmentV2(
                                 messagePxy.fileMeta.contentType
                             )
                         ) {
                             $applozic('.mck-timestamp-' + messagePxy.key)
                                 .removeClass('n-vis')
                                 .addClass('vis');
-                            KommunicateUI.updateAttachmentStopUploadStatus(
+                            SnapUI.updateAttachmentStopUploadStatus(
                                 messagePxy.key,
                                 false
                             );
                         }
                         var currentTabId = $mck_msg_inner.data('mck-id');
                         if (typeof data === 'object') {
-                            KommunicateUI.deleteProgressMeter(
+                            SnapUI.deleteProgressMeter(
                                 messagePxy.key,
                                 true
                             );
@@ -5546,7 +5546,7 @@ var userOverride = {
                             )
                                 .removeClass('vis')
                                 .addClass('n-vis');
-                            kommunicateCommons.modifyClassList(
+                            snapCommons.modifyClassList(
                                 {
                                     class: [
                                         'km-attachment-progress-bar-wrapper-' +
@@ -5639,14 +5639,14 @@ var userOverride = {
                         var sendMsgCount = $applozic('[data-msgtype=5]').length;
                         if (
                             sendMsgCount == 1 &&
-                            ((KommunicateUI.leadCollectionEnabledOnAwayMessage &&
-                                KommunicateUI.awayMessageInfo.isEnabled &&
-                                KommunicateUI.awayMessageInfo.eventId == 1) ||
-                                (KommunicateUI.welcomeMessageEnabled &&
-                                    KommunicateUI.leadCollectionEnabledOnWelcomeMessage &&
-                                    KommunicateUI.anonymousUser))
+                            ((SnapUI.leadCollectionEnabledOnAwayMessage &&
+                                SnapUI.awayMessageInfo.isEnabled &&
+                                SnapUI.awayMessageInfo.eventId == 1) ||
+                                (SnapUI.welcomeMessageEnabled &&
+                                    SnapUI.leadCollectionEnabledOnWelcomeMessage &&
+                                    SnapUI.anonymousUser))
                         ) {
-                            KommunicateUI.displayLeadCollectionTemplate(null);
+                            SnapUI.displayLeadCollectionTemplate(null);
                         }
                         sendMsgCount > 1 &&
                             $applozic('#mck-email-collection-box')
@@ -5839,16 +5839,16 @@ var userOverride = {
                     message.code === 'AGENTS_ONLINE' &&
                     !isAgentOffline
                 ) {
-                    KommunicateUI.setAvailabilityStatus('online');
+                    SnapUI.setAvailabilityStatus('online');
                 } else if (
                     message &&
                     message.code === 'SUCCESS' &&
                     !isAgentOffline
                 ) {
-                    KommunicateUI.setAvailabilityStatus('away');
+                    SnapUI.setAvailabilityStatus('away');
                 }
-                KommunicateUI.populateAwayMessage(err, message);
-                KommunicateUI.updateLeadCollectionStatus(
+                SnapUI.populateAwayMessage(err, message);
+                SnapUI.updateLeadCollectionStatus(
                     err,
                     message,
                     data.message || []
@@ -5936,7 +5936,7 @@ var userOverride = {
                         CURRENT_GROUP_DATA.lastMessagingMember =
                             data.message[0] && data.message[0].contactIds;
                         params.isWaitingQueue &&
-                            KommunicateUI.handleWaitingQueueMessage();
+                            SnapUI.handleWaitingQueueMessage();
                         var currTabId = $mck_msg_inner.data('mck-id');
                         var isGroupTab = $mck_msg_inner.data('isgroup');
                         if (!params.isGroup || params.startTime) {
@@ -6121,7 +6121,7 @@ var userOverride = {
                                                             'title',
                                                             name
                                                         );
-                                                        KommunicateUI.adjustConversationTitleHeadingWidth(
+                                                        SnapUI.adjustConversationTitleHeadingWidth(
                                                             POPUP_WIDGET
                                                         );
                                                     }
@@ -6285,7 +6285,7 @@ var userOverride = {
                                                         if (
                                                             window.applozic
                                                                 .PRODUCT_ID ==
-                                                                'kommunicate' &&
+                                                                'snap' &&
                                                             group.users[
                                                                 MCK_USER_ID
                                                             ]
@@ -6530,7 +6530,7 @@ var userOverride = {
                                     }
                                 }
                                 if (params.isGroup) {
-                                    Kommunicate.conversation.processConversationOpenedFromList(
+                                    Snap.conversation.processConversationOpenedFromList(
                                         data
                                     );
                                     var conversationAssignee =
@@ -6598,7 +6598,7 @@ var userOverride = {
                                 data.userDetails[key].userId ==
                                     CURRENT_GROUP_DATA.conversationAssignee &&
                                 data.userDetails[key].roleType ==
-                                    KommunicateConstants.APPLOZIC_USER_ROLE_TYPE
+                                    SnapConstants.APPLOZIC_USER_ROLE_TYPE
                                         .BOT
                             ) {
                                 mckGroupLayout.checkBotDetail(
@@ -6631,8 +6631,8 @@ var userOverride = {
                 roleType,
                 isAgentOffline
             ) {
-                var userSession = KommunicateUtils.isSessionStorageAvailable()
-                    ? JSON.parse(sessionStorage.kommunicate)
+                var userSession = SnapUtils.isSessionStorageAvailable()
+                    ? JSON.parse(sessionStorage.snap)
                     : {};
                 var languageCode =
                     userSession &&
@@ -6643,9 +6643,9 @@ var userOverride = {
                     tabId &&
                     typeof roleType !== 'undefined' &&
                     roleType !==
-                        KommunicateConstants.APPLOZIC_USER_ROLE_TYPE.BOT
+                        SnapConstants.APPLOZIC_USER_ROLE_TYPE.BOT
                 ) {
-                    Kommunicate.getAwayMessage(
+                    Snap.getAwayMessage(
                         {
                             applicationId: MCK_APP_ID,
                             conversationId: tabId,
@@ -6670,15 +6670,15 @@ var userOverride = {
                 if (
                     typeof detailOfAssignedUser !== 'undefined' &&
                     detailOfAssignedUser.roleType ===
-                        KommunicateConstants.APPLOZIC_USER_ROLE_TYPE.BOT
+                        SnapConstants.APPLOZIC_USER_ROLE_TYPE.BOT
                 ) {
                     // Checking if the CONVERSATION_ASSIGNEE is bot or not
                     data.availabilityStatus =
-                        KommunicateConstants.AVAILABILITY_STATUS.ONLINE;
+                        SnapConstants.AVAILABILITY_STATUS.ONLINE;
                 } else if (
                     typeof detailOfAssignedUser !== 'undefined' &&
                     detailOfAssignedUser.roleType ===
-                        KommunicateConstants.APPLOZIC_USER_ROLE_TYPE
+                        SnapConstants.APPLOZIC_USER_ROLE_TYPE
                             .APPLICATION_WEB_ADMIN
                 ) {
                     if (
@@ -6686,10 +6686,10 @@ var userOverride = {
                         detailOfAssignedUser.connected == true
                     ) {
                         data.availabilityStatus =
-                            KommunicateConstants.AVAILABILITY_STATUS.ONLINE;
+                            SnapConstants.AVAILABILITY_STATUS.ONLINE;
                     } else {
                         data.availabilityStatus =
-                            KommunicateConstants.AVAILABILITY_STATUS.OFFLINE;
+                            SnapConstants.AVAILABILITY_STATUS.OFFLINE;
                         data.isAgentOffline = true;
                     }
                 }
@@ -6715,13 +6715,13 @@ var userOverride = {
                 var imageUrl;
                 params.name =
                     params.name &&
-                    kommunicateCommons.formatHtmlTag(params.name);
+                    snapCommons.formatHtmlTag(params.name);
                 var profileImage = params.name
                     ? params.name + ' profile image'
                     : 'Profile image';
                 $mck_tab_title.html(params.name);
                 $mck_tab_title.attr('title', params.name);
-                KommunicateUI.adjustConversationTitleHeadingWidth(POPUP_WIDGET);
+                SnapUI.adjustConversationTitleHeadingWidth(POPUP_WIDGET);
                 if (params.imageUrl) {
                     imageUrl = params.imageUrl;
                     $applozic('.mck-agent-image-container img').removeClass(
@@ -6749,7 +6749,7 @@ var userOverride = {
                     src: imageUrl,
                     alt: profileImage,
                 });
-                KommunicateUI.setAvailabilityStatus(params.availabilityStatus);
+                SnapUI.setAvailabilityStatus(params.availabilityStatus);
             };
             _this.updateAssigneeDetails = function (data, tabId) {
                 var updateConversationHeaderParams = new Object();
@@ -6760,14 +6760,14 @@ var userOverride = {
                 CURRENT_GROUP_DATA.conversationAssignee = data && data.userId;
                 if (
                     data.roleType ===
-                    KommunicateConstants.APPLOZIC_USER_ROLE_TYPE.BOT
+                    SnapConstants.APPLOZIC_USER_ROLE_TYPE.BOT
                 ) {
                     updateConversationHeaderParams.availabilityStatus =
-                        KommunicateConstants.AVAILABILITY_STATUS.ONLINE;
+                        SnapConstants.AVAILABILITY_STATUS.ONLINE;
                 } else {
                     updateConversationHeaderParams.availabilityStatus = data.connected
-                        ? KommunicateConstants.AVAILABILITY_STATUS.ONLINE
-                        : KommunicateConstants.AVAILABILITY_STATUS.OFFLINE;
+                        ? SnapConstants.AVAILABILITY_STATUS.ONLINE
+                        : SnapConstants.AVAILABILITY_STATUS.OFFLINE;
                 }
                 _this.processOnlineStatusChange(
                     tabId,
@@ -7436,7 +7436,7 @@ var userOverride = {
                 $applozic.template('csatModule', csatModule);
             };
 
-            
+
 
             _this.loadDropdownOptions = function () {
                 var enableDropdown = false;
@@ -7446,7 +7446,7 @@ var userOverride = {
                 */
                 if (CSAT_ENABLED) {
                     enableDropdown = true;
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         { id: ['km-csat-trigger'] },
                         '',
                         'n-vis'
@@ -7455,11 +7455,11 @@ var userOverride = {
 
                 // For voice output user override
                 if (VOICE_OUTPUT_ENABLED) {
-                    enableDropdown = true;  
-                    KommunicateUI.toggleVoiceOutputOverride(
+                    enableDropdown = true;
+                    SnapUI.toggleVoiceOutputOverride(
                         userOverride.voiceOutput
                     );
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         { id: ['user-overide-voice-output'] },
                         '',
                         'n-vis'
@@ -7468,7 +7468,7 @@ var userOverride = {
 
                 // For toggling display of three dot button (Dropdown btn)
                 enableDropdown &&
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         { id: ['km-widget-options'] },
                         '',
                         'n-vis'
@@ -7499,20 +7499,20 @@ var userOverride = {
             };
 
             _this.handleLoadTab = function () {
-                if (KOMMUNICATE_VERSION === 'v2') {
+                if (SNAP_VERSION === 'v2') {
                     // load all the script which we want to load afterwards.
                     !IS_PLUGIN_INITIALIZATION_PROCESS_COMPLETED &&
                         mckInit.loadDataPostInitialization();
-                    Kommunicate.setDefaultIframeConfigForOpenChat(POPUP_WIDGET);
-                    var kommunicateIframe = parent.document.getElementById(
-                        'kommunicate-widget-iframe'
+                    Snap.setDefaultIframeConfigForOpenChat(POPUP_WIDGET);
+                    var snapIframe = parent.document.getElementById(
+                        'snap-widget-iframe'
                     );
-                    var kommunicateIframeDocument =
-                        kommunicateIframe.contentDocument;
-                    var chatbox = kommunicateIframeDocument.getElementById(
+                    var snapIframeDocument =
+                        snapIframe.contentDocument;
+                    var chatbox = snapIframeDocument.getElementById(
                         'mck-sidebox-launcher'
                     );
-                    !kommunicateCommons.isWidgetOpen() && chatbox.click();
+                    !snapCommons.isWidgetOpen() && chatbox.click();
                 }
 
                 if ($mck_sidebox.css('display') === 'none') {
@@ -7523,20 +7523,20 @@ var userOverride = {
             };
 
             _this.loadTab = function (params, callback) {
-                var userId = KommunicateUtils.getCookie(
-                    KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_ID
+                var userId = SnapUtils.getCookie(
+                    SnapConstants.COOKIES.SNAP_LOGGED_IN_ID
                 );
-                (KommunicateUtils.getItemFromLocalStorage(
+                (SnapUtils.getItemFromLocalStorage(
                     'mckActiveConversationInfo',
                     { groupId: params.tabId }
                 ) ||
-                    kommunicateCommons.isWidgetOpen()) &&
+                    snapCommons.isWidgetOpen()) &&
                     _this.handleLoadTab();
                 mckInit.clearMsgTriggerAndChatPopuTimeouts();
                 MCK_MAINTAIN_ACTIVE_CONVERSATION_STATE &&
                     params.isGroup &&
                     params.tabId &&
-                    KommunicateUtils.setItemToLocalStorage(
+                    SnapUtils.setItemToLocalStorage(
                         'mckActiveConversationInfo',
                         {
                             groupId: params.tabId,
@@ -7613,7 +7613,7 @@ var userOverride = {
                     document
                         .getElementById('mck-char-warning')
                         .classList.add('n-vis');
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { class: ['mck-rating-box'] },
                     '',
                     'selected'
@@ -7639,7 +7639,7 @@ var userOverride = {
                     $mck_group_menu_options
                         .removeClass('vis')
                         .addClass('n-vis');
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         {
                             id: ['mck-waiting-queue'],
                         },
@@ -7649,7 +7649,7 @@ var userOverride = {
                     if (params.isGroup) {
                         $mck_msg_inner.addClass('mck-group-inner');
                         $li_mck_block_user.removeClass('vis').addClass('n-vis');
-                        KommunicateUI.activateTypingField();
+                        SnapUI.activateTypingField();
                     } else {
                         $li_mck_block_user.removeClass('n-vis').addClass('vis');
                     }
@@ -7817,7 +7817,7 @@ var userOverride = {
                         updateConversationHeaderParams
                     );
                     conversationAssigneeDetails.roleType ==
-                    KommunicateConstants.APPLOZIC_USER_ROLE_TYPE.BOT
+                    SnapConstants.APPLOZIC_USER_ROLE_TYPE.BOT
                         ? mckGroupLayout.checkBotDetail(conversationAssignee)
                         : (CURRENT_GROUP_DATA.CHAR_CHECK = false);
                 } else {
@@ -7914,7 +7914,7 @@ var userOverride = {
                                 null,
                                 allowReload
                             );
-                            Kommunicate.appendEmailToIframe(message);
+                            Snap.appendEmailToIframe(message);
                             showMoreDateTime = message.createdAtTime;
                             allowReload &&
                                 !scroll &&
@@ -8094,7 +8094,7 @@ var userOverride = {
                 var progressMeterClass = 'n-vis';
                 var attachmentBox = 'n-vis';
 
-                if (!Kommunicate.visibleMessage(msg)) return;
+                if (!Snap.visibleMessage(msg)) return;
 
                 if (
                     typeof msg.metadata === 'object' &&
@@ -8140,7 +8140,7 @@ var userOverride = {
                 }
                 if (
                     msg.source ==
-                    KommunicateConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
+                    SnapConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
                 ) {
                     emailMsgIndicator = 'vis';
                     $applozic('.email-conversation-indicator')
@@ -8155,9 +8155,9 @@ var userOverride = {
 
                 if (
                     msg.contentType ==
-                        KommunicateConstants.MESSAGE_CONTENT_TYPE.ATTACHMENT ||
+                        SnapConstants.MESSAGE_CONTENT_TYPE.ATTACHMENT ||
                     msg.contentType ==
-                        KommunicateConstants.MESSAGE_CONTENT_TYPE.LOCATION
+                        SnapConstants.MESSAGE_CONTENT_TYPE.LOCATION
                 ) {
                     messageClass = 'n-vis';
                     progressMeterClass = 'n-vis';
@@ -8165,13 +8165,13 @@ var userOverride = {
                 } else {
                     messageClass =
                         (msg.contentType ==
-                            KommunicateConstants.MESSAGE_CONTENT_TYPE
+                            SnapConstants.MESSAGE_CONTENT_TYPE
                                 .TEXT_HTML &&
                             msg.source ==
-                                KommunicateConstants.MESSAGE_SOURCE
+                                SnapConstants.MESSAGE_SOURCE
                                     .MAIL_INTERCEPTOR) ||
                         (msg.contentType ==
-                            KommunicateConstants.MESSAGE_CONTENT_TYPE.DEFAULT &&
+                            SnapConstants.MESSAGE_CONTENT_TYPE.DEFAULT &&
                             typeof msg.message != 'string')
                             ? 'n-vis'
                             : 'vis';
@@ -8290,20 +8290,20 @@ var userOverride = {
                 ) {
                     olStatus = 'vis';
                 }
-                KommunicateUI.handleAttachmentIconVisibility(enableAttachment, msg, !append);
-                var richText = Kommunicate.isRichTextMessage(msg.metadata) || msg.contentType == 3;
+                SnapUI.handleAttachmentIconVisibility(enableAttachment, msg, !append);
+                var richText = Snap.isRichTextMessage(msg.metadata) || msg.contentType == 3;
                 var kmRichTextMarkupVisibility=richText ? 'vis' : 'n-vis';
-                var kmRichTextMarkup = richText ? Kommunicate.getRichTextMessageTemplate(msg) : "";
-                
-                var containerType = Kommunicate.getContainerTypeForRichMessage(msg);
-                var attachment = Kommunicate.isAttachment(msg);
+                var kmRichTextMarkup = richText ? Snap.getRichTextMessageTemplate(msg) : "";
+
+                var containerType = Snap.getContainerTypeForRichMessage(msg);
+                var attachment = Snap.isAttachment(msg);
                 msg.fileMeta &&
                     msg.fileMeta.size &&
                     (msg.fileMeta.previewSize = alFileService.getFilePreviewSize(
                         msg.fileMeta.size
                     ));
                 var attachmentTemplate = attachment
-                    ? Kommunicate.messageTemplate.getAttachmentContanier(
+                    ? Snap.messageTemplate.getAttachmentContanier(
                           msg,
                           mckMessageLayout.getFilePath(msg),
                           alFileService.getFileAttachment(msg),
@@ -8312,13 +8312,13 @@ var userOverride = {
                     : '';
                 if (
                     msg.contentType ==
-                    KommunicateConstants.MESSAGE_CONTENT_TYPE.ATTACHMENT
+                    SnapConstants.MESSAGE_CONTENT_TYPE.ATTACHMENT
                 ) {
                     var progressMeterClass = attachment ? 'n-vis' : 'vis';
                     attachmentBox = attachment ? 'vis' : 'n-vis';
                     var progressMeter =
                         attachment && !msg.fileMeta.url && !msg.fileMeta.blobKey
-                            ? Kommunicate.messageTemplate.getProgressMeterContanier(
+                            ? Snap.messageTemplate.getProgressMeterContanier(
                                   msg.key
                               )
                             : '';
@@ -8336,13 +8336,13 @@ var userOverride = {
                     HIDE_POST_CTA &&
                     richText &&
                     (
-                        kmRichTextMarkup.indexOf('km-cta-multi-button-container') != -1 || 
-                        kmRichTextMarkup.indexOf('km-faq-list--footer_button-container') != -1 
+                        kmRichTextMarkup.indexOf('km-cta-multi-button-container') != -1 ||
+                        kmRichTextMarkup.indexOf('km-faq-list--footer_button-container') != -1
                     ) &&
-                    (   
-                        kmRichTextMarkup.indexOf('<button') != -1 || 
-                        kmRichTextMarkup.indexOf('km-list-item-handler') != -1 
-                    ) 
+                    (
+                        kmRichTextMarkup.indexOf('<button') != -1 ||
+                        kmRichTextMarkup.indexOf('km-list-item-handler') != -1
+                    )
                     &&
                     kmRichTextMarkup.indexOf('km-link-button') == -1
                 ) {
@@ -8359,7 +8359,7 @@ var userOverride = {
                 //     // if it is not a rich msg and neither contains any text then dont precess it because in UI it is shown as empty text box which does not look good.
                 //     return ;
                 // }
-                
+
                 var msgList = [{
                     msgReply: replyMsg ? replyMsg.message + "\n" : '',
                     msgReplyTo: replyMsg ? replyTo + "\n" : '',
@@ -8376,7 +8376,7 @@ var userOverride = {
                     msgDeleteExpr: MCK_LABELS['delete'],
                     msgReplyExpr: MCK_LABELS['reply'],
                     msgForwardExpr: MCK_LABELS['forward'],
-                    msgForwardVisibleExpr: (window.applozic.PRODUCT_ID == 'kommunicate') ? 'n-vis' : 'vis',
+                    msgForwardVisibleExpr: (window.applozic.PRODUCT_ID == 'snap') ? 'n-vis' : 'vis',
                     msgSourceExpr: msg.source,
                     statusIconExpr: statusIcon,
                     contactExpr: contactExpr,
@@ -8416,14 +8416,14 @@ var userOverride = {
                     botMsgDelayExpr: botMessageDelayClass
                 }];
 
-                append ? 
-                    $applozic.tmpl("messageTemplate", msgList).appendTo("#mck-message-cell .mck-message-inner") : 
+                append ?
+                    $applozic.tmpl("messageTemplate", msgList).appendTo("#mck-message-cell .mck-message-inner") :
                     $applozic.tmpl("messageTemplate", msgList).prependTo("#mck-message-cell .mck-message-inner");
 
-                if (msg.contentType == KommunicateConstants.MESSAGE_CONTENT_TYPE.NOTIFY_MESSAGE) {
+                if (msg.contentType == SnapConstants.MESSAGE_CONTENT_TYPE.NOTIFY_MESSAGE) {
                     if (msg.metadata && msg.metadata.feedback) {
                         var userFeedback = JSON.parse(msg.metadata.feedback);
-                        var ratingSmileSVG = kommunicateCommons.getRatingSmilies(
+                        var ratingSmileSVG = snapCommons.getRatingSmilies(
                             userFeedback.rating
                         );
                         var ratingComment = '';
@@ -8738,7 +8738,7 @@ var userOverride = {
                 }
 
                 if (richText) {
-                    Kommunicate.richMsgEventHandler.initializeSlick(
+                    Snap.richMsgEventHandler.initializeSlick(
                         $applozic(
                             "div[data-msgkey='" + msg.key + "'] .km-div-slider"
                         )
@@ -8900,12 +8900,12 @@ var userOverride = {
                     if (msg.fileMeta.contentType.indexOf('image') !== -1) {
                         if (msg.fileMeta.contentType.indexOf('svg') !== -1) {
                             return (
-                                '<a href="#" target="_self"  role="link" class="file-preview-link fancybox-media fancybox-kommunicate" data-type="' +
+                                '<a href="#" target="_self"  role="link" class="file-preview-link fancybox-media fancybox-snap" data-type="' +
                                 msg.fileMeta.contentType +
                                 '" data-url="' +
                                 alFileService.getFileurl(msg) +
                                 '" data-name="' +
-                                kommunicateCommons.formatHtmlTag(
+                                snapCommons.formatHtmlTag(
                                     msg.fileMeta.name
                                 ) +
                                 '"><img src="' +
@@ -8916,12 +8916,12 @@ var userOverride = {
                             );
                         } else if (msg.contentType === 5) {
                             return (
-                                '<a href="#" target="_self"  role="link" class="file-preview-link fancybox-media fancybox-kommunicate" data-type="' +
+                                '<a href="#" target="_self"  role="link" class="file-preview-link fancybox-media fancybox-snap" data-type="' +
                                 msg.fileMeta.contentType +
                                 '" data-url="' +
                                 msg.fileMeta.blobKey +
                                 '" data-name="' +
-                                kommunicateCommons.formatHtmlTag(
+                                snapCommons.formatHtmlTag(
                                     msg.fileMeta.name
                                 ) +
                                 '"><img src="' +
@@ -8942,12 +8942,12 @@ var userOverride = {
                                         }
                                     );
                                     return (
-                                        '<a href="#" target="_self"  role="link" class="file-preview-link fancybox-media fancybox-kommunicate" data-type="' +
+                                        '<a href="#" target="_self"  role="link" class="file-preview-link fancybox-media fancybox-snap" data-type="' +
                                         msg.fileMeta.contentType +
                                         '" data-url="" data-blobKey="' +
                                         msg.fileMeta.blobKey +
                                         '" data-name="' +
-                                        kommunicateCommons.formatHtmlTag(
+                                        snapCommons.formatHtmlTag(
                                             msg.fileMeta.name
                                         ) +
                                         '"><img src="' +
@@ -8956,12 +8956,12 @@ var userOverride = {
                                     );
                                 } else {
                                     return (
-                                        '<a href="#" target="_self"  role="link" class="file-preview-link fancybox-media fancybox-kommunicate" data-type="' +
+                                        '<a href="#" target="_self"  role="link" class="file-preview-link fancybox-media fancybox-snap" data-type="' +
                                         msg.fileMeta.contentType +
                                         '" data-url="' +
                                         alFileService.getFileurl(msg) +
                                         '" data-name="' +
-                                        kommunicateCommons.formatHtmlTag(
+                                        snapCommons.formatHtmlTag(
                                             msg.fileMeta.name
                                         ) +
                                         '"><img src="' +
@@ -8974,12 +8974,12 @@ var userOverride = {
                                 'thumbnail_' + msg.fileMeta.name
                             ) {
                                 return (
-                                    '<a href="#" target="_self"  role="link" class="file-preview-link fancybox-media fancybox-kommunicate" data-type="' +
+                                    '<a href="#" target="_self"  role="link" class="file-preview-link fancybox-media fancybox-snap" data-type="' +
                                     msg.fileMeta.contentType +
                                     '" data-url="' +
                                     alFileService.getFileurl(msg) +
                                     '" data-name="' +
-                                    kommunicateCommons.formatHtmlTag(
+                                    snapCommons.formatHtmlTag(
                                         msg.fileMeta.name
                                     ) +
                                     '"><img src="' +
@@ -8990,12 +8990,12 @@ var userOverride = {
                                 );
                             } else {
                                 return (
-                                    '<a href="#" target="_self"  role="link" class="file-preview-link fancybox-media fancybox-kommunicate" data-type="' +
+                                    '<a href="#" target="_self"  role="link" class="file-preview-link fancybox-media fancybox-snap" data-type="' +
                                     msg.fileMeta.contentType +
                                     '" data-url="' +
                                     alFileService.getFileurl(msg) +
                                     '" data-name="' +
-                                    kommunicateCommons.formatHtmlTag(
+                                    snapCommons.formatHtmlTag(
                                         msg.fileMeta.name
                                     ) +
                                     '"><img src="' +
@@ -9016,7 +9016,7 @@ var userOverride = {
                             alFileService.getFileurl(msg) +
                             '" type="video/ogg"></video>'
                         );
-                        //    return '<a href="#" role="link" class="file-preview-link fancybox-media fancybox-kommunicate" data-type="' + msg.fileMeta.contentType + '" data-url="' + MCK_FILE_URL + FILE_PREVIEW_URL + msg.fileMeta.blobKey + '" data-name="' + msg.fileMeta.name + '"><div class="mck-video-box n-vis"><video controls preload><source src="' + MCK_FILE_URL + FILE_PREVIEW_URL + msg.fileMeta.blobKey + '" type="' + msg.fileMeta.contentType + '"></video></div><span class="file-detail"><span class="mck-file-name"><span class="mck-icon-attachment"></span>&nbsp;' + msg.fileMeta.name + '</span>&nbsp;<span class="file-size">' + alFileService.getFilePreviewSize(msg.fileMeta.size) + '</span></span></a>';
+                        //    return '<a href="#" role="link" class="file-preview-link fancybox-media fancybox-snap" data-type="' + msg.fileMeta.contentType + '" data-url="' + MCK_FILE_URL + FILE_PREVIEW_URL + msg.fileMeta.blobKey + '" data-name="' + msg.fileMeta.name + '"><div class="mck-video-box n-vis"><video controls preload><source src="' + MCK_FILE_URL + FILE_PREVIEW_URL + msg.fileMeta.blobKey + '" type="' + msg.fileMeta.contentType + '"></video></div><span class="file-detail"><span class="mck-file-name"><span class="mck-icon-attachment"></span>&nbsp;' + msg.fileMeta.name + '</span>&nbsp;<span class="file-size">' + alFileService.getFilePreviewSize(msg.fileMeta.size) + '</span></span></a>';
                     } else if (
                         msg.fileMeta.contentType.indexOf('audio') !== -1
                     ) {
@@ -9151,7 +9151,7 @@ var userOverride = {
 
             _this.getImageUrlForGroupType = function (contact, displayName) {
                 var profileDisplayName = displayName
-                    ? kommunicateCommons.formatHtmlTag(displayName) +
+                    ? snapCommons.formatHtmlTag(displayName) +
                       ' profile image'
                     : 'Profile image';
                 return contact.imageUrl
@@ -9170,7 +9170,7 @@ var userOverride = {
             ) {
                 var imgsrctag = '';
                 var profileDisplayName = displayName
-                    ? kommunicateCommons.formatHtmlTag(displayName) +
+                    ? snapCommons.formatHtmlTag(displayName) +
                       ' profile image'
                     : 'Profile image';
                 if (!contact.isGroup) {
@@ -9263,7 +9263,7 @@ var userOverride = {
                             //Todo: replace this with role once its build at Applozic side.
                             imgsrctag =
                                 '<img src="' +
-                                'https://cdn.kommunicate.io/kommunicate/bot_default_image.png' +
+                                'https://cdn.snap.io/snap/bot_default_image.png' +
                                 '" alt="' +
                                 profileDisplayName +
                                 '"/>';
@@ -9597,7 +9597,7 @@ var userOverride = {
                 } else {
                     _this.addContact(contact, $listId, message);
                 }
-                KommunicateUI.handleConversationBanner();
+                SnapUI.handleConversationBanner();
             };
             _this.addContactsToSearchList = function () {
                 var contactsArray = [],
@@ -10030,7 +10030,7 @@ var userOverride = {
                     ).html(
                         typeof message.createdAtTime === 'undefined'
                             ? ''
-                            : kommunicateCommons.getTimeOrDate(
+                            : snapCommons.getTimeOrDate(
                                   message ? message.createdAtTime : '',
                                   true
                               )
@@ -10145,7 +10145,7 @@ var userOverride = {
                     contact &&
                     contact.metadata &&
                     contact.metadata.CONVERSATION_STATUS ==
-                        Kommunicate.conversationHelper.status.CLOSED
+                        Snap.conversationHelper.status.CLOSED
                         ? 'mck-conversation-resolved'
                         : 'mck-conversation-open';
 
@@ -10221,7 +10221,7 @@ var userOverride = {
                             ? 'vis'
                             : 'n-vis',
                         msgCreatedDateExpr: message
-                            ? kommunicateCommons.getTimeOrDate(
+                            ? snapCommons.getTimeOrDate(
                                   message.createdAtTime,
                                   true
                               )
@@ -10245,7 +10245,7 @@ var userOverride = {
                     $applozic
                         .tmpl('contactTemplate', contactList)
                         .appendTo('#' + $listId);
-                    KommunicateUI.checkSingleThreadedConversationSettings(true);
+                    SnapUI.checkSingleThreadedConversationSettings(true);
                 }
                 var $textMessage = $applozic(
                     '#li-' + contHtmlExpr + ' .msgTextExpr'
@@ -10257,7 +10257,7 @@ var userOverride = {
                 if (message && message.metadata && message.metadata.feedback) {
                     emoji_template = MCK_LABELS['you'] + ' ' + emoji_template;
                 }
-                kommunicateCommons.isObject(emoji_template)
+                snapCommons.isObject(emoji_template)
                     ? $textMessage.append(emoji_template)
                     : $textMessage.html(emoji_template);
                 if (typeof emoji_template == 'undefined') {
@@ -10479,7 +10479,7 @@ var userOverride = {
                 );
             };
             _this.getStatusIconName = function (msg) {
-                if (!Kommunicate.internetStatus && msg.contentType === 1) {
+                if (!Snap.internetStatus && msg.contentType === 1) {
                     return 'mck-failed-text';
                 }
                 if (
@@ -10629,16 +10629,16 @@ var userOverride = {
                     message &&
                     message.message &&
                     message.contentType !==
-                        KommunicateConstants.MESSAGE_CONTENT_TYPE.LOCATION &&
+                        SnapConstants.MESSAGE_CONTENT_TYPE.LOCATION &&
                     message.contentType !==
-                        KommunicateConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML &&
-                    !Kommunicate.isRichTextMessage(message.metadata)
+                        SnapConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML &&
+                    !Snap.isRichTextMessage(message.metadata)
                 ) {
                     if (
                         typeof emoji_template === 'string' &&
                         emoji_template.indexOf('emoji-inner') === -1
                     ) {
-                        emoji_template = kommunicateCommons.formatHtmlTag(
+                        emoji_template = snapCommons.formatHtmlTag(
                             emoji_template
                         );
                     }
@@ -10664,16 +10664,16 @@ var userOverride = {
                         }
                         if (
                             message.contentType ===
-                            KommunicateConstants.MESSAGE_CONTENT_TYPE.LOCATION
+                            SnapConstants.MESSAGE_CONTENT_TYPE.LOCATION
                         ) {
                             emoji_template =
                                 '<span class="mck-icon--location"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="rgba(38,50,56,.52)"/><path d="M0 0h24v24H0z" fill="none"/></svg></span><span>Location</span>';
                         } else if (
                             message.contentType ===
-                                KommunicateConstants.MESSAGE_CONTENT_TYPE
+                                SnapConstants.MESSAGE_CONTENT_TYPE
                                     .TEXT_HTML &&
                             message.source ===
-                                KommunicateConstants.MESSAGE_SOURCE
+                                SnapConstants.MESSAGE_SOURCE
                                     .MAIL_INTERCEPTOR
                         ) {
                             var s = message.message;
@@ -10722,7 +10722,7 @@ var userOverride = {
                                     emoji_template.indexOf('emoji-inner') ===
                                         -1 &&
                                     message.contentType ===
-                                        KommunicateConstants
+                                        SnapConstants
                                             .MESSAGE_CONTENT_TYPE.DEFAULT
                                 ) {
                                     var x = d.createElement('p');
@@ -10746,17 +10746,17 @@ var userOverride = {
                     }
 
                     if (
-                        Kommunicate.isRichTextMessage(message.metadata) ||
+                        Snap.isRichTextMessage(message.metadata) ||
                         message.contentType ==
-                            KommunicateConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML
+                            SnapConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML
                     ) {
                         var messageContent = message.message;
                         message.contentType ==
-                            KommunicateConstants.MESSAGE_CONTENT_TYPE
+                            SnapConstants.MESSAGE_CONTENT_TYPE
                                 .TEXT_HTML && (messageContent = '');
                         emoji_template =
                             '<span class="mck-icon--rich-message">' +
-                            KommunicateConstants.RICH_MESSAGE_ICON +
+                            SnapConstants.RICH_MESSAGE_ICON +
                             '</span><span>' +
                             (messageContent ||
                                 MCK_LABELS['rich.message'][
@@ -10767,9 +10767,9 @@ var userOverride = {
                     if (
                         contact.isGroup &&
                         contact.type !==
-                            KommunicateConstants.GROUP_TYPE.SELLER &&
+                            SnapConstants.GROUP_TYPE.SELLER &&
                         contact.type !==
-                            KommunicateConstants.GROUP_TYPE.GROUP_OF_TWO
+                            SnapConstants.GROUP_TYPE.GROUP_OF_TWO
                     ) {
                         var msgFrom =
                             message.to.split(',')[0] === MCK_USER_ID
@@ -10780,10 +10780,10 @@ var userOverride = {
                                   );
                         if (
                             message.contentType !==
-                                KommunicateConstants.MESSAGE_CONTENT_TYPE
+                                SnapConstants.MESSAGE_CONTENT_TYPE
                                     .NOTIFY_MESSAGE &&
                             contact.type !==
-                                KommunicateConstants.GROUP_TYPE.SUPPORT
+                                SnapConstants.GROUP_TYPE.SUPPORT
                         ) {
                             emoji_template = msgFrom + ': ' + emoji_template;
                         }
@@ -10792,9 +10792,9 @@ var userOverride = {
                             message &&
                             message.message &&
                             message.contentType ===
-                                KommunicateConstants.MESSAGE_CONTENT_TYPE
+                                SnapConstants.MESSAGE_CONTENT_TYPE
                                     .DEFAULT &&
-                            !Kommunicate.isRichTextMessage(message.metadata)
+                            !Snap.isRichTextMessage(message.metadata)
                         ) {
                             var x = d.createElement('p');
                             x.appendChild(d.createTextNode(emoji_template));
@@ -10947,8 +10947,8 @@ var userOverride = {
                         MCK_TOTAL_UNREAD_COUNT
                     );
                 }
-                if (kommunicateCommons.isWidgetOpen()) {
-                    kommunicateCommons.modifyClassList(
+                if (snapCommons.isWidgetOpen()) {
+                    snapCommons.modifyClassList(
                         { id: ['applozic-badge-count'] },
                         'n-vis',
                         ''
@@ -11016,7 +11016,7 @@ var userOverride = {
                     }
                 }
                 return (
-                    displayName && kommunicateCommons.formatHtmlTag(displayName)
+                    displayName && snapCommons.formatHtmlTag(displayName)
                 );
             };
             _this.populateMessage = function (
@@ -11407,7 +11407,7 @@ var userOverride = {
                     contact.users[message.to] &&
                     contact.users[message.to].userId !== 'bot' &&
                     contact.users[message.to].role ===
-                        KommunicateConstants.GROUP_ROLE.MODERATOR_OR_BOT
+                        SnapConstants.GROUP_ROLE.MODERATOR_OR_BOT
                 );
             };
 
@@ -11599,7 +11599,7 @@ var userOverride = {
                                 'data-contact'
                             ) &&
                         timeOffset <
-                            KommunicateConstants.MESSAGE_CLUBBING.TIME_FRAME
+                            SnapConstants.MESSAGE_CLUBBING.TIME_FRAME
                     ) {
                         allMessages[_len - 2].classList.add(
                             'km-clubbing-first'
@@ -11622,7 +11622,7 @@ var userOverride = {
                                         'data-contact'
                                     ) &&
                                 timeOffset <
-                                    KommunicateConstants.MESSAGE_CLUBBING
+                                    SnapConstants.MESSAGE_CLUBBING
                                         .TIME_FRAME
                             ) {
                                 allMessages[key].classList.add(
@@ -11768,7 +11768,7 @@ var userOverride = {
                     startIndex: 0,
                     limit: 10,
                 };
-                Kommunicate.client.getGroupDetailByType(
+                Snap.client.getGroupDetailByType(
                     options,
                     function (err, result) {
                         if (err) {
@@ -12452,7 +12452,7 @@ var userOverride = {
             };
 
             _this.createGroupDefaultSettings = function () {
-                var defaultSettings = KommunicateUtils.getDataFromKmSession(
+                var defaultSettings = SnapUtils.getDataFromKmSession(
                     'settings'
                 );
                 var conversationDetail = {
@@ -12474,14 +12474,14 @@ var userOverride = {
                     skipEncryption: true,
                     global: false,
                     success: function (data) {
-                        /* 
-                            Auto human handoff check is removed from the below code if something breaks regarding the same, 
+                        /*
+                            Auto human handoff check is removed from the below code if something breaks regarding the same,
                             please add this condition to the below check like this :  && !(data.data[0].autoHumanHandoff)
                         */
                         CURRENT_GROUP_DATA.CHAR_CHECK =
                             data.data[0] &&
                             data.data[0].aiPlatform ==
-                                KommunicateConstants.BOT_PLATFORM.DIALOGFLOW;
+                                SnapConstants.BOT_PLATFORM.DIALOGFLOW;
                         !CURRENT_GROUP_DATA.CHAR_CHECK &&
                             _this.removeWarningsFromTextBox();
                         CURRENT_GROUP_DATA.CHAR_CHECK &&
@@ -12494,7 +12494,7 @@ var userOverride = {
                 });
             };
             _this.removeWarningsFromTextBox = function () {
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { id: ['mck-char-warning'] },
                     'n-vis',
                     ''
@@ -13001,7 +13001,7 @@ var userOverride = {
                         if (currTabId === groupId.toString() && isGroupTab) {
                             var groupName =
                                 group.displayName &&
-                                kommunicateCommons.formatHtmlTag(
+                                snapCommons.formatHtmlTag(
                                     group.displayName
                                 );
                             $mck_tab_title.html(groupName);
@@ -13611,7 +13611,7 @@ var userOverride = {
             _this.init = function () {
                 $applozic.template('fileboxTemplate', mck_filebox_tmpl);
                 //ataching events for rich msh templates
-                Kommunicate.attachEvents($applozic);
+                Snap.attachEvents($applozic);
                 $mck_file_upload.on('click', function (e) {
                     e.preventDefault();
                     $mck_file_input.trigger('click');
@@ -13630,8 +13630,8 @@ var userOverride = {
                 $mck_file_input.on('change', function () {
                     var file = $applozic(this)[0].files[0];
                     var tabId = $mck_msg_inner.data('mck-id');
-                    if (file && KommunicateUI.isAttachmentV2(file.type)) {
-                        Kommunicate.attachmentService.getFileMeta(
+                    if (file && SnapUI.isAttachmentV2(file.type)) {
+                        Snap.attachmentService.getFileMeta(
                             file,
                             tabId,
                             function (file_meta, messagePxy, file) {
@@ -13644,7 +13644,7 @@ var userOverride = {
                                         var params = {};
                                         params.file = file;
                                         params.name = file.name;
-                                        Kommunicate.attachmentService.uploadAttachment(
+                                        Snap.attachmentService.uploadAttachment(
                                             params,
                                             messagePxy,
                                             MCK_CUSTOM_UPLOAD_SETTINGS
@@ -13657,7 +13657,7 @@ var userOverride = {
                         var params = {};
                         params.file = file;
                         params.name = file.name;
-                        Kommunicate.attachmentService.uploadAttachment(
+                        Snap.attachmentService.uploadAttachment(
                             params,
                             null,
                             MCK_CUSTOM_UPLOAD_SETTINGS
@@ -13787,14 +13787,14 @@ var userOverride = {
                     );
                     $file_progressbar.css('width', '0%');
                     messagePxy &&
-                        Kommunicate.attachmentEventHandler.progressMeter(
+                        Snap.attachmentEventHandler.progressMeter(
                             0,
                             messagePxy.key
                         );
                     $file_progress.removeClass('n-vis').addClass('vis');
                     $file_remove.attr('disabled', true);
                     $mck_file_upload.attr('disabled', true);
-                    KommunicateUI.hideFileBox(
+                    SnapUI.hideFileBox(
                         file,
                         $file_box,
                         $mck_file_upload
@@ -13814,7 +13814,7 @@ var userOverride = {
                             );
                             $file_progressbar.css('width', progress + '%');
                             messagePxy &&
-                                Kommunicate.attachmentEventHandler.progressMeter(
+                                Snap.attachmentEventHandler.progressMeter(
                                     progress,
                                     messagePxy.key
                                 );
@@ -13831,10 +13831,10 @@ var userOverride = {
                                 var optns = {
                                     tabId: messagePxy.groupId,
                                 };
-                                stopUpload = KommunicateUI.getAttachmentStopUploadStatus(
+                                stopUpload = SnapUI.getAttachmentStopUploadStatus(
                                     messagePxy.key
                                 );
-                                KommunicateUI.updateAttachmentTemplate(
+                                SnapUI.updateAttachmentTemplate(
                                     file_meta,
                                     messagePxy.key
                                 );
@@ -13843,7 +13843,7 @@ var userOverride = {
                                         messagePxy,
                                         optns
                                     );
-                                KommunicateUI.updateImageAttachmentPreview(
+                                SnapUI.updateImageAttachmentPreview(
                                     file_meta,
                                     messagePxy.key
                                 );
@@ -13970,14 +13970,14 @@ var userOverride = {
                     );
                     $file_progressbar.css('width', '0%');
                     messagePxy &&
-                        Kommunicate.attachmentEventHandler.progressMeter(
+                        Snap.attachmentEventHandler.progressMeter(
                             0,
                             messagePxy.key
                         );
                     $file_progress.removeClass('n-vis').addClass('vis');
                     $file_remove.attr('disabled', true);
                     $mck_file_upload.attr('disabled', true);
-                    KommunicateUI.hideFileBox(
+                    SnapUI.hideFileBox(
                         file,
                         $file_box,
                         $mck_file_upload
@@ -14003,7 +14003,7 @@ var userOverride = {
                                     progress + '%'
                                 );
                             messagePxy &&
-                                Kommunicate.attachmentEventHandler.progressMeter(
+                                Snap.attachmentEventHandler.progressMeter(
                                     progress,
                                     messagePxy.key
                                 );
@@ -14025,10 +14025,10 @@ var userOverride = {
                                 var optns = {
                                     tabId: messagePxy.groupId,
                                 };
-                                stopUpload = KommunicateUI.getAttachmentStopUploadStatus(
+                                stopUpload = SnapUI.getAttachmentStopUploadStatus(
                                     messagePxy.key
                                 );
-                                KommunicateUI.updateAttachmentTemplate(
+                                SnapUI.updateAttachmentTemplate(
                                     file_meta,
                                     messagePxy.key
                                 );
@@ -14037,7 +14037,7 @@ var userOverride = {
                                         messagePxy,
                                         optns
                                     );
-                                KommunicateUI.updateImageAttachmentPreview(
+                                SnapUI.updateImageAttachmentPreview(
                                     file_meta,
                                     messagePxy.key
                                 );
@@ -14163,14 +14163,14 @@ var userOverride = {
                     );
                     $file_progressbar.css('width', '0%');
                     messagePxy &&
-                        Kommunicate.attachmentEventHandler.progressMeter(
+                        Snap.attachmentEventHandler.progressMeter(
                             0,
                             messagePxy.key
                         );
                     $file_progress.removeClass('n-vis').addClass('vis');
                     $file_remove.attr('disabled', true);
                     $mck_file_upload.attr('disabled', true);
-                    KommunicateUI.hideFileBox(
+                    SnapUI.hideFileBox(
                         file,
                         $file_box,
                         $mck_file_upload
@@ -14195,7 +14195,7 @@ var userOverride = {
                                 );
                             $file_progressbar.css('width', progress + '%');
                             messagePxy &&
-                                Kommunicate.attachmentEventHandler.progressMeter(
+                                Snap.attachmentEventHandler.progressMeter(
                                     progress,
                                     messagePxy.key
                                 );
@@ -14212,10 +14212,10 @@ var userOverride = {
                                 var optns = {
                                     tabId: messagePxy.groupId,
                                 };
-                                stopUpload = KommunicateUI.getAttachmentStopUploadStatus(
+                                stopUpload = SnapUI.getAttachmentStopUploadStatus(
                                     messagePxy.key
                                 );
-                                KommunicateUI.updateAttachmentTemplate(
+                                SnapUI.updateAttachmentTemplate(
                                     file_meta,
                                     messagePxy.key
                                 );
@@ -14224,7 +14224,7 @@ var userOverride = {
                                         messagePxy,
                                         optns
                                     );
-                                KommunicateUI.updateImageAttachmentPreview(
+                                SnapUI.updateImageAttachmentPreview(
                                     file_meta,
                                     messagePxy.key
                                 );
@@ -14460,7 +14460,7 @@ var userOverride = {
                 var notificationsound = mckNotificationTone;
                 mckInit.clearMsgTriggerAndChatPopuTimeouts();
                 _this.showNewMessageNotification(message, contact, displayName);
-                KOMMUNICATE_VERSION === 'v2' &&
+                SNAP_VERSION === 'v2' &&
                     !OPEN_CONVERSATION_ON_NEW_MESSAGE &&
                     _this.handleIframeNotification();
                 if (IS_MCK_NOTIFICATION && !IS_MCK_TAB_FOCUSED) {
@@ -14510,8 +14510,8 @@ var userOverride = {
             };
 
             _this.handleIframeNotification = function () {
-                WIDGET_POSITION === KommunicateConstants.POSITION.LEFT &&
-                    kommunicateCommons.modifyClassList(
+                WIDGET_POSITION === SnapConstants.POSITION.LEFT &&
+                    snapCommons.modifyClassList(
                         {
                             class: [
                                 'mck-msg-preview-visual-indicator-container',
@@ -14521,7 +14521,7 @@ var userOverride = {
                         'align-left'
                     );
                 var kmIframe = parent.document.getElementById(
-                    'kommunicate-widget-iframe'
+                    'snap-widget-iframe'
                 );
                 var notificationMessageWidth = document.getElementById(
                     'mck-msg-preview-visual-indicator'
@@ -14536,7 +14536,7 @@ var userOverride = {
 
             _this.hideMessagePreview = function () {
                 var kmIframe = parent.document.getElementById(
-                    'kommunicate-widget-iframe'
+                    'snap-widget-iframe'
                 );
                 $mck_msg_preview_visual_indicator
                     .removeClass('vis')
@@ -14646,7 +14646,7 @@ var userOverride = {
                             finalMessage
                         );
                     } else if (message.contentType === 3) {
-                        var formattedMessage = kommunicateCommons.removeHtmlTag(
+                        var formattedMessage = snapCommons.removeHtmlTag(
                             message.message
                         );
                         var notificationContent = document.createElement('p');
@@ -14739,28 +14739,28 @@ var userOverride = {
                 // setTimeout(function () {
                 //     $mck_msg_preview.fadeOut(1000);
                 // }, 10000);
-                Kommunicate.KmEventHandler.notificationEvent(message);
+                Snap.KmEventHandler.notificationEvent(message);
                 $applozic(d).on(
                     'click',
                     '#mck-msg-preview-visual-indicator .mck-close-btn',
                     function (e) {
-                        var kommunicateIframe = parent.document.getElementById(
-                            'kommunicate-widget-iframe'
+                        var snapIframe = parent.document.getElementById(
+                            'snap-widget-iframe'
                         );
-                        kommunicateIframe.classList.remove(
+                        snapIframe.classList.remove(
                             'km-iframe-dimension-no-popup'
                         );
-                        kommunicateIframe.classList.remove(
+                        snapIframe.classList.remove(
                             'km-iframe-notification'
                         );
-                        kommunicateIframe.classList.remove(
+                        snapIframe.classList.remove(
                             'km-iframe-dimension-with-popup'
                         );
                         document.getElementById(
                             'km-popup-close-button'
                         ).style.display = 'none';
                         _this.hideMessagePreview();
-                        kommunicateCommons.modifyClassList(
+                        snapCommons.modifyClassList(
                             { id: ['applozic-badge-count'] },
                             '',
                             'n-vis'
@@ -14772,7 +14772,7 @@ var userOverride = {
                     ' #mck-msg-preview-visual-indicator .mck-msg-preview-visual-indicator-text',
                     function () {
                         _this.hideMessagePreview();
-                        KommunicateUI.hideFaq();
+                        SnapUI.hideFaq();
                     }
                 );
                 !IS_MCK_TAB_FOCUSED &&
@@ -15445,19 +15445,19 @@ var userOverride = {
                                 (MCK_GROUP_MAP[
                                     resp.message.groupId
                                 ].metadata.CONVERSATION_STATUS =
-                                    Kommunicate.conversationHelper.status[
+                                    Snap.conversationHelper.status[
                                         conversationStatus.toUpperCase()
                                     ]);
                             CURRENT_GROUP_DATA.tabId = resp.message.groupId;
                             CURRENT_GROUP_DATA.conversationStatus =
-                                Kommunicate.conversationHelper.status[
+                                Snap.conversationHelper.status[
                                     conversationStatus.toUpperCase()
                                 ];
                             if (
                                 resp.message.metadata.KM_STATUS ===
-                                KommunicateConstants.CONVERSATION_CLOSED_STATUS
+                                SnapConstants.CONVERSATION_CLOSED_STATUS
                             ) {
-                                kommunicateCommons.modifyClassList(
+                                snapCommons.modifyClassList(
                                     {
                                         id: [groupId],
                                     },
@@ -15466,9 +15466,9 @@ var userOverride = {
                                 );
                             } else if (
                                 resp.message.metadata.KM_STATUS ===
-                                KommunicateConstants.CONVERSATION_OPEN_STATUS
+                                SnapConstants.CONVERSATION_OPEN_STATUS
                             ) {
-                                kommunicateCommons.modifyClassList(
+                                snapCommons.modifyClassList(
                                     {
                                         id: [groupId],
                                     },
@@ -15476,13 +15476,13 @@ var userOverride = {
                                     'mck-conversation-resolved'
                                 );
                             }
-                            KommunicateUI.handleConversationBanner();
+                            SnapUI.handleConversationBanner();
                             resp &&
                                 resp.message &&
-                                KommunicateUI.handleWaitingQueueMessage();
+                                SnapUI.handleWaitingQueueMessage();
                         }
                         if (
-                            kommunicateCommons.isObject(resp.message) &&
+                            snapCommons.isObject(resp.message) &&
                             resp.message.groupId &&
                             resp.message.groupId == tabId &&
                             resp.message.metadata
@@ -15490,9 +15490,9 @@ var userOverride = {
                             CURRENT_GROUP_DATA.tabId = resp.message.groupId;
                             if (
                                 resp.message.metadata.KM_STATUS ===
-                                    KommunicateConstants.CONVERSATION_CLOSED_STATUS ||
+                                    SnapConstants.CONVERSATION_CLOSED_STATUS ||
                                 resp.message.metadata.KM_STATUS ===
-                                    KommunicateConstants.CONVERSATION_RESOLVED_STATUS
+                                    SnapConstants.CONVERSATION_RESOLVED_STATUS
                             ) {
                                 if (
                                     MCK_BOT_MESSAGE_DELAY !== 0 &&
@@ -15502,21 +15502,21 @@ var userOverride = {
                                     )
                                 ) {
                                     setTimeout(function () {
-                                        KommunicateUI.showClosedConversationBanner(
+                                        SnapUI.showClosedConversationBanner(
                                             true
                                         );
                                     }, MCK_BOT_MESSAGE_DELAY);
                                 } else {
-                                    KommunicateUI.isConvJustResolved = !!!KommunicateUI.isConvJustResolved;
-                                    KommunicateUI.showClosedConversationBanner(
+                                    SnapUI.isConvJustResolved = !!!SnapUI.isConvJustResolved;
+                                    SnapUI.showClosedConversationBanner(
                                         true
                                     );
                                 }
                             } else if (
                                 resp.message.metadata.KM_STATUS ===
-                                KommunicateConstants.CONVERSATION_OPEN_STATUS
+                                SnapConstants.CONVERSATION_OPEN_STATUS
                             ) {
-                                KommunicateUI.showClosedConversationBanner(
+                                SnapUI.showClosedConversationBanner(
                                     false
                                 );
                             }
@@ -15550,7 +15550,7 @@ var userOverride = {
                                         );
                                         if (
                                             updatedAssignee.roleType !=
-                                            KommunicateConstants
+                                            SnapConstants
                                                 .APPLOZIC_USER_ROLE_TYPE.BOT
                                         ) {
                                             CURRENT_GROUP_DATA.CHAR_CHECK = false;
@@ -15576,11 +15576,11 @@ var userOverride = {
                                 JSON.stringify(message)
                             );
                             messageCopy.userOverride = userOverride;
-                            Kommunicate.KmEventHandler.onMessageReceived(
+                            Snap.KmEventHandler.onMessageReceived(
                                 messageCopy
                             );
                         } else if (messageType === 'APPLOZIC_02') {
-                            Kommunicate.KmEventHandler.onMessageSent(message);
+                            Snap.KmEventHandler.onMessageSent(message);
                         }
                         if (message.conversationId) {
                             var conversationPxy =

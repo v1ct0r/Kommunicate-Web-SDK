@@ -3,8 +3,8 @@ const configEnv = {
         port: '3030',
         urls: {
             applozicBaseUrl: 'https://apps-test.applozic.com',
-            kommunicateBaseUrl: 'https://api-test.kommunicate.io',
-            botPlatformApi: 'https://bots-test.kommunicate.io',
+            snapBaseUrl: 'https://api-test.snap.io',
+            botPlatformApi: 'https://bots-test.snap.io',
             hostUrl: 'http://localhost:3030',
         },
         pluginProperties: {
@@ -17,8 +17,8 @@ const configEnv = {
                 enabled: false,
             },
             aws: {
-                cdnUrl: 'https://cdn-test.kommunicate.io',
-                bucket: 'cdn-kommunicate',
+                cdnUrl: 'https://cdn-test.snap.io',
+                bucket: 'cdn-snap',
             },
         },
     },
@@ -26,9 +26,9 @@ const configEnv = {
         port: '3030',
         urls: {
             applozicBaseUrl: 'https://apps-test.applozic.com',
-            kommunicateBaseUrl: 'https://api-test.kommunicate.io',
-            botPlatformApi: 'https://bots-test.kommunicate.io',
-            hostUrl: 'https://widget-test.kommunicate.io',
+            snapBaseUrl: 'https://api-test.snap.io',
+            botPlatformApi: 'https://bots-test.snap.io',
+            hostUrl: 'https://widget-test.snap.io',
         },
         pluginProperties: {
             pseudoNameEnabled: true,
@@ -40,8 +40,8 @@ const configEnv = {
                 enabled: true,
             },
             aws: {
-                cdnUrl: 'https://cdn-test.kommunicate.io',
-                bucket: 'cdn-kommunicate',
+                cdnUrl: 'https://cdn-test.snap.io',
+                bucket: 'cdn-snap',
             },
         },
     },
@@ -49,9 +49,9 @@ const configEnv = {
         port: '3031',
         urls: {
             applozicBaseUrl: 'https://apps-test.applozic.com',
-            kommunicateBaseUrl: 'https://api-staging.kommunicate.io',
-            botPlatformApi: 'https://bots-test.kommunicate.io',
-            hostUrl: 'https://widget-staging.kommunicate.io',
+            snapBaseUrl: 'https://api-staging.snap.io',
+            botPlatformApi: 'https://bots-test.snap.io',
+            hostUrl: 'https://widget-staging.snap.io',
         },
         pluginProperties: {
             pseudoNameEnabled: true,
@@ -63,18 +63,18 @@ const configEnv = {
                 enabled: true,
             },
             aws: {
-                cdnUrl: 'https://cdn-test.kommunicate.io',
-                bucket: 'cdn-kommunicate',
+                cdnUrl: 'https://cdn-test.snap.io',
+                bucket: 'cdn-snap',
             },
         },
     },
     prod: {
         port: '3030',
         urls: {
-            applozicBaseUrl: 'https://chat.kommunicate.io',
-            kommunicateBaseUrl: 'https://api.kommunicate.io',
-            botPlatformApi: 'https://bots.kommunicate.io',
-            hostUrl: 'https://widget.kommunicate.io',
+            applozicBaseUrl: 'https://chat.snap.io',
+            snapBaseUrl: 'https://api.snap.io',
+            botPlatformApi: 'https://bots.snap.io',
+            hostUrl: 'https://widget.snap.io',
         },
         pluginProperties: {
             pseudoNameEnabled: true,
@@ -86,17 +86,17 @@ const configEnv = {
                 enabled: false,
             },
             aws: {
-                cdnUrl: 'https://cdn.kommunicate.io',
-                bucket: 'kommunicate-cdn',
+                cdnUrl: 'https://cdn.snap.io',
+                bucket: 'snap-cdn',
             },
         },
     },
     prod_ca: {
         port: '3030',
         urls: {
-            applozicBaseUrl: 'https://chat-ca.kommunicate.io',
-            kommunicateBaseUrl: 'https://api-ca.kommunicate.io',
-            hostUrl: 'https://widget-ca.kommunicate.io',
+            applozicBaseUrl: 'https://chat-ca.snap.io',
+            snapBaseUrl: 'https://api-ca.snap.io',
+            hostUrl: 'https://widget-ca.snap.io',
         },
         pluginProperties: {
             pseudoNameEnabled: true,
@@ -108,8 +108,8 @@ const configEnv = {
                 enabled: false,
             },
             aws: {
-                cdnUrl: 'https://cdn.kommunicate.io',
-                bucket: 'kommunicate-cdn',
+                cdnUrl: 'https://cdn.snap.io',
+                bucket: 'snap-cdn',
             },
         },
     },
@@ -117,10 +117,10 @@ const configEnv = {
     prod_in: {
         port: '3030',
         urls: {
-            applozicBaseUrl: 'https://chat-in.kommunicate.io',
-            kommunicateBaseUrl: 'https://api-in.kommunicate.io',
-            botPlatformApi: 'https://bots-in.kommunicate.io',
-            hostUrl: 'https://widget-in.kommunicate.io',
+            applozicBaseUrl: 'https://chat-in.snap.io',
+            snapBaseUrl: 'https://api-in.snap.io',
+            botPlatformApi: 'https://bots-in.snap.io',
+            hostUrl: 'https://widget-in.snap.io',
         },
         pluginProperties: {
             pseudoNameEnabled: true,
@@ -132,17 +132,17 @@ const configEnv = {
                 enabled: false,
             },
             aws: {
-                cdnUrl: 'https://cdn.kommunicate.io',
-                bucket: 'kommunicate-cdn',
+                cdnUrl: 'https://cdn.snap.io',
+                bucket: 'snap-cdn',
             },
         },
     },
     prod_ire: {
         port: '3030',
         urls: {
-            applozicBaseUrl: 'https://chat-ire.kommunicate.io',
-            kommunicateBaseUrl: 'https://api-ire.kommunicate.io',
-            hostUrl: 'https://widget-ire.kommunicate.io',
+            applozicBaseUrl: 'https://chat-ire.snap.io',
+            snapBaseUrl: 'https://api-ire.snap.io',
+            hostUrl: 'https://widget-ire.snap.io',
         },
         pluginProperties: {
             pseudoNameEnabled: true,
@@ -165,10 +165,10 @@ const configEnv = {
     prod_enterprise: {
         port: '3033',
         urls: {
-            applozicBaseUrl: 'https://chat.kommunicate.io',
-            kommunicateBaseUrl: 'https://api-enterprise.kommunicate.io',
-            botPlatformApi: 'https://bots.kommunicate.io',
-            hostUrl: 'https://widget-enterprise.kommunicate.io',
+            applozicBaseUrl: 'https://chat.snap.io',
+            snapBaseUrl: 'https://api-enterprise.snap.io',
+            botPlatformApi: 'https://bots.snap.io',
+            hostUrl: 'https://widget-enterprise.snap.io',
         },
         pluginProperties: {
             pseudoNameEnabled: true,
@@ -180,18 +180,18 @@ const configEnv = {
                 enabled: false,
             },
             aws: {
-                cdnUrl: 'https://cdn.kommunicate.io',
-                bucket: 'kommunicate-cdn',
+                cdnUrl: 'https://cdn.snap.io',
+                bucket: 'snap-cdn',
             },
         },
     },
     prod_beta: {
         port: '3034',
         urls: {
-            applozicBaseUrl: 'https://chat.kommunicate.io',
-            kommunicateBaseUrl: 'https://api.kommunicate.io',
-            botPlatformApi: 'https://bots.kommunicate.io',
-            hostUrl: 'https://widget-beta.kommunicate.io',
+            applozicBaseUrl: 'https://chat.snap.io',
+            snapBaseUrl: 'https://api.snap.io',
+            botPlatformApi: 'https://bots.snap.io',
+            hostUrl: 'https://widget-beta.snap.io',
         },
         pluginProperties: {
             pseudoNameEnabled: true,
@@ -203,8 +203,8 @@ const configEnv = {
                 enabled: false,
             },
             aws: {
-                cdnUrl: 'https://cdn.kommunicate.io',
-                bucket: 'kommunicate-cdn',
+                cdnUrl: 'https://cdn.snap.io',
+                bucket: 'snap-cdn',
             },
         },
     },

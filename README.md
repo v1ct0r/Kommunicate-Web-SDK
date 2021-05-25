@@ -1,26 +1,26 @@
-# Kommunicate | [Demo](https://www.kommunicate.io/livechat-demo?appId=kommunicate-support) | [Docs](https://docs.kommunicate.io/docs/web-installation.html)
+# Snap | [Demo](https://www.snap.io/livechat-demo?appId=snap-support) | [Docs](https://docs.snap.io/docs/web-installation.html)
 
-<img src="https://kommunicate-prod.s3.amazonaws.com/logo/Header.jpg" />
+<img src="https://snap-prod.s3.amazonaws.com/logo/Header.jpg" />
 
-# [Kommunicate ](https://www.kommunicate.io/?utm_source=github&utm_medium=readme&utm_campaign=web)Live Chat Plugin and Chatbot Integration For Web
+# [Snap ](https://www.snap.io/?utm_source=github&utm_medium=readme&utm_campaign=web)Live Chat Plugin and Chatbot Integration For Web
 
 
 ## Overview
 
-Kommunicate provides open source live chat Plugin. The Kommunicate plugin is flexible, lightweight and easily integrable. 
+Snap provides open source live chat Plugin. The Snap plugin is flexible, lightweight and easily integrable. 
 It lets you easily add real-time live chat and in-app messaging in your websites and web apps for customer support. The live chat plugin is equipped with advance messaging options such as real-time chat, sending attachments, sharing location and rich messaging.
 
-Kommunicate has a powerful human + chatbot hybrid platform, where you can integrate Dialogflow and Amazon Lex chatbot without using any code. You can also integrate any third-party or custom chatbot in Kommunciate as well. The automatic bot to human handoff enabled, customizable and rich-messaging equipped chat-widget gives you ample options to make your chatbot more powerful. 
+Snap has a powerful human + chatbot hybrid platform, where you can integrate Dialogflow and Amazon Lex chatbot without using any code. You can also integrate any third-party or custom chatbot in Snap as well. The automatic bot to human handoff enabled, customizable and rich-messaging equipped chat-widget gives you ample options to make your chatbot more powerful. 
 
 ![Chat-widget](https://user-images.githubusercontent.com/32258004/95323958-9dd83c00-08bc-11eb-8744-bbf33140e00d.png)
 
 
 
-## Build a BOT on Kommunicate and integrate it in your Website 
+## Build a BOT on Snap and integrate it in your Website 
 
 ### Kompose
 
-[Kompose](https://dashboard.kommunicate.io/bots/bot-builder) is a Kommunicate’s bot builder that help you in building your own bot, a techie, non-techie, or a person who doesn’t have any idea about chatbots can also build the bot. Anyone can create a chatbot with the Kompose without any assistance.
+[Kompose](https://dashboard.snap.io/bots/bot-builder) is a Snap’s bot builder that help you in building your own bot, a techie, non-techie, or a person who doesn’t have any idea about chatbots can also build the bot. Anyone can create a chatbot with the Kompose without any assistance.
 
 ![Kompose-build](https://user-images.githubusercontent.com/38066371/87525821-a519f000-c6a7-11ea-90d6-97e8fab4d1b3.gif)
 
@@ -37,9 +37,9 @@ Kommunicate has a powerful human + chatbot hybrid platform, where you can integr
 
 Dialogflow is a Google-owned NLP platform to facilitate human-computer interactions such as chatbots, voice bots, etc. 
 
-Kommunicate's Dialogflow integration provides a more versatile, customizable and better chatting experience. Kommunicate chat widget supports all of Dialogflow's features such as Google Assistant, Rich Messaging, etc. On top of that, it is equipped with advanced features such as bot-human handoff, conversation managing dashboard, reporting, and others. 
+Snap's Dialogflow integration provides a more versatile, customizable and better chatting experience. Snap chat widget supports all of Dialogflow's features such as Google Assistant, Rich Messaging, etc. On top of that, it is equipped with advanced features such as bot-human handoff, conversation managing dashboard, reporting, and others. 
 
-You can connect your Dialogflow chatbot with Kommunicate in the following 4 simple steps. [Here](https://www.youtube.com/watch?v=ZlrFYRwJxS8) is a video for the same. 
+You can connect your Dialogflow chatbot with Snap in the following 4 simple steps. [Here](https://www.youtube.com/watch?v=ZlrFYRwJxS8) is a video for the same. 
 
 ### Step 1: Get your API credentials from Dialogflow
 - Login to Dialogflow console and select your agent from the dropdown in the left panel.
@@ -47,26 +47,26 @@ You can connect your Dialogflow chatbot with Kommunicate in the following 4 simp
 - Inside the general tab search for GOOGLE PROJECTS and click on your service account.
 - After getting redirected to your SERVICE ACCOUNT, create a key in JSON format for your project from the actions section and it will get automatically downloaded.
 
-### Step 2: Create a free Kommunicate account
-Create a free account on [Kommunicate](https://dashboard.kommunicate.io/signup) and navigate to the [Bots section](https://dashboard.kommunicate.io/bots/bot-integrations). 
+### Step 2: Create a free Snap account
+Create a free account on [Snap](https://dashboard.snap.io/signup) and navigate to the [Bots section](https://dashboard.snap.io/bots/bot-integrations). 
 
-### Step 3: Integrate your Dialogflow chatbot with Kommunicate
+### Step 3: Integrate your Dialogflow chatbot with Snap
 - In the Bot integrations section, choose Dialogflow. A popup window will open.
 - Upload your Key file here and proceed.
 - Give a name and image to your chatbot. It will be visible to the users chatting with your chatbot.
 - Enable/Disable chatbot to human handoff. If enabled, it will automatically assign conversations to humans in case the chatbot is not able to answer.
 
 ### Step 4: Install the chat widget on your website
-You can install the Kommunicate chat widget on your website by adding a code snippet to your website. More information on how to integrate with your website [here](https://docs.kommunicate.io/docs/web-installation.html). 
+You can install the Snap chat widget on your website by adding a code snippet to your website. More information on how to integrate with your website [here](https://docs.snap.io/docs/web-installation.html). 
 
-> Note: Here's a [sample chatbot](https://docs.kommunicate.io/docs/bot-samples) for you to get started with Dialogflow. 
+> Note: Here's a [sample chatbot](https://docs.snap.io/docs/bot-samples) for you to get started with Dialogflow. 
 
 
 ## Other Features
 
 **Live chat widget:**  Make it easier for your visitors and users to reach you with an instant website and in-app support through chat. The widget is highly customizable. 
 
-**Chatbots:** Automate and speed up your customer service by integrating AI-powered chatbots. Build your chatbots and deploy them using Kommunicate and seamlessly add them in the live chat.
+**Chatbots:** Automate and speed up your customer service by integrating AI-powered chatbots. Build your chatbots and deploy them using Snap and seamlessly add them in the live chat.
 
 **Conversations:** Manage all your customer queries coming from the live chat plugin. Easily manage and assign agents to cater to user conversations.
 
@@ -76,7 +76,7 @@ You can install the Kommunicate chat widget on your website by adding a code sni
 
 **Mailbox:** A simple and powerful team inbox for ticketing, managing, receiving and replying to all your customer support emails. 
 
-**Integrations:** Easily move data between Kommunicate and your other favorite apps. Integrate your favorite CRM, knowledge base software and other apps.
+**Integrations:** Easily move data between Snap and your other favorite apps. Integrate your favorite CRM, knowledge base software and other apps.
 
 **Conversation Routing:** Select routing rules for incoming conversations for both your agents and bots. Choose between automatic assignments or to notify all.
 
@@ -86,24 +86,24 @@ You can install the Kommunicate chat widget on your website by adding a code sni
 
 ### Example :
 
-https://jsfiddle.net/Kommunicate/wgLuLLbu/
+https://jsfiddle.net/Snap/wgLuLLbu/
 
 ## Getting Started :
 
-Create your account by [signing](https://www.kommunicate.io/?utm_source=github&utm_medium=readme&utm_campaign=web) up for Kommunicate. If you already have a Kommunicate account, log in to your account and go to [Settings -> Install](https://dashboard.kommunicate.io/settings/install) section and copy the script.
+Create your account by [signing](https://www.snap.io/?utm_source=github&utm_medium=readme&utm_campaign=web) up for Snap. If you already have a Snap account, log in to your account and go to [Settings -> Install](https://dashboard.snap.io/settings/install) section and copy the script.
 
 Or
 
-You can copy the below script and replace the required parameters manually. Note: You will get your <APP_ID> in the [Install](https://dashboard.kommunicate.io/settings/install) section. 
+You can copy the below script and replace the required parameters manually. Note: You will get your <APP_ID> in the [Install](https://dashboard.snap.io/settings/install) section. 
 
 
 ```
 <script type="text/javascript">
     (function(d, m){
 
-    /*---------------- Kommunicate settings start ----------------*/
+    /*---------------- Snap settings start ----------------*/
 
-     var kommunicateSettings = {
+     var snapSettings = {
       "appId": "<APP_ID>",  
       "automaticChatOpenOnNavigation": true,
       "popupWidget": true
@@ -115,20 +115,20 @@ You can copy the below script and replace the required parameters manually. Note
       */
       };
 
-    /*----------------- Kommunicate settings end ------------------*/
+    /*----------------- Snap settings end ------------------*/
 
      var s = document.createElement("script");
       s.type = "text/javascript";
       s.async = true;
-      s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+      s.src = "https://widget.snap.io/v2/snap.app";
       var h = document.getElementsByTagName("head")[0];
       h.appendChild(s);
-      window.kommunicate = m;
-      m._globals = kommunicateSettings;
-    })(document, window.kommunicate || {});
+      window.snap = m;
+      m._globals = snapSettings;
+    })(document, window.snap || {});
 </script>
 ```
 
 ## Technical Documentation:
 
-Please check out the detailed [documentation](https://docs.kommunicate.io/docs/web-installation.html) for more features, implementation and customizations.
+Please check out the detailed [documentation](https://docs.snap.io/docs/web-installation.html) for more features, implementation and customizations.

@@ -17,14 +17,14 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
                     {
                         message:
                             'This is the image template. Image height and width will automatically be adjusted acording to the view port. If image is too small it will be strached to fill container space. The minimum recommend size of image is 500*500px',
-                        platform: 'kommunicate',
+                        platform: 'snap',
                         metadata: {
                             contentType: '300',
                             templateId: '9',
                             payload: [
                                 {
                                     url:
-                                        'https://kommunicate.s3.ap-south-1.amazonaws.com/profile_pic/1537970492506kommunicate-support-devashish%40kommunicate.io.png',
+                                        'https://snap.s3.ap-south-1.amazonaws.com/profile_pic/1537970492506snap-support-devashish%40snap.io.png',
                                 },
                             ],
                         },

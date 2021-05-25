@@ -3,26 +3,26 @@
  */
 
 // above code will expose below function from iframe window to browser window.
-var KOMMUNICATE_VERSION = window.kommunicate.version;
-KOMMUNICATE_VERSION === 'v2' && (parent.Kommunicate = window.Kommunicate);
+var SNAP_VERSION = window.snap.version;
+SNAP_VERSION === 'v2' && (parent.Snap = window.Snap);
 
-$applozic.extend(true, Kommunicate, {
+$applozic.extend(true, Snap, {
     getBaseUrl: function () {
-        return KM_PLUGIN_SETTINGS.kommunicateApiUrl;
+        return KM_PLUGIN_SETTINGS.snapApiUrl;
     },
     setDefaultAgent: function (agentName) {
-        //kommunicate.defaultAgent  = agentName;
+        //snap.defaultAgent  = agentName;
         throw new Error('not implemented');
     },
     getConversationOfParticipent: function (options, callback) {
         if (typeof callback !== 'function') {
             throw new Error(
-                'invalid callback! expected: Kommunicate.startNewConversation(options, callback) '
+                'invalid callback! expected: Snap.startNewConversation(options, callback) '
             );
         }
         $applozic.ajax({
             url:
-                Kommunicate.getBaseUrl() +
+                Snap.getBaseUrl() +
                 '/conversations/participent/' +
                 options.userId,
             type: 'get',
@@ -35,12 +35,12 @@ $applozic.extend(true, Kommunicate, {
         });
     },
     startConversation: function (params, callback) {
-        kommunicateCommons.setWidgetStateOpen(true);
+        snapCommons.setWidgetStateOpen(true);
         params = typeof params == 'object' ? params : {};
-        params = Kommunicate.updateConversationDetail(params);
+        params = Snap.updateConversationDetail(params);
         if (!params.agentId && !params.agentIds && !params.teamId) {
             var appOptions =
-                KommunicateUtils.getDataFromKmSession('appOptions') ||
+                SnapUtils.getDataFromKmSession('appOptions') ||
                 applozic._globals;
             params.agentId = appOptions.agentId;
         }
@@ -59,9 +59,9 @@ $applozic.extend(true, Kommunicate, {
             params.defaultGroupName ||
             params.conversationTitle ||
             params.groupName ||
-            kommunicate._globals.conversationTitle ||
-            kommunicate._globals.groupName ||
-            kommunicate._globals.agentId;
+            snap._globals.conversationTitle ||
+            snap._globals.groupName ||
+            snap._globals.agentId;
         var assignee =
             params.defaultAssignee || params.assignee || params.agentId;
 
@@ -91,14 +91,14 @@ $applozic.extend(true, Kommunicate, {
             teamId: params.teamId,
         };
         if (IS_SOCKET_CONNECTED) {
-            Kommunicate.client.createConversation(conversationDetail, callback);
+            Snap.client.createConversation(conversationDetail, callback);
         } else {
             var SET_INTERVAL_DURATION = 500;
             var SET_TIMEOUT_DURATION = 3500;
             var interval = setInterval(function () {
                 // socket connected check
                 if (IS_SOCKET_CONNECTED) {
-                    Kommunicate.client.createConversation(
+                    Snap.client.createConversation(
                         conversationDetail,
                         callback
                     );
@@ -108,7 +108,7 @@ $applozic.extend(true, Kommunicate, {
             }, SET_INTERVAL_DURATION);
             var timeout = setTimeout(function () {
                 conversationDetail.allowMessagesViaSocket = true;
-                Kommunicate.client.createConversation(
+                Snap.client.createConversation(
                     conversationDetail,
                     callback
                 );
@@ -120,8 +120,8 @@ $applozic.extend(true, Kommunicate, {
     updateConversationMetadata: function (conversationMetadata) {
         if (conversationMetadata) {
             if (
-                kommunicateCommons.isObject(conversationMetadata) &&
-                kommunicateCommons.isObject(conversationMetadata.metadata) &&
+                snapCommons.isObject(conversationMetadata) &&
+                snapCommons.isObject(conversationMetadata.metadata) &&
                 conversationMetadata.groupId &&
                 conversationMetadata.metadata
             ) {
@@ -155,44 +155,44 @@ $applozic.extend(true, Kommunicate, {
         }
     },
     updateConversationDetail: function (conversationDetail) {
-        var kommunicateSettings = KommunicateUtils.getDataFromKmSession(
+        var snapSettings = SnapUtils.getDataFromKmSession(
             'settings'
         );
         if (
-            typeof kommunicateSettings === 'undefined' ||
-            kommunicateSettings === null
+            typeof snapSettings === 'undefined' ||
+            snapSettings === null
         ) {
             return conversationDetail;
         }
-        // Update welcome message only if some value for it is coming in conversationDetails parameter or kommunicateSettings.
+        // Update welcome message only if some value for it is coming in conversationDetails parameter or snapSettings.
         conversationDetail.WELCOME_MESSAGE =
             conversationDetail.WELCOME_MESSAGE ||
-            kommunicateSettings.WELCOME_MESSAGE;
+            snapSettings.WELCOME_MESSAGE;
         conversationDetail.defaultAssignee =
-            conversationDetail.assignee || kommunicateSettings.defaultAssignee;
+            conversationDetail.assignee || snapSettings.defaultAssignee;
         conversationDetail.agentIds =
-            conversationDetail.agentIds || kommunicateSettings.defaultAgentIds;
+            conversationDetail.agentIds || snapSettings.defaultAgentIds;
         conversationDetail.botIds =
-            conversationDetail.botIds || kommunicateSettings.defaultBotIds;
+            conversationDetail.botIds || snapSettings.defaultBotIds;
         conversationDetail.skipRouting =
-            conversationDetail.skipRouting || kommunicateSettings.skipRouting;
+            conversationDetail.skipRouting || snapSettings.skipRouting;
         conversationDetail.skipBotEvent =
-            conversationDetail.skipBotEvent || kommunicateSettings.skipBotEvent;
+            conversationDetail.skipBotEvent || snapSettings.skipBotEvent;
         conversationDetail.customWelcomeEvent =
             conversationDetail.customWelcomeEvent ||
-            kommunicateSettings.customWelcomeEvent;
+            snapSettings.customWelcomeEvent;
         conversationDetail.teamId =
-            conversationDetail.teamId || kommunicateSettings.teamId;
+            conversationDetail.teamId || snapSettings.teamId;
         return conversationDetail;
     },
     openConversationList: function () {
-        kommunicateCommons.setWidgetStateOpen(true);
+        snapCommons.setWidgetStateOpen(true);
         window.$applozic.fn.applozic('loadTab', '');
-        KommunicateUI.showChat();
-        KommunicateUI.hideFaq();
+        SnapUI.showChat();
+        SnapUI.hideFaq();
     },
     openConversation: function (groupId, groupDetail) {
-        kommunicateCommons.setWidgetStateOpen(true);
+        snapCommons.setWidgetStateOpen(true);
         if (groupId) {
             window.$applozic.fn.applozic('loadGroupTab', groupId);
         } else if (groupDetail && groupDetail.clientGroupId) {
@@ -200,14 +200,14 @@ $applozic.extend(true, Kommunicate, {
                 'loadGroupTabByClientGroupId',
                 groupDetail
             );
-        } 
-        KommunicateUI.hideFaq();
+        }
+        SnapUI.hideFaq();
     },
     openDirectConversation: function (userId) {
-        kommunicateCommons.setWidgetStateOpen(true);
+        snapCommons.setWidgetStateOpen(true);
         window.$applozic.fn.applozic('loadTab', userId);
-        KommunicateUI.showChat();
-        KommunicateUI.hideFaq();
+        SnapUI.showChat();
+        SnapUI.hideFaq();
     },
     /**
      * load conversation will open or create a conversation between existing users.
@@ -241,9 +241,9 @@ $applozic.extend(true, Kommunicate, {
         // max length of clientGroupId is 256 in db.
         // default bot is not included in client groupId generation
         var loggedInUserName =
-            kommunicate._globals.userId ||
-            KommunicateUtils.getCookie(
-                KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_ID
+            snap._globals.userId ||
+            SnapUtils.getCookie(
+                SnapConstants.COOKIES.SNAP_LOGGED_IN_ID
             );
         var agentsNameStr = agentList.join('_');
 
@@ -279,15 +279,15 @@ $applozic.extend(true, Kommunicate, {
                     );
                     var conversationDetail = {
                         groupName:
-                            kommunicate._globals.conversationTitle ||
-                            kommunicate._globals.groupName ||
-                            kommunicate._globals.agentId,
+                            snap._globals.conversationTitle ||
+                            snap._globals.groupName ||
+                            snap._globals.agentId,
                         type: 10,
                         agentId: users[0].userId,
                         users: users,
                         clientGroupId: decodeURIComponent(clientGroupId),
                     };
-                    Kommunicate.client.createConversation(
+                    Snap.client.createConversation(
                         conversationDetail,
                         function (result) {
                             if (callback) {
@@ -312,7 +312,7 @@ $applozic.extend(true, Kommunicate, {
         var user = [];
         var group = [];
         group.push(params.agentId);
-        group.push(kommunicate._globals.userId);
+        group.push(snap._globals.userId);
         user.push({ userId: params.agentId, groupRole: 1 });
         user.push({ userId: 'bot', groupRole: 2 });
         if (params.botIds) {
@@ -322,16 +322,16 @@ $applozic.extend(true, Kommunicate, {
                 group.push(params.botIds[i]);
             }
         }
-        var groupName = Kommunicate.createGroupName(group);
+        var groupName = Snap.createGroupName(group);
         var groupDetail = {};
         groupDetail.groupName = groupName;
         groupDetail.callback = function (response) {
             if (response.data.groups.length > 0) {
                 console.log('already have a group');
-                Kommunicate.openConversation(response.data.groups[0].id);
+                Snap.openConversation(response.data.groups[0].id);
             } else {
                 console.log('new user');
-                Kommunicate.startConversation(
+                Snap.startConversation(
                     conversationDetail,
                     function (response) {}
                 );
@@ -340,12 +340,12 @@ $applozic.extend(true, Kommunicate, {
         window.$applozic.fn.applozic('getGroupListByFilter', groupDetail);
     },
     /**
-     * creating conversation entry in kommuncate db.
+     * creating conversation entry in snap db.
      */
     createNewConversation: function (options, callback) {
         if (typeof callback !== 'function') {
             throw new Error(
-                'invalid callback! expected: Kommunicate.startNewConversation(options, callback) '
+                'invalid callback! expected: Snap.startNewConversation(options, callback) '
             );
         }
         var data = {
@@ -356,7 +356,7 @@ $applozic.extend(true, Kommunicate, {
             applicationId: options.applicationId,
         };
         $applozic.ajax({
-            url: Kommunicate.getBaseUrl() + '/conversations',
+            url: Snap.getBaseUrl() + '/conversations',
             type: 'post',
             data: JSON.stringify(data),
             contentType: 'application/json',
@@ -378,11 +378,11 @@ $applozic.extend(true, Kommunicate, {
         ) {
             window.$applozic.fn.applozic('logout');
         }
-        KommunicateUtils.removeItemFromLocalStorage(
+        SnapUtils.removeItemFromLocalStorage(
             'mckActiveConversationInfo'
         );
-        KommunicateUtils.deleteUserCookiesOnLogout();
-        parent.window && parent.window.removeKommunicateScripts();
+        SnapUtils.deleteUserCookiesOnLogout();
+        parent.window && parent.window.removeSnapScripts();
     },
     launchConversation: function () {
         window.$applozic.fn.applozic('mckLaunchSideboxChat');
@@ -390,7 +390,7 @@ $applozic.extend(true, Kommunicate, {
     triggerEvent: function (event, options) {
         $applozic.ajax({
             url:
-                Kommunicate.getBaseUrl() + '/applications/events?type=' + event,
+                Snap.getBaseUrl() + '/applications/events?type=' + event,
             type: 'post',
             data: JSON.stringify({
                 conversationId: options.groupId,
@@ -412,7 +412,7 @@ $applozic.extend(true, Kommunicate, {
     getAwayMessage: function (options, callback) {
         $applozic.ajax({
             url:
-                Kommunicate.getBaseUrl() +
+                Snap.getBaseUrl() +
                 '/applications/' +
                 options.applicationId +
                 '/awaymessage?conversationId=' +
@@ -435,8 +435,8 @@ $applozic.extend(true, Kommunicate, {
         window.$applozic.fn.applozic('updateUserIdentity', {
             newUserId: newUserId,
             callback: function (response) {
-                KommunicateUtils.setCookie({
-                    name: KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_ID,
+                SnapUtils.setCookie({
+                    name: SnapConstants.COOKIES.SNAP_LOGGED_IN_ID,
                     value: newUserId,
                     expiresInDays: 30,
                     domain: MCK_COOKIE_DOMAIN,
@@ -460,7 +460,7 @@ $applozic.extend(true, Kommunicate, {
     },
     appendEmailToIframe: function (message) {
         var richText =
-            Kommunicate.isRichTextMessage(message.metadata) ||
+            Snap.isRichTextMessage(message.metadata) ||
             message.contentType == 3;
         if (richText && message.source === 7 && message.message) {
             var iframeID = 'km-iframe-' + message.groupId;
@@ -479,9 +479,9 @@ $applozic.extend(true, Kommunicate, {
         return (
             (typeof msg.fileMeta === 'object' &&
                 msg.contentType ==
-                    KommunicateConstants.MESSAGE_CONTENT_TYPE.ATTACHMENT) ||
+                    SnapConstants.MESSAGE_CONTENT_TYPE.ATTACHMENT) ||
             msg.contentType ==
-                KommunicateConstants.MESSAGE_CONTENT_TYPE.LOCATION
+                SnapConstants.MESSAGE_CONTENT_TYPE.LOCATION
         );
     },
     getContainerTypeForRichMessage: function (message) {
@@ -489,7 +489,7 @@ $applozic.extend(true, Kommunicate, {
         var metadata = message.metadata;
         var sliderClass = 'km-slick-container ';
         metadata.templateId ==
-            KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL &&
+            SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL &&
             metadata.payload &&
             metadata.payload.length > 1 &&
             (sliderClass += 'km-slider-multiple-cards-container');
@@ -497,11 +497,11 @@ $applozic.extend(true, Kommunicate, {
             switch (metadata.templateId) {
                 // add template Id to enable slick effect
                 // 2 for get room pax info template
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .HOTEL_BOOKING_CARD:
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .ROOM_DETAIL:
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .CARD_CAROUSEL:
                     return sliderClass;
                     break;
@@ -515,9 +515,9 @@ $applozic.extend(true, Kommunicate, {
             }
         } else if (
             message.contentType ==
-                KommunicateConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML &&
+                SnapConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML &&
             message.source ==
-                KommunicateConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
+                SnapConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
         ) {
             return 'km-fixed-container';
         }
@@ -539,64 +539,64 @@ $applozic.extend(true, Kommunicate, {
         if (metadata.templateId) {
             switch (metadata.templateId) {
                 // 1 for get room pax info template
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .ROOM_COUNT:
-                    return Kommunicate.markup.getHotelRoomPaxInfoTemplate();
+                    return Snap.markup.getHotelRoomPaxInfoTemplate();
                     break;
                 //2 for hotel card template
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .HOTEL_BOOKING_CARD:
-                    return Kommunicate.markup.getHotelCardContainerTemplate(
+                    return Snap.markup.getHotelCardContainerTemplate(
                         JSON.parse(metadata.hotelList || '[]'),
                         metadata.sessionId
                     );
                     break;
                 // 3 for button container
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .LINK_BUTTON:
-                    return Kommunicate.markup.buttonContainerTemplate(metadata);
+                    return Snap.markup.buttonContainerTemplate(metadata);
                     break;
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .PASSENGER_DETAIL:
-                    return Kommunicate.markup.getPassangerDetail(metadata);
+                    return Snap.markup.getPassangerDetail(metadata);
                     break;
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .ROOM_DETAIL:
-                    return Kommunicate.markup.getRoomDetailsContainerTemplate(
+                    return Snap.markup.getRoomDetailsContainerTemplate(
                         JSON.parse(metadata.hotelRoomDetail || '[]'),
                         metadata.sessionId
                     );
                     break;
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .QUICK_REPLY:
-                    return Kommunicate.markup.quickRepliesContainerTemplate(
+                    return Snap.markup.quickRepliesContainerTemplate(
                         metadata,
-                        KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                        SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                             .QUICK_REPLY
                     );
                     break;
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE.LIST:
-                    return Kommunicate.markup.getListContainerMarkup(metadata);
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.LIST:
+                    return Snap.markup.getListContainerMarkup(metadata);
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .DIALOG_BOX:
-                    return Kommunicate.markup.getDialogboxContainer(metadata);
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE.IMAGE:
-                    return Kommunicate.markup.getImageContainer(metadata);
+                    return Snap.markup.getDialogboxContainer(metadata);
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.IMAGE:
+                    return Snap.markup.getImageContainer(metadata);
                     break;
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .CARD_CAROUSEL:
-                    return Kommunicate.markup.getCarouselMarkup(metadata);
+                    return Snap.markup.getCarouselMarkup(metadata);
                     break;
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .GENERIC_BUTTONS:
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .GENERIC_BUTTONS_V2:
-                    return Kommunicate.markup.getGenericButtonMarkup(metadata);
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE.FORM:
-                    return Kommunicate.markup.getActionableFormMarkup(metadata);
+                    return Snap.markup.getGenericButtonMarkup(metadata);
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.FORM:
+                    return Snap.markup.getActionableFormMarkup(metadata);
                     break;
-                case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE.VIDEO:
-                    return Kommunicate.markup.getVideoMarkup(metadata);
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.VIDEO:
+                    return Snap.markup.getVideoMarkup(metadata);
                     break;
                 default:
                     return '';
@@ -604,17 +604,17 @@ $applozic.extend(true, Kommunicate, {
             }
         } else if (
             message.contentType ==
-                KommunicateConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML &&
+                SnapConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML &&
             message.source ==
-                KommunicateConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
+                SnapConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
         ) {
-            return Kommunicate.markup.getHtmlMessageMarkups(message);
+            return Snap.markup.getHtmlMessageMarkups(message);
         } else {
             return '';
         }
     },
     /*
-       updateSettings parameters 
+       updateSettings parameters
        1. defaultAssignee [single value]
        2. defaultAgentIds [multiple values]
        3. defaultBotIds [multiple values]
@@ -629,27 +629,27 @@ $applozic.extend(true, Kommunicate, {
         if (type != 'object') {
             throw new error('update settings expects an object, found ' + type);
         }
-        var settings = KommunicateUtils.getDataFromKmSession('settings');
+        var settings = SnapUtils.getDataFromKmSession('settings');
         settings = settings ? settings : {};
 
         for (var key in options) {
             settings[key] = options[key];
         }
-        KommunicateUtils.storeDataIntoKmSession('settings', settings);
+        SnapUtils.storeDataIntoKmSession('settings', settings);
     },
     getSettings: function (setting) {
-        return KommunicateUtils.getSettings(setting);
+        return SnapUtils.getSettings(setting);
     },
     updateChatContext: function (options) {
         if (typeof options == 'object') {
             var chatContext =
-                KommunicateUtils.getSettings(
-                    KommunicateConstants.SETTINGS.KM_CHAT_CONTEXT
+                SnapUtils.getSettings(
+                    SnapConstants.SETTINGS.KM_CHAT_CONTEXT
                 ) || {};
             for (var key in options) {
                 chatContext[key] = options[key];
             }
-            Kommunicate.updateSettings({ KM_CHAT_CONTEXT: chatContext });
+            Snap.updateSettings({ KM_CHAT_CONTEXT: chatContext });
         } else {
             console.info(
                 "can not update chat context, expected data type is 'object', found ",
@@ -659,39 +659,39 @@ $applozic.extend(true, Kommunicate, {
     },
     updateUserLanguage: function (languageCode) {
         var chatContext =
-            KommunicateUtils.getSettings(
-                KommunicateConstants.SETTINGS.KM_CHAT_CONTEXT
+            SnapUtils.getSettings(
+                SnapConstants.SETTINGS.KM_CHAT_CONTEXT
             ) || {};
         chatContext[
-            KommunicateConstants.SETTINGS.KM_USER_LANGUAGE_CODE
+            SnapConstants.SETTINGS.KM_USER_LANGUAGE_CODE
         ] = languageCode;
-        Kommunicate.updateChatContext(chatContext);
+        Snap.updateChatContext(chatContext);
     },
     setDefaultIframeConfigForOpenChat: function (isPopupEnabled) {
-        !kommunicateCommons.checkIfDeviceIsHandheld() &&
-            kommunicateCommons.modifyClassList(
+        !snapCommons.checkIfDeviceIsHandheld() &&
+            snapCommons.modifyClassList(
                 { id: ['mck-sidebox'] },
                 'popup-enabled',
                 ''
             );
-        var kommunicateIframe = parent.document.getElementById(
-            'kommunicate-widget-iframe'
+        var snapIframe = parent.document.getElementById(
+            'snap-widget-iframe'
         );
-        var kommunicateIframeDocument = kommunicateIframe.contentDocument;
-        var popUpCloseButton = kommunicateIframeDocument.getElementById(
+        var snapIframeDocument = snapIframe.contentDocument;
+        var popUpCloseButton = snapIframeDocument.getElementById(
             'km-popup-close-button'
         );
-        kommunicateIframe.style.width = '';
-        kommunicateIframe.classList.remove('km-iframe-notification');
-        kommunicateIframe.classList.remove('km-iframe-closed');
+        snapIframe.style.width = '';
+        snapIframe.classList.remove('km-iframe-notification');
+        snapIframe.classList.remove('km-iframe-closed');
         isPopupEnabled
-            ? (kommunicateIframe.classList.add(
+            ? (snapIframe.classList.add(
                   'km-iframe-dimension-with-popup'
               ),
               popUpCloseButton && (popUpCloseButton.style.display = 'flex'))
-            : kommunicateIframe.classList.add('km-iframe-dimension-no-popup');
-        kommunicateIframe.classList.add(
-            'kommunicate-iframe-enable-media-query'
+            : snapIframe.classList.add('km-iframe-dimension-no-popup');
+        snapIframe.classList.add(
+            'snap-iframe-enable-media-query'
         );
     },
     // add css to style component in window
@@ -709,29 +709,29 @@ $applozic.extend(true, Kommunicate, {
      * @param {String} timezone
      */
     updateUserTimezone: function (timezone) {
-        if (KommunicateUtils.isValidTimeZone(timezone)) {
+        if (SnapUtils.isValidTimeZone(timezone)) {
             var chatContext =
-                KommunicateUtils.getSettings(
-                    KommunicateConstants.SETTINGS.KM_CHAT_CONTEXT
+                SnapUtils.getSettings(
+                    SnapConstants.SETTINGS.KM_CHAT_CONTEXT
                 ) || {};
             chatContext[
-                KommunicateConstants.SETTINGS.KM_USER_TIMEZONE
+                SnapConstants.SETTINGS.KM_USER_TIMEZONE
             ] = timezone;
-            Kommunicate.updateChatContext(chatContext);
+            Snap.updateChatContext(chatContext);
         }
     },
     /**
      * @param {Boolean} display
      */
-    displayKommunicateWidget: function (display) {
-        var kommunicateIframe = parent.document.getElementById(
-            'kommunicate-widget-iframe'
+    displaySnapWidget: function (display) {
+        var snapIframe = parent.document.getElementById(
+            'snap-widget-iframe'
         );
         display
-            ? kommunicateIframe.classList.remove(
-                  'kommunicate-hide-custom-iframe'
+            ? snapIframe.classList.remove(
+                  'snap-hide-custom-iframe'
               )
-            : kommunicateIframe.classList.add('kommunicate-hide-custom-iframe');
+            : snapIframe.classList.add('snap-hide-custom-iframe');
     },
     // check if the message needs to be processed by addMessage
     visibleMessage: function (msg) {
@@ -745,15 +745,15 @@ $applozic.extend(true, Kommunicate, {
             return false;
         }
         if (
-            msg.type === KommunicateConstants.MESSAGE_TYPE.CALL_INCOMING ||
-            msg.type === KommunicateConstants.MESSAGE_TYPE.CALL_OUTGOING
+            msg.type === SnapConstants.MESSAGE_TYPE.CALL_INCOMING ||
+            msg.type === SnapConstants.MESSAGE_TYPE.CALL_OUTGOING
         ) {
             return false;
         }
         if (
             (msg.metadata && msg.metadata.category === 'HIDDEN') ||
             msg.contentType ===
-                KommunicateConstants.MESSAGE_CONTENT_TYPE.AUDIO_VIDEO_CALL
+                SnapConstants.MESSAGE_CONTENT_TYPE.AUDIO_VIDEO_CALL
         ) {
             return false;
         }
@@ -765,7 +765,7 @@ $applozic.extend(true, Kommunicate, {
         }
         if (
             msg.contentType ===
-                KommunicateConstants.MESSAGE_CONTENT_TYPE.NOTIFY_MESSAGE &&
+                SnapConstants.MESSAGE_CONTENT_TYPE.NOTIFY_MESSAGE &&
             msg.metadata &&
             msg.metadata.hide === 'true'
         ) {

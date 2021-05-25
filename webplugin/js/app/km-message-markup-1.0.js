@@ -1,4 +1,4 @@
-Kommunicate.messageTemplate = {
+Snap.messageTemplate = {
     getAttachmentTemplate: function () {
         return `<div class="mck-file-text mck-attachment {{attachmentClass}} notranslate mck-attachment-{{key}}" data-groupId="{{groupId}}" data-filemetakey="{{fileMetaKey}}" data-stopupload="{{fileMeta.stopUpload}}" data-filename="{{fileMeta.name}}" data-thumbnailUrl="{{fileMeta.thumbnailUrl}}"  data-filetype="{{fileMeta.contentType}}" data-fileurl="{{fileUrl}" data-filesize="{{fileMeta.size}}+" data-msgkey ="{{key}}"><div>{{{fileExpr}}}</div><div class="{{attachmentDownloadClass}}">{{{downloadMediaUrlExpr}}}</div></div>`;
     },
@@ -28,7 +28,7 @@ Kommunicate.messageTemplate = {
             case data.fileMeta.contentType.indexOf('image') != -1:
                 data.attachmentDownloadClass = 'vis';
                 return Mustache.to_html(
-                    Kommunicate.messageTemplate.getAttachmentTemplate(),
+                    Snap.messageTemplate.getAttachmentTemplate(),
                     data
                 );
                 break;
@@ -36,9 +36,9 @@ Kommunicate.messageTemplate = {
             case data.fileMeta.contentType.indexOf('text') != -1:
             case data.fileMeta.contentType == '' &&
                 data.contentType !=
-                    KommunicateConstants.MESSAGE_CONTENT_TYPE.LOCATION:
+                    SnapConstants.MESSAGE_CONTENT_TYPE.LOCATION:
                 data.attachmentClass = 'km-application-attachment-wrapper';
-                if (!Kommunicate.internetStatus) {
+                if (!Snap.internetStatus) {
                     data.uploadIconClass = 'vis';
                     data.downloadIconClass = 'n-vis';
                     data.cancelIconClass = 'n-vis';
@@ -62,7 +62,7 @@ Kommunicate.messageTemplate = {
                     data.fileUrl ||
                     'javascript:void(0)';
                 return Mustache.to_html(
-                    Kommunicate.messageTemplate.getAttachmentApplicationTemplate(
+                    Snap.messageTemplate.getAttachmentApplicationTemplate(
                         data
                     ),
                     data
@@ -72,7 +72,7 @@ Kommunicate.messageTemplate = {
                 data.attachmentDownloadClass = 'vis';
                 data.downloadMediaUrlExpr = mediaUrlExpr;
                 return Mustache.to_html(
-                    Kommunicate.messageTemplate.getAttachmentTemplate(),
+                    Snap.messageTemplate.getAttachmentTemplate(),
                     data
                 );
         }
@@ -80,20 +80,20 @@ Kommunicate.messageTemplate = {
     getProgressMeterContanier: function (key) {
         var data = { key: key };
         return Mustache.to_html(
-            Kommunicate.messageTemplate.getProgressMeter(),
+            Snap.messageTemplate.getProgressMeter(),
             data
         );
     },
 };
 
-Kommunicate.popupChatTemplate = {
+Snap.popupChatTemplate = {
     getPopupChatTemplate: function (
         popupWidgetContent,
         chatWidget,
         isAnonymousChat
     ) {
         var isPopupEnabled =
-            kommunicateCommons.isObject(chatWidget) && chatWidget.popup;
+            snapCommons.isObject(chatWidget) && chatWidget.popup;
         var chatPopupTemplateMarkup = '';
         var popupMessageContent =
             popupWidgetContent &&
@@ -108,9 +108,9 @@ Kommunicate.popupChatTemplate = {
                 (popupWidgetContent &&
                     popupWidgetContent.length &&
                     popupWidgetContent[0].templateKey) ||
-                KommunicateConstants.CHAT_POPUP_TEMPLATE.HORIZONTAL;
+                SnapConstants.CHAT_POPUP_TEMPLATE.HORIZONTAL;
             var templateCss =
-                index === KommunicateConstants.CHAT_POPUP_TEMPLATE.HORIZONTAL
+                index === SnapConstants.CHAT_POPUP_TEMPLATE.HORIZONTAL
                     ? 'chat-popup-widget-container--horizontal'
                     : 'chat-popup-widget-container--vertical';
             chatPopupTemplateMarkup =
@@ -120,7 +120,7 @@ Kommunicate.popupChatTemplate = {
                 launcherClass +
                 '"><p class="chat-popup-widget-text">' +
                 (popupMessageContent &&
-                    kommunicateCommons.formatHtmlTag(popupMessageContent)) +
+                    snapCommons.formatHtmlTag(popupMessageContent)) +
                 '</p></div>' +
                 '<div class="chat-popup-widget-close-btn-container"><div class="chat-popup-widget-close-btn"><span class="chat-popup-widget-close-icon-svg"><svg viewBox="0 0 64 64" width="8" xmlns="http://www.w3.org/2000/svg" height="8"><path fill="#fff" d="M28.941 31.786L.613 60.114a2.014 2.014 0 1 0 2.848 2.849l28.541-28.541 28.541 28.541c.394.394.909.59 1.424.59a2.014 2.014 0 0 0 1.424-3.439L35.064 31.786 63.41 3.438A2.014 2.014 0 1 0 60.562.589L32.003 29.15 3.441.59A2.015 2.015 0 0 0 .593 3.439l28.348 28.347z"></path></svg></span></div></div>' +
                 '</div>';

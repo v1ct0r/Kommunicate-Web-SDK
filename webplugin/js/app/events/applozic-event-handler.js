@@ -1,4 +1,4 @@
-Kommunicate.KmEventHandler = {
+Snap.KmEventHandler = {
     openChatOnNotification: function (message) {
         if (
             !(document.getElementById('mck-sidebox').style.display === 'block')
@@ -16,20 +16,20 @@ Kommunicate.KmEventHandler = {
                 document
                     .getElementById('launcher-svg-container')
                     .classList.add('vis');
-                window.Kommunicate.openConversation(message.groupId);
+                window.Snap.openConversation(message.groupId);
             } else {
-                window.Kommunicate.openDirectConversation(message.to);
+                window.Snap.openDirectConversation(message.to);
             }
-            KommunicateUI.hideMessagePreview();
+            SnapUI.hideMessagePreview();
         }
     },
     notificationEvent: function (message) {
         if (
-            KommunicateUtils.getDataFromKmSession('appOptions') &&
-            KommunicateUtils.getDataFromKmSession('appOptions')
+            SnapUtils.getDataFromKmSession('appOptions') &&
+            SnapUtils.getDataFromKmSession('appOptions')
                 .openConversationOnNewMessage
         ) {
-            Kommunicate.KmEventHandler.openChatOnNotification(message);
+            Snap.KmEventHandler.openChatOnNotification(message);
         } else if (
             document
                 .getElementById('launcher-agent-img-container')
@@ -51,15 +51,15 @@ Kommunicate.KmEventHandler = {
             message.metadata.hide != 'true';
         if (!message.metadata || validMessageMetadata) {
             // hiding away message when new message received from agents.
-            KommunicateUI.hideAwayMessage();
+            SnapUI.hideAwayMessage();
             // Send the message for voice output
             message.userOverride.voiceOutput &&
-                Kommunicate.mediaService.voiceOutputIncomingMessage(message);
+                Snap.mediaService.voiceOutputIncomingMessage(message);
         }
     },
     onMessageSent: function (message) {
         if (!(message && message.metadata && message.metadata.feedback)) {
-            KommunicateUI.showClosedConversationBanner(false);
+            SnapUI.showClosedConversationBanner(false);
         }
     },
 };

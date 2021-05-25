@@ -1,9 +1,9 @@
 /**
- * Add all Kommunicate UI Manipulation in this file.
+ * Add all Snap UI Manipulation in this file.
  *
  */
-var kommunicateCommons = new KommunicateCommons();
-KommunicateUI = {
+var snapCommons = new SnapCommons();
+SnapUI = {
     awayMessageInfo: {},
     awayMessageScroll: true,
     leadCollectionEnabledOnAwayMessage: false,
@@ -17,27 +17,27 @@ KommunicateUI = {
         '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><circle class="km-custom-widget-fill" cx="12" cy="12" r="12" fill="#5553B7" fill-rule="nonzero" opacity=".654"/><g transform="translate(6.545 5.818)"><polygon fill="#FFF" points=".033 2.236 .033 12.057 10.732 12.057 10.732 .02 3.324 .02"/><rect class="km-custom-widget-fill" width="6.433" height="1" x="2.144" y="5.468" fill="#5553B7" fill-rule="nonzero" opacity=".65" rx=".5"/><rect class="km-custom-widget-fill" width="4.289" height="1" x="2.144" y="8.095" fill="#5553B7" fill-rule="nonzero" opacity=".65" rx=".5"/><polygon class="km-custom-widget-fill" fill="#5553B7" points="2.656 .563 3.384 2.487 1.162 3.439" opacity=".65" transform="rotate(26 2.273 2.001)"/></g></g></svg>',
     CONSTS: {},
     updateLeadCollectionStatus: function (err, message, data) {
-        KommunicateUI.awayMessageInfo = {};
+        SnapUI.awayMessageInfo = {};
         if (
             !err &&
             (message.code == 'SUCCESS' || message.code == 'AGENTS_ONLINE')
         ) {
-            KommunicateUI.leadCollectionEnabledOnAwayMessage =
+            SnapUI.leadCollectionEnabledOnAwayMessage =
                 message.data.collectEmailOnAwayMessage;
             if (
                 message.code != 'AGENTS_ONLINE' &&
                 message.data.messageList.length > 0
             ) {
-                KommunicateUI.awayMessageInfo['eventId'] =
+                SnapUI.awayMessageInfo['eventId'] =
                     message.data.messageList[0].eventId;
-                KommunicateUI.awayMessageInfo['isEnabled'] = true;
+                SnapUI.awayMessageInfo['isEnabled'] = true;
             }
-            KommunicateUI.leadCollectionEnabledOnWelcomeMessage =
+            SnapUI.leadCollectionEnabledOnWelcomeMessage =
                 message.data.collectEmailOnWelcomeMessage;
-            KommunicateUI.welcomeMessageEnabled =
+            SnapUI.welcomeMessageEnabled =
                 message.data.welcomeMessageEnabled;
-            KommunicateUI.anonymousUser = message.data.anonymousUser;
-            KommunicateUI.displayLeadCollectionTemplate(data);
+            SnapUI.anonymousUser = message.data.anonymousUser;
+            SnapUI.displayLeadCollectionTemplate(data);
         }
     },
     populateAwayMessage: function (err, message) {
@@ -55,7 +55,7 @@ KommunicateUI = {
             !closedConversation
         ) {
             awayMessage = message.data.messageList[0].message;
-            awayMessage = kommunicateCommons.formatHtmlTag(awayMessage);
+            awayMessage = snapCommons.formatHtmlTag(awayMessage);
             $applozic('#mck-away-msg').html(awayMessage);
             $applozic('#mck-away-msg').linkify({
                 target: '_blank',
@@ -67,9 +67,9 @@ KommunicateUI = {
         var messageBody = document.querySelectorAll(
             '.mck-message-inner.mck-group-inner'
         )[0];
-        if (KommunicateUI.awayMessageScroll && messageBody) {
+        if (SnapUI.awayMessageScroll && messageBody) {
             messageBody.scrollTop = messageBody.scrollHeight;
-            KommunicateUI.awayMessageScroll = false;
+            SnapUI.awayMessageScroll = false;
         }
     },
     showAwayMessage: function () {
@@ -77,8 +77,8 @@ KommunicateUI = {
             '#mck-tab-individual'
         ).hasClass('n-vis');
         if (
-            KommunicateUI.awayMessageInfo &&
-            KommunicateUI.awayMessageInfo.isEnabled &&
+            SnapUI.awayMessageInfo &&
+            SnapUI.awayMessageInfo.isEnabled &&
             !conversationWindowNotActive
         ) {
             $applozic('#mck-email-collection-box')
@@ -106,12 +106,12 @@ KommunicateUI = {
             }
             if (countMsg == 1) {
                 if (
-                    (KommunicateUI.leadCollectionEnabledOnAwayMessage &&
-                        KommunicateUI.awayMessageInfo.isEnabled &&
-                        KommunicateUI.awayMessageInfo.eventId == 1) ||
-                    (KommunicateUI.welcomeMessageEnabled &&
-                        KommunicateUI.leadCollectionEnabledOnWelcomeMessage &&
-                        KommunicateUI.anonymousUser)
+                    (SnapUI.leadCollectionEnabledOnAwayMessage &&
+                        SnapUI.awayMessageInfo.isEnabled &&
+                        SnapUI.awayMessageInfo.eventId == 1) ||
+                    (SnapUI.welcomeMessageEnabled &&
+                        SnapUI.leadCollectionEnabledOnWelcomeMessage &&
+                        SnapUI.anonymousUser)
                 ) {
                     this.populateLeadCollectionTemplate();
                     this.hideAwayMessage();
@@ -151,7 +151,7 @@ KommunicateUI = {
         $applozic('.progress-meter-' + key + ' .km-progress-stop-upload-icon')
             .removeClass('vis')
             .addClass('n-vis');
-        Kommunicate.attachmentEventHandler.progressMeter(100, key);
+        Snap.attachmentEventHandler.progressMeter(100, key);
         !uploadStatus &&
             $applozic('.mck-attachment-' + key)
                 .next()
@@ -169,7 +169,7 @@ KommunicateUI = {
             );
     },
     hideFileBox: function (file, $file_box, $mck_file_upload) {
-        if (KommunicateUI.isAttachmentV2(file.type)) {
+        if (SnapUI.isAttachmentV2(file.type)) {
             $file_box.removeClass('vis').addClass('n-vis');
             $mck_file_upload.attr('disabled', false);
         } else {
@@ -230,7 +230,7 @@ KommunicateUI = {
         return stopUpload;
     },
     populateLeadCollectionTemplate: function () {
-        KommunicateUI.hideAwayMessage();
+        SnapUI.hideAwayMessage();
         $applozic('#mck-email-collection-box')
             .removeClass('n-vis')
             .addClass('vis');
@@ -261,7 +261,7 @@ KommunicateUI = {
             window.$applozic.fn.applozic('updateUser', {
                 data: { email: sendMsg },
             });
-            // KommunicateUI.showAwayMessage();  lead collection feature improvement- [WIP]
+            // SnapUI.showAwayMessage();  lead collection feature improvement- [WIP]
             return true;
         } else {
             $applozic('#mck-email-error-alert-box')
@@ -281,7 +281,7 @@ KommunicateUI = {
             'click',
             '#mck-msg-preview, #mck-msg-preview-visual-indicator .mck-msg-preview-visual-indicator-text',
             function () {
-                KommunicateUI.showChat();
+                SnapUI.showChat();
             }
         );
 
@@ -293,7 +293,7 @@ KommunicateUI = {
                 MCK_EVENT_HISTORY.push('km-faq-answer-list');
             var articleId = $(this).attr('data-articleid');
             var source = $(this).attr('data-source');
-            KommunicateKB.getArticle({
+            SnapKB.getArticle({
                 data: {
                     appId: data.appId,
                     articleId: articleId,
@@ -308,7 +308,7 @@ KommunicateUI = {
                     ) {
                         var faqTitle =
                             faqDetails.title &&
-                            kommunicateCommons.formatHtmlTag(faqDetails.title);
+                            snapCommons.formatHtmlTag(faqDetails.title);
                         // FAQ description is already coming in formatted way from the dashboard FAQ editor.
                         $applozic('#km-faqanswer').append(
                             '<div class="km-faqanswer-list km-faqanswerscroll ql-snow"><div class="km-faqquestion">' +
@@ -352,11 +352,11 @@ KommunicateUI = {
         // On Click of FAQ button the FAQ List will open.
         $applozic(d).on('click', '#km-faq', function () {
             MCK_MAINTAIN_ACTIVE_CONVERSATION_STATE &&
-                KommunicateUtils.removeItemFromLocalStorage(
+                SnapUtils.removeItemFromLocalStorage(
                     'mckActiveConversationInfo'
                 );
-            KommunicateUI.showHeader();
-            KommunicateUI.awayMessageScroll = true;
+            SnapUI.showHeader();
+            SnapUI.awayMessageScroll = true;
             MCK_EVENT_HISTORY[MCK_EVENT_HISTORY.length - 1] !== 'km-faq-list' &&
                 MCK_EVENT_HISTORY.push('km-faq-list');
             MCK_BOT_MESSAGE_QUEUE = [];
@@ -402,13 +402,13 @@ KommunicateUI = {
             $applozic(
                 '#mck-tab-individual .mck-name-status-container.mck-box-title'
             ).removeClass('padding');
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     id: ['km-widget-options'],
                 },
                 'n-vis'
             );
-            KommunicateUI.checkSingleThreadedConversationSettings(true);
+            SnapUI.checkSingleThreadedConversationSettings(true);
         });
 
         $applozic(d).on('click', '#km-faqanswer a', function (e) {
@@ -427,12 +427,12 @@ KommunicateUI = {
                     .removeClass('vis');
             }
             if (e.which == 32 || e.which == 13) {
-                KommunicateUI.searchFaqs(data);
+                SnapUI.searchFaqs(data);
                 return;
             }
             clearTimeout(mcktimer);
             mcktimer = setTimeout(function validate() {
-                KommunicateUI.searchFaqs(data);
+                SnapUI.searchFaqs(data);
             }, 500);
         });
 
@@ -452,13 +452,13 @@ KommunicateUI = {
                 .removeClass('vis')
                 .addClass('n-vis');
             MCK_MAINTAIN_ACTIVE_CONVERSATION_STATE &&
-                KommunicateUtils.removeItemFromLocalStorage(
+                SnapUtils.removeItemFromLocalStorage(
                     'mckActiveConversationInfo'
                 );
-            KommunicateUI.awayMessageScroll = true;
-            KommunicateUI.hideAwayMessage();
-            KommunicateUI.hideLeadCollectionTemplate();
-            kommunicateCommons.modifyClassList(
+            SnapUI.awayMessageScroll = true;
+            SnapUI.hideAwayMessage();
+            SnapUI.hideLeadCollectionTemplate();
+            snapCommons.modifyClassList(
                 {
                     id: ['km-widget-options'],
                 },
@@ -470,7 +470,7 @@ KommunicateUI = {
                     MCK_EVENT_HISTORY[MCK_EVENT_HISTORY.length - 2] ==
                     'km-faq-list'
                 ) {
-                    KommunicateUI.showHeader();
+                    SnapUI.showHeader();
                     $applozic('#km-faqdiv')
                         .removeClass('n-vis')
                         .addClass('vis');
@@ -524,7 +524,7 @@ KommunicateUI = {
                     var elem = MCK_EVENT_HISTORY[MCK_EVENT_HISTORY.length - 2];
                     $applozic.fn.applozic('openChat', elem);
                     MCK_EVENT_HISTORY.splice(MCK_EVENT_HISTORY.length - 1, 1);
-                    KommunicateUI.activateTypingField();
+                    SnapUI.activateTypingField();
                     return;
                 } else {
                     $applozic('#km-faq').removeClass('n-vis').addClass('vis');
@@ -561,19 +561,19 @@ KommunicateUI = {
                 )
                     .removeClass('vis')
                     .addClass('n-vis');
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { class: ['mck-rating-box'] },
                     '',
                     'selected'
                 );
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { id: ['mck-rate-conversation'] },
                     '',
                     'n-vis'
                 );
                 document.getElementById('mck-tab-title').textContent = '';
                 MCK_EVENT_HISTORY.length = 0;
-                KommunicateUI.handleConversationBanner();
+                SnapUI.handleConversationBanner();
                 return;
             }
         });
@@ -584,7 +584,7 @@ KommunicateUI = {
             response.data.length === 0 &&
             $applozic('.km-no-results-found-container').hasClass('n-vis')
         ) {
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     class: [
                         'km-no-results-found-container',
@@ -597,7 +597,7 @@ KommunicateUI = {
             document.querySelector('.km-talk-to-human-div p').innerHTML =
                 MCK_LABELS['no-faq-found'];
         } else {
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     class: ['km-no-results-found-container'],
                 },
@@ -606,7 +606,7 @@ KommunicateUI = {
             );
             document.querySelector('.km-talk-to-human-div p').innerHTML =
                 MCK_LABELS['looking.for.something.else'];
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     class: ['km-talk-to-human-div'],
                 },
@@ -618,12 +618,12 @@ KommunicateUI = {
         $applozic.each(response.data, function (i, faq) {
             var id = faq.id || faq.articleId;
             var title = faq.name || faq.title;
-            title = title && kommunicateCommons.formatHtmlTag(title);
+            title = title && snapCommons.formatHtmlTag(title);
             document.getElementById('km-faq-list-container').innerHTML +=
                 '<li class="km-faq-list"  data-articleId="' +
                 id +
                 '"><a class="km-faqdisplay"> <div class="km-faqimage">' +
-                KommunicateUI.faqSVGImage +
+                SnapUI.faqSVGImage +
                 '</div><div class="km-faqanchor">' +
                 title +
                 '</div></a></li>';
@@ -631,26 +631,26 @@ KommunicateUI = {
     },
     searchFaqs: function (data) {
         if (!document.getElementById('km-faq-search-input').value) {
-            KommunicateKB.getArticles({
+            SnapKB.getArticles({
                 data: {
                     appId: data.appId,
                     query: document.getElementById('km-faq-search-input').value,
                 },
                 success: function (response) {
-                    KommunicateUI.searchFaqUI(response);
+                    SnapUI.searchFaqUI(response);
                 },
                 error: function () {
                     console.log('error while searching faq', err);
                 },
             });
         } else {
-            KommunicateKB.searchFaqs({
+            SnapKB.searchFaqs({
                 data: {
                     appId: data.appId,
                     query: document.getElementById('km-faq-search-input').value,
                 },
                 success: function (response) {
-                    KommunicateUI.searchFaqUI(response);
+                    SnapUI.searchFaqUI(response);
                 },
                 error: function (err) {
                     console.log('error while searching faq', err);
@@ -675,7 +675,7 @@ KommunicateUI = {
     },
 
     showChat: function () {
-        kommunicateCommons.setWidgetStateOpen(true);
+        snapCommons.setWidgetStateOpen(true);
         $applozic('.faq-common').removeClass('vis').addClass('n-vis');
         $applozic('.mck-conversation').removeClass('n-vis').addClass('vis');
         $applozic('#km-faq').removeClass('n-vis').addClass('vis');
@@ -717,14 +717,14 @@ KommunicateUI = {
                 contentType: 0,
                 message: msgTemplate,
             };
-            // Kommunicate.sendMessage(messagePxy);
+            // Snap.sendMessage(messagePxy);
             $applozic.fn.applozic('sendGroupMessage', messagePxy);
         } else {
             return;
         }
     },
     activateTypingField: function () {
-        !kommunicateCommons.checkIfDeviceIsHandheld() &&
+        !snapCommons.checkIfDeviceIsHandheld() &&
             $applozic('#mck-text-box').focus();
     },
     setAvailabilityStatus: function (status) {
@@ -744,11 +744,11 @@ KommunicateUI = {
     },
     toggleVoiceOutputOverride: function (voiceOutput) {
         if (voiceOutput) {
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 { id: ['user-overide-voice-output-svg-off'] },
                 'n-vis'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 { id: ['user-overide-voice-output-svg-on'] },
                 '',
                 'n-vis'
@@ -760,11 +760,11 @@ KommunicateUI = {
                     'conversation.header.dropdown'
                 ].USER_OVERIDE_VOICE_OUTPUT_OFF;
         } else {
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 { id: ['user-overide-voice-output-svg-on'] },
                 'n-vis'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 { id: ['user-overide-voice-output-svg-off'] },
                 '',
                 'n-vis'
@@ -778,39 +778,39 @@ KommunicateUI = {
         }
     },
     triggerCSAT: function () {
-        var isCSATenabled = kommunicate._globals.collectFeedback;
-        if (!KommunicateUI.isConvJustResolved) {
-            KommunicateUI.isCSATtriggeredByUser = true;
+        var isCSATenabled = snap._globals.collectFeedback;
+        if (!SnapUI.isConvJustResolved) {
+            SnapUI.isCSATtriggeredByUser = true;
         }
 
         if (isCSATenabled) {
             document.getElementById('mck-submit-comment').disabled = false;
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 { class: ['mck-rating-box'] },
                 '',
                 'selected'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     class: ['mck-box-form'],
                 },
                 'n-vis',
                 'vis'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     id: ['mck-sidebox-ft'],
                 },
                 'km-mid-conv-csat'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     id: ['csat-1'],
                 },
                 'vis',
                 'n-vis'
             );
-            KommunicateUI.isConvJustResolved = false;
+            SnapUI.isConvJustResolved = false;
         }
     },
     showClosedConversationBanner: function (isConversationClosed) {
@@ -818,12 +818,12 @@ KommunicateUI = {
         var conversationStatusDiv = document.getElementById(
             'mck-conversation-status-box'
         );
-        var isCSATenabled = kommunicate._globals.collectFeedback;
-        var isCSATtriggeredByUser = KommunicateUI.isCSATtriggeredByUser;
-        var isConvJustResolved = KommunicateUI.isConvJustResolved;
+        var isCSATenabled = snap._globals.collectFeedback;
+        var isCSATtriggeredByUser = SnapUI.isCSATtriggeredByUser;
+        var isConvJustResolved = SnapUI.isConvJustResolved;
         var $mck_msg_inner = $applozic('#mck-message-cell .mck-message-inner');
         isConversationClosed &&
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     class: ['mck-box-form'],
                 },
@@ -832,14 +832,14 @@ KommunicateUI = {
         if (
             isCSATenabled &&
             isConversationClosed &&
-            !kommunicateCommons.isConversationClosedByBot() &&
+            !snapCommons.isConversationClosedByBot() &&
             !isCSATtriggeredByUser &&
             !isConvJustResolved
         ) {
             mckUtils.ajax({
                 type: 'GET',
                 url:
-                    Kommunicate.getBaseUrl() +
+                    Snap.getBaseUrl() +
                     '/feedback' +
                     '/' +
                     CURRENT_GROUP_DATA.tabId,
@@ -848,32 +848,32 @@ KommunicateUI = {
                 success: function (data) {
                     var feedback = data.data;
                     CURRENT_GROUP_DATA.currentGroupFeedback = feedback;
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         {
                             class: ['mck-box-form'],
                         },
                         'n-vis'
                     );
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         {
                             class: ['mck-csat-text-1'],
                         },
                         '',
                         'n-vis'
                     );
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         {
                             id: ['mck-sidebox-ft'],
                         },
                         'mck-closed-conv-banner'
                     );
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         {
                             id: ['csat-1', 'csat-2', 'csat-3'],
                         },
                         'n-vis'
                     );
-                    kommunicateCommons.modifyClassList(
+                    snapCommons.modifyClassList(
                         {
                             id: ['km-widget-options'],
                         },
@@ -886,7 +886,7 @@ KommunicateUI = {
                 */
                     if (!feedback) {
                         // no rating given after conversation is resolved
-                        kommunicateCommons.modifyClassList(
+                        snapCommons.modifyClassList(
                             {
                                 id: ['csat-1'],
                             },
@@ -910,111 +910,111 @@ KommunicateUI = {
             });
         } else if (
             isConversationClosed &&
-            KommunicateUI.isCSATtriggeredByUser
+            SnapUI.isCSATtriggeredByUser
         ) {
-            KommunicateUI.isCSATtriggeredByUser = false;
-            kommunicateCommons.modifyClassList(
+            SnapUI.isCSATtriggeredByUser = false;
+            snapCommons.modifyClassList(
                 {
                     id: ['csat-1', 'csat-2', 'csat-3', 'mck-rated'],
                 },
                 'n-vis',
                 ''
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     id: ['mck-sidebox-ft'],
                 },
                 '',
                 'km-mid-conv-csat'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     id: ['mck-conversation-status-box'],
                 },
                 'n-vis',
                 'vis'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     class: ['mck-box-form'],
                 },
                 '',
                 'n-vis'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     class: ['mck-csat-text-1'],
                 },
                 'n-vis'
             );
-        } else if (isConversationClosed && KommunicateUI.isConvJustResolved) {
-            KommunicateUI.triggerCSAT();
+        } else if (isConversationClosed && SnapUI.isConvJustResolved) {
+            SnapUI.triggerCSAT();
         } else if (isConversationClosed) {
             conversationStatusDiv &&
                 (conversationStatusDiv.innerHTML = messageText);
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     id: ['mck-sidebox-ft'],
                 },
                 'mck-closed-conv-banner'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     id: ['mck-conversation-status-box'],
                 },
                 'vis',
                 'n-vis'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     class: ['mck-box-form'],
                 },
                 '',
                 'n-vis'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     id: ['km-widget-options'],
                 },
                 'n-vis'
             );
         } else {
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     id: ['csat-1', 'csat-2', 'csat-3', 'mck-rated'],
                 },
                 'n-vis',
                 ''
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     id: ['mck-sidebox-ft'],
                 },
                 '',
                 'mck-closed-conv-banner'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     id: ['mck-sidebox-ft'],
                 },
                 '',
                 'km-mid-conv-csat'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     id: ['mck-conversation-status-box'],
                 },
                 'n-vis',
                 'vis'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     class: ['mck-box-form'],
                 },
                 '',
                 'n-vis'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 {
                     class: ['mck-csat-text-1'],
                 },
@@ -1033,26 +1033,26 @@ KommunicateUI = {
             msg.metadata.KM_ENABLE_ATTACHMENT
         ) {
             msg.metadata.KM_ENABLE_ATTACHMENT == 'true' &&
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { id: ['mck-attachfile-box', 'mck-file-up'] },
                     'vis',
                     'n-vis'
                 );
             msg.metadata.KM_ENABLE_ATTACHMENT == 'false' &&
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { id: ['mck-attachfile-box', 'mck-file-up'] },
                     'n-vis',
                     'vis'
                 );
         } else if (groupReloaded && enableAttachment) {
             enableAttachment == 'true' &&
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { id: ['mck-attachfile-box', 'mck-file-up'] },
                     'vis',
                     'n-vis'
                 );
             enableAttachment == 'false' &&
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { id: ['mck-attachfile-box', 'mck-file-up'] },
                     'n-vis',
                     'vis'
@@ -1065,14 +1065,14 @@ KommunicateUI = {
         mckChatPopupNotificationTone
     ) {
         var enableGreetingMessage =
-            kommunicateCommons.isObject(chatWidget) &&
+            snapCommons.isObject(chatWidget) &&
             chatWidget.hasOwnProperty('enableGreetingMessageInMobile')
                 ? chatWidget.enableGreetingMessageInMobile
                 : true;
         var isPopupEnabled =
-            kommunicateCommons.isObject(chatWidget) &&
+            snapCommons.isObject(chatWidget) &&
             chatWidget.popup &&
-            (kommunicateCommons.checkIfDeviceIsHandheld()
+            (snapCommons.checkIfDeviceIsHandheld()
                 ? enableGreetingMessage
                 : true);
         var delay =
@@ -1083,10 +1083,10 @@ KommunicateUI = {
             (popupChatContent &&
                 popupChatContent.length &&
                 popupChatContent[0].templateKey) ||
-            KommunicateConstants.CHAT_POPUP_TEMPLATE.HORIZONTAL;
+            SnapConstants.CHAT_POPUP_TEMPLATE.HORIZONTAL;
         if (isPopupEnabled && delay > -1) {
             MCK_CHAT_POPUP_TEMPLATE_TIMER = setTimeout(function () {
-                KommunicateUI.togglePopupChatTemplate(
+                SnapUI.togglePopupChatTemplate(
                     popupTemplateKey,
                     true,
                     mckChatPopupNotificationTone
@@ -1099,60 +1099,60 @@ KommunicateUI = {
         showTemplate,
         mckChatPopupNotificationTone
     ) {
-        var kommunicateIframe = parent.document.getElementById(
-            'kommunicate-widget-iframe'
+        var snapIframe = parent.document.getElementById(
+            'snap-widget-iframe'
         );
-        var playPopupTone = KommunicateUtils.getDataFromKmSession(
+        var playPopupTone = SnapUtils.getDataFromKmSession(
             'playPopupNotificationTone'
         );
 
-        if (showTemplate && !kommunicateCommons.isWidgetOpen()) {
+        if (showTemplate && !snapCommons.isWidgetOpen()) {
             if (playPopupTone == null || playPopupTone) {
                 mckChatPopupNotificationTone &&
                     mckChatPopupNotificationTone.play();
-                KommunicateUtils.storeDataIntoKmSession(
+                SnapUtils.storeDataIntoKmSession(
                     'playPopupNotificationTone',
                     false
                 );
             }
 
             popupTemplateKey ===
-                KommunicateConstants.CHAT_POPUP_TEMPLATE.HORIZONTAL &&
-                kommunicateCommons.modifyClassList(
+                SnapConstants.CHAT_POPUP_TEMPLATE.HORIZONTAL &&
+                snapCommons.modifyClassList(
                     { id: ['mck-sidebox-launcher', 'launcher-svg-container'] },
                     'km-no-box-shadow',
                     ''
                 );
             popupTemplateKey ===
-            KommunicateConstants.CHAT_POPUP_TEMPLATE.HORIZONTAL
-                ? kommunicateIframe.classList.add(
+            SnapConstants.CHAT_POPUP_TEMPLATE.HORIZONTAL
+                ? snapIframe.classList.add(
                       'chat-popup-widget-horizontal'
                   )
-                : kommunicateIframe.classList.add('chat-popup-widget-vertical');
-            kommunicateCommons.modifyClassList(
+                : snapIframe.classList.add('chat-popup-widget-vertical');
+            snapCommons.modifyClassList(
                 { id: ['launcher-svg-container'] },
                 'km-animate',
                 ''
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 { id: ['chat-popup-widget-container'] },
                 'km-animate',
                 'n-vis'
             );
-            if(kommunicateIframe.classList.contains("chat-popup-widget-vertical")){
+            if(snapIframe.classList.contains("chat-popup-widget-vertical")){
                 var heightOfPopup = document.getElementById("chat-popup-widget-container").offsetHeight + 15;
-                var css = 'iframe#kommunicate-widget-iframe.chat-popup-widget-vertical { height:'+ heightOfPopup +'px!important;}';
-                parent.document.querySelector("style#kommunicate-style-sheet").innerText += css;
+                var css = 'iframe#snap-widget-iframe.chat-popup-widget-vertical { height:'+ heightOfPopup +'px!important;}';
+                parent.document.querySelector("style#snap-style-sheet").innerText += css;
             };
             var WIDGET_POSITION =
-                kommunicate &&
-                kommunicate._globals &&
-                kommunicate._globals.widgetSettings &&
-                kommunicate._globals.widgetSettings.hasOwnProperty('position')
-                    ? kommunicate._globals.widgetSettings.position
-                    : KommunicateConstants.POSITION.RIGHT;
-            WIDGET_POSITION === KommunicateConstants.POSITION.LEFT &&
-                kommunicateCommons.modifyClassList(
+                snap &&
+                snap._globals &&
+                snap._globals.widgetSettings &&
+                snap._globals.widgetSettings.hasOwnProperty('position')
+                    ? snap._globals.widgetSettings.position
+                    : SnapConstants.POSITION.RIGHT;
+            WIDGET_POSITION === SnapConstants.POSITION.LEFT &&
+                snapCommons.modifyClassList(
                     {
                         class: [
                             'chat-popup-widget-close-btn-container',
@@ -1164,25 +1164,25 @@ KommunicateUI = {
                     'align-left'
                 );
         } else {
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 { id: ['mck-sidebox-launcher', 'launcher-svg-container'] },
                 '',
                 'km-no-box-shadow'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 { id: ['launcher-svg-container'] },
                 '',
                 'km-animate'
             );
-            kommunicateIframe &&
-                kommunicateIframe.classList.remove(
+            snapIframe &&
+                snapIframe.classList.remove(
                     'chat-popup-widget-horizontal'
                 );
-            kommunicateIframe &&
-                kommunicateIframe.classList.remove(
+            snapIframe &&
+                snapIframe.classList.remove(
                     'chat-popup-widget-vertical'
                 );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 { id: ['chat-popup-widget-container'] },
                 'n-vis',
                 'km-animate'
@@ -1196,7 +1196,7 @@ KommunicateUI = {
         var showAllBannerHtml = '<div id="mck-conversation-filter"><span id="mck-conversation-banner-heading">'
             .concat(
                 MCK_LABELS['filter.conversation.list'].ACTIVE_CONVERSATIONS,
-                '</span><span id="mck-conversation-banner-action" onclick="KommunicateUI.toggleShowResolvedConversationsStatus(),KommunicateUI.handleResolvedConversationsList()">'
+                '</span><span id="mck-conversation-banner-action" onclick="SnapUI.toggleShowResolvedConversationsStatus(),SnapUI.handleResolvedConversationsList()">'
             )
             .concat(
                 MCK_LABELS['filter.conversation.list'].HIDE_RESOLVED,
@@ -1226,7 +1226,7 @@ KommunicateUI = {
                 conversationFilterBanner.parentNode.removeChild(
                     conversationFilterBanner
                 );
-            KommunicateUI.showResolvedConversations = true;
+            SnapUI.showResolvedConversations = true;
         } else if (
             conversationFilterBanner &&
             totalConversations == openConversations
@@ -1235,12 +1235,12 @@ KommunicateUI = {
                 conversationFilterBanner.parentNode.removeChild(
                     conversationFilterBanner
                 );
-            KommunicateUI.showResolvedConversations = false;
+            SnapUI.showResolvedConversations = false;
         }
-        KommunicateUI.handleResolvedConversationsList();
+        SnapUI.handleResolvedConversationsList();
     },
     toggleShowResolvedConversationsStatus: function () {
-        KommunicateUI.showResolvedConversations = !KommunicateUI.showResolvedConversations;
+        SnapUI.showResolvedConversations = !SnapUI.showResolvedConversations;
     },
     handleResolvedConversationsList: function () {
         var bannerHeading = document.getElementById(
@@ -1249,8 +1249,8 @@ KommunicateUI = {
         var bannerAction = document.getElementById(
             'mck-conversation-banner-action'
         );
-        if (KommunicateUI.showResolvedConversations) {
-            kommunicateCommons.modifyClassList(
+        if (SnapUI.showResolvedConversations) {
+            snapCommons.modifyClassList(
                 { class: ['mck-conversation-resolved'] },
                 'mck-show-resolved-conversation'
             );
@@ -1261,7 +1261,7 @@ KommunicateUI = {
                 (bannerAction.innerHTML =
                     MCK_LABELS['filter.conversation.list'].HIDE_RESOLVED);
         } else {
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 { class: ['mck-conversation-resolved'] },
                 '',
                 'mck-show-resolved-conversation'
@@ -1293,8 +1293,8 @@ KommunicateUI = {
         hasMultipleConversations
     ) {
         if (
-            kommunicateCommons.isObject(kommunicate._globals.widgetSettings) &&
-            kommunicate._globals.widgetSettings.isSingleThreaded
+            snapCommons.isObject(snap._globals.widgetSettings) &&
+            snap._globals.widgetSettings.isSingleThreaded
         ) {
             var startConversationButton = document.getElementById(
                 'mck-contacts-content'
@@ -1309,7 +1309,7 @@ KommunicateUI = {
         handleWaitingQueueMessage: function () {
             var group = CURRENT_GROUP_DATA;
             var groupId = group && group.tabId;
-            var waitingStatus = group && group.conversationStatus == Kommunicate.conversationHelper.status.WAITING;
+            var waitingStatus = group && group.conversationStatus == Snap.conversationHelper.status.WAITING;
             window.Applozic.ALApiService.ajax({
                 type: 'GET',
                 url: MCK_BASE_URL + '/rest/ws/group/waiting/list',
@@ -1322,11 +1322,11 @@ KommunicateUI = {
                         // var waitingQueueNumber = document.getElementById('waiting-queue-number');
                         if (waitingStatus && isGroupPresentInWaitingQueue && WAITING_QUEUE.length) {
                             // waitingQueueNumber.innerHTML = "#" + parseInt(WAITING_QUEUE.indexOf(parseInt(groupId)) + 1);
-                            kommunicateCommons.modifyClassList({
+                            snapCommons.modifyClassList({
                                 id: ["mck-waiting-queue"]
                             }, "vis", "n-vis");
                         } else {
-                            kommunicateCommons.modifyClassList({
+                            snapCommons.modifyClassList({
                                 id: ["mck-waiting-queue"]
                             }, "n-vis", "vis");
                         }

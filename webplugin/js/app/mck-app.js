@@ -16,7 +16,7 @@ if (typeof jQuery !== 'undefined') {
 (function (window) {
     if (typeof Applozic !== 'undefined') {
         throw new Error(
-            " Kommunicate script is already loaded, please check if you're loading it more than once."
+            " Snap script is already loaded, please check if you're loading it more than once."
         );
         return;
     }
@@ -45,7 +45,7 @@ function ApplozicSidebox() {
     var mck_style_loader = [
         {
             name: 'mck-sidebox',
-            url: KOMMUNICATE_MIN_CSS,
+            url: SNAP_MIN_CSS,
         },
     ];
     var mck_third_party_scripts = [
@@ -60,7 +60,7 @@ function ApplozicSidebox() {
     ];
     this.load = function () {
         try {
-            if (applozic.PRODUCT_ID == 'kommunicate') {
+            if (applozic.PRODUCT_ID == 'snap') {
                 if (typeof applozic._globals.locShare === 'undefined') {
                     applozic._globals.locShare = false;
                 } else if (typeof applozic._globals.locShare === 'string') {
@@ -209,7 +209,7 @@ function ApplozicSidebox() {
                 showAfterLoad();
             } else {
                 var isScriptV2 = !!parent.document.getElementById(
-                    'kommunicate-widget-iframe'
+                    'snap-widget-iframe'
                 );
                 if (isScriptV2) {
                     window.parent.document.addEventListener(
@@ -284,7 +284,7 @@ function ApplozicSidebox() {
     function mckInitPluginScript() {
         try {
             var options = applozic._globals;
-            MCK_COOKIE_DOMAIN = KommunicateUtils.findCookieDomain(
+            MCK_COOKIE_DOMAIN = SnapUtils.findCookieDomain(
                 document.domain
             );
             for (var index in mck_third_party_scripts) {
@@ -308,26 +308,26 @@ function ApplozicSidebox() {
         }
     }
     function mckLoadAppScript() {
-        // var cookiePrefix = KommunicateUtils.getCookiePrefix();
+        // var cookiePrefix = SnapUtils.getCookiePrefix();
         // var mapCookies = [{
-        //     oldName: 'kommunicate-id',
-        //     newName: cookiePrefix + KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_ID,
+        //     oldName: 'snap-id',
+        //     newName: cookiePrefix + SnapConstants.COOKIES.SNAP_LOGGED_IN_ID,
         //     skipPrefix: true
         // }, {
         //     oldName: "userName",
-        //     newName: cookiePrefix + KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_USERNAME,
+        //     newName: cookiePrefix + SnapConstants.COOKIES.SNAP_LOGGED_IN_USERNAME,
         //     skipPrefix: true
         // }, {
         //     oldName: "km_id",
-        //     newName: cookiePrefix + KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_ID,
+        //     newName: cookiePrefix + SnapConstants.COOKIES.SNAP_LOGGED_IN_ID,
         //     skipPrefix: true
         // }, {
         //     oldName: "km_user_name",
-        //     newName: cookiePrefix + KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_USERNAME,
+        //     newName: cookiePrefix + SnapConstants.COOKIES.SNAP_LOGGED_IN_USERNAME,
         //     skipPrefix: true
         // }, {
         //     oldName: "km_lead_collection",
-        //     newName: cookiePrefix + KommunicateConstants.COOKIES.IS_USER_ID_FOR_LEAD_COLLECTION,
+        //     newName: cookiePrefix + SnapConstants.COOKIES.IS_USER_ID_FOR_LEAD_COLLECTION,
         //     skipPrefix: true
         // },{
         //     oldName: "_kom_km_id",
@@ -340,7 +340,7 @@ function ApplozicSidebox() {
         //     oldName: "_kom_km_user_name",
         //     skipPrefix: true
         // }];
-        var userId = KommunicateUtils.getRandomId();
+        var userId = SnapUtils.getRandomId();
         try {
             (navigator.userAgent.indexOf('MSIE') !== -1 ||
                 navigator.appVersion.indexOf('Trident/') > 0) &&
@@ -383,18 +383,18 @@ function ApplozicSidebox() {
                 Array.isArray(allowedDomains) &&
                 allowedDomains.length &&
                 !allowedDomains.some(isSubDomain);
-            // exclude kommunicate.io from restricted domains for
+            // exclude snap.io from restricted domains for
             // the chatbot preview feature
-            var isCurrentDomainKommunicate = KommunicateConstants.KOMMUNICATE_DOMAINS.some(
+            var isCurrentDomainSnap = SnapConstants.SNAP_DOMAINS.some(
                 isSubDomain
             );
             // Remove scripts if disableChatWidget property is enabled
             // or domain restrictions are enabled
             if (
                 (disableChatWidget || isCurrentDomainDisabled) &&
-                !isCurrentDomainKommunicate
+                !isCurrentDomainSnap
             ) {
-                parent.window && parent.window.removeKommunicateScripts();
+                parent.window && parent.window.removeSnapScripts();
                 return false;
             }
 
@@ -415,7 +415,7 @@ function ApplozicSidebox() {
                 options.appSettings.customerCreatedAt;
             options['collectFeedback'] = options.appSettings.collectFeedback;
             options['chatPopupMessage'] = options.appSettings.chatPopupMessage;
-        
+
             var pseudoNameEnabled = (widgetSettings && (typeof widgetSettings.pseudonymsEnabled !== 'undefined')) ? widgetSettings.pseudonymsEnabled : KM_PLUGIN_SETTINGS.pseudoNameEnabled;
             options.metadata = typeof options.metadata == 'object' ? options.metadata : {};
             options.fileUpload = options.fileUpload || (widgetSettings && widgetSettings.fileUpload);
@@ -425,7 +425,7 @@ function ApplozicSidebox() {
             options.attachment = options.attachment != null ? options.attachment : (widgetSettings && widgetSettings.attachment);
             options.hidePostCTA = options.hidePostCTA != null ? options.hidePostCTA : (widgetSettings && widgetSettings.hidePostCTA);
 
-            KommunicateUtils.deleteDataFromKmSession("settings");
+            SnapUtils.deleteDataFromKmSession("settings");
 
             var pseudoNameEnabled =
                 widgetSettings &&
@@ -459,7 +459,7 @@ function ApplozicSidebox() {
                     ? options.hidePostCTA
                     : widgetSettings && widgetSettings.hidePostCTA;
 
-            KommunicateUtils.deleteDataFromKmSession('settings');
+            SnapUtils.deleteDataFromKmSession('settings');
 
             if (
                 sessionTimeout != null &&
@@ -467,27 +467,27 @@ function ApplozicSidebox() {
             ) {
                 logoutAfterSessionExpiry(sessionTimeout);
                 var details =
-                    KommunicateUtils.getItemFromLocalStorage(
+                    SnapUtils.getItemFromLocalStorage(
                         applozic._globals.appId
                     ) || {};
                 !details.sessionStartTime &&
                     (details.sessionStartTime = new Date().getTime());
                 details.sessionTimeout = sessionTimeout;
-                KommunicateUtils.setItemToLocalStorage(
+                SnapUtils.setItemToLocalStorage(
                     applozic._globals.appId,
                     details
                 );
             }
 
-            if (applozic.PRODUCT_ID == 'kommunicate') {
-                var accessTokenFromCookie = KommunicateUtils.getCookie(
-                    KommunicateConstants.COOKIES.ACCESS_TOKEN
+            if (applozic.PRODUCT_ID == 'snap') {
+                var accessTokenFromCookie = SnapUtils.getCookie(
+                    SnapConstants.COOKIES.ACCESS_TOKEN
                 );
-                var userIdFromCookie = KommunicateUtils.getCookie(
-                    KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_ID
+                var userIdFromCookie = SnapUtils.getCookie(
+                    SnapConstants.COOKIES.SNAP_LOGGED_IN_ID
                 );
-                var displayNameFromCookie = KommunicateUtils.getCookie(
-                    KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_USERNAME
+                var displayNameFromCookie = SnapUtils.getCookie(
+                    SnapConstants.COOKIES.SNAP_LOGGED_IN_USERNAME
                 );
                 var isAnonymousUser = !options.userId;
                 options['userId'] = !isAnonymousUser
@@ -558,14 +558,14 @@ function ApplozicSidebox() {
     // function seekReplaceDestroyCookies (mapCookies){
     //    var  hostName = parent.window.location.hostname;
     //     mapCookies && mapCookies.forEach(function(arrayItem){
-    //         if (KommunicateUtils.getCookie(arrayItem.oldName,arrayItem.skipPrefix)) {
-    //             var value = KommunicateUtils.getCookie(arrayItem.oldName, arrayItem.skipPrefix);
+    //         if (SnapUtils.getCookie(arrayItem.oldName,arrayItem.skipPrefix)) {
+    //             var value = SnapUtils.getCookie(arrayItem.oldName, arrayItem.skipPrefix);
     //             if(arrayItem.newName){
-    //                 KommunicateUtils.setCookie({"name":arrayItem.newName,"value": value, "expiresInDays":30, domain: KommunicateUtils.getDomainFromUrl(),skipPrefix:arrayItem.skipPrefix});
+    //                 SnapUtils.setCookie({"name":arrayItem.newName,"value": value, "expiresInDays":30, domain: SnapUtils.getDomainFromUrl(),skipPrefix:arrayItem.skipPrefix});
     //             }
-    //             KommunicateUtils.deleteCookie({name: arrayItem.oldName, skipPrefix: arrayItem.skipPrefix, domain: KommunicateUtils.getDomainFromUrl()});
+    //             SnapUtils.deleteCookie({name: arrayItem.oldName, skipPrefix: arrayItem.skipPrefix, domain: SnapUtils.getDomainFromUrl()});
     //             // deleting for old version where domain is set as hostname
-    //             KommunicateUtils.deleteCookie({name: arrayItem.oldName, skipPrefix: arrayItem.skipPrefix, domain: hostName});
+    //             SnapUtils.deleteCookie({name: arrayItem.oldName, skipPrefix: arrayItem.skipPrefix, domain: hostName});
     //         }
     //     })
     // };
@@ -575,7 +575,7 @@ function ApplozicSidebox() {
         data.appId = applozic._globals.appId;
         // NOTE: Don't pass applozic._globals as it is in data field of ajax call, pass only the fields which are required for this API call.
         var url =
-            KM_PLUGIN_SETTINGS.kommunicateApiUrl +
+            KM_PLUGIN_SETTINGS.snapApiUrl +
             '/users/v2/chat/plugin/settings?appId=' +
             applozic._globals.appId;
         var xhr = new XMLHttpRequest();
@@ -589,19 +589,19 @@ function ApplozicSidebox() {
         xhr.send(data);
     }
     function loadErrorTracking(userId) {
-        var kommunicateIframe = parent.document.getElementById(
-            'kommunicate-widget-iframe'
+        var snapIframe = parent.document.getElementById(
+            'snap-widget-iframe'
         );
-        var url = kommunicateIframe
-            ? kommunicateIframe.getAttribute('data-url')
+        var url = snapIframe
+            ? snapIframe.getAttribute('data-url')
             : parent.window.location.href;
         userId =
-            KommunicateUtils.getCookie(
-                KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_ID
+            SnapUtils.getCookie(
+                SnapConstants.COOKIES.SNAP_LOGGED_IN_ID
             ) || userId;
         Sentry.init({
             dsn: sentryConfig.dsn,
-            release: KommunicateConstants.KM_WIDGET_RELEASE_VERSION,
+            release: SnapConstants.KM_WIDGET_RELEASE_VERSION,
         });
         Sentry.configureScope(function (scope) {
             scope.setTag('applicationId', applozic._globals.appId);
@@ -612,37 +612,37 @@ function ApplozicSidebox() {
             });
         });
     }
-    function saveUserCookies(kommunicateSettings) {
-        KommunicateUtils.setCookie({
-            name: KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_ID,
-            value: kommunicateSettings.userId,
+    function saveUserCookies(snapSettings) {
+        SnapUtils.setCookie({
+            name: SnapConstants.COOKIES.SNAP_LOGGED_IN_ID,
+            value: snapSettings.userId,
             expiresInDays: 30,
             domain: MCK_COOKIE_DOMAIN,
         });
-        KommunicateUtils.setCookie({
-            name: KommunicateConstants.COOKIES.KOMMUNICATE_LOGGED_IN_USERNAME,
-            value: kommunicateSettings.userName || '',
+        SnapUtils.setCookie({
+            name: SnapConstants.COOKIES.SNAP_LOGGED_IN_USERNAME,
+            value: snapSettings.userName || '',
             expiresInDays: 30,
             domain: MCK_COOKIE_DOMAIN,
         });
         if (
             !(
-                kommunicateSettings.preLeadCollection ||
-                kommunicateSettings.askUserDetails
+                snapSettings.preLeadCollection ||
+                snapSettings.askUserDetails
             )
         ) {
-            KommunicateUtils.setCookie({
+            SnapUtils.setCookie({
                 name:
-                    KommunicateConstants.COOKIES.IS_USER_ID_FOR_LEAD_COLLECTION,
+                    SnapConstants.COOKIES.IS_USER_ID_FOR_LEAD_COLLECTION,
                 value: false,
                 expiresInDays: 30,
                 domain: MCK_COOKIE_DOMAIN,
             });
         }
-        if (kommunicateSettings.accessToken) {
-            var encodedToken = window.btoa(kommunicateSettings.accessToken);
-            KommunicateUtils.setCookie({
-                name: KommunicateConstants.COOKIES.ACCESS_TOKEN,
+        if (snapSettings.accessToken) {
+            var encodedToken = window.btoa(snapSettings.accessToken);
+            SnapUtils.setCookie({
+                name: SnapConstants.COOKIES.ACCESS_TOKEN,
                 value: encodedToken || '',
                 expiresInDays: 30,
                 domain: MCK_COOKIE_DOMAIN,
@@ -653,7 +653,7 @@ function ApplozicSidebox() {
     function logoutAfterSessionExpiry(sessionTimeout) {
         var widgetSettings, timeStampDifference;
         applozic._globals.appId &&
-            (widgetSettings = KommunicateUtils.getItemFromLocalStorage(
+            (widgetSettings = SnapUtils.getItemFromLocalStorage(
                 applozic._globals.appId
             ));
         var timeStampDifference =
@@ -664,13 +664,13 @@ function ApplozicSidebox() {
             sessionTimeout != null &&
             timeStampDifference > sessionTimeout
         ) {
-            KommunicateUtils.deleteUserCookiesOnLogout();
-            sessionStorage.removeItem('kommunicate');
-            KommunicateUtils.removeItemFromLocalStorage(
+            SnapUtils.deleteUserCookiesOnLogout();
+            sessionStorage.removeItem('snap');
+            SnapUtils.removeItemFromLocalStorage(
                 applozic._globals.appId
             );
             ALStorage.clearSessionStorageElements();
-            KommunicateUtils.removeItemFromLocalStorage(
+            SnapUtils.removeItemFromLocalStorage(
                 'mckActiveConversationInfo'
             );
         }
@@ -678,11 +678,11 @@ function ApplozicSidebox() {
         window.addEventListener('beforeunload', function (event) {
             // Cancel the event as stated by the standard.
             var details =
-                KommunicateUtils.getItemFromLocalStorage(
+                SnapUtils.getItemFromLocalStorage(
                     applozic._globals.appId
                 ) || {};
             details.sessionEndTime = new Date().getTime();
-            KommunicateUtils.setItemToLocalStorage(
+            SnapUtils.setItemToLocalStorage(
                 applozic._globals.appId,
                 details
             );

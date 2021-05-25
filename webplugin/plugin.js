@@ -8,8 +8,8 @@ var PRODUCT_ID = ':PRODUCT_ID';
 
 var kmCustomElements = {
     iframe: {
-        id: 'kommunicate-widget-iframe',
-        styleSheetId: 'kommunicate-style-sheet',
+        id: 'snap-widget-iframe',
+        styleSheetId: 'snap-style-sheet',
     },
     imageModal: {
         id: 'km-fullscreen-image-modal',
@@ -19,7 +19,7 @@ var kmCustomElements = {
 
 // iframe class
 var kmCustomIframe =
-    '.kommunicate-custom-iframe { ' +
+    '.snap-custom-iframe { ' +
     '   max-height: calc(100% - 30px)!important;' +
     '   border: none;' +
     '   position: fixed;' +
@@ -29,11 +29,11 @@ var kmCustomIframe =
     '   height: 75px;' +
     '   width: 75px;' +
     '} \n ' +
-    '.kommunicate-custom-iframe.align-left { ' +
+    '.snap-custom-iframe.align-left { ' +
     '   left: 20px;' +
     '   right: 0px;' +
     '} \n ' +
-    '@media only screen and (max-width:600px) { .kommunicate-iframe-enable-media-query {' +
+    '@media only screen and (max-width:600px) { .snap-iframe-enable-media-query {' +
     '   right: 0px !important;' +
     '   bottom: 0px;' +
     '   top: 0;' +
@@ -67,43 +67,43 @@ var kmCustomIframe =
     'height:100vh;' +
     'width:100vw;' +
     '} \n' +
-    '.kommunicate-custom-iframe.chat-popup-widget-horizontal { ' +
+    '.snap-custom-iframe.chat-popup-widget-horizontal { ' +
     '   width: 445px;' +
     '   height: 80px;' +
     '} \n' +
-    '.kommunicate-custom-iframe.chat-popup-widget-vertical { ' +
+    '.snap-custom-iframe.chat-popup-widget-vertical { ' +
     '   width: 415px;' +
     '   height: 153px;' +
     '} \n' +
     '@media only screen and (max-device-width: 420px) { ' +
-    '.kommunicate-custom-iframe.chat-popup-widget-vertical { ' +
+    '.snap-custom-iframe.chat-popup-widget-vertical { ' +
     'width: 100%;' +
     'height: 155px;' +
     '} \n' +
-    '.kommunicate-custom-iframe.chat-popup-widget-horizontal { ' +
+    '.snap-custom-iframe.chat-popup-widget-horizontal { ' +
     '   width: 100%;' +
     '} \n' +
-    '.kommunicate-custom-iframe.chat-popup-widget-container--horizontal { ' +
+    '.snap-custom-iframe.chat-popup-widget-container--horizontal { ' +
     'width: 100%;' +
     '} \n' +
     '} \n' +
-    '.kommunicate-hide-custom-iframe { ' +
+    '.snap-hide-custom-iframe { ' +
     '   display: none!important' +
     '} \n';
 
 isV1Script() ? injectJquery() : appendIframe();
 
-function removeKommunicateScripts() {
-    window.KommunicateGlobal = null;
-    window.Kommunicate = null;
-    // delete iframe, kommunicate style sheet, image view modal, origin file
+function removeSnapScripts() {
+    window.SnapGlobal = null;
+    window.Snap = null;
+    // delete iframe, snap style sheet, image view modal, origin file
     removeElementFromHtmlById([
         kmCustomElements.imageModal.styleSheetId,
         kmCustomElements.imageModal.id,
         kmCustomElements.iframe.id,
         kmCustomElements.iframe.styleSheetId,
     ]);
-    var originFile = document.querySelector("script[src*='kommunicate.app']");
+    var originFile = document.querySelector("script[src*='snap.app']");
     originFile && originFile.parentNode.removeChild(originFile);
 }
 
@@ -114,7 +114,7 @@ function removeElementFromHtmlById(elementIdArray) {
     }
 }
 function appendIframe() {
-    createKommunicateIframe();
+    createSnapIframe();
     createCustomClasses(kmCustomIframe); // Add class to document
 }
 
@@ -125,40 +125,40 @@ function isV1Script() {
 function createCustomClasses(classSettings) {
     // Create custom classes
     var style = document.createElement('style');
-    style.id = 'kommunicate-style-sheet';
+    style.id = 'snap-style-sheet';
     style.type = 'text/css';
     style.innerHTML = classSettings;
     document.getElementsByTagName('head')[0].appendChild(style);
 }
 
-// Create element iframe for kommunicate widget
-function createKommunicateIframe() {
+// Create element iframe for snap widget
+function createSnapIframe() {
     if (document.getElementById(kmCustomElements.iframe.id)) {
         throw new Error(
-            " Kommunicate script is already loaded, please check if you're loading it more than once."
+            " Snap script is already loaded, please check if you're loading it more than once."
         );
     }
-    var kommunicateIframe = document.createElement('iframe');
-    kommunicateIframe.setAttribute('style', 'overflow:hidden;'); // to fix scrollbars appearing before the chat widget loads on slow connections
-    kommunicateIframe.setAttribute('scrolling', 'no'); // to fix scrollbars appearing before the chat widget loads on slow connections
-    kommunicateIframe.setAttribute('id', 'kommunicate-widget-iframe');
-    kommunicateIframe.setAttribute('title', 'Live chat');
-    kommunicateIframe.setAttribute('name', 'Kommunicate widget iframe');
-    kommunicateIframe.setAttribute('class', 'kommunicate-custom-iframe');
-    kommunicateIframe.setAttribute('data-protocol', window.location.protocol);
-    kommunicateIframe.setAttribute('data-url', window.location.href);
-    document.body.appendChild(kommunicateIframe);
-    kommunicateIframe.innerHTML =
-        '<a href="https://www.kommunicate.io/"> Kommunicate Live chat </a>';
+    var snapIframe = document.createElement('iframe');
+    snapIframe.setAttribute('style', 'overflow:hidden;'); // to fix scrollbars appearing before the chat widget loads on slow connections
+    snapIframe.setAttribute('scrolling', 'no'); // to fix scrollbars appearing before the chat widget loads on slow connections
+    snapIframe.setAttribute('id', 'snap-widget-iframe');
+    snapIframe.setAttribute('title', 'Live chat');
+    snapIframe.setAttribute('name', 'Snap widget iframe');
+    snapIframe.setAttribute('class', 'snap-custom-iframe');
+    snapIframe.setAttribute('data-protocol', window.location.protocol);
+    snapIframe.setAttribute('data-url', window.location.href);
+    document.body.appendChild(snapIframe);
+    snapIframe.innerHTML =
+        '<a href="https://www.snap.io/"> Snap Live chat </a>';
     var iframeDocument =
-        kommunicateIframe.contentDocument ||
-        kommunicateIframe.contentWindow.document;
-    kommunicateIframe.contentWindow.kommunicate = window.kommunicate;
+        snapIframe.contentDocument ||
+        snapIframe.contentWindow.document;
+    snapIframe.contentWindow.snap = window.snap;
 
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
         // Do Firefox-related activities
         var testClick = window.document.getElementById(
-            'kommunicate-widget-iframe'
+            'snap-widget-iframe'
         );
         testClick.onload = function () {
             injectJquery();
@@ -170,26 +170,26 @@ function createKommunicateIframe() {
     }
 }
 
-function addKommunicatePluginToIframe() {
-    // Add kommunicate plugin inside iframe
+function addSnapPluginToIframe() {
+    // Add snap plugin inside iframe
     var addableWindow, addableDocument;
     if (isV1Script()) {
         addableWindow = window;
         addableDocument = document;
     } else {
-        var kommunicateIframe = window.document.getElementById(
-            'kommunicate-widget-iframe'
+        var snapIframe = window.document.getElementById(
+            'snap-widget-iframe'
         );
         var iframeDocument =
-            kommunicateIframe.contentDocument ||
-            kommunicateIframe.contentWindow.document;
-        addableWindow = kommunicateIframe.contentWindow;
+            snapIframe.contentDocument ||
+            snapIframe.contentWindow.document;
+        addableWindow = snapIframe.contentWindow;
         addableDocument = iframeDocument;
     }
     addableWindow.applozic =
         (isV1Script()
-            ? addableWindow.kommunicate
-            : kommunicateIframe.contentWindow.kommunicate) || {};
+            ? addableWindow.snap
+            : snapIframe.contentWindow.snap) || {};
     addableWindow.MCK_CONTEXTPATH = MCK_CONTEXTPATH;
     addableWindow.MCK_STATICPATH = MCK_STATICPATH;
     addableWindow.MCK_ONINIT = '';
@@ -208,16 +208,16 @@ function addKommunicatePluginToIframe() {
         'error',
         function (e) {
             MCK_THIRD_PARTY_INTEGRATION.sentry.enabled &&
-                typeof KommunicateGlobal != 'undefined' &&
-                KommunicateGlobal != null &&
-                KommunicateGlobal.Sentry != null &&
-                KommunicateGlobal.Sentry.withScope(function (scope) {
+                typeof SnapGlobal != 'undefined' &&
+                SnapGlobal != null &&
+                SnapGlobal.Sentry != null &&
+                SnapGlobal.Sentry.withScope(function (scope) {
                     scope.setTag('applicationId', options.appId);
                     scope.setTag('userId', options.userId);
                     scope.setUser({
                         id: options.appId,
                     });
-                    KommunicateGlobal.Sentry.captureException(e);
+                    SnapGlobal.Sentry.captureException(e);
                 });
             if (
                 typeof e.target.src !== 'undefined' &&
@@ -233,7 +233,7 @@ function addKommunicatePluginToIframe() {
     var imported = addableDocument.createElement('script');
     imported.async = false;
     imported.type = 'text/javascript';
-    imported.src = KOMMUNICATE_MIN_JS;
+    imported.src = SNAP_MIN_JS;
     addableDocument.head.appendChild(imported);
     addFullviewImageModal();
 }
@@ -244,20 +244,20 @@ function injectJquery() {
         addableWindow = window;
         addableDocument = document;
     } else {
-        var kommunicateIframe = window.document.getElementById(
-            'kommunicate-widget-iframe'
+        var snapIframe = window.document.getElementById(
+            'snap-widget-iframe'
         );
         var iframeDocument =
-            kommunicateIframe.contentDocument ||
-            kommunicateIframe.contentWindow.document;
-        addableWindow = kommunicateIframe.contentWindow;
+            snapIframe.contentDocument ||
+            snapIframe.contentWindow.document;
+        addableWindow = snapIframe.contentWindow;
         addableDocument = iframeDocument;
     }
     var head = addableDocument.getElementsByTagName('head')[0];
     var script = addableDocument.createElement('script');
     script.async = false;
     script.type = 'text/javascript';
-    script.src = 'https://cdn.kommunicate.io/kommunicate/jquery-3.5.1.min.js';
+    script.src = 'http://45.79.141.152/snap/jquery-3.5.1.min.js';
     if (script.readyState) {
         // IE
         script.onreadystatechange = function () {
@@ -265,13 +265,13 @@ function injectJquery() {
                 script.readyState === 'loaded' ||
                 script.readyState === 'complete'
             ) {
-                addKommunicatePluginToIframe();
+                addSnapPluginToIframe();
             }
         };
     } else {
         // Others
         script.onload = function () {
-            addKommunicatePluginToIframe();
+            addSnapPluginToIframe();
         };
     }
     script.onerror = function (error) {

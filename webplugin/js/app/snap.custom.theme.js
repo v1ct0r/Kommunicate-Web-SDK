@@ -1,4 +1,4 @@
-var kommunicateCommons = new KommunicateCommons();
+var snapCommons = new SnapCommons();
 
 function KmCustomTheme() {
     var _this = this;
@@ -24,7 +24,7 @@ function KmCustomTheme() {
 
     _this.customSideboxWidget = function () {
         var primaryColor = DEFAULT_BACKGROUND_COLOR;
-        if (kommunicateCommons.isObject(WIDGET_SETTINGS)) {
+        if (snapCommons.isObject(WIDGET_SETTINGS)) {
             primaryColor =
                 WIDGET_SETTINGS && WIDGET_SETTINGS.primaryColor
                     ? WIDGET_SETTINGS.primaryColor
@@ -74,19 +74,19 @@ function KmCustomTheme() {
 
     _this.returnCustomWidget = function () {
         if (
-            kommunicateCommons.isObject(WIDGET_SETTINGS) &&
+            snapCommons.isObject(WIDGET_SETTINGS) &&
             WIDGET_SETTINGS.iconIndex
         ) {
             if (WIDGET_SETTINGS.iconIndex === 'image') {
                 return _this.KmCustomImageIcon(WIDGET_SETTINGS.widgetImageLink);
             } else {
-                // NOTE : We're sending icondIndex as integer value from kommunicate
-                return KommunicateConstants.CUSTOM_WIDGETS_SVG[
+                // NOTE : We're sending icondIndex as integer value from snap
+                return SnapConstants.CUSTOM_WIDGETS_SVG[
                     WIDGET_SETTINGS.iconIndex
                 ];
             }
         } else {
-            return KommunicateConstants.CUSTOM_WIDGETS_SVG[1]; // DEFAULT ICON
+            return SnapConstants.CUSTOM_WIDGETS_SVG[1]; // DEFAULT ICON
         }
     };
 

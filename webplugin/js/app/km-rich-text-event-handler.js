@@ -2,93 +2,93 @@
  * Attach all event listeners.
  */
 
-Kommunicate.attachEvents = function ($applozic) {
+Snap.attachEvents = function ($applozic) {
     $applozic('#mck-message-cell').on(
         'click',
         '.km-increment-guest-count',
-        Kommunicate.richMsgEventHandler.incrementGuestCount
+        Snap.richMsgEventHandler.incrementGuestCount
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-decrement-guest-count',
-        Kommunicate.richMsgEventHandler.decrementGuestCount
+        Snap.richMsgEventHandler.decrementGuestCount
     ); //
     $applozic('#mck-message-cell').on(
         'click',
         '.km-btn-add-more-rooms',
-        Kommunicate.richMsgEventHandler.addMoreRoom
+        Snap.richMsgEventHandler.addMoreRoom
     ); //
     $applozic('#mck-message-cell').on(
         'click',
         '.km-done-button',
-        Kommunicate.richMsgEventHandler.processSelectedRoom
+        Snap.richMsgEventHandler.processSelectedRoom
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-card-message-footer-button',
-        Kommunicate.richMsgEventHandler.processHotelBookClick
+        Snap.richMsgEventHandler.processHotelBookClick
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.mck-form-submit-button',
-        Kommunicate.richMsgEventHandler.handleFormSubmit
+        Snap.richMsgEventHandler.handleFormSubmit
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-cta-button',
-        Kommunicate.richMsgEventHandler.handleRichButtonClick
+        Snap.richMsgEventHandler.handleRichButtonClick
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-submit-person-detail',
-        Kommunicate.richMsgEventHandler.handlleSubmitPersonDetail
+        Snap.richMsgEventHandler.handlleSubmitPersonDetail
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-block-room-button',
-        Kommunicate.richMsgEventHandler.processBookRoomClick
+        Snap.richMsgEventHandler.processBookRoomClick
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-quick-replies',
-        Kommunicate.richMsgEventHandler.processQuickReplies
+        Snap.richMsgEventHandler.processQuickReplies
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-list-item-handler',
-        Kommunicate.richMsgEventHandler.processClickOnListItem
+        Snap.richMsgEventHandler.processClickOnListItem
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-list-button-item-handler',
-        Kommunicate.richMsgEventHandler.processClickOnButtonItem
+        Snap.richMsgEventHandler.processClickOnButtonItem
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-faq-dialog-button',
-        Kommunicate.richMsgEventHandler.processClickOnDialogButton
+        Snap.richMsgEventHandler.processClickOnDialogButton
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-progress-meter-container',
-        Kommunicate.attachmentEventHandler.manageUploadAttachment
+        Snap.attachmentEventHandler.manageUploadAttachment
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-link-button',
-        Kommunicate.richMsgEventHandler.handleLinkButtonClick
+        Snap.richMsgEventHandler.handleLinkButtonClick
     );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-attachment-icon',
-        Kommunicate.attachmentEventHandler.handleSendingAttachment
+        Snap.attachmentEventHandler.handleSendingAttachment
     );
 };
 
 /**
  * define your event listeners.
  */
-Kommunicate.attachmentEventHandler = {
+Snap.attachmentEventHandler = {
     manageUploadAttachment: function (e) {
         var stopUploadIconHidden = $applozic(e.target)
             .closest('.km-msg-box-attachment')
@@ -107,17 +107,17 @@ Kommunicate.attachmentEventHandler = {
             .find('.mck-msg-right-muted');
         var fileMetaKey = attachmentDiv[0].dataset.filemetakey;
         var file = KM_PENDING_ATTACHMENT_FILE[msgkey];
-        KommunicateUI.updateAttachmentStopUploadStatus(msgkey, true);
-        if (Kommunicate.internetStatus) {
+        SnapUI.updateAttachmentStopUploadStatus(msgkey, true);
+        if (Snap.internetStatus) {
             if (!stopUploadIconHidden && uploadIconHidden) {
-                Kommunicate.attachmentEventHandler.progressMeter(100, msgkey);
+                Snap.attachmentEventHandler.progressMeter(100, msgkey);
                 $applozic('.km-progress-stop-upload-icon-' + msgkey)
                     .removeClass('vis')
                     .addClass('n-vis');
                 $applozic('.km-progress-upload-icon-' + msgkey)
                     .removeClass('n-vis')
                     .addClass('vis');
-                Kommunicate.attachmentEventHandler.progressMeter(100, msgkey);
+                Snap.attachmentEventHandler.progressMeter(100, msgkey);
                 $applozic('.mck-timestamp-' + msgkey)
                     .removeClass('n-vis')
                     .addClass('vis');
@@ -138,7 +138,7 @@ Kommunicate.attachmentEventHandler = {
                     fileName &&
                     fileType
                 ) {
-                    KommunicateUI.updateAttachmentStopUploadStatus(
+                    SnapUI.updateAttachmentStopUploadStatus(
                         msgkey,
                         false
                     );
@@ -201,7 +201,7 @@ Kommunicate.attachmentEventHandler = {
                         },
                         messagePxy: messagePxy,
                     };
-                    KommunicateUI.updateAttachmentStopUploadStatus(
+                    SnapUI.updateAttachmentStopUploadStatus(
                         msgkey,
                         false
                     );
@@ -220,14 +220,14 @@ Kommunicate.attachmentEventHandler = {
                 }
             }
         } else {
-            KommunicateUI.displayUploadIconForAttachment(msgkey, false);
-            KommunicateUI.updateAttachmentStopUploadStatus(msgkey, true);
+            SnapUI.displayUploadIconForAttachment(msgkey, false);
+            SnapUI.updateAttachmentStopUploadStatus(msgkey, true);
         }
     },
     progressMeter: function (value, key) {
         var control = document.getElementById('km-progress-meter-input');
         var selector = '.progress-meter-' + key + ' .km-progress-value';
-        var stopUpload = KommunicateUI.getAttachmentStopUploadStatus(key);
+        var stopUpload = SnapUI.getAttachmentStopUploadStatus(key);
         if (stopUpload) {
             value = 100;
         }
@@ -237,12 +237,12 @@ Kommunicate.attachmentEventHandler = {
             var progress = value / 100;
             var dashoffset = KM_PROGRESS_METER_CIRCUMFERENCE * (1 - progress);
             progressValue.style.strokeDashoffset = dashoffset;
-            // value == 100 && !stopUpload && KommunicateUI.deleteProgressMeter(key);
+            // value == 100 && !stopUpload && SnapUI.deleteProgressMeter(key);
         }
     },
     handleSendingAttachment: function (e) {
         var stopSending =
-            !Kommunicate.internetStatus ||
+            !Snap.internetStatus ||
             $applozic(e.target)
                 .closest('.km-msg-box-attachment')
                 .find('.km-attachment-cancel-icon')
@@ -262,8 +262,8 @@ Kommunicate.attachmentEventHandler = {
         var fileMetaKey = attachmentDiv[0].dataset.filemetakey;
 
         if (stopSending) {
-            KommunicateUI.updateAttachmentStopUploadStatus(msgKey, true);
-            kommunicateCommons.modifyClassList(
+            SnapUI.updateAttachmentStopUploadStatus(msgKey, true);
+            snapCommons.modifyClassList(
                 {
                     class: [
                         'km-attachment-progress-bar-success-' + msgKey,
@@ -273,7 +273,7 @@ Kommunicate.attachmentEventHandler = {
                 'n-vis',
                 'vis'
             );
-            kommunicateCommons.modifyClassList(
+            snapCommons.modifyClassList(
                 { class: ['mck-timestamp-' + msgKey] },
                 'vis',
                 'n-vis'
@@ -295,7 +295,7 @@ Kommunicate.attachmentEventHandler = {
             var thumbnailUrl = attachmentDiv[0].dataset.thumbnailurl;
             var fileUrl = attachmentDiv[0].dataset.fileurl;
             if (fileSize && fileMetaKey && fileName && fileType && fileUrl) {
-                KommunicateUI.updateAttachmentStopUploadStatus(msgKey, false);
+                SnapUI.updateAttachmentStopUploadStatus(msgKey, false);
                 messagePxy = {
                     contentType: 1,
                     groupId: groupId,
@@ -330,7 +330,7 @@ Kommunicate.attachmentEventHandler = {
                 deliveryStatusDiv[0].querySelector(
                     '.mck-sending-failed'
                 ).style.display = 'none';
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { class: ['mck-timestamp-' + msgKey] },
                     'n-vis',
                     'vis'
@@ -356,9 +356,9 @@ Kommunicate.attachmentEventHandler = {
                     },
                     messagePxy: messagePxy,
                 };
-                KommunicateUI.updateAttachmentStopUploadStatus(msgKey, false);
+                SnapUI.updateAttachmentStopUploadStatus(msgKey, false);
                 $applozic.fn.applozic('uploadAttachemnt', params);
-                kommunicateCommons.modifyClassList(
+                snapCommons.modifyClassList(
                     { class: ['mck-timestamp-' + msgKey] },
                     'vis',
                     'n-vis'
@@ -372,7 +372,7 @@ Kommunicate.attachmentEventHandler = {
     },
 };
 
-Kommunicate.richMsgEventHandler = {
+Snap.richMsgEventHandler = {
     svg: {
         arrow:
             '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="11" viewBox="0 0 10 19"><path fill="#5B5959" fill-rule="evenodd" d="M9.076 18.266c.21.2.544.2.753 0a.53.53 0 0 0 0-.753L1.524 9.208 9.829.903a.53.53 0 0 0 0-.752.546.546 0 0 0-.753 0L.026 9.208l9.05 9.058z"/></svg>',
@@ -386,8 +386,8 @@ Kommunicate.richMsgEventHandler = {
                 slideBy: 'page',
                 loop: false,
                 controlsText: [
-                    Kommunicate.richMsgEventHandler.svg.arrow,
-                    Kommunicate.richMsgEventHandler.svg.arrow,
+                    Snap.richMsgEventHandler.svg.arrow,
+                    Snap.richMsgEventHandler.svg.arrow,
                 ],
                 mouseDrag: true,
                 arrowKeys: true,
@@ -436,7 +436,7 @@ Kommunicate.richMsgEventHandler = {
         var roomCount = Number(e.target.dataset.roomcount) + 1;
         e.target.setAttribute('data-roomcount', roomCount);
         var roomInfoElem = document.createElement('div');
-        roomInfoElem.innerHTML = Kommunicate.markup.getSingleRoomPaxInfo(
+        roomInfoElem.innerHTML = Snap.markup.getSingleRoomPaxInfo(
             roomCount
         );
         container
@@ -481,7 +481,7 @@ Kommunicate.richMsgEventHandler = {
             },
         };
 
-        Kommunicate.sendMessage(messagePxy);
+        Snap.sendMessage(messagePxy);
     },
     processHotelBookClick: function (e) {
         var target = e.target || e.srcElement;
@@ -499,7 +499,7 @@ Kommunicate.richMsgEventHandler = {
             },
         };
 
-        Kommunicate.sendMessage(messagePxy);
+        Snap.sendMessage(messagePxy);
     },
 
     processBookRoomClick: function (e) {
@@ -553,8 +553,8 @@ Kommunicate.richMsgEventHandler = {
         var postBackData = {};
         var isActionableForm =
             form.className.indexOf('mck-actionable-form') != -1;
-        var postBackToKommunicate = isActionableForm
-            ? JSON.parse(target.dataset.postBackToKommunicate.toLowerCase())
+        var postBackToSnap = isActionableForm
+            ? JSON.parse(target.dataset.postBackToSnap.toLowerCase())
             : false;
         var replyText = target.title || target.innerHTML;
         var formElements = [];
@@ -592,7 +592,7 @@ Kommunicate.richMsgEventHandler = {
                 case 'select-one': //dropdown
                     data[name] = value;
                     if (formElements[i].dataset.errorText) {
-                        Kommunicate.richMsgEventHandler.handleFormErrorMessage(
+                        Snap.richMsgEventHandler.handleFormErrorMessage(
                             form,
                             name,
                             formElements[i].dataset.errorText,
@@ -605,14 +605,14 @@ Kommunicate.richMsgEventHandler = {
                     data[name] = value;
                     try {
                         if (formElements[i].dataset.regex) {
-                            validString = Kommunicate.richMsgEventHandler.isValidString(
+                            validString = Snap.richMsgEventHandler.isValidString(
                                 formElements[i].dataset.regex,
                                 value
                             );
                             validationResults.push(
                                 validString ? 'success' : 'failed'
                             );
-                            Kommunicate.richMsgEventHandler.handleFormErrorMessage(
+                            Snap.richMsgEventHandler.handleFormErrorMessage(
                                 form,
                                 name,
                                 formElements[i].dataset.errorText ||
@@ -625,7 +625,7 @@ Kommunicate.richMsgEventHandler = {
                     }
             }
             if (
-                KommunicateConstants.FORM_POST_BACK_MESSAGE_UNSUPPORTED_FIELDS.indexOf(
+                SnapConstants.FORM_POST_BACK_MESSAGE_UNSUPPORTED_FIELDS.indexOf(
                     type
                 ) == -1
             ) {
@@ -647,7 +647,7 @@ Kommunicate.richMsgEventHandler = {
         } else {
             !isActionableForm && form.submit(); // called for submit button
             isActionableForm &&
-                KommunicateUtils.isURL(form.action) &&
+                SnapUtils.isURL(form.action) &&
                 $applozic.post(form.action, data).done(function (data) {
                     // console.log("ResponseText:" + data);
                 });
@@ -657,21 +657,21 @@ Kommunicate.richMsgEventHandler = {
         replyText && (messagePxy.message = replyText); //message to send
 
         isActionableForm &&
-            requestType == KommunicateConstants.POST_BACK_TO_BOT_PLATFORM &&
+            requestType == SnapConstants.POST_BACK_TO_BOT_PLATFORM &&
             (msgMetadata['KM_CHAT_CONTEXT'] = { formData: data });
         var formDataMessageTemplate =
-            postBackToKommunicate &&
-            Kommunicate.markup.getFormDataMessageTemplate(postBackData);
+            postBackToSnap &&
+            Snap.markup.getFormDataMessageTemplate(postBackData);
         formDataMessageTemplate &&
-            Kommunicate.sendMessage({
+            Snap.sendMessage({
                 message: formDataMessageTemplate,
-                type: KommunicateConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML,
+                type: SnapConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML,
             });
         Object.keys(msgMetadata).length > 0 &&
             (messagePxy['metadata'] = msgMetadata);
         (Object.keys(msgMetadata).length > 0 ||
             Object.keys(messagePxy).length > 0) &&
-            Kommunicate.sendMessage(messagePxy);
+            Snap.sendMessage(messagePxy);
     },
     handleFormErrorMessage: function (form, name, errorText, validationFailed) {
         var element = form.getElementsByClassName(
@@ -745,7 +745,7 @@ Kommunicate.richMsgEventHandler = {
                 personInfo: JSON.stringify(personDetail),
             },
         };
-        Kommunicate.sendMessage(messagePxy);
+        Snap.sendMessage(messagePxy);
         console.log('passenger detail submitted');
     },
     processQuickReplies: function (e) {
@@ -755,7 +755,7 @@ Kommunicate.richMsgEventHandler = {
             metadata = JSON.parse(e.target.dataset.metadata);
         } catch (e) {}
         var languageCode = e.target.dataset.languagecode;
-        languageCode && Kommunicate.updateUserLanguage(languageCode);
+        languageCode && Snap.updateUserLanguage(languageCode);
         var messagePxy = {
             message: message, //message to send
             metadata: metadata,
@@ -763,16 +763,16 @@ Kommunicate.richMsgEventHandler = {
         document
             .getElementById('mck-text-box')
             .setAttribute('data-quick-reply', true);
-        Kommunicate.sendMessage(messagePxy);
+        Snap.sendMessage(messagePxy);
 
-        if(kommunicate._globals.hidePostCTA){
-            var siblingsArray = Kommunicate.getAllSiblings(e.target);
+        if(snap._globals.hidePostCTA){
+            var siblingsArray = Snap.getAllSiblings(e.target);
             var siblingContainsLink = siblingsArray.some(function (sibling) {
                 return sibling.classList.contains('km-link-button');
             });
-            !siblingContainsLink && Kommunicate.hideMessage(e.target);
+            !siblingContainsLink && Snap.hideMessage(e.target);
         }
-        
+
     },
     processClickOnListItem: function (e) {
         var target = e.currentTarget;
@@ -788,13 +788,13 @@ Kommunicate.richMsgEventHandler = {
         metadata.KM_FAQ_ID = articleId;
         metadata.source = source;
         if (type && type == 'quick_reply') {
-            languageCode && Kommunicate.updateUserLanguage(languageCode);
+            languageCode && Snap.updateUserLanguage(languageCode);
             var messagePxy = {
                 message: reply, //message to send
                 metadata: metadata,
             };
 
-            Kommunicate.sendMessage(messagePxy);
+            Snap.sendMessage(messagePxy);
         } else if (type && type == 'submit') {
             //TODO : support for post request with data.
         }
@@ -808,13 +808,13 @@ Kommunicate.richMsgEventHandler = {
         var metadata = (target.dataset && target.dataset.metadata) || {};
         metadata.KM_BUTTON_CLICKED = true;
         if (type && type == 'quick_reply') {
-            languageCode && Kommunicate.updateUserLanguage(languageCode);
+            languageCode && Snap.updateUserLanguage(languageCode);
             var messagePxy = {
                 message: reply, //message to send
                 metadata: metadata,
             };
 
-            Kommunicate.sendMessage(messagePxy);
+            Snap.sendMessage(messagePxy);
         } else if (type && type == 'submit') {
             //TODO : support for post request with data.
         }
@@ -835,7 +835,7 @@ Kommunicate.richMsgEventHandler = {
             metadata: metadata,
         };
 
-        Kommunicate.sendMessage(messagePxy);
+        Snap.sendMessage(messagePxy);
     },
     handleLinkButtonClick: function (e) {
         var url = decodeURI(e.currentTarget.dataset.url);

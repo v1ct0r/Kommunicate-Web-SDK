@@ -4,14 +4,14 @@ const fs = require('fs');
 const fetch = require('node-fetch');
 const path = require('path');
 const argv = require('minimist')(process.argv.slice(2));
-const KOMMUNICATE_BASE_URL = config.urls.kommunicateBaseUrl;
+const SNAP_BASE_URL = config.urls.snapBaseUrl;
 const AWS = config.thirdPartyIntegration.aws;
 const FILE_UPLOAD_PATH = argv && argv.path;
 /*
     We're using node-fetch to upload files for web-plugin server.
     What is node-fetch ?
     -> A light-weight module that brings window.fetch to Node.js
-    
+
     How to pass params in fetch request ?
     -> Follow the below steps :
     1. Add module querystring (comes with node)
@@ -44,7 +44,7 @@ exports.upload = async (buildDir, version) => {
 
 const uploadFileToS3 = async (filePath, folderName) => {
     try {
-        let uploadUrl = KOMMUNICATE_BASE_URL + FILE_UPLOAD_PATH;
+        let uploadUrl = SNAP_BASE_URL + FILE_UPLOAD_PATH;
         let fileStream = fs.createReadStream(filePath);
         fileStream.on('error', function (err) {
             console.log('Error while reading file data', err);

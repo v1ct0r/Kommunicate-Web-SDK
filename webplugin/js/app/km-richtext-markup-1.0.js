@@ -1,5 +1,5 @@
-//Kommunicate = $applozic.extends(true,Kommunicate||{})
-Kommunicate.markup = {
+//Snap = $applozic.extends(true,Snap||{})
+Snap.markup = {
     getSingleRoomPaxInfo: function (roomCount) {
         roomCount = roomCount || '1';
         return (
@@ -218,7 +218,7 @@ Kommunicate.markup = {
                 '  " data-metadata="' +
                 options.replyMetadata +
                 '" data-buttontype="button" data-target="' +
-                Kommunicate.markup.getLinkTarget(options) +
+                Snap.markup.getLinkTarget(options) +
                 '" ">' +
                 options.name +
                 '' +
@@ -475,7 +475,7 @@ getListMarkup:function(){
                         {{/payload}}
                     </div>
                         {{#buttons}}
-                            <button type="{{type}}" class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button" data-requesttype="{{requestType}}" title="{{message}}" data-post-back-to-kommunicate="{{postBackToKommunicate}}">{{label}}</button>      
+                            <button type="{{type}}" class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button" data-requesttype="{{requestType}}" title="{{message}}" data-post-back-to-snap="{{postBackToSnap}}">{{label}}</button>      
                         {{/buttons}}   
                 </form>   
             </div>`;
@@ -510,7 +510,7 @@ getListMarkup:function(){
     },
 };
 
-Kommunicate.markup.buttonContainerTemplate = function (options) {
+Snap.markup.buttonContainerTemplate = function (options) {
     var containerMarkup = '<div class="km-cta-multi-button-container">';
     var payload = JSON.parse(options.payload);
     var formData = options.formData || '';
@@ -527,7 +527,7 @@ Kommunicate.markup.buttonContainerTemplate = function (options) {
             typeof payload[i].replyMetadata == 'object'
                 ? JSON.stringify(payload[i].replyMetadata)
                 : payload[i].replyMetadata;
-        containerMarkup += Kommunicate.markup.getButtonTemplate(
+        containerMarkup += Snap.markup.getButtonTemplate(
             payload[i],
             requestType,
             buttonClass
@@ -535,13 +535,13 @@ Kommunicate.markup.buttonContainerTemplate = function (options) {
         if (payload[i].type != 'link' && formData) {
             formData = JSON.parse(formData);
             Object.keys(formData).length > 0 &&
-                (containerMarkup += Kommunicate.markup.getFormMarkup(options));
+                (containerMarkup += Snap.markup.getFormMarkup(options));
         }
     }
     containerMarkup += '</div>';
     return containerMarkup;
 };
-Kommunicate.markup.getFormMarkup = function (options) {
+Snap.markup.getFormMarkup = function (options) {
     var payload =
         typeof options.payload == 'string'
             ? JSON.parse(options.payload)
@@ -570,23 +570,23 @@ Kommunicate.markup.getFormMarkup = function (options) {
         return formMarkup;
     }
 };
-Kommunicate.markup.quickRepliesContainerTemplate = function (
+Snap.markup.quickRepliesContainerTemplate = function (
     options,
     template
 ) {
     var payload = JSON.parse(options.payload);
     var buttonClass;
-    var hidePostCTA = kommunicate._globals.hidePostCTA;
+    var hidePostCTA = snap._globals.hidePostCTA;
     switch (template) {
-        case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE.QUICK_REPLY:
+        case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.QUICK_REPLY:
             buttonClass = 'km-quick-rpy-btn km-custom-widget-border-color ';
             break;
-        case KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL:
+        case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL:
             buttonClass =
                 'km-carousel-card-button km-carousel-card-quick-rpy-button ';
             break;
     }
-    template == KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE.QUICK_REPLY &&
+    template == SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.QUICK_REPLY &&
         (buttonClass +=
             payload.length == 1
                 ? 'km-cta-button-1'
@@ -602,16 +602,16 @@ Kommunicate.markup.quickRepliesContainerTemplate = function (
         payload[i].buttonClass = buttonClass;
         payload[i].hidePostCTA = hidePostCTA;
     }
-    return Mustache.to_html(Kommunicate.markup.getQuickRepliesTemplate(), {
+    return Mustache.to_html(Snap.markup.getQuickRepliesTemplate(), {
         payload: payload,
     });
 };
 
-Kommunicate.markup.getHotelRoomPaxInfoTemplate = function (roomCount) {
+Snap.markup.getHotelRoomPaxInfoTemplate = function (roomCount) {
     return (
         `<div class = "km-rich-text-default-container">
             <div class="km-room-person-selector-container">` +
-        Kommunicate.markup.getSingleRoomPaxInfo(roomCount) +
+        Snap.markup.getSingleRoomPaxInfo(roomCount) +
         `</div>
             <hr>
             <div class="km-add-room-button-container">
@@ -622,7 +622,7 @@ Kommunicate.markup.getHotelRoomPaxInfoTemplate = function (roomCount) {
     );
 };
 
-Kommunicate.markup.getHotelCardContainerTemplate = function (
+Snap.markup.getHotelCardContainerTemplate = function (
     hotelList,
     sessionId
 ) {
@@ -630,7 +630,7 @@ Kommunicate.markup.getHotelCardContainerTemplate = function (
     for (var i = 0; i < hotelList.length; i++) {
         hotelListMarkup =
             hotelListMarkup +
-            Kommunicate.markup.getHotelCardTemplate(hotelList[i], sessionId);
+            Snap.markup.getHotelCardTemplate(hotelList[i], sessionId);
     }
     return (
         `<div class="km-card-message-container  km-div-slider">` +
@@ -639,7 +639,7 @@ Kommunicate.markup.getHotelCardContainerTemplate = function (
     );
 };
 
-Kommunicate.markup.getRoomDetailsContainerTemplate = function (
+Snap.markup.getRoomDetailsContainerTemplate = function (
     roomList,
     sessionId
 ) {
@@ -648,11 +648,11 @@ Kommunicate.markup.getRoomDetailsContainerTemplate = function (
     for (var i = 0; i < roomDetails.length; i++) {
         roomListMarkup =
             roomListMarkup +
-            Kommunicate.markup.getRoomDetailTemplate(roomDetails[i], sessionId);
+            Snap.markup.getRoomDetailTemplate(roomDetails[i], sessionId);
     }
     return `<div class="km-card-room-detail-container  km-div-slider">` + roomListMarkup + `</div>`
 }
-Kommunicate.markup.getListContainerMarkup = function (metadata) {
+Snap.markup.getListContainerMarkup = function (metadata) {
     const buttonClass = { link: "km-link-button", submit: "" }
     if (metadata && metadata.payload) {
         var json = JSON.parse(metadata.payload);
@@ -668,7 +668,7 @@ Kommunicate.markup.getListContainerMarkup = function (metadata) {
                 if (item.imgSrc) {
                     item.imgSrc = '<img src ="' + item.imgSrc + '" />';
                 }
-                item.description && (item.description = kommunicateCommons.removeHtmlTag(item.description));
+                item.description && (item.description = snapCommons.removeHtmlTag(item.description));
                 if (item.action && item.action.replyMetadata) {
                     item.replyMetadata = typeof item.action.replyMetadata == "object" ? JSON.stringify(item.action.replyMetadata) : item.action.replyMetadata;
                 }
@@ -681,7 +681,7 @@ Kommunicate.markup.getListContainerMarkup = function (metadata) {
                     item.href = "javascript:void(0)";
                     item.target = '';
                     item.action && (item.updateLanguage = item.action.updateLanguage);
-                    item.hidePostCTA = kommunicate._globals.hidePostCTA;
+                    item.hidePostCTA = snap._globals.hidePostCTA;
                 }
                 item.handlerClass = "km-list-item-handler";
                 if (item.action) {
@@ -698,7 +698,7 @@ Kommunicate.markup.getListContainerMarkup = function (metadata) {
         }
         if (json.buttons && json.buttons.length) {
             json.buttons = json.buttons.map(function (button) {
-                button.target = Kommunicate.markup.getLinkTarget(button.action);
+                button.target = Snap.markup.getLinkTarget(button.action);
                 button.buttonClass = buttonClass[button.action.type];
                 if (button.action && button.action.replyMetadata) {
                     button.replyMetadata = typeof button.action.replyMetadata == "object" ? JSON.stringify(button.action.replyMetadata) : button.action.replyMetadata;
@@ -712,7 +712,7 @@ Kommunicate.markup.getListContainerMarkup = function (metadata) {
                 }
 
                 if(button.action.type == "quick_reply"){
-                    button.hidePostCTA = kommunicate._globals.hidePostCTA;
+                    button.hidePostCTA = snap._globals.hidePostCTA;
                 }else{
                     button.hidePostCTA = false;
                 }
@@ -724,14 +724,14 @@ Kommunicate.markup.getListContainerMarkup = function (metadata) {
                 return button;
             })
         }
-        
 
-        return Mustache.to_html(Kommunicate.markup.getListMarkup(), json);
+
+        return Mustache.to_html(Snap.markup.getListMarkup(), json);
     } else {
         return "";
     }
 };
-Kommunicate.markup.getDialogboxContainer = function (metadata) {
+Snap.markup.getDialogboxContainer = function (metadata) {
     if (metadata && metadata.payload) {
         var json = JSON.parse(metadata.payload);
 
@@ -743,27 +743,27 @@ Kommunicate.markup.getDialogboxContainer = function (metadata) {
                         : element.replyMetadata;
             });
         return Mustache.to_html(
-            Kommunicate.markup.getDialogboxTemplate(),
+            Snap.markup.getDialogboxTemplate(),
             json
         );
     }
     return '';
 };
-Kommunicate.markup.getImageContainer = function (options) {
+Snap.markup.getImageContainer = function (options) {
     if (options && options.payload) {
         var payload =
             typeof options.payload == 'string'
                 ? JSON.parse(options.payload)
                 : {};
         options.payload = payload;
-        return Mustache.to_html(Kommunicate.markup.getImageTemplate(), options);
+        return Mustache.to_html(Snap.markup.getImageTemplate(), options);
     }
     return '';
 };
-Kommunicate.markup.getHtmlMessageMarkups = function (message) {
+Snap.markup.getHtmlMessageMarkups = function (message) {
     if (
         message &&
-        message.source == KommunicateConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
+        message.source == SnapConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
     ) {
         var uniqueId = 'km-iframe-' + message.groupId;
         return (
@@ -772,7 +772,7 @@ Kommunicate.markup.getHtmlMessageMarkups = function (message) {
     }
     return '';
 };
-Kommunicate.markup.getActionableFormMarkup = function (options) {
+Snap.markup.getActionableFormMarkup = function (options) {
     var action = {};
     var data = {};
     var isActionObject = false;
@@ -783,7 +783,7 @@ Kommunicate.markup.getActionableFormMarkup = function (options) {
                 : {};
         options.payload = payload;
         options.buttons = [];
-        if (kommunicateCommons.isObject(options.payload[0].data)) {
+        if (snapCommons.isObject(options.payload[0].data)) {
             options.payload = options.payload.map(function (item) {
                 data = {};
                 data.type = item.type;
@@ -797,10 +797,10 @@ Kommunicate.markup.getActionableFormMarkup = function (options) {
         }
         options.payload.forEach(function (item, index) {
             if (item.type == 'submit') {
-                isActionObject = kommunicateCommons.isObject(item.action);
+                isActionObject = snapCommons.isObject(item.action);
                 options.actionUrl = item.formAction || (isActionObject && item.action.formAction) || "javascript:void(0);";
                 options.requestType = item.requestType || (isActionObject && item.action.requestType) ;
-                options.postBackToKommunicate = (isActionObject && item.action.postBackToKommunicate) || false;
+                options.postBackToSnap = (isActionObject && item.action.postBackToSnap) || false;
                 options.label = item.name || item.label;
                 options.message =
                     item.message || (isActionObject && item.action.message);
@@ -809,7 +809,7 @@ Kommunicate.markup.getActionableFormMarkup = function (options) {
                 options.payload.splice(index, 1);
             } else {
                 options.payload[index].supported =
-                    KommunicateConstants.FORM_SUPPORTED_FIELDS.indexOf(
+                    SnapConstants.FORM_SUPPORTED_FIELDS.indexOf(
                         item.type
                     ) != -1;
                 options.payload[index][item.type] = true;
@@ -822,10 +822,10 @@ Kommunicate.markup.getActionableFormMarkup = function (options) {
                 }
             }
         });
-        return Mustache.to_html(Kommunicate.markup.getFormTemplate(), options);
+        return Mustache.to_html(Snap.markup.getFormTemplate(), options);
     }
 };
-Kommunicate.markup.getCarouselMarkup = function (options) {
+Snap.markup.getCarouselMarkup = function (options) {
     var cardList = [];
     var cardHtml = {};
     var image = true;
@@ -846,9 +846,9 @@ Kommunicate.markup.getCarouselMarkup = function (options) {
                     buttons[i].action.payload,
                 ]);
                 cardFooter = cardFooter.concat(
-                    Kommunicate.markup.quickRepliesContainerTemplate(
+                    Snap.markup.quickRepliesContainerTemplate(
                         buttons[i].action,
-                        KommunicateConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                        SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                             .CARD_CAROUSEL
                     )
                 );
@@ -869,7 +869,7 @@ Kommunicate.markup.getCarouselMarkup = function (options) {
                     'km-carousel-card-button';
                 buttons[i].action.payload['name'] = buttons[i].name;
                 cardFooter = cardFooter.concat(
-                    Kommunicate.markup.getButtonTemplate(
+                    Snap.markup.getButtonTemplate(
                         buttons[i].action.payload,
                         requestType,
                         'km-carousel-card-button'
@@ -886,7 +886,7 @@ Kommunicate.markup.getCarouselMarkup = function (options) {
                     (buttons[i].action['formData'] = JSON.stringify(formData));
                 formData &&
                     (cardFooter = cardFooter.concat(
-                        Kommunicate.markup.getFormMarkup(buttons[i].action)
+                        Snap.markup.getFormMarkup(buttons[i].action)
                     ));
             }
         }
@@ -934,8 +934,8 @@ Kommunicate.markup.getCarouselMarkup = function (options) {
             cardHtml['carouselHeaderClass'] = carouselHeaderClass;
             cardHtml['carouselInfoWrapperClass'] = carouselInfoWrapperClass;
             item.header &&
-                (cardHtml.header = Kommunicate.markup.cardHeader(item.header));
-            cardHtml.info = Kommunicate.markup.cardInfo(item);
+                (cardHtml.header = Snap.markup.cardHeader(item.header));
+            cardHtml.info = Snap.markup.cardInfo(item);
             item.buttons && (cardHtml.footer = createCardFooter(item.buttons));
             cardList[i] = $applozic.extend([], cardHtml);
             cardList[i].url = item.url;
@@ -944,17 +944,17 @@ Kommunicate.markup.getCarouselMarkup = function (options) {
     var cardCarousel = { payload: cardList };
 
     return Mustache.to_html(
-        Kommunicate.markup.getCarouselTemplate(),
+        Snap.markup.getCarouselTemplate(),
         cardCarousel
     );
 };
-Kommunicate.markup.cardHeader = function (item) {
-    return Mustache.to_html(Kommunicate.markup.getCardHeaderTemplate(), item);
+Snap.markup.cardHeader = function (item) {
+    return Mustache.to_html(Snap.markup.getCardHeaderTemplate(), item);
 };
-Kommunicate.markup.cardInfo = function (item) {
-    return Mustache.to_html(Kommunicate.markup.getCardInfoTemplate(), item);
+Snap.markup.cardInfo = function (item) {
+    return Mustache.to_html(Snap.markup.getCardInfoTemplate(), item);
 };
-Kommunicate.markup.getLinkTarget = function (buttonInfo) {
+Snap.markup.getLinkTarget = function (buttonInfo) {
     buttonInfo.openLinkInNewTab =
         typeof buttonInfo.openLinkInNewTab != 'undefined' &&
         !buttonInfo.openLinkInNewTab
@@ -963,7 +963,7 @@ Kommunicate.markup.getLinkTarget = function (buttonInfo) {
     return buttonInfo.openLinkInNewTab ? '_blank' : '_parent';
 };
 
-Kommunicate.markup.getGenericButtonMarkup = function (metadata) {
+Snap.markup.getGenericButtonMarkup = function (metadata) {
     var buttonPayloadList = metadata.payload
         ? JSON.parse(metadata.payload)
         : [];
@@ -979,22 +979,22 @@ Kommunicate.markup.getGenericButtonMarkup = function (metadata) {
         var singlePayload = buttonPayloadList[i];
         typeof (singlePayload.replyMetadata == "object") && (singlePayload.replyMetadata = JSON.stringify(singlePayload.replyMetadata));
         !singlePayload.type && singlePayload.action && (singlePayload.type = singlePayload.action.type);
-        !singlePayload.replyMetadata && singlePayload.action && singlePayload.action.replyMetadata && kommunicateCommons.isObject(singlePayload.action.replyMetadata) && (singlePayload.replyMetadata = JSON.stringify(singlePayload.action.replyMetadata));
+        !singlePayload.replyMetadata && singlePayload.action && singlePayload.action.replyMetadata && snapCommons.isObject(singlePayload.action.replyMetadata) && (singlePayload.replyMetadata = JSON.stringify(singlePayload.action.replyMetadata));
         singlePayload.hidePostCTA = false;
         if (singlePayload.type == "link" || singlePayload.type == "submit") {
             singlePayload.url = buttonPayloadList[i].action.url || buttonPayloadList[i].action.formAction;
             singlePayload.openLinkInNewTab = buttonPayloadList[i].action.openLinkInNewTab;
             buttonClass += buttonClass + " km-add-more-rooms";
-            buttonContainerHtml += Kommunicate.markup.getButtonTemplate(singlePayload, singlePayload.action.requestType, buttonClass);
-            singlePayload.type == "submit" && (buttonContainerHtml += Kommunicate.markup.getFormMarkup({
+            buttonContainerHtml += Snap.markup.getButtonTemplate(singlePayload, singlePayload.action.requestType, buttonClass);
+            singlePayload.type == "submit" && (buttonContainerHtml += Snap.markup.getFormMarkup({
                 "payload": singlePayload.action
             }))
 
         } else if (singlePayload.type == "quickReply" || singlePayload.type == "suggestedReply") {
             singlePayload.buttonClass = "km-quick-rpy-btn " + buttonClass;
             singlePayload.message = singlePayload.action.message || singlePayload.name;
-            singlePayload.type == "quickReply" && (singlePayload.hidePostCTA = kommunicate._globals.hidePostCTA);
-            buttonContainerHtml += Mustache.to_html(Kommunicate.markup.getGenericSuggestedReplyButton(), singlePayload);
+            singlePayload.type == "quickReply" && (singlePayload.hidePostCTA = snap._globals.hidePostCTA);
+            buttonContainerHtml += Mustache.to_html(Snap.markup.getGenericSuggestedReplyButton(), singlePayload);
         } else if (singlePayload.action && singlePayload.action.type == "submit") {
 
 
@@ -1002,7 +1002,7 @@ Kommunicate.markup.getGenericButtonMarkup = function (metadata) {
     }
     return buttonContainerHtml + '</div>';
 };
-Kommunicate.markup.getVideoMarkup = function (options) {
+Snap.markup.getVideoMarkup = function (options) {
     if (options && options.payload) {
         var payload =
             typeof options.payload == 'string'
@@ -1014,6 +1014,6 @@ Kommunicate.markup.getVideoMarkup = function (options) {
             video.height = video.height || '250px';
         }
         options.payload = payload;
-        return Mustache.to_html(Kommunicate.markup.getVideoTemplate(), options);
+        return Mustache.to_html(Snap.markup.getVideoTemplate(), options);
     }
 };
