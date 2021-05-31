@@ -3,7 +3,7 @@ var snapCommons = new SnapCommons();
 function KmCustomTheme() {
     var _this = this;
     var WIDGET_SETTINGS;
-    var DEFAULT_BACKGROUND_COLOR = '#5553B7';
+    var DEFAULT_BACKGROUND_COLOR = '#1d50a2';
     var DEFAULT_SECONDARY_BACKGROUND_COLOR = '#e6e5ec';
 
     _this.init = function (optns) {
