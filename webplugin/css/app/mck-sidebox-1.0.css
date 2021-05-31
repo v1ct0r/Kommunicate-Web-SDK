@@ -105,7 +105,7 @@
     box-shadow: 0 1.5rem 2rem rgba(0,0,0,.3);
 }
 .mck-sidebox-launcher:focus {
-	box-shadow: #5553B7 0px 0px 0px 5px;
+	box-shadow: #1D50A2 0px 0px 0px 5px;
 }
 .mck-running-on > a{
 	text-decoration: none;
@@ -120,7 +120,7 @@
 
 .mck-running-on > a:hover{
 	text-decoration:underline;
-	color: #5553B7 !important
+	color: #1D50A2 !important
 }
 /* #mck-textbox-container .mck-text-box-panel{
 	filter:grayscale(100);
@@ -306,7 +306,7 @@
 }
 
 .mck-sidebox a {
-	color: #5553B7;
+	color: #1D50A2;
 }
 
 .mck-sidebox  a {
@@ -938,7 +938,7 @@
 	min-height: 60px;
 	text-align: left;
 	border-bottom: 1px solid #e5e5e5;
-	background-color:#5553b7;
+	background-color:#1D50A2;
 	color:white;
 }
 
@@ -2146,7 +2146,7 @@
 
 .mck-msg-right .mck-msg-box:after {
 	border-color: transparent;
-	border-left-color: #5553B7;
+	border-left-color: #1D50A2;
 	border-width: 11px;
 }
 
@@ -2871,7 +2871,7 @@ display: none;
 	padding: 10px 14px 10px;
 	position: relative;
 	color: rgba(255, 255, 255, 0.87);
-	background-color: #5553B7;
+	background-color: #1D50A2;
 }
 
 .mck-msg-avator-bubble.mck-msg-right .mck-msg-box {
@@ -4063,7 +4063,7 @@ display: none;
 	/* width:100% !important; */
 }
 #mck-msg-new{
-	background-color: #5553b7;
+	background-color: #1D50A2;
     color: white;
     border-radius: 26px;
     box-shadow: 2px 2px 6px 1px rgba(24, 23, 23, 0.35);
@@ -4303,10 +4303,10 @@ display: none;
 	margin-left: 35px;
 }
 .km-faqbtn{
-	background-color: #5553b7;
+	background-color: #1D50A2;
 }
 .button:hover #km-faqbtn {
-	background-color: #5553b7;
+	background-color: #1D50A2;
 }
 
 .km-faqback{
@@ -4551,7 +4551,7 @@ div#mck-tab-title.mck-tab-title{
     font-stretch: normal;
     line-height: normal;
     letter-spacing: 0.7px;
-    color: #5553B7;
+    color: #1D50A2;
     padding-left: 10px;
 	text-decoration: none;
 	margin-left: 8px;
@@ -5042,8 +5042,8 @@ box-shadow: 0 0 4px rgba(0,0,0,.22), 0 4px 8px rgba(0,0,0,.31);
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    border: solid 2.5px #5553b7;
-    background: #aaa;	
+    border: solid 2.5px #1D50A2;
+    background: #aaa;
 }
 .mck-agent-image-container .mck-agent-status-indicator.mck-status--online {
 	background-color: #2bef84;
@@ -5196,7 +5196,7 @@ box-shadow: 0 0 4px rgba(0,0,0,.22), 0 4px 8px rgba(0,0,0,.31);
 }
 
 #km-local-file-system-warning .km-learn-more {
-    background-color: #5553b7;
+    background-color: #1D50A2;
     color: #fff;
     outline: 0;
     border: none;
@@ -5282,7 +5282,7 @@ div[name="message"]:last-child {
 	align-items: center;
 	justify-content: center;
 	animation: kmScaleAnim .25s cubic-bezier(0.25, 0.1, 0.25, 1);
-	background: #5553b7;
+	background: #1D50A2;
 	white-space: pre-line;
 }
 
@@ -5536,7 +5536,7 @@ div#mck-rated:before{
 	color: #fff;
 	font-size: 15px;
 	border: none;
-	background: #5553b7;
+	background: #1D50A2;
 }
 
 #mck-submit-comment:disabled {
