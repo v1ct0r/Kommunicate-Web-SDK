@@ -9263,7 +9263,7 @@ var userOverride = {
                             //Todo: replace this with role once its build at Applozic side.
                             imgsrctag =
                                 '<img src="' +
-                                'https://cdn.snap.io/snap/bot_default_image.png' +
+                                'http://45.79.141.152/snap/bot_default_image.png' +
                                 '" alt="' +
                                 profileDisplayName +
                                 '"/>';
