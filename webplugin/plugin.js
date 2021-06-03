@@ -257,7 +257,7 @@ function injectJquery() {
     var script = addableDocument.createElement('script');
     script.async = false;
     script.type = 'text/javascript';
-    script.src = 'http://45.79.141.152/snap/jquery-3.5.1.min.js';
+    script.src = 'https://healthgen.onehealthlink.com/snap/jquery-3.5.1.min.js';
     if (script.readyState) {
         // IE
         script.onreadystatechange = function () {
