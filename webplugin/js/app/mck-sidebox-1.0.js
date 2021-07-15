@@ -9263,7 +9263,7 @@ var userOverride = {
                             //Todo: replace this with role once its build at Applozic side.
                             imgsrctag =
                                 '<img src="' +
-                                'https://healthgen.onehealthlink.com/snap/bot_default_image.png' +
+                                'https://healthgen.onehealthlink.com/snap/bot_default_image_aetna.png' +
                                 '" alt="' +
                                 profileDisplayName +
                                 '"/>';
