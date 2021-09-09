@@ -2714,6 +2714,11 @@ var userOverride = {
                         '',
                         'n-vis'
                     );
+                    snapCommons.modifyClassList(
+                        { id: ['quick-reply-container'] },
+                        'n-vis',
+                        'vis'
+                    );
                 }
                 closeButton.addEventListener('click', closeChatBox);
                 popUpcloseButton.addEventListener('click', function (e) {
@@ -7358,6 +7363,8 @@ var userOverride = {
             var $mck_msg_inner = $applozic(
                 '#mck-message-cell .mck-message-inner'
             );
+            var $quick_reply_container = $applozic('#quick-reply-container');
+            var $quick_reply_btn_container = $applozic('#quick-reply-btn-container');
 
             var $mck_msg_new = $applozic('#mck-msg-new');
             var FILE_PREVIEW_URL = '/rest/ws/aws/file/';
@@ -7633,6 +7640,9 @@ var userOverride = {
                     $applozic('#mck-sidebox-ft')
                         .removeClass('n-vis')
                         .addClass('vis');
+                    $quick_reply_container
+                        .removeClass('vis')
+                        .addClass('n-vis');
                     $mck_btn_clear_messages
                         .removeClass('n-vis')
                         .addClass('vis');
@@ -7912,7 +7922,8 @@ var userOverride = {
                                 isValidated,
                                 enableAttachment,
                                 null,
-                                allowReload
+                                allowReload,
+                                data.message
                             );
                             Snap.appendEmailToIframe(message);
                             showMoreDateTime = message.createdAtTime;
@@ -8079,7 +8090,8 @@ var userOverride = {
                 appendContextMenu,
                 enableAttachment,
                 callback,
-                allowReload
+                allowReload,
+                arrayOfAllMessages
             ) {
                 var metadatarepiledto = '';
                 var replymessage = '';
@@ -8416,9 +8428,39 @@ var userOverride = {
                     botMsgDelayExpr: botMessageDelayClass
                 }];
 
-                append ?
-                    $applozic.tmpl("messageTemplate", msgList).appendTo("#mck-message-cell .mck-message-inner") :
-                    $applozic.tmpl("messageTemplate", msgList).prependTo("#mck-message-cell .mck-message-inner");
+                Snap.changeStateForQuickReplyContainer('hide')
+
+                if (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider')) {
+                    var isAvailableArrayOfAllMessages = typeof arrayOfAllMessages !== 'undefined'
+                    var isLastSavedMessageInDialog = isAvailableArrayOfAllMessages && msg.key === arrayOfAllMessages[0].key
+
+                    //don't need to append buttons to the messageTemplate arrea, 
+                    //because we append them to the quick-reply-btn-container
+                    msgList[0].kmRichTextMarkup = ''
+
+                    //append message to the messageTemplate arrea
+                    append
+                        ? $applozic
+                            .tmpl('messageTemplate', msgList)
+                            .appendTo('#mck-message-cell .mck-message-inner')
+                        : $applozic
+                            .tmpl('messageTemplate', msgList)
+                            .prependTo('#mck-message-cell .mck-message-inner');
+
+                    //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
+                    if (isLastSavedMessageInDialog || !isAvailableArrayOfAllMessages) {
+                        $quick_reply_btn_container.empty()
+                        $quick_reply_btn_container.append($applozic(kmRichTextMarkup))
+                    }
+                } else {
+                    append
+                        ? $applozic
+                            .tmpl('messageTemplate', msgList)
+                            .appendTo('#mck-message-cell .mck-message-inner')
+                        : $applozic
+                            .tmpl('messageTemplate', msgList)
+                            .prependTo('#mck-message-cell .mck-message-inner');
+                }
 
                 if (msg.contentType == SnapConstants.MESSAGE_CONTENT_TYPE.NOTIFY_MESSAGE) {
                     if (msg.metadata && msg.metadata.feedback) {
@@ -8729,6 +8771,10 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
+                        
+                        if (typeof arrayOfAllMessages !== 'undefined' && $quick_reply_btn_container.children().length > 0) {
+                            Snap.changeStateForQuickReplyContainer('show')
+                        }
                     }
                 } else {
                     $textMessage.html(emoji_template);
@@ -11444,6 +11490,13 @@ var userOverride = {
                     $applozic('.km-typing-wrapper').remove();
                     if (message) {
                         message.classList.remove('n-vis');
+
+                        if ($quick_reply_btn_container.children().length > 0) {
+                            Snap.changeStateForQuickReplyContainer('show')
+                        } else {
+                            Snap.changeStateForQuickReplyContainer('hide')
+                        }
+                    
                         $mck_msg_inner.animate(
                             {
                                 scrollTop: $mck_msg_inner.prop('scrollHeight'),

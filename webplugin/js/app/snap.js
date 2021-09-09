@@ -505,10 +505,10 @@ $applozic.extend(true, Snap, {
                     .CARD_CAROUSEL:
                     return sliderClass;
                     break;
-                case '6':
-                    return 'km-border-less-container km-cta-multi-button-container';
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                    .QUICK_REPLY:
+                    return 'km-border-less-container km-cta-multi-button-container custom-quick-reply';
                     break;
-
                 default:
                     return 'km-fixed-container';
                     break;
@@ -778,9 +778,19 @@ $applozic.extend(true, Snap, {
             return;
         }
         var parentEle = element.parentElement;
-        while (!parentEle.classList.contains('mck-msg-left')) {
+        var isQuickReplyContainer = parentEle.classList.contains('quick-reply-btn-container')
+
+        if (isQuickReplyContainer) {
+            parentEle.innerHTML = '';
+            parentEle.parentElement.classList.add('n-vis');
+
+            return;
+        }
+
+        while (!parentEle.classList.contains('mck-msg-left') && !isQuickReplyContainer) {
             parentEle = parentEle.parentElement;
         }
+
         parentEle.classList.add('n-vis');
     },
     getAllSiblings: function (element) {
@@ -796,5 +806,29 @@ $applozic.extend(true, Snap, {
             sibling = sibling.nextSibling;
         }
         return siblings;
+    },
+    changeStateForQuickReplyContainer: function (state) {
+        // debugger
+        var $quickReplyContainer = $applozic('#quick-reply-container')
+        // var $quickReplyBtnContainer = $applozic('#quick-reply-btn-container')
+        var $textareaWrapper = $applozic('#mck-sidebox-ft')
+
+        if (state === 'show') {
+            $quickReplyContainer
+                .removeClass('n-vis')
+                .addClass('vis');
+            
+            $textareaWrapper
+                .removeClass('vis')
+                .addClass('n-vis');
+        } else {
+            $quickReplyContainer
+                .removeClass('vis')
+                .addClass('n-vis');
+
+            $textareaWrapper
+                .removeClass('n-vis')
+                .addClass('vis');
+        }
     },
 });

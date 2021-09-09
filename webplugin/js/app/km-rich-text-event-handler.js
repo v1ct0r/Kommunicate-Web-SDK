@@ -53,6 +53,11 @@ Snap.attachEvents = function ($applozic) {
         '.km-quick-replies',
         Snap.richMsgEventHandler.processQuickReplies
     );
+    $applozic('#quick-reply-container').on(
+        'click',
+        '.km-quick-replies',
+        Snap.richMsgEventHandler.processQuickReplies
+    );
     $applozic('#mck-message-cell').on(
         'click',
         '.km-list-item-handler',

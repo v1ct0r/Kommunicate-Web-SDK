@@ -6192,3 +6192,34 @@ body.accesibility :focus {
 .mck-msg-left.contains-quick-replies-only:not(:last-child) {
 	display: none;
 }
+
+/* Custom quick reply buttons */
+.quick-reply-container {
+	display: flex;
+	flex-direction: column !important;
+	margin: 0 15px 20px;
+}
+
+.quick-reply-container .quick-reply-btn-container {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.quick-reply-container .quick-reply-btn-container button:last-of-type {
+	margin-right: none !important;
+}
+
+.quick-reply-container hr {
+	height: 1px;
+	margin: 15px 0 20px 0;
+	border: none;
+	background-color: #cecbcb;
+}
+
+.quick-reply-container h3 {
+	font-size: 15px;
+	text-align: center;
+	margin-top: 0;
+	margin-bottom: 5px;
+}

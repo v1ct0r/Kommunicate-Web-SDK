@@ -1306,7 +1306,7 @@ SnapUI = {
                 : backButton.classList.add('force-n-vis');
         }
     },
-        handleWaitingQueueMessage: function () {
+    handleWaitingQueueMessage: function () {
             var group = CURRENT_GROUP_DATA;
             var groupId = group && group.tabId;
             var waitingStatus = group && group.conversationStatus == Snap.conversationHelper.status.WAITING;

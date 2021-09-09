@@ -1326,6 +1326,8 @@
     outline: none;
 }
 .km-cta-multi-button-container button.km-quick-replies {
+    min-width: 105px;
+    line-height: 22px;
     font-size: 14px;
     border: 1px solid;
     background-color: white;

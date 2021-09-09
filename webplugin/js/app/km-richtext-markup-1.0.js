@@ -286,9 +286,9 @@ Snap.markup = {
             `>Submit</button>
                 </div>
             </div>
-            `
-        )},
-getListMarkup:function(){
+            `)
+    },
+    getListMarkup:function(){
     return `<div class="km-message km-received km-chat-faq-list km-list-container" style="">
      <div class="km-faq-list--container"  >
              <div class="km-faq-list--header">
