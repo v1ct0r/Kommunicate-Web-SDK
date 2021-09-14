@@ -108,10 +108,7 @@ $applozic.extend(true, Snap, {
             }, SET_INTERVAL_DURATION);
             var timeout = setTimeout(function () {
                 conversationDetail.allowMessagesViaSocket = true;
-                Snap.client.createConversation(
-                    conversationDetail,
-                    callback
-                );
+                Snap.client.createConversation(conversationDetail, callback);
                 clearInterval(interval);
             }, SET_TIMEOUT_DURATION);
         }
@@ -155,19 +152,13 @@ $applozic.extend(true, Snap, {
         }
     },
     updateConversationDetail: function (conversationDetail) {
-        var snapSettings = SnapUtils.getDataFromKmSession(
-            'settings'
-        );
-        if (
-            typeof snapSettings === 'undefined' ||
-            snapSettings === null
-        ) {
+        var snapSettings = SnapUtils.getDataFromKmSession('settings');
+        if (typeof snapSettings === 'undefined' || snapSettings === null) {
             return conversationDetail;
         }
         // Update welcome message only if some value for it is coming in conversationDetails parameter or snapSettings.
         conversationDetail.WELCOME_MESSAGE =
-            conversationDetail.WELCOME_MESSAGE ||
-            snapSettings.WELCOME_MESSAGE;
+            conversationDetail.WELCOME_MESSAGE || snapSettings.WELCOME_MESSAGE;
         conversationDetail.defaultAssignee =
             conversationDetail.assignee || snapSettings.defaultAssignee;
         conversationDetail.agentIds =
@@ -242,9 +233,7 @@ $applozic.extend(true, Snap, {
         // default bot is not included in client groupId generation
         var loggedInUserName =
             snap._globals.userId ||
-            SnapUtils.getCookie(
-                SnapConstants.COOKIES.SNAP_LOGGED_IN_ID
-            );
+            SnapUtils.getCookie(SnapConstants.COOKIES.SNAP_LOGGED_IN_ID);
         var agentsNameStr = agentList.join('_');
 
         var botsNameStr = botList.join('_');
@@ -378,9 +367,7 @@ $applozic.extend(true, Snap, {
         ) {
             window.$applozic.fn.applozic('logout');
         }
-        SnapUtils.removeItemFromLocalStorage(
-            'mckActiveConversationInfo'
-        );
+        SnapUtils.removeItemFromLocalStorage('mckActiveConversationInfo');
         SnapUtils.deleteUserCookiesOnLogout();
         parent.window && parent.window.removeSnapScripts();
     },
@@ -389,8 +376,7 @@ $applozic.extend(true, Snap, {
     },
     triggerEvent: function (event, options) {
         $applozic.ajax({
-            url:
-                Snap.getBaseUrl() + '/applications/events?type=' + event,
+            url: Snap.getBaseUrl() + '/applications/events?type=' + event,
             type: 'post',
             data: JSON.stringify({
                 conversationId: options.groupId,
@@ -480,8 +466,7 @@ $applozic.extend(true, Snap, {
             (typeof msg.fileMeta === 'object' &&
                 msg.contentType ==
                     SnapConstants.MESSAGE_CONTENT_TYPE.ATTACHMENT) ||
-            msg.contentType ==
-                SnapConstants.MESSAGE_CONTENT_TYPE.LOCATION
+            msg.contentType == SnapConstants.MESSAGE_CONTENT_TYPE.LOCATION
         );
     },
     getContainerTypeForRichMessage: function (message) {
@@ -499,14 +484,11 @@ $applozic.extend(true, Snap, {
                 // 2 for get room pax info template
                 case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .HOTEL_BOOKING_CARD:
-                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                    .ROOM_DETAIL:
-                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                    .CARD_CAROUSEL:
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.ROOM_DETAIL:
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL:
                     return sliderClass;
                     break;
-                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                    .QUICK_REPLY:
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.QUICK_REPLY:
                     return 'km-border-less-container km-cta-multi-button-container custom-quick-reply';
                     break;
                 default:
@@ -516,8 +498,7 @@ $applozic.extend(true, Snap, {
         } else if (
             message.contentType ==
                 SnapConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML &&
-            message.source ==
-                SnapConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
+            message.source == SnapConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
         ) {
             return 'km-fixed-container';
         }
@@ -539,8 +520,7 @@ $applozic.extend(true, Snap, {
         if (metadata.templateId) {
             switch (metadata.templateId) {
                 // 1 for get room pax info template
-                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                    .ROOM_COUNT:
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.ROOM_COUNT:
                     return Snap.markup.getHotelRoomPaxInfoTemplate();
                     break;
                 //2 for hotel card template
@@ -552,43 +532,35 @@ $applozic.extend(true, Snap, {
                     );
                     break;
                 // 3 for button container
-                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                    .LINK_BUTTON:
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.LINK_BUTTON:
                     return Snap.markup.buttonContainerTemplate(metadata);
                     break;
-                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                    .PASSENGER_DETAIL:
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.PASSENGER_DETAIL:
                     return Snap.markup.getPassangerDetail(metadata);
                     break;
-                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                    .ROOM_DETAIL:
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.ROOM_DETAIL:
                     return Snap.markup.getRoomDetailsContainerTemplate(
                         JSON.parse(metadata.hotelRoomDetail || '[]'),
                         metadata.sessionId
                     );
                     break;
-                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                    .QUICK_REPLY:
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.QUICK_REPLY:
                     return Snap.markup.quickRepliesContainerTemplate(
                         metadata,
-                        SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                            .QUICK_REPLY
+                        SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.QUICK_REPLY
                     );
                     break;
                 case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.LIST:
                     return Snap.markup.getListContainerMarkup(metadata);
-                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                    .DIALOG_BOX:
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.DIALOG_BOX:
                     return Snap.markup.getDialogboxContainer(metadata);
                 case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.IMAGE:
                     return Snap.markup.getImageContainer(metadata);
                     break;
-                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                    .CARD_CAROUSEL:
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL:
                     return Snap.markup.getCarouselMarkup(metadata);
                     break;
-                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                    .GENERIC_BUTTONS:
+                case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.GENERIC_BUTTONS:
                 case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
                     .GENERIC_BUTTONS_V2:
                     return Snap.markup.getGenericButtonMarkup(metadata);
@@ -605,8 +577,7 @@ $applozic.extend(true, Snap, {
         } else if (
             message.contentType ==
                 SnapConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML &&
-            message.source ==
-                SnapConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
+            message.source == SnapConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
         ) {
             return Snap.markup.getHtmlMessageMarkups(message);
         } else {
@@ -643,9 +614,8 @@ $applozic.extend(true, Snap, {
     updateChatContext: function (options) {
         if (typeof options == 'object') {
             var chatContext =
-                SnapUtils.getSettings(
-                    SnapConstants.SETTINGS.KM_CHAT_CONTEXT
-                ) || {};
+                SnapUtils.getSettings(SnapConstants.SETTINGS.KM_CHAT_CONTEXT) ||
+                {};
             for (var key in options) {
                 chatContext[key] = options[key];
             }
@@ -659,9 +629,7 @@ $applozic.extend(true, Snap, {
     },
     updateUserLanguage: function (languageCode) {
         var chatContext =
-            SnapUtils.getSettings(
-                SnapConstants.SETTINGS.KM_CHAT_CONTEXT
-            ) || {};
+            SnapUtils.getSettings(SnapConstants.SETTINGS.KM_CHAT_CONTEXT) || {};
         chatContext[
             SnapConstants.SETTINGS.KM_USER_LANGUAGE_CODE
         ] = languageCode;
@@ -674,9 +642,7 @@ $applozic.extend(true, Snap, {
                 'popup-enabled',
                 ''
             );
-        var snapIframe = parent.document.getElementById(
-            'snap-widget-iframe'
-        );
+        var snapIframe = parent.document.getElementById('snap-widget-iframe');
         var snapIframeDocument = snapIframe.contentDocument;
         var popUpCloseButton = snapIframeDocument.getElementById(
             'km-popup-close-button'
@@ -685,14 +651,10 @@ $applozic.extend(true, Snap, {
         snapIframe.classList.remove('km-iframe-notification');
         snapIframe.classList.remove('km-iframe-closed');
         isPopupEnabled
-            ? (snapIframe.classList.add(
-                  'km-iframe-dimension-with-popup'
-              ),
+            ? (snapIframe.classList.add('km-iframe-dimension-with-popup'),
               popUpCloseButton && (popUpCloseButton.style.display = 'flex'))
             : snapIframe.classList.add('km-iframe-dimension-no-popup');
-        snapIframe.classList.add(
-            'snap-iframe-enable-media-query'
-        );
+        snapIframe.classList.add('snap-iframe-enable-media-query');
     },
     // add css to style component in window
     customizeWidgetCss: function (classSettings) {
@@ -711,12 +673,9 @@ $applozic.extend(true, Snap, {
     updateUserTimezone: function (timezone) {
         if (SnapUtils.isValidTimeZone(timezone)) {
             var chatContext =
-                SnapUtils.getSettings(
-                    SnapConstants.SETTINGS.KM_CHAT_CONTEXT
-                ) || {};
-            chatContext[
-                SnapConstants.SETTINGS.KM_USER_TIMEZONE
-            ] = timezone;
+                SnapUtils.getSettings(SnapConstants.SETTINGS.KM_CHAT_CONTEXT) ||
+                {};
+            chatContext[SnapConstants.SETTINGS.KM_USER_TIMEZONE] = timezone;
             Snap.updateChatContext(chatContext);
         }
     },
@@ -724,13 +683,9 @@ $applozic.extend(true, Snap, {
      * @param {Boolean} display
      */
     displaySnapWidget: function (display) {
-        var snapIframe = parent.document.getElementById(
-            'snap-widget-iframe'
-        );
+        var snapIframe = parent.document.getElementById('snap-widget-iframe');
         display
-            ? snapIframe.classList.remove(
-                  'snap-hide-custom-iframe'
-              )
+            ? snapIframe.classList.remove('snap-hide-custom-iframe')
             : snapIframe.classList.add('snap-hide-custom-iframe');
     },
     // check if the message needs to be processed by addMessage
@@ -778,7 +733,9 @@ $applozic.extend(true, Snap, {
             return;
         }
         var parentEle = element.parentElement;
-        var isQuickReplyContainer = parentEle.classList.contains('quick-reply-btn-container')
+        var isQuickReplyContainer = parentEle.classList.contains(
+            'quick-reply-btn-container'
+        );
 
         if (isQuickReplyContainer) {
             parentEle.innerHTML = '';
@@ -787,7 +744,10 @@ $applozic.extend(true, Snap, {
             return;
         }
 
-        while (!parentEle.classList.contains('mck-msg-left') && !isQuickReplyContainer) {
+        while (
+            !parentEle.classList.contains('mck-msg-left') &&
+            !isQuickReplyContainer
+        ) {
             parentEle = parentEle.parentElement;
         }
 
@@ -807,28 +767,25 @@ $applozic.extend(true, Snap, {
         }
         return siblings;
     },
-    changeStateForQuickReplyContainer: function (state) {
-        // debugger
-        var $quickReplyContainer = $applozic('#quick-reply-container')
-        // var $quickReplyBtnContainer = $applozic('#quick-reply-btn-container')
-        var $textareaWrapper = $applozic('#mck-sidebox-ft')
-
+    changeVisibilityStateForElement: function ($element, state) {
         if (state === 'show') {
-            $quickReplyContainer
-                .removeClass('n-vis')
-                .addClass('vis');
-            
-            $textareaWrapper
-                .removeClass('vis')
-                .addClass('n-vis');
+            $element.removeClass('n-vis').addClass('vis');
         } else {
-            $quickReplyContainer
-                .removeClass('vis')
-                .addClass('n-vis');
-
-            $textareaWrapper
-                .removeClass('n-vis')
-                .addClass('vis');
+            $element.removeClass('vis').addClass('n-vis');
         }
+    },
+
+    changeTextInputState: function (msg) {
+        var hintTextForTextInput = '';
+        var isEnableTextInput = true;
+
+        $applozic('#mck-text-box').attr('contenteditable', isEnableTextInput);
+
+        $applozic('#mck-text-box').attr(
+            'data-text',
+            hintTextForTextInput
+                ? hintTextForTextInput
+                : MCK_LABELS['input.message']
+        );
     },
 });

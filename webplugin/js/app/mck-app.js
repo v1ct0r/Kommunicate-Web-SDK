@@ -285,9 +285,7 @@ function ApplozicSidebox() {
     function mckInitPluginScript() {
         try {
             var options = applozic._globals;
-            MCK_COOKIE_DOMAIN = SnapUtils.findCookieDomain(
-                document.domain
-            );
+            MCK_COOKIE_DOMAIN = SnapUtils.findCookieDomain(document.domain);
             for (var index in mck_third_party_scripts) {
                 var data = mck_third_party_scripts[index];
                 if (data.name === 'locationPicker') {
@@ -417,16 +415,39 @@ function ApplozicSidebox() {
             options['collectFeedback'] = options.appSettings.collectFeedback;
             options['chatPopupMessage'] = options.appSettings.chatPopupMessage;
 
-            var pseudoNameEnabled = (widgetSettings && (typeof widgetSettings.pseudonymsEnabled !== 'undefined')) ? widgetSettings.pseudonymsEnabled : KM_PLUGIN_SETTINGS.pseudoNameEnabled;
-            options.metadata = typeof options.metadata == 'object' ? options.metadata : {};
-            options.fileUpload = options.fileUpload || (widgetSettings && widgetSettings.fileUpload);
-            options.connectSocketOnWidgetClick = options.connectSocketOnWidgetClick != null ? options.connectSocketOnWidgetClick : (widgetSettings && widgetSettings.connectSocketOnWidgetClick);
-            options.voiceInput = options.voiceInput != null ? options.voiceInput : (widgetSettings && widgetSettings.voiceInput);
-            options.voiceOutput = options.voiceOutput != null ? options.voiceOutput : (widgetSettings && widgetSettings.voiceOutput);
-            options.attachment = options.attachment != null ? options.attachment : (widgetSettings && widgetSettings.attachment);
-            options.hidePostCTA = options.hidePostCTA != null ? options.hidePostCTA : (widgetSettings && widgetSettings.hidePostCTA);
+            var pseudoNameEnabled =
+                widgetSettings &&
+                typeof widgetSettings.pseudonymsEnabled !== 'undefined'
+                    ? widgetSettings.pseudonymsEnabled
+                    : KM_PLUGIN_SETTINGS.pseudoNameEnabled;
+            options.metadata =
+                typeof options.metadata == 'object' ? options.metadata : {};
+            options.fileUpload =
+                options.fileUpload ||
+                (widgetSettings && widgetSettings.fileUpload);
+            options.connectSocketOnWidgetClick =
+                options.connectSocketOnWidgetClick != null
+                    ? options.connectSocketOnWidgetClick
+                    : widgetSettings &&
+                      widgetSettings.connectSocketOnWidgetClick;
+            options.voiceInput =
+                options.voiceInput != null
+                    ? options.voiceInput
+                    : widgetSettings && widgetSettings.voiceInput;
+            options.voiceOutput =
+                options.voiceOutput != null
+                    ? options.voiceOutput
+                    : widgetSettings && widgetSettings.voiceOutput;
+            options.attachment =
+                options.attachment != null
+                    ? options.attachment
+                    : widgetSettings && widgetSettings.attachment;
+            options.hidePostCTA =
+                options.hidePostCTA != null
+                    ? options.hidePostCTA
+                    : widgetSettings && widgetSettings.hidePostCTA;
 
-            SnapUtils.deleteDataFromKmSession("settings");
+            SnapUtils.deleteDataFromKmSession('settings');
 
             var pseudoNameEnabled =
                 widgetSettings &&
@@ -590,16 +611,13 @@ function ApplozicSidebox() {
         xhr.send(data);
     }
     function loadErrorTracking(userId) {
-        var snapIframe = parent.document.getElementById(
-            'snap-widget-iframe'
-        );
+        var snapIframe = parent.document.getElementById('snap-widget-iframe');
         var url = snapIframe
             ? snapIframe.getAttribute('data-url')
             : parent.window.location.href;
         userId =
-            SnapUtils.getCookie(
-                SnapConstants.COOKIES.SNAP_LOGGED_IN_ID
-            ) || userId;
+            SnapUtils.getCookie(SnapConstants.COOKIES.SNAP_LOGGED_IN_ID) ||
+            userId;
         Sentry.init({
             dsn: sentryConfig.dsn,
             release: SnapConstants.KM_WIDGET_RELEASE_VERSION,
@@ -626,15 +644,9 @@ function ApplozicSidebox() {
             expiresInDays: 30,
             domain: MCK_COOKIE_DOMAIN,
         });
-        if (
-            !(
-                snapSettings.preLeadCollection ||
-                snapSettings.askUserDetails
-            )
-        ) {
+        if (!(snapSettings.preLeadCollection || snapSettings.askUserDetails)) {
             SnapUtils.setCookie({
-                name:
-                    SnapConstants.COOKIES.IS_USER_ID_FOR_LEAD_COLLECTION,
+                name: SnapConstants.COOKIES.IS_USER_ID_FOR_LEAD_COLLECTION,
                 value: false,
                 expiresInDays: 30,
                 domain: MCK_COOKIE_DOMAIN,
@@ -667,26 +679,18 @@ function ApplozicSidebox() {
         ) {
             SnapUtils.deleteUserCookiesOnLogout();
             sessionStorage.removeItem('snap');
-            SnapUtils.removeItemFromLocalStorage(
-                applozic._globals.appId
-            );
+            SnapUtils.removeItemFromLocalStorage(applozic._globals.appId);
             ALStorage.clearSessionStorageElements();
-            SnapUtils.removeItemFromLocalStorage(
-                'mckActiveConversationInfo'
-            );
+            SnapUtils.removeItemFromLocalStorage('mckActiveConversationInfo');
         }
         // TODO: Handle case where internet disconnects and sessionEndTime is not updated.
         window.addEventListener('beforeunload', function (event) {
             // Cancel the event as stated by the standard.
             var details =
-                SnapUtils.getItemFromLocalStorage(
-                    applozic._globals.appId
-                ) || {};
+                SnapUtils.getItemFromLocalStorage(applozic._globals.appId) ||
+                {};
             details.sessionEndTime = new Date().getTime();
-            SnapUtils.setItemToLocalStorage(
-                applozic._globals.appId,
-                details
-            );
+            SnapUtils.setItemToLocalStorage(applozic._globals.appId, details);
         });
     }
 }

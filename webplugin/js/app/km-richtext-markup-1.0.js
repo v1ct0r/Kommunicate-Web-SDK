@@ -203,7 +203,7 @@ Snap.markup = {
 
     getButtonTemplate: function (options, requestType, buttonClass) {
         var linkSvg =
-            '<span><svg width="12" height="12" viewBox="0 0 12 12"><path class="km-custom-widget-stroke" fill="none" stroke="#754794" d="M8.111 5.45v2.839A.711.711 0 0 1 7.4 9H1.711A.711.711 0 0 1 1 8.289V2.6a.71.71 0 0 1 .711-.711H4.58M5.889 1h2.667C8.8 1 9 1.199 9 1.444v2.667m-.222-2.889L4.503 5.497" /></svg></span>';
+            '<span><svg width="16" height="16" viewBox="0 0 12 12"><path class="km-custom-widget-stroke" fill="none" stroke="#754794" d="M8.111 5.45v2.839A.711.711 0 0 1 7.4 9H1.711A.711.711 0 0 1 1 8.289V2.6a.71.71 0 0 1 .711-.711H4.58M5.889 1h2.667C8.8 1 9 1.199 9 1.444v2.667m-.222-2.889L4.503 5.497" /></svg></span>';
 
         if (options.type == 'link') {
             return (
@@ -286,10 +286,11 @@ Snap.markup = {
             `>Submit</button>
                 </div>
             </div>
-            `)
+            `
+        );
     },
-    getListMarkup:function(){
-    return `<div class="km-message km-received km-chat-faq-list km-list-container" style="">
+    getListMarkup: function () {
+        return `<div class="km-message km-received km-chat-faq-list km-list-container" style="">
      <div class="km-faq-list--container"  >
              <div class="km-faq-list--header">
                      {{{headerImgSrc}}}
@@ -570,10 +571,7 @@ Snap.markup.getFormMarkup = function (options) {
         return formMarkup;
     }
 };
-Snap.markup.quickRepliesContainerTemplate = function (
-    options,
-    template
-) {
+Snap.markup.quickRepliesContainerTemplate = function (options, template) {
     var payload = JSON.parse(options.payload);
     var buttonClass;
     var hidePostCTA = snap._globals.hidePostCTA;
@@ -622,10 +620,7 @@ Snap.markup.getHotelRoomPaxInfoTemplate = function (roomCount) {
     );
 };
 
-Snap.markup.getHotelCardContainerTemplate = function (
-    hotelList,
-    sessionId
-) {
+Snap.markup.getHotelCardContainerTemplate = function (hotelList, sessionId) {
     var hotelListMarkup = '';
     for (var i = 0; i < hotelList.length; i++) {
         hotelListMarkup =
@@ -639,10 +634,7 @@ Snap.markup.getHotelCardContainerTemplate = function (
     );
 };
 
-Snap.markup.getRoomDetailsContainerTemplate = function (
-    roomList,
-    sessionId
-) {
+Snap.markup.getRoomDetailsContainerTemplate = function (roomList, sessionId) {
     var roomDetails = roomList.HotelRoomsDetails;
     var roomListMarkup = '';
     for (var i = 0; i < roomDetails.length; i++) {
@@ -650,85 +642,115 @@ Snap.markup.getRoomDetailsContainerTemplate = function (
             roomListMarkup +
             Snap.markup.getRoomDetailTemplate(roomDetails[i], sessionId);
     }
-    return `<div class="km-card-room-detail-container  km-div-slider">` + roomListMarkup + `</div>`
-}
+    return (
+        `<div class="km-card-room-detail-container  km-div-slider">` +
+        roomListMarkup +
+        `</div>`
+    );
+};
 Snap.markup.getListContainerMarkup = function (metadata) {
-    const buttonClass = { link: "km-link-button", submit: "" }
+    const buttonClass = { link: 'km-link-button', submit: '' };
     if (metadata && metadata.payload) {
         var json = JSON.parse(metadata.payload);
         if (json.headerImgSrc) {
-            json.headerImgSrc = '<div class="km-faq-list--header_text-img"><img src= "' + json.headerImgSrc + '"  alt = "image" /></div>';
-        } if (json.headerText) {
-            json.headerText = '<p class="km-faq-list--header_text">' + json.headerText + "</p>"
+            json.headerImgSrc =
+                '<div class="km-faq-list--header_text-img"><img src= "' +
+                json.headerImgSrc +
+                '"  alt = "image" /></div>';
+        }
+        if (json.headerText) {
+            json.headerText =
+                '<p class="km-faq-list--header_text">' +
+                json.headerText +
+                '</p>';
         }
         if (json.elements && json.elements.length) {
-            json.elementClass = "vis";
+            json.elementClass = 'vis';
             json.elements = json.elements.map(function (item) {
                 // checking for image
                 if (item.imgSrc) {
                     item.imgSrc = '<img src ="' + item.imgSrc + '" />';
                 }
-                item.description && (item.description = snapCommons.removeHtmlTag(item.description));
+                item.description &&
+                    (item.description = snapCommons.removeHtmlTag(
+                        item.description
+                    ));
                 if (item.action && item.action.replyMetadata) {
-                    item.replyMetadata = typeof item.action.replyMetadata == "object" ? JSON.stringify(item.action.replyMetadata) : item.action.replyMetadata;
+                    item.replyMetadata =
+                        typeof item.action.replyMetadata == 'object'
+                            ? JSON.stringify(item.action.replyMetadata)
+                            : item.action.replyMetadata;
                 }
                 //checking for type
-                if (item.action && item.action.type == "link") {
+                if (item.action && item.action.type == 'link') {
                     item.href = item.action.url;
-                    item.action.openLinkInNewTab == false ? item.target = 'target="_parent"' : item.target = 'target="_blank"';
+                    item.action.openLinkInNewTab == false
+                        ? (item.target = 'target="_parent"')
+                        : (item.target = 'target="_blank"');
                     item.hidePostCTA = false;
                 } else {
-                    item.href = "javascript:void(0)";
+                    item.href = 'javascript:void(0)';
                     item.target = '';
-                    item.action && (item.updateLanguage = item.action.updateLanguage);
+                    item.action &&
+                        (item.updateLanguage = item.action.updateLanguage);
                     item.hidePostCTA = snap._globals.hidePostCTA;
                 }
-                item.handlerClass = "km-list-item-handler";
+                item.handlerClass = 'km-list-item-handler';
                 if (item.action) {
-                    item.dataType = item.action.type || "";
-                    item.dataReply = item.action.text || item.title || "";
+                    item.dataType = item.action.type || '';
+                    item.dataReply = item.action.text || item.title || '';
                 }
-                item.dataArticleId = item.articleId || "";
-                item.dataSource = item.source || "";
+                item.dataArticleId = item.articleId || '';
+                item.dataSource = item.source || '';
                 // TODO : add post url in data.
                 return item;
-            })
+            });
         } else {
-            json.elementClass = "n-vis"
+            json.elementClass = 'n-vis';
         }
         if (json.buttons && json.buttons.length) {
             json.buttons = json.buttons.map(function (button) {
                 button.target = Snap.markup.getLinkTarget(button.action);
                 button.buttonClass = buttonClass[button.action.type];
                 if (button.action && button.action.replyMetadata) {
-                    button.replyMetadata = typeof button.action.replyMetadata == "object" ? JSON.stringify(button.action.replyMetadata) : button.action.replyMetadata;
+                    button.replyMetadata =
+                        typeof button.action.replyMetadata == 'object'
+                            ? JSON.stringify(button.action.replyMetadata)
+                            : button.action.replyMetadata;
                 }
-                button.action && (button.updateLanguage = button.action.updateLanguage);
-                if (!button.action || button.action.type == "quick_reply" || button.action.type == "submit") {
-                    button.href = "javascript:void(0)";
-                    button.handlerClass = "km-list-button-item-handler";
+                button.action &&
+                    (button.updateLanguage = button.action.updateLanguage);
+                if (
+                    !button.action ||
+                    button.action.type == 'quick_reply' ||
+                    button.action.type == 'submit'
+                ) {
+                    button.href = 'javascript:void(0)';
+                    button.handlerClass = 'km-list-button-item-handler';
                 } else {
                     button.href = encodeURI(button.action.url);
                 }
 
-                if(button.action.type == "quick_reply"){
+                if (button.action.type == 'quick_reply') {
                     button.hidePostCTA = snap._globals.hidePostCTA;
-                }else{
+                } else {
                     button.hidePostCTA = false;
                 }
 
-                button.dataType = button.action ? button.action.type : "";
+                button.dataType = button.action ? button.action.type : '';
 
-                button.dataReply = (button.action && button.action.text) ? button.action.text : (button.name || "");
+                button.dataReply =
+                    button.action && button.action.text
+                        ? button.action.text
+                        : button.name || '';
                 // TODO : add post url in data.
                 return button;
-            })
+            });
         }
-
 
         return Mustache.to_html(Snap.markup.getListMarkup(), json);
     } else {
-        return "";
+        return '';
     }
 };
 Snap.markup.getDialogboxContainer = function (metadata) {
@@ -742,10 +764,7 @@ Snap.markup.getDialogboxContainer = function (metadata) {
                         ? JSON.stringify(element.replyMetadata)
                         : element.replyMetadata;
             });
-        return Mustache.to_html(
-            Snap.markup.getDialogboxTemplate(),
-            json
-        );
+        return Mustache.to_html(Snap.markup.getDialogboxTemplate(), json);
     }
     return '';
 };
@@ -798,9 +817,15 @@ Snap.markup.getActionableFormMarkup = function (options) {
         options.payload.forEach(function (item, index) {
             if (item.type == 'submit') {
                 isActionObject = snapCommons.isObject(item.action);
-                options.actionUrl = item.formAction || (isActionObject && item.action.formAction) || "javascript:void(0);";
-                options.requestType = item.requestType || (isActionObject && item.action.requestType) ;
-                options.postBackToSnap = (isActionObject && item.action.postBackToSnap) || false;
+                options.actionUrl =
+                    item.formAction ||
+                    (isActionObject && item.action.formAction) ||
+                    'javascript:void(0);';
+                options.requestType =
+                    item.requestType ||
+                    (isActionObject && item.action.requestType);
+                options.postBackToSnap =
+                    (isActionObject && item.action.postBackToSnap) || false;
                 options.label = item.name || item.label;
                 options.message =
                     item.message || (isActionObject && item.action.message);
@@ -809,9 +834,8 @@ Snap.markup.getActionableFormMarkup = function (options) {
                 options.payload.splice(index, 1);
             } else {
                 options.payload[index].supported =
-                    SnapConstants.FORM_SUPPORTED_FIELDS.indexOf(
-                        item.type
-                    ) != -1;
+                    SnapConstants.FORM_SUPPORTED_FIELDS.indexOf(item.type) !=
+                    -1;
                 options.payload[index][item.type] = true;
                 try {
                     options.payload[index].className = (item.label || item.name)
@@ -848,8 +872,7 @@ Snap.markup.getCarouselMarkup = function (options) {
                 cardFooter = cardFooter.concat(
                     Snap.markup.quickRepliesContainerTemplate(
                         buttons[i].action,
-                        SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                            .CARD_CAROUSEL
+                        SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL
                     )
                 );
             } else if (
@@ -943,10 +966,7 @@ Snap.markup.getCarouselMarkup = function (options) {
     }
     var cardCarousel = { payload: cardList };
 
-    return Mustache.to_html(
-        Snap.markup.getCarouselTemplate(),
-        cardCarousel
-    );
+    return Mustache.to_html(Snap.markup.getCarouselTemplate(), cardCarousel);
 };
 Snap.markup.cardHeader = function (item) {
     return Mustache.to_html(Snap.markup.getCardHeaderTemplate(), item);
@@ -977,27 +997,54 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
             : 'km-cta-button-many');
     for (var i = 0; i < buttonPayloadList.length; i++) {
         var singlePayload = buttonPayloadList[i];
-        typeof (singlePayload.replyMetadata == "object") && (singlePayload.replyMetadata = JSON.stringify(singlePayload.replyMetadata));
-        !singlePayload.type && singlePayload.action && (singlePayload.type = singlePayload.action.type);
-        !singlePayload.replyMetadata && singlePayload.action && singlePayload.action.replyMetadata && snapCommons.isObject(singlePayload.action.replyMetadata) && (singlePayload.replyMetadata = JSON.stringify(singlePayload.action.replyMetadata));
+        typeof (singlePayload.replyMetadata == 'object') &&
+            (singlePayload.replyMetadata = JSON.stringify(
+                singlePayload.replyMetadata
+            ));
+        !singlePayload.type &&
+            singlePayload.action &&
+            (singlePayload.type = singlePayload.action.type);
+        !singlePayload.replyMetadata &&
+            singlePayload.action &&
+            singlePayload.action.replyMetadata &&
+            snapCommons.isObject(singlePayload.action.replyMetadata) &&
+            (singlePayload.replyMetadata = JSON.stringify(
+                singlePayload.action.replyMetadata
+            ));
         singlePayload.hidePostCTA = false;
-        if (singlePayload.type == "link" || singlePayload.type == "submit") {
-            singlePayload.url = buttonPayloadList[i].action.url || buttonPayloadList[i].action.formAction;
-            singlePayload.openLinkInNewTab = buttonPayloadList[i].action.openLinkInNewTab;
-            buttonClass += buttonClass + " km-add-more-rooms";
-            buttonContainerHtml += Snap.markup.getButtonTemplate(singlePayload, singlePayload.action.requestType, buttonClass);
-            singlePayload.type == "submit" && (buttonContainerHtml += Snap.markup.getFormMarkup({
-                "payload": singlePayload.action
-            }))
-
-        } else if (singlePayload.type == "quickReply" || singlePayload.type == "suggestedReply") {
-            singlePayload.buttonClass = "km-quick-rpy-btn " + buttonClass;
-            singlePayload.message = singlePayload.action.message || singlePayload.name;
-            singlePayload.type == "quickReply" && (singlePayload.hidePostCTA = snap._globals.hidePostCTA);
-            buttonContainerHtml += Mustache.to_html(Snap.markup.getGenericSuggestedReplyButton(), singlePayload);
-        } else if (singlePayload.action && singlePayload.action.type == "submit") {
-
-
+        if (singlePayload.type == 'link' || singlePayload.type == 'submit') {
+            singlePayload.url =
+                buttonPayloadList[i].action.url ||
+                buttonPayloadList[i].action.formAction;
+            singlePayload.openLinkInNewTab =
+                buttonPayloadList[i].action.openLinkInNewTab;
+            buttonClass += buttonClass + ' km-add-more-rooms';
+            buttonContainerHtml += Snap.markup.getButtonTemplate(
+                singlePayload,
+                singlePayload.action.requestType,
+                buttonClass
+            );
+            singlePayload.type == 'submit' &&
+                (buttonContainerHtml += Snap.markup.getFormMarkup({
+                    payload: singlePayload.action,
+                }));
+        } else if (
+            singlePayload.type == 'quickReply' ||
+            singlePayload.type == 'suggestedReply'
+        ) {
+            singlePayload.buttonClass = 'km-quick-rpy-btn ' + buttonClass;
+            singlePayload.message =
+                singlePayload.action.message || singlePayload.name;
+            singlePayload.type == 'quickReply' &&
+                (singlePayload.hidePostCTA = snap._globals.hidePostCTA);
+            buttonContainerHtml += Mustache.to_html(
+                Snap.markup.getGenericSuggestedReplyButton(),
+                singlePayload
+            );
+        } else if (
+            singlePayload.action &&
+            singlePayload.action.type == 'submit'
+        ) {
         }
     }
     return buttonContainerHtml + '</div>';

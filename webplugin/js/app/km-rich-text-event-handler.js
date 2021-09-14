@@ -2,88 +2,85 @@
  * Attach all event listeners.
  */
 
+var messageCellQuickReplySelector = '#mck-message-cell, #quick-reply-container';
+
 Snap.attachEvents = function ($applozic) {
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-increment-guest-count',
         Snap.richMsgEventHandler.incrementGuestCount
     );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-decrement-guest-count',
         Snap.richMsgEventHandler.decrementGuestCount
     ); //
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-btn-add-more-rooms',
         Snap.richMsgEventHandler.addMoreRoom
     ); //
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-done-button',
         Snap.richMsgEventHandler.processSelectedRoom
     );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-card-message-footer-button',
         Snap.richMsgEventHandler.processHotelBookClick
     );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.mck-form-submit-button',
         Snap.richMsgEventHandler.handleFormSubmit
     );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-cta-button',
         Snap.richMsgEventHandler.handleRichButtonClick
     );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-submit-person-detail',
         Snap.richMsgEventHandler.handlleSubmitPersonDetail
     );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-block-room-button',
         Snap.richMsgEventHandler.processBookRoomClick
     );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-quick-replies',
         Snap.richMsgEventHandler.processQuickReplies
     );
-    $applozic('#quick-reply-container').on(
-        'click',
-        '.km-quick-replies',
-        Snap.richMsgEventHandler.processQuickReplies
-    );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-list-item-handler',
         Snap.richMsgEventHandler.processClickOnListItem
     );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-list-button-item-handler',
         Snap.richMsgEventHandler.processClickOnButtonItem
     );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-faq-dialog-button',
         Snap.richMsgEventHandler.processClickOnDialogButton
     );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-progress-meter-container',
         Snap.attachmentEventHandler.manageUploadAttachment
     );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-link-button',
         Snap.richMsgEventHandler.handleLinkButtonClick
     );
-    $applozic('#mck-message-cell').on(
+    $applozic(messageCellQuickReplySelector).on(
         'click',
         '.km-attachment-icon',
         Snap.attachmentEventHandler.handleSendingAttachment
@@ -143,10 +140,7 @@ Snap.attachmentEventHandler = {
                     fileName &&
                     fileType
                 ) {
-                    SnapUI.updateAttachmentStopUploadStatus(
-                        msgkey,
-                        false
-                    );
+                    SnapUI.updateAttachmentStopUploadStatus(msgkey, false);
                     messagePxy = {
                         contentType: 1,
                         groupId: groupId,
@@ -206,10 +200,7 @@ Snap.attachmentEventHandler = {
                         },
                         messagePxy: messagePxy,
                     };
-                    SnapUI.updateAttachmentStopUploadStatus(
-                        msgkey,
-                        false
-                    );
+                    SnapUI.updateAttachmentStopUploadStatus(msgkey, false);
                     $applozic.fn.applozic('uploadAttachemnt', params);
                     $applozic('.mck-timestamp-' + msgkey)
                         .removeClass('n-vis')
@@ -441,9 +432,7 @@ Snap.richMsgEventHandler = {
         var roomCount = Number(e.target.dataset.roomcount) + 1;
         e.target.setAttribute('data-roomcount', roomCount);
         var roomInfoElem = document.createElement('div');
-        roomInfoElem.innerHTML = Snap.markup.getSingleRoomPaxInfo(
-            roomCount
-        );
+        roomInfoElem.innerHTML = Snap.markup.getSingleRoomPaxInfo(roomCount);
         container
             .getElementsByClassName('km-room-person-selector-container')[0]
             .appendChild(roomInfoElem);
@@ -770,14 +759,13 @@ Snap.richMsgEventHandler = {
             .setAttribute('data-quick-reply', true);
         Snap.sendMessage(messagePxy);
 
-        if(snap._globals.hidePostCTA){
+        if (snap._globals.hidePostCTA) {
             var siblingsArray = Snap.getAllSiblings(e.target);
             var siblingContainsLink = siblingsArray.some(function (sibling) {
                 return sibling.classList.contains('km-link-button');
             });
             !siblingContainsLink && Snap.hideMessage(e.target);
         }
-
     },
     processClickOnListItem: function (e) {
         var target = e.currentTarget;

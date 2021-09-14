@@ -14,7 +14,7 @@ var IS_SOCKET_CONNECTED = false;
 var MCK_BOT_MESSAGE_QUEUE = [];
 var WAITING_QUEUE = [];
 var AVAILABLE_VOICES_FOR_TTS = new Array();
-var KM_ATTACHMENT_V2_SUPPORTED_MIME_TYPES = ["application","text","image"];
+var KM_ATTACHMENT_V2_SUPPORTED_MIME_TYPES = ['application', 'text', 'image'];
 var userOverride = {
     voiceOutput: true,
 };
@@ -28,8 +28,7 @@ var userOverride = {
         });
     }
     var default_options = {
-        baseUrl:
-            KM_PLUGIN_SETTINGS.applozicBaseUrl || 'https://chat.snap.io',
+        baseUrl: KM_PLUGIN_SETTINGS.applozicBaseUrl || 'https://chat.snap.io',
         fileBaseUrl: 'https://applozic.appspot.com',
         customFileUrl: 'https://googleupload.applozic.com', // google cloud file upload url
         genereateCloudFileUrl:
@@ -362,8 +361,7 @@ var userOverride = {
             appOptions.openConversationOnNewMessage;
         var SNAP_VERSION = appOptions.KM_VER ? appOptions.KM_VER : '';
         SNAP_VERSION === 'v2' && (parent.SnapGlobal = window);
-        SNAP_VERSION === 'v2' &&
-            (parent.Snap = window.Snap);
+        SNAP_VERSION === 'v2' && (parent.Snap = window.Snap);
         var WIDGET_SETTINGS = appOptions.widgetSettings;
         var EMOJI_LIBRARY = appOptions.emojilibrary;
         var CSAT_ENABLED = appOptions.collectFeedback;
@@ -830,13 +828,13 @@ var userOverride = {
 
             // the browser call getVoices is async
             // so we are updating the array whenever they're available
-            if (VOICE_OUTPUT_ENABLED && "speechSynthesis" in window) {
+            if (VOICE_OUTPUT_ENABLED && 'speechSynthesis' in window) {
                 AVAILABLE_VOICES_FOR_TTS = speechSynthesis.getVoices();
                 if (speechSynthesis.onvoiceschanged !== undefined) {
                     speechSynthesis.onvoiceschanged = function () {
                         AVAILABLE_VOICES_FOR_TTS = speechSynthesis.getVoices();
                     };
-                  }
+                }
             }
         };
         _this.reInit = function (optns) {
@@ -1239,9 +1237,7 @@ var userOverride = {
                 ALStorage.clearSessionStorageElements();
                 $applozic.fn.applozic('reset', appOptions);
                 SnapUtils.deleteCookie({
-                    name:
-                        SnapConstants.COOKIES
-                            .SNAP_LOGGED_IN_USERNAME,
+                    name: SnapConstants.COOKIES.SNAP_LOGGED_IN_USERNAME,
                     domain: MCK_COOKIE_DOMAIN,
                 });
                 SnapUtils.deleteCookie({
@@ -2035,13 +2031,11 @@ var userOverride = {
                 USER_DEVICE_KEY = '';
                 if (
                     SnapUtils.getCookie(
-                        SnapConstants.COOKIES
-                            .IS_USER_ID_FOR_LEAD_COLLECTION
+                        SnapConstants.COOKIES.IS_USER_ID_FOR_LEAD_COLLECTION
                     ) &&
                     !JSON.parse(
                         SnapUtils.getCookie(
-                            SnapConstants.COOKIES
-                                .IS_USER_ID_FOR_LEAD_COLLECTION
+                            SnapConstants.COOKIES.IS_USER_ID_FOR_LEAD_COLLECTION
                         )
                     ) &&
                     KM_ASK_USER_DETAILS &&
@@ -2061,8 +2055,7 @@ var userOverride = {
                         $applozic('#km-userId').val(MCK_USER_ID);
                         if (
                             SnapUtils.getCookie(
-                                SnapConstants.COOKIES
-                                    .SNAP_LOGGED_IN_ID
+                                SnapConstants.COOKIES.SNAP_LOGGED_IN_ID
                             ) &&
                             SnapUtils.getCookie(
                                 SnapConstants.COOKIES
@@ -2076,8 +2069,7 @@ var userOverride = {
                             )
                         ) {
                             var userId = SnapUtils.getCookie(
-                                SnapConstants.COOKIES
-                                    .SNAP_LOGGED_IN_ID
+                                SnapConstants.COOKIES.SNAP_LOGGED_IN_ID
                             );
                             var options = {
                                 userId: userId,
@@ -2108,8 +2100,7 @@ var userOverride = {
                         );
 
                         if (SNAP_VERSION === 'v2') {
-                            WIDGET_POSITION ===
-                            SnapConstants.POSITION.LEFT
+                            WIDGET_POSITION === SnapConstants.POSITION.LEFT
                                 ? (kmAnonymousChatLauncher.style.left = '10px')
                                 : (kmAnonymousChatLauncher.style.right =
                                       '10px');
@@ -2317,9 +2308,7 @@ var userOverride = {
                     snapIframe.classList.remove(
                         'km-iframe-dimension-with-popup'
                     );
-                    snapIframe.classList.remove(
-                        'km-iframe-dimension-no-popup'
-                    );
+                    snapIframe.classList.remove('km-iframe-dimension-no-popup');
                 }
                 kmChatLoginModal.style.display = 'none';
                 kmAnonymousChatLauncher.classList.remove('n-vis');
@@ -2536,9 +2525,7 @@ var userOverride = {
                         activeConversationInfo,
                         data
                     ) &&
-                    Snap.openConversation(
-                        activeConversationInfo.groupId
-                    );
+                    Snap.openConversation(activeConversationInfo.groupId);
                 MCK_MAINTAIN_ACTIVE_CONVERSATION_STATE &&
                     !SnapUtils.isActiveConversationNeedsToBeOpened(
                         activeConversationInfo,
@@ -2673,9 +2660,7 @@ var userOverride = {
                 chatbox.addEventListener('click', function () {
                     snapCommons.setWidgetStateOpen(true);
                     snapIframe.classList.remove('km-iframe-closed');
-                    snapIframe.classList.add(
-                        'snap-iframe-enable-media-query'
-                    );
+                    snapIframe.classList.add('snap-iframe-enable-media-query');
                     snapCommons.modifyClassList(
                         { id: ['applozic-badge-count'] },
                         'n-vis',
@@ -2706,19 +2691,17 @@ var userOverride = {
                     snapIframe.classList.remove(
                         'km-iframe-dimension-with-popup'
                     );
-                    snapIframe.classList.remove(
-                        'km-iframe-dimension-no-popup'
-                    );
+                    snapIframe.classList.remove('km-iframe-dimension-no-popup');
                     snapCommons.modifyClassList(
                         { id: ['applozic-badge-count'] },
                         '',
                         'n-vis'
                     );
-                    snapCommons.modifyClassList(
-                        { id: ['quick-reply-container'] },
-                        'n-vis',
-                        'vis'
-                    );
+                    // snapCommons.modifyClassList(
+                    //     { id: ['quick-reply-container'] },
+                    //     'n-vis',
+                    //     'vis'
+                    // );
                 }
                 closeButton.addEventListener('click', closeChatBox);
                 popUpcloseButton.addEventListener('click', function (e) {
@@ -2993,7 +2976,7 @@ var userOverride = {
                 options.forEach(function (element) {
                     if (snapCommons.isObject(element)) {
                         dropDownOption = document.createElement('option');
-                        dropDownOption.setAttribute('value',element.value);
+                        dropDownOption.setAttribute('value', element.value);
                         dropDownOption.textContent =
                             element.value.charAt(0).toUpperCase() +
                             element.value.slice(1);
@@ -3118,47 +3101,107 @@ var userOverride = {
                     .html(MCK_LABELS['exit.group'])
                     .attr('title', MCK_LABELS['exit.group']);
                 $applozic('#mck-typing-label').html(MCK_LABELS['typing']);
-                $applozic('#mck-btn-clear-messages').html(MCK_LABELS['clear.messages']).attr('title', MCK_LABELS['clear.messages']);
-                $applozic('#mck-block-button').html(MCK_LABELS['block.user']).attr('title', MCK_LABELS['block.user']);
-                $applozic('#mck-loc-box .mck-box-title, #mck-share-loc-label').html(MCK_LABELS['location.share.title']).attr('title', MCK_LABELS['location.share.title']);
-                $applozic('#mck-btn-loc').attr('title', MCK_LABELS['location.share.title']);
-                $applozic('#mck-file-up-label').html(MCK_LABELS['file.attachment']);
-                $applozic('#mck-file-up').attr('title', MCK_LABELS['file.attachment']);
-                $applozic('.mck-file-attach-label').attr('title', MCK_LABELS['file.attach.title']);
-                $applozic('#mck-my-loc').html(MCK_LABELS['my.location']).attr('title', MCK_LABELS['my.location']);
-                $applozic('#mck-btn-close-loc-box').html(MCK_LABELS['close']).attr('title', MCK_LABELS['close']);
-                $applozic('#mck-loc-submit').html(MCK_LABELS['send']).attr('title', MCK_LABELS['send']);
-                $applozic('#mck-msg-sbmt').attr('title', MCK_LABELS['send.message'])
-                $applozic('#mck-btn-smiley').attr('title', MCK_LABELS['smiley']);
-                $applozic('#mck-group-name-save').attr('title', MCK_LABELS['save']);
-                $applozic('#mck-btn-group-icon-save').attr('title', MCK_LABELS['save']);
-                $applozic('#mck-group-name-edit').attr('title', MCK_LABELS['edit']);
-                document.getElementById("mck-text-box").dataset.text = MCK_LABELS['input.message'];
-                document.getElementById("mck-char-warning-text").innerHTML = MCK_LABELS['char.limit.warn'];
-                document.getElementById('km-faq-search-input').setAttribute('placeholder', MCK_LABELS['search.faq']);
-                document.getElementById('mck-no-faq-found').innerHTML=  MCK_LABELS['looking.for.something.else'];
-                document.getElementById('km-internet-disconnect-msg').innerHTML=  MCK_LABELS['offline.msg'];
-                document.getElementById('talk-to-human-link').innerHTML= MCK_LABELS['talk.to.agent'];
-                document.getElementById('mck-collect-email').innerHTML= MCK_LABELS['how.to.reachout'];
-                document.getElementById('mck-email-error-alert').innerHTML= MCK_LABELS['email.error.alert'];
-                document.getElementById('mck-rated-text').innerHTML= MCK_LABELS['csat.rating'].CONVERSATION_RATED;
-                document.getElementById('mck-rate-conversation').innerHTML= MCK_LABELS['csat.rating'].RATE_CONVERSATION;
-                document.getElementById('mck-other-queries').innerHTML= MCK_LABELS['csat.rating'].OTHER_QUERIES;
-                document.getElementById('mck-restart-conversation').innerHTML= MCK_LABELS['csat.rating'].RESTART_CONVERSATION;
-                document.getElementById('mck-feedback-comment').setAttribute('placeholder',MCK_LABELS['csat.rating'].CONVERSATION_REVIEW_PLACEHOLDER)
-                document.getElementById('mck-submit-comment').innerHTML = MCK_LABELS['csat.rating'].SUBMIT_RATING;
-                document.getElementById('wq-msg-first-Part').innerHTML = MCK_LABELS['waiting.queue.message']['first.Part'];
+                $applozic('#mck-btn-clear-messages')
+                    .html(MCK_LABELS['clear.messages'])
+                    .attr('title', MCK_LABELS['clear.messages']);
+                $applozic('#mck-block-button')
+                    .html(MCK_LABELS['block.user'])
+                    .attr('title', MCK_LABELS['block.user']);
+                $applozic('#mck-loc-box .mck-box-title, #mck-share-loc-label')
+                    .html(MCK_LABELS['location.share.title'])
+                    .attr('title', MCK_LABELS['location.share.title']);
+                $applozic('#mck-btn-loc').attr(
+                    'title',
+                    MCK_LABELS['location.share.title']
+                );
+                $applozic('#mck-file-up-label').html(
+                    MCK_LABELS['file.attachment']
+                );
+                $applozic('#mck-file-up').attr(
+                    'title',
+                    MCK_LABELS['file.attachment']
+                );
+                $applozic('.mck-file-attach-label').attr(
+                    'title',
+                    MCK_LABELS['file.attach.title']
+                );
+                $applozic('#mck-my-loc')
+                    .html(MCK_LABELS['my.location'])
+                    .attr('title', MCK_LABELS['my.location']);
+                $applozic('#mck-btn-close-loc-box')
+                    .html(MCK_LABELS['close'])
+                    .attr('title', MCK_LABELS['close']);
+                $applozic('#mck-loc-submit')
+                    .html(MCK_LABELS['send'])
+                    .attr('title', MCK_LABELS['send']);
+                $applozic('#mck-msg-sbmt').attr(
+                    'title',
+                    MCK_LABELS['send.message']
+                );
+                $applozic('#mck-btn-smiley').attr(
+                    'title',
+                    MCK_LABELS['smiley']
+                );
+                $applozic('#mck-group-name-save').attr(
+                    'title',
+                    MCK_LABELS['save']
+                );
+                $applozic('#mck-btn-group-icon-save').attr(
+                    'title',
+                    MCK_LABELS['save']
+                );
+                $applozic('#mck-group-name-edit').attr(
+                    'title',
+                    MCK_LABELS['edit']
+                );
+                document.getElementById('mck-text-box').dataset.text =
+                    MCK_LABELS['input.message'];
+                document.getElementById('mck-char-warning-text').innerHTML =
+                    MCK_LABELS['char.limit.warn'];
+                document
+                    .getElementById('km-faq-search-input')
+                    .setAttribute('placeholder', MCK_LABELS['search.faq']);
+                document.getElementById('mck-no-faq-found').innerHTML =
+                    MCK_LABELS['looking.for.something.else'];
+                document.getElementById(
+                    'km-internet-disconnect-msg'
+                ).innerHTML = MCK_LABELS['offline.msg'];
+                document.getElementById('talk-to-human-link').innerHTML =
+                    MCK_LABELS['talk.to.agent'];
+                document.getElementById('mck-collect-email').innerHTML =
+                    MCK_LABELS['how.to.reachout'];
+                document.getElementById('mck-email-error-alert').innerHTML =
+                    MCK_LABELS['email.error.alert'];
+                document.getElementById('mck-rated-text').innerHTML =
+                    MCK_LABELS['csat.rating'].CONVERSATION_RATED;
+                document.getElementById('mck-rate-conversation').innerHTML =
+                    MCK_LABELS['csat.rating'].RATE_CONVERSATION;
+                document.getElementById('mck-other-queries').innerHTML =
+                    MCK_LABELS['csat.rating'].OTHER_QUERIES;
+                document.getElementById('mck-restart-conversation').innerHTML =
+                    MCK_LABELS['csat.rating'].RESTART_CONVERSATION;
+                document
+                    .getElementById('mck-feedback-comment')
+                    .setAttribute(
+                        'placeholder',
+                        MCK_LABELS['csat.rating']
+                            .CONVERSATION_REVIEW_PLACEHOLDER
+                    );
+                document.getElementById('mck-submit-comment').innerHTML =
+                    MCK_LABELS['csat.rating'].SUBMIT_RATING;
+                document.getElementById('wq-msg-first-Part').innerHTML =
+                    MCK_LABELS['waiting.queue.message']['first.Part'];
                 // document.getElementById('waiting-queue-number').innerHTML = MCK_LABELS['waiting.queue.message']['waiting.queue.number'];
-                document.getElementById('wq-msg-last-part').innerHTML = MCK_LABELS['waiting.queue.message']['last.part'];
-                document.getElementById('km-csat-trigger-text').innerText = MCK_LABELS['conversation.header.dropdown'].CSAT_RATING_TEXT;
+                document.getElementById('wq-msg-last-part').innerHTML =
+                    MCK_LABELS['waiting.queue.message']['last.part'];
+                document.getElementById('km-csat-trigger-text').innerText =
+                    MCK_LABELS['conversation.header.dropdown'].CSAT_RATING_TEXT;
             };
             $applozic(d).on('click', '.fancybox-snap', function (e) {
                 e.preventDefault();
                 var $this = $applozic(this);
                 var href = $this.data('url');
-                var title = snapCommons.formatHtmlTag(
-                    $this.data('name')
-                );
+                var title = snapCommons.formatHtmlTag($this.data('name'));
                 if (href === '') {
                     var key;
                     key = $this.data('blobkey');
@@ -4329,9 +4372,7 @@ var userOverride = {
                 ).onclick = function (e) {
                     e.preventDefault();
                     userOverride.voiceOutput = !userOverride.voiceOutput;
-                    SnapUI.toggleVoiceOutputOverride(
-                        userOverride.voiceOutput
-                    );
+                    SnapUI.toggleVoiceOutputOverride(userOverride.voiceOutput);
                 };
 
                 //----------------------------------------------------------------
@@ -4360,9 +4401,7 @@ var userOverride = {
                     if (email) {
                         userId = email;
                         SnapUtils.setCookie({
-                            name:
-                                SnapConstants.COOKIES
-                                    .SNAP_LOGGED_IN_ID,
+                            name: SnapConstants.COOKIES.SNAP_LOGGED_IN_ID,
                             value: email,
                             expiresInDays: 30,
                             domain: MCK_COOKIE_DOMAIN,
@@ -4875,9 +4914,7 @@ var userOverride = {
                                 SnapUI.leadCollectionEnabledOnWelcomeMessage &&
                                 SnapUI.anonymousUser))
                     ) {
-                        var isValid = SnapUI.validateEmail(
-                            messagePxy.message
-                        );
+                        var isValid = SnapUI.validateEmail(messagePxy.message);
                         if (!isValid) {
                             return false;
                         }
@@ -5334,17 +5371,13 @@ var userOverride = {
                         }
                         if (
                             FILE_META &&
-                            SnapUI.isAttachmentV2(
-                                FILE_META[0].contentType
-                            )
+                            SnapUI.isAttachmentV2(FILE_META[0].contentType)
                         ) {
                             $applozic('.mck-timestamp-' + messagePxy.key)
                                 .removeClass('vis')
                                 .addClass('n-vis');
                             FILE_META[0].contentType.indexOf('image/') != -1 &&
-                                SnapUI.displayProgressMeter(
-                                    messagePxy.key
-                                );
+                                SnapUI.displayProgressMeter(messagePxy.key);
                             SnapUI.updateAttachmentTemplate(
                                 messagePxy,
                                 messagePxy.key
@@ -5466,9 +5499,7 @@ var userOverride = {
                         ? msgProxy.metadata['KM_CHAT_CONTEXT']
                         : {};
                 // chat context in setting can be updated by user using Snap.updateSetting()
-                var chatContext = SnapUtils.getSettings(
-                    'KM_CHAT_CONTEXT'
-                );
+                var chatContext = SnapUtils.getSettings('KM_CHAT_CONTEXT');
                 chatContext = typeof chatContext == 'object' ? chatContext : {};
                 MCK_DEFAULT_MESSAGE_METADATA =
                     typeof MCK_DEFAULT_MESSAGE_METADATA == 'object'
@@ -5537,10 +5568,7 @@ var userOverride = {
                         }
                         var currentTabId = $mck_msg_inner.data('mck-id');
                         if (typeof data === 'object') {
-                            SnapUI.deleteProgressMeter(
-                                messagePxy.key,
-                                true
-                            );
+                            SnapUI.deleteProgressMeter(messagePxy.key, true);
                             $applozic(
                                 '.km-attachment-download-icon-' + messagePxy.key
                             )
@@ -6603,8 +6631,7 @@ var userOverride = {
                                 data.userDetails[key].userId ==
                                     CURRENT_GROUP_DATA.conversationAssignee &&
                                 data.userDetails[key].roleType ==
-                                    SnapConstants.APPLOZIC_USER_ROLE_TYPE
-                                        .BOT
+                                    SnapConstants.APPLOZIC_USER_ROLE_TYPE.BOT
                             ) {
                                 mckGroupLayout.checkBotDetail(
                                     CURRENT_GROUP_DATA.conversationAssignee
@@ -6647,8 +6674,7 @@ var userOverride = {
                 if (
                     tabId &&
                     typeof roleType !== 'undefined' &&
-                    roleType !==
-                        SnapConstants.APPLOZIC_USER_ROLE_TYPE.BOT
+                    roleType !== SnapConstants.APPLOZIC_USER_ROLE_TYPE.BOT
                 ) {
                     Snap.getAwayMessage(
                         {
@@ -6719,8 +6745,7 @@ var userOverride = {
                 }
                 var imageUrl;
                 params.name =
-                    params.name &&
-                    snapCommons.formatHtmlTag(params.name);
+                    params.name && snapCommons.formatHtmlTag(params.name);
                 var profileImage = params.name
                     ? params.name + ' profile image'
                     : 'Profile image';
@@ -6764,8 +6789,7 @@ var userOverride = {
                     (updateConversationHeaderParams.imageUrl = data.imageLink);
                 CURRENT_GROUP_DATA.conversationAssignee = data && data.userId;
                 if (
-                    data.roleType ===
-                    SnapConstants.APPLOZIC_USER_ROLE_TYPE.BOT
+                    data.roleType === SnapConstants.APPLOZIC_USER_ROLE_TYPE.BOT
                 ) {
                     updateConversationHeaderParams.availabilityStatus =
                         SnapConstants.AVAILABILITY_STATUS.ONLINE;
@@ -7364,7 +7388,9 @@ var userOverride = {
                 '#mck-message-cell .mck-message-inner'
             );
             var $quick_reply_container = $applozic('#quick-reply-container');
-            var $quick_reply_btn_container = $applozic('#quick-reply-btn-container');
+            var $quick_reply_btn_container = $applozic(
+                '#quick-reply-btn-container'
+            );
 
             var $mck_msg_new = $applozic('#mck-msg-new');
             var FILE_PREVIEW_URL = '/rest/ws/aws/file/';
@@ -7443,8 +7469,6 @@ var userOverride = {
                 $applozic.template('csatModule', csatModule);
             };
 
-
-
             _this.loadDropdownOptions = function () {
                 var enableDropdown = false;
                 /*
@@ -7463,9 +7487,7 @@ var userOverride = {
                 // For voice output user override
                 if (VOICE_OUTPUT_ENABLED) {
                     enableDropdown = true;
-                    SnapUI.toggleVoiceOutputOverride(
-                        userOverride.voiceOutput
-                    );
+                    SnapUI.toggleVoiceOutputOverride(userOverride.voiceOutput);
                     snapCommons.modifyClassList(
                         { id: ['user-overide-voice-output'] },
                         '',
@@ -7514,8 +7536,7 @@ var userOverride = {
                     var snapIframe = parent.document.getElementById(
                         'snap-widget-iframe'
                     );
-                    var snapIframeDocument =
-                        snapIframe.contentDocument;
+                    var snapIframeDocument = snapIframe.contentDocument;
                     var chatbox = snapIframeDocument.getElementById(
                         'mck-sidebox-launcher'
                     );
@@ -7640,9 +7661,7 @@ var userOverride = {
                     $applozic('#mck-sidebox-ft')
                         .removeClass('n-vis')
                         .addClass('vis');
-                    $quick_reply_container
-                        .removeClass('vis')
-                        .addClass('n-vis');
+                    // $quick_reply_container.removeClass('vis').addClass('n-vis');
                     $mck_btn_clear_messages
                         .removeClass('n-vis')
                         .addClass('vis');
@@ -8151,8 +8170,7 @@ var userOverride = {
                     return;
                 }
                 if (
-                    msg.source ==
-                    SnapConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
+                    msg.source == SnapConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
                 ) {
                     emailMsgIndicator = 'vis';
                     $applozic('.email-conversation-indicator')
@@ -8177,8 +8195,7 @@ var userOverride = {
                 } else {
                     messageClass =
                         (msg.contentType ==
-                            SnapConstants.MESSAGE_CONTENT_TYPE
-                                .TEXT_HTML &&
+                            SnapConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML &&
                             msg.source ==
                                 SnapConstants.MESSAGE_SOURCE
                                     .MAIL_INTERCEPTOR) ||
@@ -8302,10 +8319,18 @@ var userOverride = {
                 ) {
                     olStatus = 'vis';
                 }
-                SnapUI.handleAttachmentIconVisibility(enableAttachment, msg, !append);
-                var richText = Snap.isRichTextMessage(msg.metadata) || msg.contentType == 3;
-                var kmRichTextMarkupVisibility=richText ? 'vis' : 'n-vis';
-                var kmRichTextMarkup = richText ? Snap.getRichTextMessageTemplate(msg) : "";
+                SnapUI.handleAttachmentIconVisibility(
+                    enableAttachment,
+                    msg,
+                    !append
+                );
+                var richText =
+                    Snap.isRichTextMessage(msg.metadata) ||
+                    msg.contentType == 3;
+                var kmRichTextMarkupVisibility = richText ? 'vis' : 'n-vis';
+                var kmRichTextMarkup = richText
+                    ? Snap.getRichTextMessageTemplate(msg)
+                    : '';
 
                 var containerType = Snap.getContainerTypeForRichMessage(msg);
                 var attachment = Snap.isAttachment(msg);
@@ -8347,23 +8372,24 @@ var userOverride = {
                 if (
                     HIDE_POST_CTA &&
                     richText &&
-                    (
-                        kmRichTextMarkup.indexOf('km-cta-multi-button-container') != -1 ||
-                        kmRichTextMarkup.indexOf('km-faq-list--footer_button-container') != -1
-                    ) &&
-                    (
-                        kmRichTextMarkup.indexOf('<button') != -1 ||
-                        kmRichTextMarkup.indexOf('km-list-item-handler') != -1
-                    )
-                    &&
+                    (kmRichTextMarkup.indexOf(
+                        'km-cta-multi-button-container'
+                    ) != -1 ||
+                        kmRichTextMarkup.indexOf(
+                            'km-faq-list--footer_button-container'
+                        ) != -1) &&
+                    (kmRichTextMarkup.indexOf('<button') != -1 ||
+                        kmRichTextMarkup.indexOf('km-list-item-handler') !=
+                            -1) &&
                     kmRichTextMarkup.indexOf('km-link-button') == -1
                 ) {
                     // if(!append){
                     //     // if type of message is richmessage having CTA buttons and it does not include links then it should not be visible
                     //     botMessageDelayClass = 'n-vis';
                     // }else{
-                        // this class is added to the message template if the message contains CTA buttons having only quick replies.
-                        botMessageDelayClass = botMessageDelayClass + " contains-quick-replies-only";
+                    // this class is added to the message template if the message contains CTA buttons having only quick replies.
+                    botMessageDelayClass =
+                        botMessageDelayClass + ' contains-quick-replies-only';
                     // }
                 }
 
@@ -8372,97 +8398,129 @@ var userOverride = {
                 //     return ;
                 // }
 
-                var msgList = [{
-                    msgReply: replyMsg ? replyMsg.message + "\n" : '',
-                    msgReplyTo: replyMsg ? replyTo + "\n" : '',
-                    msgReplyDivExpr: replyMsg ? 'vis' : 'n-vis',
-                    msgReplyToVisibleExpr: msgReplyToVisible,
-                    msgPreview: msgpreview ? _this.getImageForReplyMessage(replyMsg) : "",
-                    msgpreviewvisExpr: msgpreviewVis,
-                    textreplyVisExpr: textreply,
-                    msgKeyExpr: msg.key,
-                    msgDeliveredExpr: msg.delivered,
-                    msgSentExpr: msg.sent,
-                    msgCreatedAtTime: msg.createdAtTime,
-                    msgTypeExpr: msg.type,
-                    msgDeleteExpr: MCK_LABELS['delete'],
-                    msgReplyExpr: MCK_LABELS['reply'],
-                    msgForwardExpr: MCK_LABELS['forward'],
-                    msgForwardVisibleExpr: (window.applozic.PRODUCT_ID == 'snap') ? 'n-vis' : 'vis',
-                    msgSourceExpr: msg.source,
-                    statusIconExpr: statusIcon,
-                    contactExpr: contactExpr,
-                    toExpr: msg.to || MCK_USER_ID,
-                    msgAvatorClassExpr: msgAvatorClassExpr,
-                    showNameExpr: showNameExpr,
-                    msgNameExpr: displayName,
-                    msgImgExpr: imgsrctag,
-                    nameTextExpr: nameTextExpr,
-                    msgFloatExpr: floatWhere,
-                    msgStatusAriaTag: messageStatusAriaTag,
-                    timeStampExpr:timeStamp,
-                    replyIdExpr: replyId,
-                    createdAtTimeExpr: mckDateUtils.getDate(msg.createdAtTime),
-                    msgFeatExpr: msgFeatExpr,
-                    replyMessageParametersExpr: replyMessageParameters,
-                    downloadMediaUrlExpr: alFileService.getFileAttachment(msg),
-                    msgClassExpr: messageClass,
-                    msgBoxColor : msgBoxColorStyle,
-                    progressMeterClassExpr:progressMeterClass,
-                    attachmentBoxExpr: attachmentBox,
-                    msgExpr: frwdMsgExpr,
-                    selfDestructTimeExpr: msg.timeToLive,
-                    fileMetaKeyExpr: msg.fileMetaKey,
-                    downloadIconVisibleExpr: downloadIconVisible,
-                    fileExpr: mckMessageLayout.getFilePath(msg),
-                    fileUrlExpr: alFileService.getFileurl(msg),
-                    fileNameExpr: fileName,
-                    fileSizeExpr: fileSize,
-                    contOlExpr: olStatus,
-                    kmRichTextMarkupVisibility:kmRichTextMarkupVisibility,
-                    kmRichTextMarkup: kmRichTextMarkup,
-                    containerType: containerType,
-                    emailMsgIndicatorExpr: emailMsgIndicator,
-                    attachmentTemplate:attachmentTemplate,
-                    progressMeter:progressMeter,
-                    botMsgDelayExpr: botMessageDelayClass
-                }];
+                var msgList = [
+                    {
+                        msgReply: replyMsg ? replyMsg.message + '\n' : '',
+                        msgReplyTo: replyMsg ? replyTo + '\n' : '',
+                        msgReplyDivExpr: replyMsg ? 'vis' : 'n-vis',
+                        msgReplyToVisibleExpr: msgReplyToVisible,
+                        msgPreview: msgpreview
+                            ? _this.getImageForReplyMessage(replyMsg)
+                            : '',
+                        msgpreviewvisExpr: msgpreviewVis,
+                        textreplyVisExpr: textreply,
+                        msgKeyExpr: msg.key,
+                        msgDeliveredExpr: msg.delivered,
+                        msgSentExpr: msg.sent,
+                        msgCreatedAtTime: msg.createdAtTime,
+                        msgTypeExpr: msg.type,
+                        msgDeleteExpr: MCK_LABELS['delete'],
+                        msgReplyExpr: MCK_LABELS['reply'],
+                        msgForwardExpr: MCK_LABELS['forward'],
+                        msgForwardVisibleExpr:
+                            window.applozic.PRODUCT_ID == 'snap'
+                                ? 'n-vis'
+                                : 'vis',
+                        msgSourceExpr: msg.source,
+                        statusIconExpr: statusIcon,
+                        contactExpr: contactExpr,
+                        toExpr: msg.to || MCK_USER_ID,
+                        msgAvatorClassExpr: msgAvatorClassExpr,
+                        showNameExpr: showNameExpr,
+                        msgNameExpr: displayName,
+                        msgImgExpr: imgsrctag,
+                        nameTextExpr: nameTextExpr,
+                        msgFloatExpr: floatWhere,
+                        msgStatusAriaTag: messageStatusAriaTag,
+                        timeStampExpr: timeStamp,
+                        replyIdExpr: replyId,
+                        createdAtTimeExpr: mckDateUtils.getDate(
+                            msg.createdAtTime
+                        ),
+                        msgFeatExpr: msgFeatExpr,
+                        replyMessageParametersExpr: replyMessageParameters,
+                        downloadMediaUrlExpr: alFileService.getFileAttachment(
+                            msg
+                        ),
+                        msgClassExpr: messageClass,
+                        msgBoxColor: msgBoxColorStyle,
+                        progressMeterClassExpr: progressMeterClass,
+                        attachmentBoxExpr: attachmentBox,
+                        msgExpr: frwdMsgExpr,
+                        selfDestructTimeExpr: msg.timeToLive,
+                        fileMetaKeyExpr: msg.fileMetaKey,
+                        downloadIconVisibleExpr: downloadIconVisible,
+                        fileExpr: mckMessageLayout.getFilePath(msg),
+                        fileUrlExpr: alFileService.getFileurl(msg),
+                        fileNameExpr: fileName,
+                        fileSizeExpr: fileSize,
+                        contOlExpr: olStatus,
+                        kmRichTextMarkupVisibility: kmRichTextMarkupVisibility,
+                        kmRichTextMarkup: kmRichTextMarkup,
+                        containerType: containerType,
+                        emailMsgIndicatorExpr: emailMsgIndicator,
+                        attachmentTemplate: attachmentTemplate,
+                        progressMeter: progressMeter,
+                        botMsgDelayExpr: botMessageDelayClass,
+                    },
+                ];
 
-                Snap.changeStateForQuickReplyContainer('hide')
+                Snap.changeVisibilityStateForElement(
+                    $applozic('#quick-reply-container'),
+                    'hide'
+                );
 
-                if (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider')) {
-                    var isAvailableArrayOfAllMessages = typeof arrayOfAllMessages !== 'undefined'
-                    var isLastSavedMessageInDialog = isAvailableArrayOfAllMessages && msg.key === arrayOfAllMessages[0].key
+                if (
+                    kmRichTextMarkup.includes('km-quick-replies') &&
+                    !kmRichTextMarkup.includes('km-div-slider')
+                ) {
+                    var isAvailableArrayOfAllMessages =
+                        typeof arrayOfAllMessages !== 'undefined';
+                    var isLastSavedMessageInDialog =
+                        isAvailableArrayOfAllMessages &&
+                        msg.key === arrayOfAllMessages[0].key;
 
-                    //don't need to append buttons to the messageTemplate arrea, 
+                    //don't need to append buttons to the messageTemplate arrea,
                     //because we append them to the quick-reply-btn-container
-                    msgList[0].kmRichTextMarkup = ''
+                    msgList[0].kmRichTextMarkup = '';
 
                     //append message to the messageTemplate arrea
                     append
                         ? $applozic
-                            .tmpl('messageTemplate', msgList)
-                            .appendTo('#mck-message-cell .mck-message-inner')
+                              .tmpl('messageTemplate', msgList)
+                              .appendTo('#mck-message-cell .mck-message-inner')
                         : $applozic
-                            .tmpl('messageTemplate', msgList)
-                            .prependTo('#mck-message-cell .mck-message-inner');
+                              .tmpl('messageTemplate', msgList)
+                              .prependTo(
+                                  '#mck-message-cell .mck-message-inner'
+                              );
 
                     //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
-                    if (isLastSavedMessageInDialog || !isAvailableArrayOfAllMessages) {
-                        $quick_reply_btn_container.empty()
-                        $quick_reply_btn_container.append($applozic(kmRichTextMarkup))
+                    if (
+                        isLastSavedMessageInDialog ||
+                        !isAvailableArrayOfAllMessages
+                    ) {
+                        $quick_reply_btn_container.empty();
+                        $quick_reply_btn_container.append(
+                            $applozic(kmRichTextMarkup)
+                        );
                     }
                 } else {
                     append
                         ? $applozic
-                            .tmpl('messageTemplate', msgList)
-                            .appendTo('#mck-message-cell .mck-message-inner')
+                              .tmpl('messageTemplate', msgList)
+                              .appendTo('#mck-message-cell .mck-message-inner')
                         : $applozic
-                            .tmpl('messageTemplate', msgList)
-                            .prependTo('#mck-message-cell .mck-message-inner');
+                              .tmpl('messageTemplate', msgList)
+                              .prependTo(
+                                  '#mck-message-cell .mck-message-inner'
+                              );
                 }
 
-                if (msg.contentType == SnapConstants.MESSAGE_CONTENT_TYPE.NOTIFY_MESSAGE) {
+                if (
+                    msg.contentType ==
+                    SnapConstants.MESSAGE_CONTENT_TYPE.NOTIFY_MESSAGE
+                ) {
                     if (msg.metadata && msg.metadata.feedback) {
                         var userFeedback = JSON.parse(msg.metadata.feedback);
                         var ratingSmileSVG = snapCommons.getRatingSmilies(
@@ -8771,10 +8829,18 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-                        
-                        if (typeof arrayOfAllMessages !== 'undefined' && $quick_reply_btn_container.children().length > 0) {
-                            Snap.changeStateForQuickReplyContainer('show')
+
+                        if (
+                            typeof arrayOfAllMessages !== 'undefined' &&
+                            $quick_reply_btn_container.children().length > 0
+                        ) {
+                            Snap.changeVisibilityStateForElement(
+                                $applozic('#quick-reply-container'),
+                                'show'
+                            );
                         }
+
+                        Snap.changeTextInputState();
                     }
                 } else {
                     $textMessage.html(emoji_template);
@@ -8951,9 +9017,7 @@ var userOverride = {
                                 '" data-url="' +
                                 alFileService.getFileurl(msg) +
                                 '" data-name="' +
-                                snapCommons.formatHtmlTag(
-                                    msg.fileMeta.name
-                                ) +
+                                snapCommons.formatHtmlTag(msg.fileMeta.name) +
                                 '"><img src="' +
                                 MCK_FILE_URL +
                                 FILE_PREVIEW_URL +
@@ -8967,9 +9031,7 @@ var userOverride = {
                                 '" data-url="' +
                                 msg.fileMeta.blobKey +
                                 '" data-name="' +
-                                snapCommons.formatHtmlTag(
-                                    msg.fileMeta.name
-                                ) +
+                                snapCommons.formatHtmlTag(msg.fileMeta.name) +
                                 '"><img src="' +
                                 msg.fileMeta.blobKey +
                                 '" area-hidden="true"></img></a>'
@@ -9197,8 +9259,7 @@ var userOverride = {
 
             _this.getImageUrlForGroupType = function (contact, displayName) {
                 var profileDisplayName = displayName
-                    ? snapCommons.formatHtmlTag(displayName) +
-                      ' profile image'
+                    ? snapCommons.formatHtmlTag(displayName) + ' profile image'
                     : 'Profile image';
                 return contact.imageUrl
                     ? '<img src="' +
@@ -9216,8 +9277,7 @@ var userOverride = {
             ) {
                 var imgsrctag = '';
                 var profileDisplayName = displayName
-                    ? snapCommons.formatHtmlTag(displayName) +
-                      ' profile image'
+                    ? snapCommons.formatHtmlTag(displayName) + ' profile image'
                     : 'Profile image';
                 if (!contact.isGroup) {
                     if (
@@ -10716,11 +10776,9 @@ var userOverride = {
                                 '<span class="mck-icon--location"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="rgba(38,50,56,.52)"/><path d="M0 0h24v24H0z" fill="none"/></svg></span><span>Location</span>';
                         } else if (
                             message.contentType ===
-                                SnapConstants.MESSAGE_CONTENT_TYPE
-                                    .TEXT_HTML &&
+                                SnapConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML &&
                             message.source ===
-                                SnapConstants.MESSAGE_SOURCE
-                                    .MAIL_INTERCEPTOR
+                                SnapConstants.MESSAGE_SOURCE.MAIL_INTERCEPTOR
                         ) {
                             var s = message.message;
                             var result = s
@@ -10768,8 +10826,8 @@ var userOverride = {
                                     emoji_template.indexOf('emoji-inner') ===
                                         -1 &&
                                     message.contentType ===
-                                        SnapConstants
-                                            .MESSAGE_CONTENT_TYPE.DEFAULT
+                                        SnapConstants.MESSAGE_CONTENT_TYPE
+                                            .DEFAULT
                                 ) {
                                     var x = d.createElement('p');
                                     x.appendChild(
@@ -10798,8 +10856,8 @@ var userOverride = {
                     ) {
                         var messageContent = message.message;
                         message.contentType ==
-                            SnapConstants.MESSAGE_CONTENT_TYPE
-                                .TEXT_HTML && (messageContent = '');
+                            SnapConstants.MESSAGE_CONTENT_TYPE.TEXT_HTML &&
+                            (messageContent = '');
                         emoji_template =
                             '<span class="mck-icon--rich-message">' +
                             SnapConstants.RICH_MESSAGE_ICON +
@@ -10812,10 +10870,8 @@ var userOverride = {
                     }
                     if (
                         contact.isGroup &&
-                        contact.type !==
-                            SnapConstants.GROUP_TYPE.SELLER &&
-                        contact.type !==
-                            SnapConstants.GROUP_TYPE.GROUP_OF_TWO
+                        contact.type !== SnapConstants.GROUP_TYPE.SELLER &&
+                        contact.type !== SnapConstants.GROUP_TYPE.GROUP_OF_TWO
                     ) {
                         var msgFrom =
                             message.to.split(',')[0] === MCK_USER_ID
@@ -10828,8 +10884,7 @@ var userOverride = {
                             message.contentType !==
                                 SnapConstants.MESSAGE_CONTENT_TYPE
                                     .NOTIFY_MESSAGE &&
-                            contact.type !==
-                                SnapConstants.GROUP_TYPE.SUPPORT
+                            contact.type !== SnapConstants.GROUP_TYPE.SUPPORT
                         ) {
                             emoji_template = msgFrom + ': ' + emoji_template;
                         }
@@ -10838,8 +10893,7 @@ var userOverride = {
                             message &&
                             message.message &&
                             message.contentType ===
-                                SnapConstants.MESSAGE_CONTENT_TYPE
-                                    .DEFAULT &&
+                                SnapConstants.MESSAGE_CONTENT_TYPE.DEFAULT &&
                             !Snap.isRichTextMessage(message.metadata)
                         ) {
                             var x = d.createElement('p');
@@ -11061,9 +11115,7 @@ var userOverride = {
                         displayName = tabId;
                     }
                 }
-                return (
-                    displayName && snapCommons.formatHtmlTag(displayName)
-                );
+                return displayName && snapCommons.formatHtmlTag(displayName);
             };
             _this.populateMessage = function (
                 messageType,
@@ -11492,11 +11544,19 @@ var userOverride = {
                         message.classList.remove('n-vis');
 
                         if ($quick_reply_btn_container.children().length > 0) {
-                            Snap.changeStateForQuickReplyContainer('show')
+                            Snap.changeVisibilityStateForElement(
+                                $applozic('#quick-reply-container'),
+                                'show'
+                            );
                         } else {
-                            Snap.changeStateForQuickReplyContainer('hide')
+                            Snap.changeVisibilityStateForElement(
+                                $applozic('#quick-reply-container'),
+                                'hide'
+                            );
                         }
-                    
+
+                        Snap.changeTextInputState();
+
                         $mck_msg_inner.animate(
                             {
                                 scrollTop: $mck_msg_inner.prop('scrollHeight'),
@@ -11651,8 +11711,7 @@ var userOverride = {
                             allMessages[_len - 1].getAttribute(
                                 'data-contact'
                             ) &&
-                        timeOffset <
-                            SnapConstants.MESSAGE_CLUBBING.TIME_FRAME
+                        timeOffset < SnapConstants.MESSAGE_CLUBBING.TIME_FRAME
                     ) {
                         allMessages[_len - 2].classList.add(
                             'km-clubbing-first'
@@ -11675,8 +11734,7 @@ var userOverride = {
                                         'data-contact'
                                     ) &&
                                 timeOffset <
-                                    SnapConstants.MESSAGE_CLUBBING
-                                        .TIME_FRAME
+                                    SnapConstants.MESSAGE_CLUBBING.TIME_FRAME
                             ) {
                                 allMessages[key].classList.add(
                                     'km-clubbing-first'
@@ -12509,9 +12567,15 @@ var userOverride = {
                     'settings'
                 );
                 var conversationDetail = {
-                    groupName: (defaultSettings && defaultSettings.groupName) || DEFAULT_GROUP_NAME,
-                    agentId: (defaultSettings && defaultSettings.agentId) || DEFAULT_AGENT_ID,
-                    botIds: (defaultSettings && defaultSettings.botIds) || DEFAULT_BOT_IDS
+                    groupName:
+                        (defaultSettings && defaultSettings.groupName) ||
+                        DEFAULT_GROUP_NAME,
+                    agentId:
+                        (defaultSettings && defaultSettings.agentId) ||
+                        DEFAULT_AGENT_ID,
+                    botIds:
+                        (defaultSettings && defaultSettings.botIds) ||
+                        DEFAULT_BOT_IDS,
                 };
                 return conversationDetail;
             };
@@ -13054,9 +13118,7 @@ var userOverride = {
                         if (currTabId === groupId.toString() && isGroupTab) {
                             var groupName =
                                 group.displayName &&
-                                snapCommons.formatHtmlTag(
-                                    group.displayName
-                                );
+                                snapCommons.formatHtmlTag(group.displayName);
                             $mck_tab_title.html(groupName);
                         } else {
                             if (
@@ -13847,11 +13909,7 @@ var userOverride = {
                     $file_progress.removeClass('n-vis').addClass('vis');
                     $file_remove.attr('disabled', true);
                     $mck_file_upload.attr('disabled', true);
-                    SnapUI.hideFileBox(
-                        file,
-                        $file_box,
-                        $mck_file_upload
-                    );
+                    SnapUI.hideFileBox(file, $file_box, $mck_file_upload);
                     var currTab = $mck_msg_inner.data('mck-id');
                     var uniqueId = params.name + file.size;
                     TAB_FILE_DRAFT[uniqueId] = currTab;
@@ -14030,11 +14088,7 @@ var userOverride = {
                     $file_progress.removeClass('n-vis').addClass('vis');
                     $file_remove.attr('disabled', true);
                     $mck_file_upload.attr('disabled', true);
-                    SnapUI.hideFileBox(
-                        file,
-                        $file_box,
-                        $mck_file_upload
-                    );
+                    SnapUI.hideFileBox(file, $file_box, $mck_file_upload);
                     var currTab = $mck_msg_inner.data('mck-id');
                     var uniqueId = params.name + file.size;
                     TAB_FILE_DRAFT[uniqueId] = currTab;
@@ -14223,11 +14277,7 @@ var userOverride = {
                     $file_progress.removeClass('n-vis').addClass('vis');
                     $file_remove.attr('disabled', true);
                     $mck_file_upload.attr('disabled', true);
-                    SnapUI.hideFileBox(
-                        file,
-                        $file_box,
-                        $mck_file_upload
-                    );
+                    SnapUI.hideFileBox(file, $file_box, $mck_file_upload);
                     var currTab = $mck_msg_inner.data('mck-id');
                     var uniqueId = params.name + file.size;
                     TAB_FILE_DRAFT[uniqueId] = currTab;
@@ -14803,9 +14853,7 @@ var userOverride = {
                         snapIframe.classList.remove(
                             'km-iframe-dimension-no-popup'
                         );
-                        snapIframe.classList.remove(
-                            'km-iframe-notification'
-                        );
+                        snapIframe.classList.remove('km-iframe-notification');
                         snapIframe.classList.remove(
                             'km-iframe-dimension-with-popup'
                         );
@@ -15561,17 +15609,13 @@ var userOverride = {
                                     }, MCK_BOT_MESSAGE_DELAY);
                                 } else {
                                     SnapUI.isConvJustResolved = !!!SnapUI.isConvJustResolved;
-                                    SnapUI.showClosedConversationBanner(
-                                        true
-                                    );
+                                    SnapUI.showClosedConversationBanner(true);
                                 }
                             } else if (
                                 resp.message.metadata.KM_STATUS ===
                                 SnapConstants.CONVERSATION_OPEN_STATUS
                             ) {
-                                SnapUI.showClosedConversationBanner(
-                                    false
-                                );
+                                SnapUI.showClosedConversationBanner(false);
                             }
                             if (
                                 message &&
@@ -15629,9 +15673,7 @@ var userOverride = {
                                 JSON.stringify(message)
                             );
                             messageCopy.userOverride = userOverride;
-                            Snap.KmEventHandler.onMessageReceived(
-                                messageCopy
-                            );
+                            Snap.KmEventHandler.onMessageReceived(messageCopy);
                         } else if (messageType === 'APPLOZIC_02') {
                             Snap.KmEventHandler.onMessageSent(message);
                         }
