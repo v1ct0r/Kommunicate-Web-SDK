@@ -776,16 +776,12 @@ $applozic.extend(true, Snap, {
     },
 
     changeTextInputState: function (msg) {
-        var hintTextForTextInput = '';
-        var isEnableTextInput = true;
+        var metadata = msg.metadata;
+        var hintTextForTextInput = metadata.text_input_hint;
+        var isEnableTextInput = metadata.enable_text_input;
 
         $applozic('#mck-text-box').attr('contenteditable', isEnableTextInput);
-
-        $applozic('#mck-text-box').attr(
-            'data-text',
-            hintTextForTextInput
-                ? hintTextForTextInput
-                : MCK_LABELS['input.message']
-        );
+        $applozic('#mck-text-box').attr('data-text', hintTextForTextInput);
+        $applozic('#mck-text-box').attr('data-label', hintTextForTextInput);
     },
 });

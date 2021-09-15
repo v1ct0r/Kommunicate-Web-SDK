@@ -5544,6 +5544,8 @@ var userOverride = {
                 });
 
                 messagePxy.metadata = metadata;
+                messagePxy.message = messagePxy.message.normalize('NFD')
+
                 window.Applozic.ALApiService.ajax({
                     type: 'POST',
                     url: MCK_BASE_URL + MESSAGE_SEND_URL,
@@ -8840,7 +8842,7 @@ var userOverride = {
                             );
                         }
 
-                        Snap.changeTextInputState();
+                        Snap.changeTextInputState(msg);
                     }
                 } else {
                     $textMessage.html(emoji_template);
@@ -11514,10 +11516,10 @@ var userOverride = {
                     message.key &&
                     MCK_BOT_MESSAGE_QUEUE.push(message.key);
                 MCK_BOT_MESSAGE_QUEUE.length == 1 &&
-                    _this.procesMessageTimerDelay();
+                    _this.procesMessageTimerDelay(message);
             };
 
-            _this.procesMessageTimerDelay = function () {
+            _this.procesMessageTimerDelay = function (msg) {
                 var messageContainer = document.getElementById(
                         'mck-message-cell'
                     ),
@@ -11555,7 +11557,7 @@ var userOverride = {
                             );
                         }
 
-                        Snap.changeTextInputState();
+                        Snap.changeTextInputState(msg);
 
                         $mck_msg_inner.animate(
                             {
