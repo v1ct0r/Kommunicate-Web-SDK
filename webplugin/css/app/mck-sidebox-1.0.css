@@ -6498,18 +6498,12 @@ body.accesibility :focus {
 
 /* Custom quick reply buttons */
 .quick-reply-container {
-    display: flex;
     flex-direction: column !important;
     margin: 0 15px 20px;
+    text-align: center;
 }
 
-.quick-reply-container .quick-reply-btn-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.quick-reply-container .quick-reply-btn-container button:last-of-type {
+.quick-reply-container button:last-of-type {
     margin-right: none !important;
 }
 

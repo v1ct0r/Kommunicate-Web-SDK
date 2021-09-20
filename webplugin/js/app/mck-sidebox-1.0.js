@@ -2697,11 +2697,11 @@ var userOverride = {
                         '',
                         'n-vis'
                     );
-                    // snapCommons.modifyClassList(
-                    //     { id: ['quick-reply-container'] },
-                    //     'n-vis',
-                    //     'vis'
-                    // );
+                    snapCommons.modifyClassList(
+                        { id: ['quick-reply-container'] },
+                        'n-vis',
+                        'vis'
+                    );
                 }
                 closeButton.addEventListener('click', closeChatBox);
                 popUpcloseButton.addEventListener('click', function (e) {
@@ -7390,9 +7390,6 @@ var userOverride = {
                 '#mck-message-cell .mck-message-inner'
             );
             var $quick_reply_container = $applozic('#quick-reply-container');
-            var $quick_reply_btn_container = $applozic(
-                '#quick-reply-btn-container'
-            );
 
             var $mck_msg_new = $applozic('#mck-msg-new');
             var FILE_PREVIEW_URL = '/rest/ws/aws/file/';
@@ -8483,7 +8480,7 @@ var userOverride = {
                         msg.key === arrayOfAllMessages[0].key;
 
                     //don't need to append buttons to the messageTemplate arrea,
-                    //because we append them to the quick-reply-btn-container
+                    //because we append them to the quick-reply-container
                     msgList[0].kmRichTextMarkup = '';
 
                     //append message to the messageTemplate arrea
@@ -8502,8 +8499,8 @@ var userOverride = {
                         isLastSavedMessageInDialog ||
                         !isAvailableArrayOfAllMessages
                     ) {
-                        $quick_reply_btn_container.empty();
-                        $quick_reply_btn_container.append(
+                        $quick_reply_container.empty();
+                        $quick_reply_container.append(
                             $applozic(kmRichTextMarkup)
                         );
                     }
@@ -8834,7 +8831,7 @@ var userOverride = {
 
                         if (
                             typeof arrayOfAllMessages !== 'undefined' &&
-                            $quick_reply_btn_container.children().length > 0
+                            $quick_reply_container.children().length > 0
                         ) {
                             Snap.changeVisibilityStateForElement(
                                 $applozic('#quick-reply-container'),
@@ -11545,7 +11542,7 @@ var userOverride = {
                     if (message) {
                         message.classList.remove('n-vis');
 
-                        if ($quick_reply_btn_container.children().length > 0) {
+                        if ($quick_reply_container.children().length > 0) {
                             Snap.changeVisibilityStateForElement(
                                 $applozic('#quick-reply-container'),
                                 'show'

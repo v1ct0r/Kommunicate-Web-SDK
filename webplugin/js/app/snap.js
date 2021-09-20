@@ -733,24 +733,12 @@ $applozic.extend(true, Snap, {
             return;
         }
         var parentEle = element.parentElement;
-        var isQuickReplyContainer = parentEle.classList.contains(
-            'quick-reply-btn-container'
-        );
 
-        if (isQuickReplyContainer) {
-            parentEle.innerHTML = '';
-            parentEle.parentElement.classList.add('n-vis');
-
-            return;
-        }
-
-        while (
-            !parentEle.classList.contains('mck-msg-left') &&
-            !isQuickReplyContainer
-        ) {
+        while (!parentEle.classList.contains('quick-reply-container')) {
             parentEle = parentEle.parentElement;
         }
 
+        parentEle.innerHTML = '';
         parentEle.classList.add('n-vis');
     },
     getAllSiblings: function (element) {

@@ -760,11 +760,11 @@ Snap.richMsgEventHandler = {
         Snap.sendMessage(messagePxy);
 
         if (snap._globals.hidePostCTA) {
-            var siblingsArray = Snap.getAllSiblings(e.target);
-            var siblingContainsLink = siblingsArray.some(function (sibling) {
-                return sibling.classList.contains('km-link-button');
-            });
-            !siblingContainsLink && Snap.hideMessage(e.target);
+            var isClickedOnKmLinkButton = e.target.classList.contains('km-link-button')
+
+            if(!isClickedOnKmLinkButton) {
+                Snap.hideMessage(e.target);
+            }
         }
     },
     processClickOnListItem: function (e) {
