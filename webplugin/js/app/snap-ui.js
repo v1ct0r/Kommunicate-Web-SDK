@@ -246,10 +246,12 @@ SnapUI = {
             .removeClass('vis')
             .addClass('n-vis');
         $applozic('#mck-btn-attach-box').removeClass('n-vis').addClass('vis');
-        $applozic('#mck-text-box').attr(
-            'data-text',
-            MCK_LABELS['input.message']
-        );
+
+        /* Uncomment lines below to set default input placeholder */
+        // $applozic('#mck-text-box').attr(
+        //     'data-text',
+        //     MCK_LABELS['input.message']
+        // );
     },
     validateEmail: function (sendMsg) {
         var mailformat = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;

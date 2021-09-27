@@ -3154,8 +3154,10 @@ var userOverride = {
                     'title',
                     MCK_LABELS['edit']
                 );
-                document.getElementById('mck-text-box').dataset.text =
-                    MCK_LABELS['input.message'];
+                /* Uncomment lines below to set default input placeholder */
+                
+                // document.getElementById('mck-text-box').dataset.text =
+                //     MCK_LABELS['input.message'];
                 document.getElementById('mck-char-warning-text').innerHTML =
                     MCK_LABELS['char.limit.warn'];
                 document
