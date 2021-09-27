@@ -3581,6 +3581,9 @@ var userOverride = {
                     _this.showSendButton();
                     Snap.typingAreaService.hideMicButton();
                 }
+
+                //Reset session timeout if user entering data to the mck-text-box element
+                Snap.sessionTimeout()
             };
 
             _this.checkArray = function (askUserDetails) {
@@ -8849,6 +8852,8 @@ var userOverride = {
                         target: '_blank',
                     });
                 }
+
+                Snap.sessionTimeout()
 
                 if (richText) {
                     Snap.richMsgEventHandler.initializeSlick(
