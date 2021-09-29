@@ -1466,6 +1466,7 @@
     border: 1px solid #e5e5ed;
     padding: 16px;
     margin-top: 5px;
+    text-align: left;
 }
 .mck-form-template-wrapper form {
     margin: 0px;

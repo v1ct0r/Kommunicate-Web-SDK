@@ -1614,7 +1614,6 @@ var userOverride = {
                     params
                 );
                 var message = params.message;
-                var messageReply = params.messageReply;
                 if (!params.groupId && !params.clientGroupId) {
                     return 'groupId or clientGroupId required';
                 }
@@ -1625,14 +1624,17 @@ var userOverride = {
                     return 'invalid message type';
                 }
                 message = $applozic.trim(message);
-                messageReply = $applozic.trim(messageReply);
+
                 var messagePxy = {
                     type: params.messageType,
                     contentType: params.type,
                     message: message,
-                    messageReply: messageReply,
                     metadata: params.metadata || {},
                 };
+                $applozic.extend(messagePxy.metadata, {
+                    MESSAGE_TEMPLATE: params.messageTemplate,
+                });
+
                 if (params.groupId) {
                     messagePxy.groupId = $applozic.trim(params.groupId);
                 } else if (params.clientGroupId) {
@@ -3158,7 +3160,7 @@ var userOverride = {
                     MCK_LABELS['edit']
                 );
                 /* Uncomment lines below to set default input placeholder */
-                
+
                 // document.getElementById('mck-text-box').dataset.text =
                 //     MCK_LABELS['input.message'];
                 document.getElementById('mck-char-warning-text').innerHTML =
@@ -3586,7 +3588,7 @@ var userOverride = {
                 }
 
                 //Reset session timeout if user entering data to the mck-text-box element
-                Snap.sessionTimeout()
+                Snap.sessionTimeout();
             };
 
             _this.checkArray = function (askUserDetails) {
@@ -5524,7 +5526,6 @@ var userOverride = {
             _this.submitMessage = function (messagePxy, optns) {
                 var randomId = messagePxy.key;
                 var metadata = messagePxy.metadata ? messagePxy.metadata : {};
-                var messageToSubmit = messagePxy.messageReply ? messagePxy.messageReply : messagePxy.message
 
                 if (MCK_CHECK_USER_BUSY_STATUS) {
                     metadata = $applozic.extend(messagePxy.metadata, {
@@ -5553,7 +5554,7 @@ var userOverride = {
                 });
 
                 messagePxy.metadata = metadata;
-                messagePxy.message = messageToSubmit.normalize('NFD')
+                messagePxy.message = messagePxy.message.normalize('NFD');
 
                 window.Applozic.ALApiService.ajax({
                     type: 'POST',
@@ -8478,15 +8479,14 @@ var userOverride = {
                     'hide'
                 );
 
-                
-                if (msg.message.includes('|StartedTemplate|')) {
-                    var splittedMessage = msg.message.split('|StartedTemplate|')
-                    msg.message = splittedMessage[splittedMessage.length - 1]
+                if (msg.metadata.MESSAGE_TEMPLATE) {
+                    msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
 
                 if (
-                    kmRichTextMarkup.includes('km-quick-replies') &&
-                    !kmRichTextMarkup.includes('km-div-slider')
+                    (kmRichTextMarkup.includes('km-quick-replies') &&
+                        !kmRichTextMarkup.includes('km-div-slider')) ||
+                    kmRichTextMarkup.includes('km-btn-hidden-form')
                 ) {
                     var isAvailableArrayOfAllMessages =
                         typeof arrayOfAllMessages !== 'undefined';
@@ -8863,7 +8863,7 @@ var userOverride = {
                     });
                 }
 
-                Snap.sessionTimeout()
+                Snap.sessionTimeout();
 
                 if (richText) {
                     Snap.richMsgEventHandler.initializeSlick(

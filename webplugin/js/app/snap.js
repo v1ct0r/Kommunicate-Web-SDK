@@ -762,7 +762,6 @@ $applozic.extend(true, Snap, {
             $element.removeClass('vis').addClass('n-vis');
         }
     },
-
     changeTextInputState: function (msg) {
         var textBox = $applozic('#mck-text-box');
 
@@ -777,7 +776,6 @@ $applozic.extend(true, Snap, {
             textBox.attr('data-label', hintTextForTextInput);
         }
     },
-
     sessionTimeout: function () {
         var delay = 30000
         var parentWindowLocation = window.parent.location;

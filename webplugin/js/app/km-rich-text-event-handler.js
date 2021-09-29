@@ -536,8 +536,7 @@ Snap.richMsgEventHandler = {
         var target = e.target || e.srcElement;
         var requestType = target.dataset.requesttype;
         var buttonType = target.dataset.buttontype || target.type;
-        var messageStartedTemplate = 'Submitted next data:\n\n';
-        var messageAdditionalTemplate = ''
+        var mainMessageTemplate = '';
         var form =
             target.parentElement.getElementsByClassName(
                 'km-btn-hidden-form'
@@ -573,44 +572,34 @@ Snap.richMsgEventHandler = {
             name = formElements[i].name;
             type = formElements[i].type;
             value = formElements[i].value;
-            var labelText = '';
 
-            if (type === 'radio' || type === 'checkbox') {
-                let radioInputWrapper = formElements[i].closest(
-                    '.mck-form-radio-wrapper'
-                ).previousElementSibling;
+            var isCheckboxOrRadio = type === 'radio' || type === 'checkbox';
+            let wrapper = isCheckboxOrRadio
+                ? formElements[i].closest('.mck-form-radio-wrapper')
+                      .previousElementSibling
+                : formElements[i].closest('.mck-form-text-wrapper');
 
-                if (radioInputWrapper) {
-                    labelText = radioInputWrapper.textContent
-                    isAvailableColon = labelText.indexOf(':') !== -1
-    
-                    labelText += isAvailableColon ? ' ' : ': ';
-                };
-            } else {
-                let textInputWrapper = formElements[i].closest(
-                    '.mck-form-text-wrapper'
-                );
+            var labelText = isCheckboxOrRadio
+                ? wrapper.textContent
+                : wrapper.querySelector('label').textContent;
 
-                if (textInputWrapper) {
-                    labelText = textInputWrapper.querySelector('label').textContent
-                    isAvailableColon = labelText.indexOf(':') !== -1
-    
-                    labelText += isAvailableColon ? ' ' : ': ';
-                };  
+            if (wrapper && labelText) {
+                isAvailableColon = labelText.indexOf(':') !== -1;
+                labelText += isAvailableColon ? ' ' : ': ';
             }
 
             switch (type) {
                 case 'radio':
                     if (formElements[i].checked) {
                         data[name] = value;
-                        messageAdditionalTemplate += labelText + value + '\n';
+                        mainMessageTemplate += labelText + value + '\n';
                     }
                     break;
                 case 'checkbox':
                     if (formElements[i].checked) {
                         !data[name] && (data[name] = []);
                         data[name].push(value);
-                        messageAdditionalTemplate += labelText + value + '\n';
+                        mainMessageTemplate += labelText + value + '\n';
                     }
                     break;
                 case 'select-one': //dropdown
@@ -625,7 +614,7 @@ Snap.richMsgEventHandler = {
                         validationResults.push(value ? 'success' : 'failed');
                     }
 
-                    messageAdditionalTemplate += labelText + value + '\n';
+                    mainMessageTemplate += labelText + value + '\n';
                     break;
                 default:
                     data[name] = value;
@@ -647,8 +636,8 @@ Snap.richMsgEventHandler = {
                             );
                         }
 
-                        if (labelText && value) {
-                            messageAdditionalTemplate += labelText + value + '\n';
+                        if (value) {
+                            mainMessageTemplate += labelText + value + '\n';
                         }
                     } catch (e) {
                         console.log(e);
@@ -684,10 +673,12 @@ Snap.richMsgEventHandler = {
         }
         var messagePxy = {};
         var msgMetadata = {};
-        
-        var template = messageAdditionalTemplate ? messageStartedTemplate + messageAdditionalTemplate : 'The form was sent without data.'
+
+        var template = mainMessageTemplate ? mainMessageTemplate.substring(0, mainMessageTemplate.length - 1) : 'The form was sent without data.';
+
         //message to send
-        messagePxy.message = replyText + '|StartedTemplate|' + template
+        messagePxy.message = replyText;
+        messagePxy.messageTemplate = template;
 
         isActionableForm &&
             requestType == SnapConstants.POST_BACK_TO_BOT_PLATFORM &&
@@ -877,6 +868,7 @@ Snap.richMsgEventHandler = {
     },
     handleFormSubmit: function (e) {
         e.preventDefault();
+        Snap.hideMessage(e.target);
     },
     isValidString: function (str, value) {
         return new RegExp(str).test(value);
