@@ -764,16 +764,17 @@ $applozic.extend(true, Snap, {
     },
 
     changeTextInputState: function (msg) {
-        if (typeof msg === 'undefined') return
+        var textBox = $applozic('#mck-text-box');
 
-        var metadata = msg.hasOwnProperty('metadata') ? msg.metadata : {};
-        var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : false;
+        if (typeof msg === 'undefined' || !msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
+            textBox.attr('contenteditable', false);
+        } else {
+            var metadata = msg.metadata;
+            var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
 
-        metadata.hasOwnProperty('enable_text_input') ? $applozic('#mck-text-box').attr('contenteditable', metadata.enable_text_input) : false;
-
-        if (hintTextForTextInput) {
-            $applozic('#mck-text-box').attr('data-text', hintTextForTextInput);
-            $applozic('#mck-text-box').attr('data-label', hintTextForTextInput);
+            textBox.attr('contenteditable', metadata.enable_text_input);
+            textBox.attr('data-text', hintTextForTextInput);
+            textBox.attr('data-label', hintTextForTextInput);
         }
     },
 
