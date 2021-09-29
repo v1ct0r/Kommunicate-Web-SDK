@@ -536,6 +536,8 @@ Snap.richMsgEventHandler = {
         var target = e.target || e.srcElement;
         var requestType = target.dataset.requesttype;
         var buttonType = target.dataset.buttontype || target.type;
+        var messageStartedTemplate = 'Submitted next data:\n\n';
+        var messageAdditionalTemplate = ''
         var form =
             target.parentElement.getElementsByClassName(
                 'km-btn-hidden-form'
@@ -571,16 +573,44 @@ Snap.richMsgEventHandler = {
             name = formElements[i].name;
             type = formElements[i].type;
             value = formElements[i].value;
+            var labelText = '';
+
+            if (type === 'radio' || type === 'checkbox') {
+                let radioInputWrapper = formElements[i].closest(
+                    '.mck-form-radio-wrapper'
+                ).previousElementSibling;
+
+                if (radioInputWrapper) {
+                    labelText = radioInputWrapper.textContent
+                    isAvailableColon = labelText.indexOf(':') !== -1
+    
+                    labelText += isAvailableColon ? ' ' : ': ';
+                };
+            } else {
+                let textInputWrapper = formElements[i].closest(
+                    '.mck-form-text-wrapper'
+                );
+
+                if (textInputWrapper) {
+                    labelText = textInputWrapper.querySelector('label').textContent
+                    isAvailableColon = labelText.indexOf(':') !== -1
+    
+                    labelText += isAvailableColon ? ' ' : ': ';
+                };  
+            }
+
             switch (type) {
                 case 'radio':
                     if (formElements[i].checked) {
                         data[name] = value;
+                        messageAdditionalTemplate += labelText + value + '\n';
                     }
                     break;
                 case 'checkbox':
                     if (formElements[i].checked) {
                         !data[name] && (data[name] = []);
                         data[name].push(value);
+                        messageAdditionalTemplate += labelText + value + '\n';
                     }
                     break;
                 case 'select-one': //dropdown
@@ -594,6 +624,8 @@ Snap.richMsgEventHandler = {
                         );
                         validationResults.push(value ? 'success' : 'failed');
                     }
+
+                    messageAdditionalTemplate += labelText + value + '\n';
                     break;
                 default:
                     data[name] = value;
@@ -613,6 +645,10 @@ Snap.richMsgEventHandler = {
                                     MCK_LABELS['rich.form'].errorText,
                                 !validString
                             );
+                        }
+
+                        if (labelText && value) {
+                            messageAdditionalTemplate += labelText + value + '\n';
                         }
                     } catch (e) {
                         console.log(e);
@@ -648,7 +684,10 @@ Snap.richMsgEventHandler = {
         }
         var messagePxy = {};
         var msgMetadata = {};
-        replyText && (messagePxy.message = replyText); //message to send
+        
+        var template = messageAdditionalTemplate ? messageStartedTemplate + messageAdditionalTemplate : 'The form was sent without data.'
+        //message to send
+        messagePxy.message = replyText + '|StartedTemplate|' + template
 
         isActionableForm &&
             requestType == SnapConstants.POST_BACK_TO_BOT_PLATFORM &&
@@ -760,9 +799,11 @@ Snap.richMsgEventHandler = {
         Snap.sendMessage(messagePxy);
 
         if (snap._globals.hidePostCTA) {
-            var isClickedOnKmLinkButton = e.target.classList.contains('km-link-button')
+            var isClickedOnKmLinkButton = e.target.classList.contains(
+                'km-link-button'
+            );
 
-            if(!isClickedOnKmLinkButton) {
+            if (!isClickedOnKmLinkButton) {
                 Snap.hideMessage(e.target);
             }
         }

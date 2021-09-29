@@ -1395,11 +1395,15 @@
     flex-wrap: wrap;
 }
 .mck-form-radio-wrapper div {
+    display: flex;
+    align-items: center;
     margin-right: 10px;
 }
 .mck-form-radio-wrapper input {
-    font-size: 11px;
-    margin-right: 3px;
+    width: 16px;
+    height: 16px;
+    font-size: 14px;
+    margin-right: 6px;
 }
 .mck-form-textarea-wrapper textarea {
     resize: vertical;

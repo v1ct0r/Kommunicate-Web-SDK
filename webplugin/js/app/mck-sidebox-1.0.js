@@ -1614,6 +1614,7 @@ var userOverride = {
                     params
                 );
                 var message = params.message;
+                var messageReply = params.messageReply;
                 if (!params.groupId && !params.clientGroupId) {
                     return 'groupId or clientGroupId required';
                 }
@@ -1624,10 +1625,12 @@ var userOverride = {
                     return 'invalid message type';
                 }
                 message = $applozic.trim(message);
+                messageReply = $applozic.trim(messageReply);
                 var messagePxy = {
                     type: params.messageType,
                     contentType: params.type,
                     message: message,
+                    messageReply: messageReply,
                     metadata: params.metadata || {},
                 };
                 if (params.groupId) {
@@ -5521,6 +5524,7 @@ var userOverride = {
             _this.submitMessage = function (messagePxy, optns) {
                 var randomId = messagePxy.key;
                 var metadata = messagePxy.metadata ? messagePxy.metadata : {};
+                var messageToSubmit = messagePxy.messageReply ? messagePxy.messageReply : messagePxy.message
 
                 if (MCK_CHECK_USER_BUSY_STATUS) {
                     metadata = $applozic.extend(messagePxy.metadata, {
@@ -5549,7 +5553,7 @@ var userOverride = {
                 });
 
                 messagePxy.metadata = metadata;
-                messagePxy.message = messagePxy.message.normalize('NFD')
+                messagePxy.message = messageToSubmit.normalize('NFD')
 
                 window.Applozic.ALApiService.ajax({
                     type: 'POST',
@@ -8473,6 +8477,12 @@ var userOverride = {
                     $applozic('#quick-reply-container'),
                     'hide'
                 );
+
+                
+                if (msg.message.includes('|StartedTemplate|')) {
+                    var splittedMessage = msg.message.split('|StartedTemplate|')
+                    msg.message = splittedMessage[splittedMessage.length - 1]
+                }
 
                 if (
                     kmRichTextMarkup.includes('km-quick-replies') &&
