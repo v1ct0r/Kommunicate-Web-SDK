@@ -103,7 +103,7 @@
     box-shadow: 0 1.5rem 2rem rgba(0, 0, 0, 0.3);
 }
 .mck-sidebox-launcher:focus {
-    box-shadow: #754794 0px 0px 0px 5px;
+    box-shadow: #1D50A2 0px 0px 0px 5px;
 }
 .mck-running-on > a {
     text-decoration: none;
@@ -124,7 +124,7 @@
 
 .mck-running-on > a:hover {
     text-decoration: underline;
-    color: #754794 !important;
+    color: #1D50A2 !important;
 }
 /* #mck-textbox-container .mck-text-box-panel{
 	filter:grayscale(100);
@@ -321,7 +321,7 @@
 }
 
 .mck-sidebox a {
-    color: #754794;
+    color: #1D50A2;
 }
 
 .mck-sidebox a {
@@ -1017,7 +1017,7 @@
     min-height: 60px;
     text-align: left;
     border-bottom: 1px solid #e5e5e5;
-    background-color: #754794;
+    background-color: #1D50A2;
     color: white;
 }
 
@@ -2330,7 +2330,7 @@ mck-sidebox .mck-group-member-list li a:hover {
 
 .mck-msg-right .mck-msg-box:after {
     border-color: transparent;
-    border-left-color: #754794;
+    border-left-color: #1D50A2;
     border-width: 11px;
 }
 
@@ -3060,7 +3060,7 @@ mck-sidebox .mck-group-member-list li a:hover {
     padding: 10px 14px 10px;
     position: relative;
     color: rgba(255, 255, 255, 0.87);
-    background-color: #754794;
+    background-color: #1D50A2;
 }
 
 .mck-msg-avator-bubble.mck-msg-right .mck-msg-box {
@@ -4291,7 +4291,7 @@ mck-sidebox .mck-group-member-list li a:hover {
     /* width:100% !important; */
 }
 #mck-msg-new {
-    background-color: #754794;
+    background-color: #1D50A2;
     color: white;
     border-radius: 26px;
     box-shadow: 2px 2px 6px 1px rgba(24, 23, 23, 0.35);
@@ -4533,10 +4533,10 @@ mck-sidebox .mck-group-member-list li a:hover {
     margin-left: 35px;
 }
 .km-faqbtn {
-    background-color: #754794;
+    background-color: #1D50A2;
 }
 .button:hover #km-faqbtn {
-    background-color: #754794;
+    background-color: #1D50A2;
 }
 
 .km-faqback {
@@ -4797,7 +4797,7 @@ div#mck-tab-title.mck-tab-title {
     font-stretch: normal;
     line-height: normal;
     letter-spacing: 0.7px;
-    color: #754794;
+    color: #1D50A2;
     padding-left: 10px;
     text-decoration: none;
     margin-left: 8px;
@@ -5306,7 +5306,7 @@ button {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    border: solid 2.5px #754794;
+    border: solid 2.5px #1D50A2;
     background: #aaa;
 }
 .mck-agent-image-container .mck-agent-status-indicator.mck-status--online {
@@ -5457,7 +5457,7 @@ button {
 }
 
 #km-local-file-system-warning .km-learn-more {
-    background-color: #754794;
+    background-color: #1D50A2;
     color: #fff;
     outline: 0;
     border: none;
@@ -5548,7 +5548,7 @@ div[name='message']:last-child {
     align-items: center;
     justify-content: center;
     animation: kmScaleAnim 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
-    background: #754794;
+    background: #1D50A2;
     white-space: pre-line;
 }
 
@@ -5810,7 +5810,7 @@ div#mck-rated:before {
     color: #fff;
     font-size: 15px;
     border: none;
-    background: #754794;
+    background: #1D50A2;
 }
 
 #mck-submit-comment:disabled {

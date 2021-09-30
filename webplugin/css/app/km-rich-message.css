@@ -389,8 +389,8 @@
     padding: 8px 10px;
 }
 .km-cta-button {
-    color: #754794;
-    border: 1px solid #754794;
+    color: #1D50A2;
+    border: 1px solid #1D50A2;
 }
 .km-undecorated-link {
     text-decoration: none;
@@ -676,7 +676,7 @@
     padding: 0px 25px 20px;
     /* position: absolute;
         bottom: 52px;
-        left:0; 
+        left:0;
         width: 97%;
         background-color: white; */
 }
@@ -1071,7 +1071,7 @@
 .km-faq-dialog-button {
     min-width: 40px;
     border-radius: 15px;
-    border: 1px solid #754794;
+    border: 1px solid #1D50A2;
 }
 
 .km-faq-answer--body .km-faq-answer--body_container {
