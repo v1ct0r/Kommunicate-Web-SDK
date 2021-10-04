@@ -11530,10 +11530,10 @@ var userOverride = {
                     message.key &&
                     MCK_BOT_MESSAGE_QUEUE.push(message.key);
                 MCK_BOT_MESSAGE_QUEUE.length == 1 &&
-                    _this.procesMessageTimerDelay(message);
+                    _this.procesMessageTimerDelay();
             };
 
-            _this.procesMessageTimerDelay = function (msg) {
+            _this.procesMessageTimerDelay = function () {
                 var messageContainer = document.getElementById(
                         'mck-message-cell'
                     ),
@@ -11552,6 +11552,10 @@ var userOverride = {
                 }
 
                 setTimeout(function () {
+                    var currentMessageObject = ALStorage.getMessageByKey(
+                        MCK_BOT_MESSAGE_QUEUE[0]
+                    );
+
                     message = messageContainer.querySelector(
                         'div[data-msgkey="' + MCK_BOT_MESSAGE_QUEUE[0] + '"]'
                     );
@@ -11571,8 +11575,6 @@ var userOverride = {
                             );
                         }
 
-                        Snap.changeTextInputState(msg);
-
                         $mck_msg_inner.animate(
                             {
                                 scrollTop: $mck_msg_inner.prop('scrollHeight'),
@@ -11581,8 +11583,13 @@ var userOverride = {
                         );
                     }
                     MCK_BOT_MESSAGE_QUEUE.shift();
-                    MCK_BOT_MESSAGE_QUEUE.length != 0 &&
+
+                    if (MCK_BOT_MESSAGE_QUEUE.length != 0) {
                         _this.procesMessageTimerDelay();
+                    } else {
+                        Snap.changeTextInputState(currentMessageObject);
+                    }
+                        
                 }, MCK_BOT_MESSAGE_DELAY);
             };
 
