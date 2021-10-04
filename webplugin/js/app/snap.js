@@ -777,7 +777,7 @@ $applozic.extend(true, Snap, {
         }
     },
     sessionTimeout: function () {
-        var delay = 30000
+        var delay = 300000
         var parentWindowLocation = window.parent.location;
         var hash = parentWindowLocation.hash.substr(1)
 
