@@ -777,19 +777,7 @@ $applozic.extend(true, Snap, {
         }
     },
     sessionTimeout: function () {
-        var delay = 300000
-        var parentWindowLocation = window.parent.location;
-        var hash = parentWindowLocation.hash.substr(1)
-
-        if (hash === "timeout") return
-
-        if (window.sessionTimeout) {
-            clearTimeout(window.sessionTimeout)
-        }
-
-        window.sessionTimeout = setTimeout(function() {
-            parentWindowLocation.replace(parentWindowLocation.origin + '#timeout');
-            parentWindowLocation.reload()
-        }, delay)
+        var parentWindow = window.parent;
+        parentWindow.sessionTimeoutInitializer()
     }
 });
