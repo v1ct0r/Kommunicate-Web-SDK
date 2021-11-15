@@ -8483,6 +8483,10 @@ var userOverride = {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
 
+                if (snap._globals.hidePostCTA) {
+                    Snap.hideMessage();
+                }
+
                 if (
                     (kmRichTextMarkup.includes('km-quick-replies') &&
                         !kmRichTextMarkup.includes('km-div-slider')) ||
@@ -11589,7 +11593,7 @@ var userOverride = {
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
                     }
-                        
+
                 }, MCK_BOT_MESSAGE_DELAY);
             };
 

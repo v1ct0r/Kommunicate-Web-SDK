@@ -729,17 +729,20 @@ $applozic.extend(true, Snap, {
         return true;
     },
     hideMessage: function (element) {
-        if (!element) {
-            return;
-        }
-        var parentEle = element.parentElement;
+        var quickReplyContainer = $applozic('#quick-reply-container');
 
-        while (!parentEle.classList.contains('quick-reply-container')) {
-            parentEle = parentEle.parentElement;
-        }
+        if (element && quickReplyContainer.children().length > 0) {
+            var parentEle = element.parentElement;
 
-        parentEle.innerHTML = '';
-        parentEle.classList.add('n-vis');
+            while (!parentEle.classList.contains('quick-reply-container')) {
+                parentEle = parentEle.parentElement;
+            }
+
+            parentEle.innerHTML = '';
+            parentEle.classList.add('n-vis');
+        } else {
+            quickReplyContainer.empty();
+        }
     },
     getAllSiblings: function (element) {
         var siblings = [];
