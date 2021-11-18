@@ -5563,6 +5563,10 @@ var userOverride = {
                     data: w.JSON.stringify(messagePxy),
                     contentType: 'application/json',
                     success: function (data) {
+                        if (snap._globals.hidePostCTA) {
+                            Snap.hideMessage();
+                        }
+
                         if (
                             messagePxy &&
                             typeof messagePxy.fileMeta === 'object' &&
@@ -8407,6 +8411,12 @@ var userOverride = {
                 //     return ;
                 // }
 
+                var isAvailableArrayOfAllMessages =
+                    typeof arrayOfAllMessages !== 'undefined';
+                var isLastSavedMessageInDialog =
+                    isAvailableArrayOfAllMessages &&
+                    msg.key === arrayOfAllMessages[0].key;
+
                 var msgList = [
                     {
                         msgReply: replyMsg ? replyMsg.message + '\n' : '',
@@ -8483,21 +8493,11 @@ var userOverride = {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
 
-                if (snap._globals.hidePostCTA) {
-                    Snap.hideMessage();
-                }
-
                 if (
                     (kmRichTextMarkup.includes('km-quick-replies') &&
                         !kmRichTextMarkup.includes('km-div-slider')) ||
                     kmRichTextMarkup.includes('km-btn-hidden-form')
                 ) {
-                    var isAvailableArrayOfAllMessages =
-                        typeof arrayOfAllMessages !== 'undefined';
-                    var isLastSavedMessageInDialog =
-                        isAvailableArrayOfAllMessages &&
-                        msg.key === arrayOfAllMessages[0].key;
-
                     //don't need to append buttons to the messageTemplate arrea,
                     //because we append them to the quick-reply-container
                     msgList[0].kmRichTextMarkup = '';
@@ -8858,7 +8858,13 @@ var userOverride = {
                             );
                         }
 
-                        Snap.changeTextInputState(msg);
+                        if (isAvailableArrayOfAllMessages) {
+                            if (isLastSavedMessageInDialog) {
+                                Snap.changeTextInputState(msg);
+                            }
+                        } else {
+                            Snap.changeTextInputState(msg);
+                        }
                     }
                 } else {
                     $textMessage.html(emoji_template);
@@ -11588,7 +11594,7 @@ var userOverride = {
                     }
                     MCK_BOT_MESSAGE_QUEUE.shift();
 
-                    if (MCK_BOT_MESSAGE_QUEUE.length != 0) {
+                    if (MCK_BOT_MESSAGE_QUEUE.length !== 0) {
                         _this.procesMessageTimerDelay();
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
