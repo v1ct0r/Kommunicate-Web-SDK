@@ -1414,7 +1414,7 @@
 .mck-form-textarea-wrapper textarea {
     border: 1px solid #cad3e3;
     color: #000000;
-    width: 93%;
+    width: 92%;
     padding: 9px;
     margin-bottom: 3px;
     display: inline-block;
@@ -1472,12 +1472,17 @@
     margin: 0px;
 }
 .mck-form-label {
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.36px;
     color: #333333;
 }
+.mck-form-template-container {
+    min-width: 245px;
+}
 .mck-form-template-container button {
-    width: 23%;
+    min-width: 105px;
+    font-size: var(--btn-font-size);
+    line-height: var(--btn-line-height);
     border-radius: 19px;
     padding: 5px;
     margin-top: 12px;
