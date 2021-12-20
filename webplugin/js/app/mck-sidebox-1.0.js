@@ -8123,7 +8123,9 @@ var userOverride = {
                 enableAttachment,
                 callback,
                 allowReload,
-                arrayOfAllMessages
+                arrayOfAllMessages,
+                processMessageInQueue = false,
+                showWithoutDelay = false
             ) {
                 var metadatarepiledto = '';
                 var replymessage = '';
@@ -8411,11 +8413,7 @@ var userOverride = {
                 //     return ;
                 // }
 
-                var isAvailableArrayOfAllMessages =
-                    typeof arrayOfAllMessages !== 'undefined';
-                var isLastSavedMessageInDialog =
-                    isAvailableArrayOfAllMessages &&
-                    msg.key === arrayOfAllMessages[0].key;
+                var isLastSavedMessageInDialog = arrayOfAllMessages && msg.key === arrayOfAllMessages[0].key;
 
                 var msgList = [
                     {
@@ -8516,7 +8514,7 @@ var userOverride = {
                     //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
                     if (
                         isLastSavedMessageInDialog ||
-                        !isAvailableArrayOfAllMessages
+                        !arrayOfAllMessages
                     ) {
                         $quick_reply_container.empty();
                         $quick_reply_container.append(
@@ -8847,10 +8845,10 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-
-                        if (
-                            typeof arrayOfAllMessages !== 'undefined' &&
-                            $quick_reply_container.children().length > 0
+                        
+                        if ( showWithoutDelay ||
+                            (!processMessageInQueue &&
+                            $quick_reply_container.children().length > 0)
                         ) {
                             Snap.changeVisibilityStateForElement(
                                 $applozic('#quick-reply-container'),
@@ -8858,7 +8856,7 @@ var userOverride = {
                             );
                         }
 
-                        if (isAvailableArrayOfAllMessages) {
+                        if (arrayOfAllMessages) {
                             if (isLastSavedMessageInDialog) {
                                 Snap.changeTextInputState(msg);
                             }
@@ -11376,7 +11374,10 @@ var userOverride = {
                                                         _this.processMessageInQueue(
                                                             message
                                                         );
-                                                    }
+                                                    },
+                                                    null,
+                                                    null,
+                                                    true
                                                 );
                                             } else {
                                                 mckMessageLayout.addMessage(
@@ -11384,7 +11385,13 @@ var userOverride = {
                                                     contact,
                                                     true,
                                                     true,
-                                                    validated
+                                                    validated,
+                                                    null,
+                                                    null,
+                                                    null,
+                                                    null,
+                                                    null,
+                                                    true
                                                 );
                                                 $applozic(
                                                     '.km-typing-wrapper'
