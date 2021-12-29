@@ -8492,9 +8492,9 @@ var userOverride = {
                 }
 
                 if (
-                    (kmRichTextMarkup.includes('km-quick-replies') &&
-                        !kmRichTextMarkup.includes('km-div-slider')) ||
-                    kmRichTextMarkup.includes('km-btn-hidden-form')
+                  !kmRichTextMarkup.includes('km-div-slider') &&
+                  (kmRichTextMarkup.includes('km-quick-replies') ||
+                    kmRichTextMarkup.includes('km-btn-hidden-form'))
                 ) {
                     //don't need to append buttons to the messageTemplate arrea,
                     //because we append them to the quick-reply-container

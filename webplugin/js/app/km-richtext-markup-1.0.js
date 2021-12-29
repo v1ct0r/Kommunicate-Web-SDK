@@ -339,7 +339,7 @@ Snap.markup = {
          <div class="km-faq-answer--body">
              <div class="km-faq-answer--body_container">
                  <p class="km-faq-answer--body_que">{{title}}</p>
-                 <p class="km-faq-answer--body_ans"> {{{description}}} </p>
+                 <p class="km-faq-answer--body_ans">{{{description}}}</p>
              </div>
          </div>
          <div class="km-faq-answer--footer">
@@ -392,7 +392,7 @@ Snap.markup = {
                 <div class="km-carousel-card-title-extension">{{titleExt}}</div>
             </div>
             <div class="km-carousel-card-sub-title">{{subtitle}}</div>
-            <div class="{{cardDescriptionClass}}"><div class="km-carousel-card-description">{{description}}</div></div>`;
+            <div class="{{cardDescriptionClass}}"><div class="km-carousel-card-description">{{{description}}}</div></div>`;
     },
     getFormTemplate: function () {
         return `<div class="mck-msg-box-rich-text-container mck-form-template-container">
