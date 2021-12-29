@@ -360,7 +360,14 @@
     flex-flow: row;
     justify-content: flex-start;
     flex-wrap: wrap;
+    max-height: 100px;
+    overflow-y: scroll;
 }
+.km-carousel-card-footer .km-cta-multi-button-container {
+    max-height: unset;
+    overflow-y: unset;
+}
+
 .km-quick-rpy-btn {
     width: auto;
     padding: 6px 14px;
@@ -1279,11 +1286,11 @@
     margin-top: 4px;
 }
 .km-carousel-card-description {
-    overflow: hidden;
+    /*overflow: hidden;*/
     position: relative;
     line-height: 14.4px;
-    max-height: 43.2px;
-    margin-right: 12px;
+    /*max-height: 43.2px;*/
+    /*margin-right: 12px;*/
     padding-right: 12px;
     margin-top: 4px;
     font-weight: 300;
@@ -1293,12 +1300,12 @@
     white-space: pre-line;
     text-overflow: ellipsis;
 }
-.km-carousel-card-description:before {
-    content: '...';
-    position: absolute;
-    right: 0;
-    bottom: 0;
-}
+/*.km-carousel-card-description:before {*/
+/*    content: '...';*/
+/*    position: absolute;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*}*/
 .km-carousel-card-description:after {
     content: '';
     position: absolute;
@@ -1326,7 +1333,7 @@
     border-radius: 2px;
 }
 .km-carousel-card-description-wrapper {
-    height: 44px;
+    /*height: 44px;*/
 }
 .km-carousel-card-info-wrapper-without-header {
     border-top: 1px solid #e7e4e4;
