@@ -736,6 +736,7 @@ $applozic.extend(true, Snap, {
 
             while (!parentEle.classList.contains('quick-reply-container')) {
                 parentEle = parentEle.parentElement;
+                document.getElementById("quick-reply-container").scrollTop = 0;
             }
 
             parentEle.innerHTML = '';
