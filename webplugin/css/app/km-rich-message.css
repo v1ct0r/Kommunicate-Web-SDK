@@ -360,7 +360,7 @@
     flex-flow: row;
     justify-content: flex-start;
     flex-wrap: wrap;
-    max-height: 100px;
+    max-height: 150px;
     overflow-y: scroll;
 }
 .km-carousel-card-footer .km-cta-multi-button-container {
