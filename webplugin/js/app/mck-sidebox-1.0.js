@@ -8577,6 +8577,9 @@ var userOverride = {
                     } catch (e) {
                         console.error('suggestionList should be an array');
                     }
+
+                    autosuggetionMetadata.source.push({searchKey: 'default', message: "My question isn't here"});
+
                     $mck_autosuggest_search_input
                         .addClass('mck-text-box')
                         .removeClass('n-vis');
@@ -9886,7 +9889,7 @@ var userOverride = {
                     },
                     matcher: function (item) {
                         var matcher1 = new RegExp(this.query, 'i');
-                        return matcher1.test(item.searchKey);
+                        return matcher1.test(item.searchKey) || item.searchKey === 'default';
                     },
                     highlighter: function (item) {
                         var metadata = JSON.parse(item.toString());
