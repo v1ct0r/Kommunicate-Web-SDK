@@ -361,6 +361,17 @@
     justify-content: flex-start;
     flex-wrap: wrap;
 }
+
+.limitHeight {
+    max-height: 150px;
+    overflow-y: scroll;
+}
+
+.km-carousel-card-footer .km-cta-multi-button-container {
+    max-height: unset;
+    overflow-y: unset;
+}
+
 .km-quick-rpy-btn {
     width: auto;
     padding: 6px 14px;
