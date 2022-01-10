@@ -355,7 +355,7 @@
 .tns-controls {
     padding-bottom: 8px;
 }
-.km-cta-multi-button-container {
+.km-cta-multi-button-container, .km-cta-multi-button-container > div {
     display: flex;
     /*flex-flow: row;*/
     /*justify-content: flex-start;*/
