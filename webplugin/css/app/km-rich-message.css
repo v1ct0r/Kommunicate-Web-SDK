@@ -357,9 +357,12 @@
 }
 .km-cta-multi-button-container {
     display: flex;
-    flex-flow: row;
+    /*flex-flow: row;*/
+    /*justify-content: flex-start;*/
+    /*flex-wrap: wrap;*/
+    flex-flow: column;
     justify-content: flex-start;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .limitHeight {
@@ -1367,7 +1370,9 @@
     min-width: 105px;
     line-height: var(--btn-line-height);
     font-size: var(--btn-font-size);
-    border: 1px solid;
+    /*border: 1px solid;*/
+    border: 0;
+    text-align: start;
     background-color: white;
 }
 .km-carousel-card-footer

@@ -6505,7 +6505,10 @@ body.accesibility :focus {
 .quick-reply-container.vis { 
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    /*justify-content: center;*/
+    justify-content: start;
+    max-height: 300px;
+    overflow: scroll;
 }
 
 .quick-reply-container button:last-of-type {
