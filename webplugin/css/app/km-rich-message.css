@@ -368,6 +368,7 @@
 .limitHeight {
     max-height: 150px;
     overflow-y: scroll;
+    width: 100%;
 }
 
 .km-carousel-card-footer .km-cta-multi-button-container {
