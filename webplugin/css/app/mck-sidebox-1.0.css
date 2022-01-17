@@ -4606,7 +4606,7 @@ mck-sidebox .mck-group-member-list li a:hover {
     line-height: normal;
     letter-spacing: 0.6px;
     text-align: left;
-    color: #949494 !important;
+    color: #757575 !important;
     /* Firefox */
 }
 #km-faq-search-input::-webkit-input-placeholder {
@@ -4620,7 +4620,7 @@ mck-sidebox .mck-group-member-list li a:hover {
     line-height: normal;
     letter-spacing: 0.6px;
     text-align: left;
-    color: #696464 !important;
+    color: #757575 !important;
 }
 
 #km-faq-search-input:-ms-input-placeholder {
@@ -4646,7 +4646,7 @@ mck-sidebox .mck-group-member-list li a:hover {
     line-height: normal;
     letter-spacing: 0.6px;
     text-align: left;
-    color: #949494 !important;
+    color: #757575 !important;
 }
 textarea::-webkit-input-placeholder {
     color: #757575 !important;
