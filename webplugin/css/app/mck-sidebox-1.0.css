@@ -1816,7 +1816,7 @@ mck-sidebox .mck-group-member-list li a:hover {
 }
 .mck-box-ft .mck-box-form {
     padding: 10px 5px 10px 0px;
-    border: thin solid #cecbcb;
+    border: thin solid #757575;
     border-radius: 4px;
     background-color: white;
     position: relative;
@@ -4649,25 +4649,25 @@ mck-sidebox .mck-group-member-list li a:hover {
     color: #949494 !important;
 }
 textarea::-webkit-input-placeholder {
-    color: #949494 !important;
+    color: #757575 !important;
 }
 
 textarea:-moz-placeholder {
     /* Firefox 18- */
-    color: #949494 !important;
+    color: #757575 !important;
 }
 
 textarea::-moz-placeholder {
     /* Firefox 19+ */
-    color: #949494 !important;
+    color: #757575 !important;
 }
 
 textarea:-ms-input-placeholder {
-    color: #949494 !important;
+    color: #757575 !important;
 }
 
 textarea::placeholder {
-    color: #949494 !important;
+    color: #757575 !important;
 }
 
 #mck-away-msg-box {
