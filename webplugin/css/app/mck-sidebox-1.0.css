@@ -112,14 +112,12 @@
 
 #mck-text-box[contenteditable='true']:empty:not(:focus):before {
     content: attr(data-text);
-    color: #949494;
-    opacity: 0.6;
+    color: #757575;
 }
 
 #mck-text-box[contenteditable='false']:empty:before {
     content: attr(data-text);
-    color: #949494;
-    opacity: 0.6;
+    color: #757575;
 }
 
 .mck-running-on > a:hover {
