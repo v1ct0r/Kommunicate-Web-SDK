@@ -831,6 +831,10 @@ SnapUI = {
                 },
                 'n-vis'
             );
+        if (isConversationClosed) {
+            document.getElementById('quick-reply-container').classList.add('n-vis');
+            document.getElementById('quick-reply-container').classList.remove('vis');
+        }
         if (
             isCSATenabled &&
             isConversationClosed &&
