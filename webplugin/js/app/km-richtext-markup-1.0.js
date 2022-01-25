@@ -1,4 +1,4 @@
-//Snap = $applozic.extends(true,Snap||{})
+// Snap = $applozic.extends(true,Snap||{})
 Snap.markup = {
     getSingleRoomPaxInfo: function (roomCount) {
         roomCount = roomCount || '1';
