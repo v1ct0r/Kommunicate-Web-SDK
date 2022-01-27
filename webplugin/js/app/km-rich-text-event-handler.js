@@ -93,7 +93,7 @@ Snap.attachEvents = function ($applozic) {
               enableTime: true,
               minDate: "today",
               dateFormat: "Y-m-d H:i",
-              disableMobile: "true"
+              disableMobile: true
           });
           e.target.click();
       }
