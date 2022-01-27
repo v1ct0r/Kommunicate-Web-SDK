@@ -82,6 +82,9 @@
     text-align: center;
     overflow: hidden;
 }
+.flatpickr-calendar.static.open, .flatpickr-calendar.open {
+    z-index: 22435001 !important;
+}
 
 .mck-sidebox {
     position: fixed !important;

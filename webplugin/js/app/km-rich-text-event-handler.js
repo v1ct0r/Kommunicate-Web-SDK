@@ -85,6 +85,19 @@ Snap.attachEvents = function ($applozic) {
         '.km-attachment-icon',
         Snap.attachmentEventHandler.handleSendingAttachment
     );
+    $applozic(messageCellQuickReplySelector).on(
+      'click',
+      'input[type=datetime-local]',
+      function (e) {
+          flatpickr(e.target, {
+              enableTime: true,
+              minDate: "today",
+              dateFormat: "Y-m-d H:i",
+              disableMobile: "true"
+          });
+          e.target.click();
+      }
+    ); //
 };
 
 /**
