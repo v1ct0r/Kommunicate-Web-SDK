@@ -86,16 +86,38 @@ Snap.attachEvents = function ($applozic) {
         Snap.attachmentEventHandler.handleSendingAttachment
     );
     $applozic(messageCellQuickReplySelector).on(
-      'click',
+      "ontouchstart" in window ? "touchend" : "click",
       'input[type=datetime-local]',
       function (e) {
-          flatpickr(e.target, {
-              enableTime: true,
-              minDate: "today",
-              dateFormat: "Y-m-d H:i",
-              disableMobile: true
-          });
-          e.target.click();
+          const width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+          if (width > 414) {
+              flatpickr(e.target, {
+                  enableTime: true,
+                  minDate: "today",
+                  dateFormat: "Y-m-d H:i",
+                  disableMobile: true
+              });
+              e.target.click();
+          } else {
+              e.target.type = 'text';
+            const dateMask = IMask(e.target, {
+              mask: 'd/M/Y h:m A',
+              pattern: 'dd/`M/`d `h:`m `A',  // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
+              blocks: {
+                  d: { mask: IMask.MaskedRange, from: 1, to: 31, maxLength: 2, autofix: true },
+                  M: { mask: IMask.MaskedRange, from: 1, to: 12, maxLength: 2, autofix: true },
+                  Y: { mask: IMask.MaskedRange, from: 2022, to: 2099, autofix: true },
+                  m: { mask: IMask.MaskedRange,from: 0, to: 59, maxLength: 2, autofix: true },
+                  h: { mask: IMask.MaskedRange, from: 0, to: 12, maxLength: 2, autofix: true },
+                  A: { mask: IMask.MaskedEnum, enum: ["AM", "am", "PM", "pm", "aM", "Am", "pM", "Pm"] }
+              },
+              autofix: true,
+              lazy: false,
+              overwrite: true
+            });
+          }
       }
     ); //
 };
