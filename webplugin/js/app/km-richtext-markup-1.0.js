@@ -471,7 +471,7 @@ Snap.markup = {
                                 {{^supported}}
                                     <div class="mck-form-text-wrapper">
                                         <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>
-                                        <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" >
+                                        <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}">
                                     </div>
                                 {{/supported}}
                             {{/.}}
