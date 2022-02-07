@@ -89,10 +89,7 @@ Snap.attachEvents = function ($applozic) {
       "ontouchstart" in window ? "touchend" : "click",
       'input[type=datetime-local]',
       function (e) {
-          const width = window.innerWidth
-            || document.documentElement.clientWidth
-            || document.body.clientWidth;
-          if (width > 414) {
+          if (e.target.classList.contains("popup")) {
               flatpickr(e.target, {
                   enableTime: true,
                   minDate: "today",
@@ -100,7 +97,7 @@ Snap.attachEvents = function ($applozic) {
                   disableMobile: true
               });
               e.target.click();
-          } else {
+          } else if (e.target.classList.contains("inline")) {
               e.target.type = 'text';
             const dateMask = IMask(e.target, {
               mask: 'd/M/Y h:m A',
