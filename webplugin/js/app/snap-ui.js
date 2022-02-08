@@ -831,10 +831,6 @@ SnapUI = {
                 },
                 'n-vis'
             );
-        if (isConversationClosed) {
-            document.getElementById('quick-reply-container').classList.add('n-vis');
-            document.getElementById('quick-reply-container').classList.remove('vis');
-        }
         if (
             isCSATenabled &&
             isConversationClosed &&
@@ -914,6 +910,8 @@ SnapUI = {
                     console.log('Error fetching feedback', err);
                 },
             });
+            document.getElementById('quick-reply-container').classList.add('n-vis');
+            document.getElementById('quick-reply-container').classList.remove('vis');
         } else if (
             isConversationClosed &&
             SnapUI.isCSATtriggeredByUser
