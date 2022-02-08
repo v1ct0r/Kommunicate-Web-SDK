@@ -682,6 +682,7 @@ SnapUI = {
         $applozic('.mck-conversation').removeClass('n-vis').addClass('vis');
         $applozic('#km-faq').removeClass('n-vis').addClass('vis');
         $applozic('#mck-msg-new').attr('disabled', false);
+        $applozic('#quick-reply-container').removeClass('n-vis').addClass('vis');
         if (
             $applozic(
                 "#mck-message-cell .mck-message-inner div[name='message']"
