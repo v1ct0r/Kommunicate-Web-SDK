@@ -1083,6 +1083,12 @@
     height: auto;
 }
 
+.email {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
 #mck-email-collection-box .svg-container,
 #mck-email-error-alert-box .svg-container {
     width: 45px;
