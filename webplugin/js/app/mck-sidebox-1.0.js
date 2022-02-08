@@ -3623,6 +3623,11 @@ var userOverride = {
                     $mck_msg_inner.html('');
                 }
                 $mck_msg_to.focus();
+                snapCommons.modifyClassList(
+                  { id: ['quick-reply-container'] },
+                  'vis',
+                  'n-vis'
+                );
             };
             _this.loadConversationWithAgents = function (params, callback) {
                 _this.openChatbox();
