@@ -8487,10 +8487,10 @@ var userOverride = {
                     },
                 ];
 
-                Snap.changeVisibilityStateForElement(
-                    $applozic('#quick-reply-container'),
-                    'hide'
-                );
+                // Snap.changeVisibilityStateForElement(
+                //     $applozic('#quick-reply-container'),
+                //     'hide'
+                // );
 
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
