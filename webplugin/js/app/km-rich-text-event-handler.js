@@ -943,11 +943,6 @@ Snap.richMsgEventHandler = {
     },
     handleEmail: function (e) {
         const email = e.target.getAttribute("data-email");
-        const win = window.open('mailto:' + email, "_blank");
-        if (win && win.open && !win.closed)
-        {
-            win.close();
-        }
-
+        window.open('mailto:' + email, "_blank");
     }
 };
