@@ -8534,6 +8534,7 @@ var userOverride = {
                                   '#mck-message-cell .mck-message-inner'
                               );
                 }
+                _this.initDatepicker();
 
                 if (
                     msg.contentType ==
@@ -8947,6 +8948,49 @@ var userOverride = {
 
                 if (typeof callback == 'function') {
                     callback();
+                }
+            };
+            _this.initDatepicker = function () {
+                var popupDate = $applozic(".popup");
+                var inline = $applozic(".inline");
+                for (let i=0; i<popupDate.length; i++) {
+                    flatpickr(popupDate[i], {
+                        enableTime: !(popupDate[i].type === 'date'),
+                        dateFormat: popupDate[i].type === 'date' ? "m/d/Y" : "m/d/Y H:i",
+                        disableMobile: true,
+                    });
+                }
+                for (let i=0; i<inline.length; i++) {
+                    const options = inline[i].type === 'date' ?
+                      {
+                          mask: 'M/d/Y h:m A',
+                          pattern: 'M/`dd/`d `h:`m `A',  // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
+                          blocks: {
+                              d: { mask: IMask.MaskedRange, from: 1, to: 31, maxLength: 2, autofix: true },
+                              M: { mask: IMask.MaskedRange, from: 1, to: 12, maxLength: 2, autofix: true },
+                              Y: { mask: IMask.MaskedRange, from: 1900, to: 2099, autofix: true },
+                              m: { mask: IMask.MaskedRange,from: 0, to: 59, maxLength: 2, autofix: true },
+                              h: { mask: IMask.MaskedRange, from: 0, to: 12, maxLength: 2, autofix: true },
+                              A: { mask: IMask.MaskedEnum, enum: ["AM", "am", "PM", "pm", "aM", "Am", "pM", "Pm"] }
+                          },
+                          autofix: true,
+                          lazy: false,
+                          overwrite: true
+                      } :
+                      {
+                          mask: 'M/d/Y',
+                          pattern: 'M/`dd/`d',  // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
+                          blocks: {
+                              d: { mask: IMask.MaskedRange, from: 1, to: 31, maxLength: 2, autofix: true },
+                              M: { mask: IMask.MaskedRange, from: 1, to: 12, maxLength: 2, autofix: true },
+                              Y: { mask: IMask.MaskedRange, from: 1900, to: 2099, autofix: true },
+                          },
+                          autofix: true,
+                          lazy: false,
+                          overwrite: true
+                      }
+                    inline[i].type = 'text';
+                    const dateMask = IMask(inline[i], options);
                 }
             };
             _this.addContactForSearchList = function (contact, $listId) {
