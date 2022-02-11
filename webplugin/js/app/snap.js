@@ -770,6 +770,8 @@ $applozic.extend(true, Snap, {
 
         if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
             textBox.attr('contenteditable', false);
+            textBox.attr('data-text', '');
+            textBox.attr('data-label', '');
         } else {
             var metadata = msg.metadata;
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
