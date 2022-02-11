@@ -1513,7 +1513,7 @@
     max-width: 100%;
 }
 
-input[type=datetime-local].inline,
-input[type=date].inline {
+input.inline {
     font-size: 19px!important;
+    padding: 6px 8px;
 }
