@@ -8953,15 +8953,15 @@ var userOverride = {
             _this.initDatepicker = function () {
                 var popupDate = $applozic(".popup");
                 var inline = $applozic(".inline");
-                for (let i=0; i<popupDate.length; i++) {
+                if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
                     flatpickr(popupDate[i], {
                         enableTime: !(popupDate[i].type === 'date'),
                         dateFormat: popupDate[i].type === 'date' ? "m/d/Y" : "m/d/Y H:i",
                         disableMobile: true,
                     });
                 }
-                for (let i=0; i<inline.length; i++) {
-                    const options = inline[i].type === 'date' ?
+                if (inline.length) for (let i=0; i<inline.length; i++) {
+                    const options = !(inline[i].type === 'date') ?
                       {
                           mask: 'M/d/Y h:m A',
                           pattern: 'M/`dd/`d `h:`m `A',  // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
@@ -8989,8 +8989,8 @@ var userOverride = {
                           lazy: false,
                           overwrite: true
                       }
-                    inline[i].type = 'text';
                     const dateMask = IMask(inline[i], options);
+                    inline[i].type = 'text';
                 }
             };
             _this.addContactForSearchList = function (contact, $listId) {
