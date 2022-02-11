@@ -86,37 +86,10 @@ Snap.attachEvents = function ($applozic) {
         Snap.attachmentEventHandler.handleSendingAttachment
     );
     $applozic(messageCellQuickReplySelector).on(
-      "ontouchstart" in window ? "touchend" : "click",
-      'input[type=datetime-local]',
-      function (e) {
-          if (e.target.classList.contains("popup")) {
-              flatpickr(e.target, {
-                  enableTime: true,
-                  minDate: "today",
-                  dateFormat: "Y-m-d H:i",
-                  disableMobile: true
-              });
-              e.target.click();
-          } else if (e.target.classList.contains("inline")) {
-              e.target.type = 'text';
-            const dateMask = IMask(e.target, {
-              mask: 'd/M/Y h:m A',
-              pattern: 'dd/`M/`d `h:`m `A',  // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
-              blocks: {
-                  d: { mask: IMask.MaskedRange, from: 1, to: 31, maxLength: 2, autofix: true },
-                  M: { mask: IMask.MaskedRange, from: 1, to: 12, maxLength: 2, autofix: true },
-                  Y: { mask: IMask.MaskedRange, from: 2022, to: 2099, autofix: true },
-                  m: { mask: IMask.MaskedRange,from: 0, to: 59, maxLength: 2, autofix: true },
-                  h: { mask: IMask.MaskedRange, from: 0, to: 12, maxLength: 2, autofix: true },
-                  A: { mask: IMask.MaskedEnum, enum: ["AM", "am", "PM", "pm", "aM", "Am", "pM", "Pm"] }
-              },
-              autofix: true,
-              lazy: false,
-              overwrite: true
-            });
-          }
-      }
-    ); //
+      'touchstart click',
+      '.email',
+      Snap.richMsgEventHandler.handleEmail
+    );
 };
 
 /**
@@ -609,7 +582,7 @@ Snap.richMsgEventHandler = {
             let wrapper = isCheckboxOrRadio
                 ? formElements[i].closest('.mck-form-radio-wrapper')
                       .previousElementSibling
-              : formElements[i].closest('.mck-form-text-wrapper') || formElements[i].closest('.mck-form-dropdown-wrapper');
+                : formElements[i].closest('.mck-form-text-wrapper');
 
             var labelText = isCheckboxOrRadio
                 ? wrapper.textContent
@@ -905,4 +878,8 @@ Snap.richMsgEventHandler = {
     isValidString: function (str, value) {
         return new RegExp(str).test(value);
     },
+    handleEmail: function (e) {
+        const email = e.target.getAttribute("data-email");
+        window.open('mailto:' + email, "_blank");
+    }
 };
