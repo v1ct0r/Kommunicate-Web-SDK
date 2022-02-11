@@ -825,13 +825,16 @@ SnapUI = {
         var isCSATtriggeredByUser = SnapUI.isCSATtriggeredByUser;
         var isConvJustResolved = SnapUI.isConvJustResolved;
         var $mck_msg_inner = $applozic('#mck-message-cell .mck-message-inner');
-        isConversationClosed &&
+        if (isConversationClosed) {
+            document.getElementById('quick-reply-container').classList.add('n-vis');
+            document.getElementById('quick-reply-container').classList.remove('vis');
             snapCommons.modifyClassList(
-                {
-                    class: ['mck-box-form'],
-                },
-                'n-vis'
+              {
+                  class: ['mck-box-form'],
+              },
+              'n-vis'
             );
+        }
         if (
             isCSATenabled &&
             isConversationClosed &&
