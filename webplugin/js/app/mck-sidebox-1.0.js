@@ -8961,7 +8961,7 @@ var userOverride = {
                     });
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
-                    const options = !(inline[i].type === 'date') ?
+                    const options = (inline[i].type === 'datetime-local') ?
                       {
                           mask: 'M/d/Y h:m A',
                           pattern: 'M/`dd/`d `h:`m `A',  // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
