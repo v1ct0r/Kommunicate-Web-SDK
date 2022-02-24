@@ -2230,6 +2230,7 @@ mck-sidebox .mck-group-member-list li a:hover {
     white-space: pre-wrap;
     word-wrap: break-word;
     position: relative;
+    font-size: 16px!important;
 }
 
 .mck-msg-content img {
