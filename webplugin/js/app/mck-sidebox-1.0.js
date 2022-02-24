@@ -3571,6 +3571,8 @@ var userOverride = {
                           'vis',
                           'n-vis'
                       );
+                document.activeElement.blur();
+                $applozic("input").blur();
             };
             _this.toggleMediaOptions = function (el) {
                 var text = '';
