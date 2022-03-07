@@ -1518,6 +1518,6 @@ input.inline {
     padding: 6px 8px;
 }
 
-[data-text]:not([data-text=""]) {
-    border-color: #ffffff;
+.data-text {
+    border-color: #ffffff!important;
 }
