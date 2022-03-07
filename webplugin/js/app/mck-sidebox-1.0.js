@@ -8993,6 +8993,8 @@ var userOverride = {
                       }
                     const dateMask = IMask(inline[i], options);
                     inline[i].type = 'text';
+                    inline[i].setAttribute("pattern","\d*");
+                    inline[i].setAttribute("inputmode","numeric");
                 }
             };
             _this.addContactForSearchList = function (contact, $listId) {
