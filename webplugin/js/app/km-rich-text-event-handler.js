@@ -582,7 +582,7 @@ Snap.richMsgEventHandler = {
             let wrapper = isCheckboxOrRadio
                 ? formElements[i].closest('.mck-form-radio-wrapper')
                       .previousElementSibling
-                : formElements[i].closest('.mck-form-text-wrapper');
+              : formElements[i].closest('.mck-form-text-wrapper') || formElements[i].closest('.mck-form-dropdown-wrapper');
 
             var labelText = isCheckboxOrRadio
                 ? wrapper.textContent
