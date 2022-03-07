@@ -5562,7 +5562,9 @@ var userOverride = {
 
                 messagePxy.metadata = metadata;
                 messagePxy.message = messagePxy.message.normalize('NFD');
-
+                if (snap._globals.hidePostCTA) {
+                    Snap.hideMessage();
+                }
                 window.Applozic.ALApiService.ajax({
                     type: 'POST',
                     url: MCK_BASE_URL + MESSAGE_SEND_URL,
@@ -5570,9 +5572,9 @@ var userOverride = {
                     data: w.JSON.stringify(messagePxy),
                     contentType: 'application/json',
                     success: function (data) {
-                        if (snap._globals.hidePostCTA) {
-                            Snap.hideMessage();
-                        }
+                        // if (snap._globals.hidePostCTA) {
+                        //     Snap.hideMessage();
+                        // }
 
                         if (
                             messagePxy &&
