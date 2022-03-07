@@ -1517,3 +1517,7 @@ input.inline {
     font-size: 19px!important;
     padding: 6px 8px;
 }
+
+[data-text]:not([data-text=""]) {
+    border-color: #ffffff;
+}
