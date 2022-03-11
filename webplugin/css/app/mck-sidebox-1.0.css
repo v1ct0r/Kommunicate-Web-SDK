@@ -116,11 +116,13 @@
 #mck-text-box[contenteditable='true']:empty:not(:focus):before {
     content: attr(data-text);
     color: #757575;
+    font-style: italic;
 }
 
 #mck-text-box[contenteditable='false']:empty:before {
     content: attr(data-text);
     color: #757575;
+    font-style: italic;
 }
 
 .mck-running-on > a:hover {
