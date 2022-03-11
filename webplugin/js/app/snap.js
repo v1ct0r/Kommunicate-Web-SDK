@@ -786,6 +786,11 @@ $applozic.extend(true, Snap, {
                 $applozic('.mck-box-form').addClass('data-text');
             }
         }
+
+        if (msg.hasOwnProperty('metadata') && msg.metadata.is_numeric_input ) {
+            textBox.attr('pattern', '\d*');
+            textBox.attr('inputmode', 'numeric');
+        }
     },
     sessionTimeout: function () {
         var parentWindow = window.parent;
