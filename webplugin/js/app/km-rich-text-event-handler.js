@@ -876,7 +876,6 @@ Snap.richMsgEventHandler = {
         Snap.hideMessage(e.target);
         $applozic('#mck-text-box').attr('data-text', '');
         $applozic('#mck-text-box').attr('data-label', '');
-        $applozic('.mck-box-form').addClass('data-text');
     },
     isValidString: function (str, value) {
         return new RegExp(str).test(value);
