@@ -469,7 +469,13 @@ Snap.markup = {
                                 {{^supported}}
                                     <div class="mck-form-text-wrapper">
                                         <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>
-                                        <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}">
+                                        {{#number}}
+                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" 
+                                            inputmode="numeric" pattern="\d*">
+                                        {{/number}}  
+                                        {{^number}}
+                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}">
+                                        {{/number}}
                                     </div>
                                 {{/supported}}
                             {{/.}}
