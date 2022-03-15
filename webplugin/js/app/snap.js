@@ -772,7 +772,6 @@ $applozic.extend(true, Snap, {
             textBox.attr('contenteditable', false);
             textBox.attr('data-text', '');
             textBox.attr('data-label', '');
-            $applozic('.mck-box-form').addClass('data-text');
         } else {
             var metadata = msg.metadata;
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
@@ -780,11 +779,12 @@ $applozic.extend(true, Snap, {
             textBox.attr('contenteditable', metadata.enable_text_input);
             textBox.attr('data-text', hintTextForTextInput);
             textBox.attr('data-label', hintTextForTextInput);
-            if (metadata.enable_text_input) {
-                $applozic('.mck-box-form').removeClass('data-text');
-            } else {
-                $applozic('.mck-box-form').addClass('data-text');
-            }
+        }
+
+        if (metadata.enable_text_input) {
+            $applozic('.mck-box-form').removeClass('data-text');
+        } else {
+            $applozic('.mck-box-form').addClass('data-text');
         }
 
         if (msg.hasOwnProperty('metadata') && msg.metadata.is_numeric_input ) {
