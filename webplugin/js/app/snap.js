@@ -781,7 +781,8 @@ $applozic.extend(true, Snap, {
             textBox.attr('data-label', hintTextForTextInput);
         }
 
-        if (JSON.parse(msg.metadata.enable_text_input)) {
+        let checkEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
+        if (checkEnable) {
             $applozic('.mck-box-form').removeClass('data-text');
         } else {
             $applozic('.mck-box-form').addClass('data-text');
