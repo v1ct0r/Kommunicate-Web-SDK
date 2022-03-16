@@ -11631,7 +11631,7 @@ var userOverride = {
                     message = messageContainer.querySelector(
                         'div[data-msgkey="' + MCK_BOT_MESSAGE_QUEUE[0] + '"]'
                     );
-                    $applozic('.km-typing-wrapper').remove();
+                    if (!currentMessageObject.metadata.needTypingIndicator) $applozic('.km-typing-wrapper').remove();
                     if (message) {
                         message.classList.remove('n-vis');
 
