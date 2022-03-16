@@ -8491,10 +8491,10 @@ var userOverride = {
                     },
                 ];
 
-                // Snap.changeVisibilityStateForElement(
-                //     $applozic('#quick-reply-container'),
-                //     'hide'
-                // );
+                Snap.changeVisibilityStateForElement(
+                    $applozic('#quick-reply-container'),
+                    'hide'
+                );
 
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
@@ -11635,7 +11635,7 @@ var userOverride = {
                     if (message) {
                         message.classList.remove('n-vis');
 
-                        if ($quick_reply_container.children().length > 0) {
+                        if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length === 1)  {
                             Snap.changeVisibilityStateForElement(
                                 $applozic('#quick-reply-container'),
                                 'show'
@@ -11661,6 +11661,7 @@ var userOverride = {
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
                     }
+
 
                 }, MCK_BOT_MESSAGE_DELAY);
             };
