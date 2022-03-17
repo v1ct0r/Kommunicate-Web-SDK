@@ -826,8 +826,6 @@ SnapUI = {
         var isConvJustResolved = SnapUI.isConvJustResolved;
         var $mck_msg_inner = $applozic('#mck-message-cell .mck-message-inner');
         if (isConversationClosed) {
-            document.getElementById('quick-reply-container').classList.add('n-vis');
-            document.getElementById('quick-reply-container').classList.remove('vis');
             snapCommons.modifyClassList(
               {
                   class: ['mck-box-form'],
