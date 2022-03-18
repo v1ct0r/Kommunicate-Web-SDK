@@ -3625,11 +3625,6 @@ var userOverride = {
                     $mck_msg_inner.html('');
                 }
                 $mck_msg_to.focus();
-                snapCommons.modifyClassList(
-                  { id: ['quick-reply-container'] },
-                  'vis',
-                  'n-vis'
-                );
             };
             _this.loadConversationWithAgents = function (params, callback) {
                 _this.openChatbox();
@@ -7683,7 +7678,7 @@ var userOverride = {
                     $applozic('#mck-sidebox-ft')
                         .removeClass('n-vis')
                         .addClass('vis');
-                    // $quick_reply_container.removeClass('vis').addClass('n-vis');
+                    $quick_reply_container.removeClass('vis').addClass('n-vis');
                     $mck_btn_clear_messages
                         .removeClass('n-vis')
                         .addClass('vis');
@@ -8491,10 +8486,10 @@ var userOverride = {
                     },
                 ];
 
-                Snap.changeVisibilityStateForElement(
-                    $applozic('#quick-reply-container'),
-                    'hide'
-                );
+                // Snap.changeVisibilityStateForElement(
+                //     $applozic('#quick-reply-container'),
+                //     'hide'
+                // );
 
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
