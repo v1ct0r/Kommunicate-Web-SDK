@@ -11631,8 +11631,8 @@ var userOverride = {
                     if (currentMessageObject.metadata.needTypingIndicator) $applozic('.mck-group-inner').append(typingElem);
                     if (message) {
                         message.classList.remove('n-vis');
-
-                        if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length <= 1 )  {
+                        if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length <= 1
+                          && !currentMessageObject.metadata.isCloseConversation)  {
                             Snap.changeVisibilityStateForElement(
                                 $applozic('#quick-reply-container'),
                                 'show'
