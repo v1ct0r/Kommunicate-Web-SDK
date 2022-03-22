@@ -7678,7 +7678,7 @@ var userOverride = {
                     $applozic('#mck-sidebox-ft')
                         .removeClass('n-vis')
                         .addClass('vis');
-                    $quick_reply_container.removeClass('vis').addClass('n-vis');
+                    //$quick_reply_container.removeClass('vis').addClass('n-vis');
                     $mck_btn_clear_messages
                         .removeClass('n-vis')
                         .addClass('vis');
