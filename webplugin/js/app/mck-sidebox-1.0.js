@@ -4931,7 +4931,6 @@ var userOverride = {
                             return false;
                         }
                     }
-                    $applozic('#mck-text-box').blur();
                     _this.hideSendButton();
                     Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
                     _this.sendMessage(messagePxy);
