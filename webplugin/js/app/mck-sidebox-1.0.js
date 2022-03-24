@@ -11627,7 +11627,7 @@ var userOverride = {
                     message = messageContainer.querySelector(
                         'div[data-msgkey="' + MCK_BOT_MESSAGE_QUEUE[0] + '"]'
                     );
-                    if (!currentMessageObject.metadata.needTypingIndicator) $applozic('.km-typing-wrapper').remove();
+                    $applozic('.km-typing-wrapper').remove();
                     if (message) {
                         message.classList.remove('n-vis');
                         if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length <= 1
