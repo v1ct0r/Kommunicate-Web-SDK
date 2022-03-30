@@ -4932,7 +4932,10 @@ var userOverride = {
                         }
                     }
                     $applozic('#mck-text-box').blur();
-                    $applozic('#quick-reply-container').click();
+                    var event1 = new Event('touchstart');
+                    var event2 = new Event('touchend');
+                    $applozic('#quick-reply-container').dispatchEvent(event1);
+                    $applozic('#quick-reply-container').dispatchEvent(event2);
                     _this.hideSendButton();
                     Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
                     _this.sendMessage(messagePxy);
