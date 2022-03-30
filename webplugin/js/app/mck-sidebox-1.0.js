@@ -4932,7 +4932,6 @@ var userOverride = {
                         }
                     }
                     $applozic('#mck-text-box').blur();
-                    document.activeElement.blur();
                     _this.hideSendButton();
                     Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
                     _this.sendMessage(messagePxy);
@@ -8157,7 +8156,7 @@ var userOverride = {
                         metadatarepiledto
                     );
                     if (typeof replyMsg !== 'undefined') {
-                        if ($applozic('#mck-text-box').blur();
+                        if (
                             (contact.isGroup && replyMsg) ||
                             (!contact.isGroup &&
                                 typeof replyMsg.fileMeta === 'undefined')
