@@ -4932,6 +4932,7 @@ var userOverride = {
                         }
                     }
                     $applozic('#mck-text-box').blur();
+                    $applozic('#quick-reply-container').click();
                     _this.hideSendButton();
                     Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
                     _this.sendMessage(messagePxy);
