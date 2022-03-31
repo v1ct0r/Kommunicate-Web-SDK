@@ -4934,8 +4934,8 @@ var userOverride = {
                     $applozic('#mck-text-box').blur();
                     var event1 = new Event('touchstart');
                     var event2 = new Event('touchend');
-                    $applozic('#quick-reply-container').dispatchEvent(event1);
-                    $applozic('#quick-reply-container').dispatchEvent(event2);
+                    document.getElementById('mck-message-cell').dispatchEvent(event1);
+                    document.getElementById('mck-message-cell').dispatchEvent(event2);
                     _this.hideSendButton();
                     Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
                     _this.sendMessage(messagePxy);
