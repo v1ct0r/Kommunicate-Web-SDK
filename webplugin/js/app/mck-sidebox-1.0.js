@@ -4947,11 +4947,34 @@ var userOverride = {
                     // document.getElementById('mck-tab-individual').dispatchEvent(event2);
                     // console.log(document.getElementById('mck-message-cell'));
                     // $applozic('#mck-tab-individual').trigger('touch');
-                    let e = $.Event('keypress');
-                    e.keyCode = 13;
-                    $(document).trigger(e);
-                    $applozic('#mck-text-box').trigger(e);
-                    console.log(e);
+                  // Create listener
+                  document.addEventListener('keydown', () => { console.log('test')})
+
+// Create event
+                  const keyboardEvent = document.createEvent('KeyboardEvent');
+                  const initMethod = typeof keyboardEvent.initKeyboardEvent !== 'undefined' ? 'initKeyboardEvent' : 'initKeyEvent';
+
+                  keyboardEvent[initMethod](
+                    'keydown', // event type: keydown, keyup, keypress
+                    true,      // bubbles
+                    true,      // cancelable
+                    window,    // view: should be window
+                    false,     // ctrlKey
+                    false,     // altKey
+                    false,     // shiftKey
+                    false,     // metaKey
+                    13,        // keyCode: unsigned long - the virtual key code, else 0
+                    0          // charCode: unsigned long - the Unicode character associated with the depressed key, else 0
+                  );
+
+// Fire event
+                  document.dispatchEvent(keyboardEvent);
+
+                    // let e = new Event('keypress');
+                    // e.keyCode = 13;
+                    // $(document).trigger(e);
+                    document.getElementById('mck-text-box').dispatchEvent(keyboardEvent);
+                    // console.log(e);
                     _this.hideSendButton();
                     Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
                     _this.sendMessage(messagePxy);
