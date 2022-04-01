@@ -11641,11 +11641,21 @@ var userOverride = {
                         message.classList.remove('n-vis');
                         if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length <= 1
                           && !currentMessageObject.metadata.is_close_conversation)  {
+                            let div = document.createElement("div")
+                            div.append("true at ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length <= 1\n" +
+                              "                          && !currentMessageObject.metadata.is_close_conversation)",
+                              $quick_reply_container.children().length, MCK_BOT_MESSAGE_QUEUE.length,currentMessageObject.metadata)
+                            $applozic('#logs').append(div);
                             Snap.changeVisibilityStateForElement(
                                 $applozic('#quick-reply-container'),
                                 'show'
                             );
                         } else {
+                            let div = document.createElement("div")
+                            div.append("false at ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length <= 1\n" +
+                              "                          && !currentMessageObject.metadata.is_close_conversation)",
+                              $quick_reply_container.children().length, MCK_BOT_MESSAGE_QUEUE.length,currentMessageObject.metadata)
+                            $applozic('#logs').append(div);
                             Snap.changeVisibilityStateForElement(
                                 $applozic('#quick-reply-container'),
                                 'hide'
