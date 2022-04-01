@@ -4938,8 +4938,11 @@ var userOverride = {
                     $applozic('#mck-msg-form').blur();
                     var event1 = new Event('touchstart');
                     var event2 = new Event('touchend');
-                    document.getElementById('mck-message-cell').dispatchEvent(event1);
-                    document.getElementById('mck-message-cell').dispatchEvent(event2);
+                    console.log(event1);
+                    document.getElementById('mck-tab-individual').dispatchEvent(event1);
+                    document.getElementById('mck-tab-individual').dispatchEvent(event2);
+                    console.log(document.getElementById('mck-message-cell'));
+                    $applozic('#mck-tab-individual').trigger('touch');
                     _this.hideSendButton();
                     Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
                     _this.sendMessage(messagePxy);
