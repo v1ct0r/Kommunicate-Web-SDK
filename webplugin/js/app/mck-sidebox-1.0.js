@@ -4932,6 +4932,10 @@ var userOverride = {
                         }
                     }
                     $applozic('#mck-text-box').blur();
+                    $applozic('#mck-file-input').blur();
+                    $applozic('#mck-autosuggest-search-input').blur();
+                    $applozic('#mck-textbox-container').blur();
+                    $applozic('#mck-msg-form').blur();
                     var event1 = new Event('touchstart');
                     var event2 = new Event('touchend');
                     document.getElementById('mck-message-cell').dispatchEvent(event1);
