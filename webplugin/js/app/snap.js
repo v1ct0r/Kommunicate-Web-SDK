@@ -776,9 +776,6 @@ $applozic.extend(true, Snap, {
             textBox.attr('contenteditable', false);
             textBox.attr('data-text', '');
             textBox.attr('data-label', '');
-            let div = document.createElement("div")
-            div.append("true at (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input'))")
-            $applozic('#logs').append(div);
         } else {
             var metadata = msg.metadata;
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
@@ -786,9 +783,6 @@ $applozic.extend(true, Snap, {
             textBox.attr('contenteditable', metadata.enable_text_input);
             textBox.attr('data-text', hintTextForTextInput);
             textBox.attr('data-label', hintTextForTextInput);
-            let div = document.createElement("div")
-            div.append("false at (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input'))")
-            $applozic('#logs').append(div);
         }
 
         let checkEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
