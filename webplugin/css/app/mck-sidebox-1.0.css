@@ -6523,14 +6523,3 @@ body.accesibility :focus {
     margin-top: 0;
     margin-bottom: 5px;
 }
-
-.logs {
-   max-height: 100px;
-    overflow: scroll;
-}
-
-.logs div {
-    margin-bottom: 8px;
-    border-bottom: 1px solid black;
-}
-}
