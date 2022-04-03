@@ -4931,18 +4931,31 @@ var userOverride = {
                             return false;
                         }
                     }
-                    $applozic('#mck-text-box').blur();
-                    $applozic('#mck-file-input').blur();
-                    $applozic('#mck-autosuggest-search-input').blur();
-                    $applozic('#mck-textbox-container').blur();
-                    $applozic('#mck-msg-form').blur();
-                    var event1 = new Event('touchstart');
-                    var event2 = new Event('touchend');
-                    console.log(event1);
-                    document.getElementById('mck-tab-individual').dispatchEvent(event1);
-                    document.getElementById('mck-tab-individual').dispatchEvent(event2);
-                    console.log(document.getElementById('mck-message-cell'));
-                    $applozic('#mck-tab-individual').trigger('touch');
+                    window.setTimeout(function () {
+                        $applozic('#mck-text-box').blur();
+                        $applozic('#mck-file-input').blur();
+                        $applozic('#mck-autosuggest-search-input').blur();
+                        $applozic('#mck-textbox-container').blur();
+                        $applozic('#mck-msg-form').blur();
+                        $applozic('input').blur();
+                        try {
+                            var event = document.createEvent('Events');
+                            event.initEvent('touchstart', true, true);
+                            var event2 = document.createEvent('Events');
+                            event2.initEvent('touchend', true, true);
+                            document.getElementById('mck-message-cell').dispatchEvent(event);
+                            document.getElementById('mck-message-cell').dispatchEvent(event2);
+                        }
+                        catch (e) {
+                            console.log(e);
+                        }
+                    }, 500);
+                    document.addEventListener('touchstart', function(e) {
+                        console.log('touchstart', e);
+                    });
+                    document.addEventListener('touchend', function(e) {
+                        console.log('touchend', e);
+                    });
                     _this.hideSendButton();
                     Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
                     _this.sendMessage(messagePxy);
