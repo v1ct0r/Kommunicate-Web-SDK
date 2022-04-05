@@ -767,6 +767,9 @@ $applozic.extend(true, Snap, {
     },
     changeTextInputState: function (msg) {
         var textBox = $applozic('#mck-text-box');
+        let p = document.createElement('div');
+        p.innerHTML = 'text_input_hint: ' + msg.metadata.text_input_hint;
+        document.getElementById('logs').append(p);
 
         if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
             textBox.attr('contenteditable', false);
