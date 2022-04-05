@@ -770,11 +770,14 @@ $applozic.extend(true, Snap, {
         let p = document.createElement('div');
         p.innerHTML = 'text_input_hint: ' + msg.metadata.text_input_hint;
         document.getElementById('logs').append(p);
+        p.innerHTML = 'iPhone: ' + !!navigator.platform.match(/iPhone|iPod|iPad/);;
+        document.getElementById('logs').append(p);
 
         if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
             textBox.attr('contenteditable', false);
             textBox.attr('data-text', '');
             textBox.attr('data-label', '');
+            Snap.touch('mck-text-box');
         } else {
             var metadata = msg.metadata;
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
@@ -782,6 +785,7 @@ $applozic.extend(true, Snap, {
             textBox.attr('contenteditable', metadata.enable_text_input);
             textBox.attr('data-text', hintTextForTextInput);
             textBox.attr('data-label', hintTextForTextInput);
+            Snap.touch('mck-text-box');
         }
 
         let checkEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
@@ -799,5 +803,23 @@ $applozic.extend(true, Snap, {
     sessionTimeout: function () {
         var parentWindow = window.parent;
         parentWindow.sessionTimeoutInitializer()
+    },
+    touch: function (elemID) {
+        window.setTimeout(function () {
+            try {
+                var event = document.createEvent('Events');
+                event.initEvent('touchstart', true, true);
+                var event2 = document.createEvent('Events');
+                event2.initEvent('touchend', true, true);
+                document.getElementById(elemID).dispatchEvent(event);
+                document.getElementById(elemID).dispatchEvent(event2);
+                let p = document.createElement('div');
+                p.innerHTML = 'touch';
+                document.getElementById('logs').append(p);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }, 500);
     }
 });
