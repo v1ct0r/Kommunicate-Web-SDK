@@ -770,26 +770,24 @@ $applozic.extend(true, Snap, {
         let p = document.createElement('div');
         p.innerHTML = 'text_input_hint: ' + msg.metadata.text_input_hint;
         document.getElementById('logs').append(p);
-        p.innerHTML = 'iPhone: ' + !!navigator.platform.match(/iPhone|iPod|iPad/);;
-        document.getElementById('logs').append(p);
+        if (!!navigator.platform.match(/iPhone|iPod|iPad/)) {
+            p.innerHTML = 'iPhone: ' + !!navigator.platform.match(/iPhone|iPod|iPad/);
+            document.getElementById('logs').append(p);
+        }
 
         if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
             textBox.attr('contenteditable', false);
-            document.getElementById('mck-text-box').setAttribute('data-text','');
-            document.getElementById('mck-text-box').setAttribute('data-label','')
-            // textBox.attr('data-text', '');
-            // textBox.attr('data-label', '');
-            Snap.touch('mck-text-box');
+            textBox.attr('data-text', '');
+            textBox.attr('data-label', '');
+            Snap.generateTouch('mck-message-cell');
         } else {
             var metadata = msg.metadata;
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
 
             textBox.attr('contenteditable', metadata.enable_text_input);
-            document.getElementById('mck-text-box').setAttribute('data-text',hintTextForTextInput);
-            document.getElementById('mck-text-box').setAttribute('data-label',hintTextForTextInput)
-            // textBox.attr('data-text', hintTextForTextInput);
-            // textBox.attr('data-label', hintTextForTextInput);
-            Snap.touch('mck-text-box');
+            textBox.attr('data-text', hintTextForTextInput);
+            textBox.attr('data-label', hintTextForTextInput);
+            Snap.generateTouch('mck-message-cell');
         }
 
         let checkEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
@@ -808,17 +806,19 @@ $applozic.extend(true, Snap, {
         var parentWindow = window.parent;
         parentWindow.sessionTimeoutInitializer()
     },
-    touch: function (elemID) {
+    generateTouch: function (elemID) {
         window.setTimeout(function () {
             try {
-                document.getElementById(elemID).focus();
-                let p = document.createElement('div');
-                p.innerHTML = 'focus';
-                document.getElementById('logs').append(p);
+                var event = document.createEvent('Events');
+                event.initEvent('touchstart', true, true);
+                var event2 = document.createEvent('Events');
+                event2.initEvent('touchend', true, true);
+                document.getElementById(elemID).dispatchEvent(event);
+                document.getElementById(elemID).dispatchEvent(event2);
             }
             catch (e) {
                 console.log(e);
             }
-        }, 1000);
+        }, 500);
     }
 });
