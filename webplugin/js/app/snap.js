@@ -775,16 +775,20 @@ $applozic.extend(true, Snap, {
 
         if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
             textBox.attr('contenteditable', false);
-            textBox.attr('data-text', '');
-            textBox.attr('data-label', '');
+            document.getElementById('mck-text-box').setAttribute('data-text','');
+            document.getElementById('mck-text-box').setAttribute('data-label','')
+            // textBox.attr('data-text', '');
+            // textBox.attr('data-label', '');
             Snap.touch('mck-text-box');
         } else {
             var metadata = msg.metadata;
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
 
             textBox.attr('contenteditable', metadata.enable_text_input);
-            textBox.attr('data-text', hintTextForTextInput);
-            textBox.attr('data-label', hintTextForTextInput);
+            document.getElementById('mck-text-box').setAttribute('data-text',hintTextForTextInput);
+            document.getElementById('mck-text-box').setAttribute('data-label',hintTextForTextInput)
+            // textBox.attr('data-text', hintTextForTextInput);
+            // textBox.attr('data-label', hintTextForTextInput);
             Snap.touch('mck-text-box');
         }
 
@@ -807,19 +811,14 @@ $applozic.extend(true, Snap, {
     touch: function (elemID) {
         window.setTimeout(function () {
             try {
-                var event = document.createEvent('Events');
-                event.initEvent('touchstart', true, true);
-                var event2 = document.createEvent('Events');
-                event2.initEvent('touchend', true, true);
-                document.getElementById(elemID).dispatchEvent(event);
-                document.getElementById(elemID).dispatchEvent(event2);
+                document.getElementById(elemID).focus();
                 let p = document.createElement('div');
-                p.innerHTML = 'touch';
+                p.innerHTML = 'focus';
                 document.getElementById('logs').append(p);
             }
             catch (e) {
                 console.log(e);
             }
-        }, 500);
+        }, 1000);
     }
 });
