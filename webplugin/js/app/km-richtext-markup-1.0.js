@@ -406,7 +406,7 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper">
                                             {{#options}}
                                                 <div>
-                                                    <input type="{{type}}" name="{{name}}" value="{{value}}">
+                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}">
                                                     <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
                                                 </div>                                     
                                             {{/options}}
@@ -417,7 +417,7 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper">
                                             {{#options}}
                                                 <div>
-                                                    <input type="{{type}}" name="{{name}}" value="{{value}}">
+                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}">
                                                     <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
                                                 </div>                                     
                                             {{/options}}
@@ -426,7 +426,7 @@ Snap.markup = {
                                     {{#text}}
                                         <div class="mck-form-text-wrapper">
                                             <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>
-                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" data-regex="{{validation.regex}}" data-error-text="{{validation.errorText}}">
+                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" aria-label="{{label}}" data-regex="{{validation.regex}}" data-error-text="{{validation.errorText}}">
                                             {{#validation}}
                                                 <span class="mck-form-error-text mck-form-error-{{className}}"></span>
                                             {{/validation}}
@@ -471,10 +471,10 @@ Snap.markup = {
                                         <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>
                                         {{#number}}
                                             <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" 
-                                            inputmode="numeric" pattern="\d*">
+                                            inputmode="numeric" pattern="\d*" aria-label="{{label}}">
                                         {{/number}}  
                                         {{^number}}
-                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}">
+                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" aria-label="{{label}}">
                                         {{/number}}
                                     </div>
                                 {{/supported}}
