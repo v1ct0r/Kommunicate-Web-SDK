@@ -6791,9 +6791,10 @@ var userOverride = {
                 var imageUrl;
                 params.name =
                     params.name && snapCommons.formatHtmlTag(params.name);
-                var profileImage = params.name
-                    ? params.name + ' profile image'
-                    : 'Profile image';
+                // var profileImage = params.name
+                //     ? params.name + ' profile image'
+                //     : 'Profile image';
+                var profileImage = '';
                 $mck_tab_title.html(params.name);
                 $mck_tab_title.attr('title', params.name);
                 SnapUI.adjustConversationTitleHeadingWidth(POPUP_WIDGET);
@@ -9358,9 +9359,10 @@ var userOverride = {
             };
 
             _this.getImageUrlForGroupType = function (contact, displayName) {
-                var profileDisplayName = displayName
-                    ? snapCommons.formatHtmlTag(displayName) + ' profile image'
-                    : 'Profile image';
+                // var profileDisplayName = displayName
+                //     ? snapCommons.formatHtmlTag(displayName) + ' profile image'
+                //     : 'Profile image';
+                var profileDisplayName = '';
                 return contact.imageUrl
                     ? '<img src="' +
                           contact.imageUrl +
@@ -9376,9 +9378,10 @@ var userOverride = {
                 message
             ) {
                 var imgsrctag = '';
-                var profileDisplayName = displayName
-                    ? snapCommons.formatHtmlTag(displayName) + ' profile image'
-                    : 'Profile image';
+                // var profileDisplayName = displayName
+                //     ? snapCommons.formatHtmlTag(displayName) + ' profile image'
+                //     : 'Profile image';
+                var profileDisplayName = '';
                 if (!contact.isGroup) {
                     if (
                         !contact.photoSrc &&
