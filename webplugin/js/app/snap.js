@@ -771,6 +771,7 @@ $applozic.extend(true, Snap, {
 
         if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
             textBox.attr('contenteditable', false);
+            Snap.reloadElement('mck-textbox-container', 'mck-text-box');
         } else {
             var metadata = msg.metadata;
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
@@ -778,10 +779,45 @@ $applozic.extend(true, Snap, {
             textBox.attr('contenteditable', metadata.enable_text_input);
             textBox.attr('data-text', hintTextForTextInput);
             textBox.attr('data-label', hintTextForTextInput);
+            textBox.attr('contenteditable', metadata.enable_text_input);
+            Snap.reloadElement('mck-textbox-container', 'mck-text-box');
+        }
+
+        let checkEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
+        if (checkEnable) {
+            $applozic('.mck-box-form').removeClass('data-text');
+        } else {
+            $applozic('.mck-box-form').addClass('data-text');
+        }
+
+        if (msg.hasOwnProperty('metadata') && msg.metadata.is_numeric_input ) {
+            textBox.attr('pattern', '\d*');
+            textBox.attr('inputmode', 'numeric');
         }
     },
     sessionTimeout: function () {
         var parentWindow = window.parent;
         parentWindow.sessionTimeoutInitializer()
+    },
+    generateTouch: function (elemID) {
+        window.setTimeout(function () {
+            try {
+                var event = document.createEvent('Events');
+                event.initEvent('touchstart', true, true);
+                var event2 = document.createEvent('Events');
+                event2.initEvent('touchend', true, true);
+                document.getElementById(elemID).dispatchEvent(event);
+                document.getElementById(elemID).dispatchEvent(event2);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }, 500);
+    },
+    reloadElement: function (parentElement, elemID) {
+        var parent = document.getElementById(parentElement);
+        var child = document.getElementById(elemID);
+        parent.removeChild(child);
+        parent.append(child);
     }
 });
