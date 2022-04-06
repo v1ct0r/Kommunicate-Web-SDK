@@ -767,25 +767,17 @@ $applozic.extend(true, Snap, {
     },
     changeTextInputState: function (msg) {
         var textBox = $applozic('#mck-text-box');
-        Snap.log('text_input_hint: ' + msg.metadata.text_input_hint);
-        if (!!navigator.platform.match(/iPhone|iPod|iPad/)) {
-            Snap.log('iPhone: ' + !!navigator.platform.match(/iPhone|iPod|iPad/));
-        }
 
         if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
             textBox.attr('data-text', '');
             textBox.attr('data-label', '');
             textBox.attr('contenteditable', false);
-            Snap.log('data-text: [' + textBox.attr('data-text') +']');
-            Snap.generateTouch('mck-message-cell');
         } else {
             var metadata = msg.metadata;
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
             textBox.attr('data-text', hintTextForTextInput);
             textBox.attr('data-label', hintTextForTextInput);
             textBox.attr('contenteditable', metadata.enable_text_input);
-            Snap.log('data-text: [' + textBox.attr('data-text') +']');
-            Snap.generateTouch('mck-message-cell');
         }
 
         let checkEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';

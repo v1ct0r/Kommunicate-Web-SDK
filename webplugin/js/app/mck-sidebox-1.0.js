@@ -11647,31 +11647,29 @@ var userOverride = {
                     );
                 }
 
-                var currentMessageObject = ALStorage.getMessageByKey(
-                  MCK_BOT_MESSAGE_QUEUE[0]
-                );
-
-                if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length <= 1
-                  && !currentMessageObject.metadata.is_close_conversation)  {
-                    Snap.changeVisibilityStateForElement(
-                      $applozic('#quick-reply-container'),
-                      'show'
+                setTimeout(function () {
+                    var currentMessageObject = ALStorage.getMessageByKey(
+                        MCK_BOT_MESSAGE_QUEUE[0]
                     );
-                } else {
-                    Snap.changeVisibilityStateForElement(
-                      $applozic('#quick-reply-container'),
-                      'hide'
-                    );
-                }
 
-                window.setTimeout(function () {
                     message = messageContainer.querySelector(
                         'div[data-msgkey="' + MCK_BOT_MESSAGE_QUEUE[0] + '"]'
                     );
                     $applozic('.km-typing-wrapper').remove();
                     if (message) {
                         message.classList.remove('n-vis');
-                        console.log(message);
+                        if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length <= 1
+                          && !currentMessageObject.metadata.is_close_conversation)  {
+                            Snap.changeVisibilityStateForElement(
+                                $applozic('#quick-reply-container'),
+                                'show'
+                            );
+                        } else {
+                            Snap.changeVisibilityStateForElement(
+                                $applozic('#quick-reply-container'),
+                                'hide'
+                            );
+                        }
 
                         $mck_msg_inner.animate(
                             {
@@ -11682,15 +11680,13 @@ var userOverride = {
                     }
                     MCK_BOT_MESSAGE_QUEUE.shift();
 
-                    let p = document.createElement('div');
-                    p.innerHTML = 'MESSAGE_QUEUE.length:' + MCK_BOT_MESSAGE_QUEUE.length;
-                    document.getElementById('logs').append(p);
-
                     if (MCK_BOT_MESSAGE_QUEUE.length !== 0) {
                         _this.procesMessageTimerDelay();
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
                     }
+
+
                 }, MCK_BOT_MESSAGE_DELAY);
             };
 
