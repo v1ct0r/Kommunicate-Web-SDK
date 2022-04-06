@@ -11670,6 +11670,9 @@ var userOverride = {
                                 'hide'
                             );
                         }
+                        if (currentMessageObject.metadata.is_close_conversation)  {
+                            $quick_reply_container.empty()
+                        }
 
                         $mck_msg_inner.animate(
                             {
