@@ -772,12 +772,14 @@ $applozic.extend(true, Snap, {
             textBox.attr('data-text', '');
             textBox.attr('data-label', '');
             textBox.attr('contenteditable', false);
+            Snap.reloadElement('mck-textbox-container', 'mck-text-box');
         } else {
             var metadata = msg.metadata;
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
             textBox.attr('data-text', hintTextForTextInput);
             textBox.attr('data-label', hintTextForTextInput);
             textBox.attr('contenteditable', metadata.enable_text_input);
+            Snap.reloadElement('mck-textbox-container', 'mck-text-box');
         }
 
         let checkEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
@@ -811,9 +813,10 @@ $applozic.extend(true, Snap, {
             }
         }, 500);
     },
-    log: function (text) {
-        let p = document.createElement('div');
-        p.innerHTML = text;
-        document.getElementById('logs').append(p);
+    reloadElement: function (parentElement, elemID) {
+        var parent = document.getElementById(parentElement);
+        var child = document.getElementById(elemID);
+        parent.removeChild(child);
+        parent.append(child);
     }
 });
