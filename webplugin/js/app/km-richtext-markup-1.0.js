@@ -471,10 +471,10 @@ Snap.markup = {
                                         <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>
                                         {{#number}}
                                             <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" 
-                                            inputmode="numeric" pattern="\d*" aria-label="{{label}}">
+                                            inputmode="numeric" pattern="\d*" aria-label="Date, text box, double tap to edit {{label}}">
                                         {{/number}}  
                                         {{^number}}
-                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" aria-label="{{label}}">
+                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" aria-label="Date, text box, double tap to edit {{label}}">
                                         {{/number}}
                                     </div>
                                 {{/supported}}
