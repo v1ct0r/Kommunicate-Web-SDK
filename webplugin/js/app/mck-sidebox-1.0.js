@@ -1949,7 +1949,7 @@ var userOverride = {
                 </div>`;
                 if (isAnonymousChat) {
                     return (
-                        '<a href="#" target="_self" aria-label="Open Chat" tabindex="0" role="button">' +
+                        '<a href="#" target="_self" tabindex="0" role="button">' +
                         CHAT_CLOSE_BUTTON +
                         (CUSTOM_CHAT_LAUNCHER
                             ? customLauncherHtml
@@ -1958,7 +1958,7 @@ var userOverride = {
                     );
                 } else {
                     return (
-                        '<div id="mck-sidebox-launcher" class="mck-sidebox-launcher launchershadow n-vis"><a href="#" target="_self" aria-label="Open Chat" role="button" tabindex="0" aria-live="polite" class="applozic-launcher">' +
+                        '<div id="mck-sidebox-launcher" class="mck-sidebox-launcher launchershadow n-vis"><a href="#" target="_self" role="button" tabindex="0" aria-live="polite" class="applozic-launcher">' +
                         CHAT_CLOSE_BUTTON +
                         (CUSTOM_CHAT_LAUNCHER
                             ? customLauncherHtml
