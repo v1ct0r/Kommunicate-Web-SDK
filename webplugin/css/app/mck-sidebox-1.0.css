@@ -1899,7 +1899,7 @@ mck-sidebox .mck-group-member-list li a:hover {
     background-color: white;
     width: auto;
     outline: none !important;
-    margin: 0px;
+    margin: 0px 30px 0px 0px;
     font-size: 16px;
     overflow: auto;
     line-height: 1.2em;
@@ -1913,6 +1913,9 @@ mck-sidebox .mck-group-member-list li a:hover {
 
 .mck-text-box-panel {
     width: 25px !important;
+    position: absolute!important;
+    right: 0;
+    bottom: 0;
 }
 #mck-btn-attach-box.mck-text-box-panel {
     width: auto !important;
