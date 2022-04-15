@@ -8979,6 +8979,7 @@ var userOverride = {
             _this.initDatepicker = function () {
                 var popupDate = $applozic(".popup");
                 var inline = $applozic(".inline");
+                console.log(inline, inline.attr('min'), inline.attr('max'));
                 if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
                     flatpickr(popupDate[i], {
                         enableTime: !(popupDate[i].type === 'date'),
@@ -8987,21 +8988,23 @@ var userOverride = {
                     });
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
+                    const minYear =  (new Date(inline[i].getAttribute('min'))).getFullYear();
+                    const maxYear = (new Date(inline[i].getAttribute('max'))).getFullYear();
                     const options = (inline[i].type === 'datetime-local') ?
                       {
-                          mask: 'M/d/Y h:m A',
-                          pattern: 'M/`dd/`d `h:`m `A',  // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
+                          mask: 'm/d/Y H:M A',
+                          pattern: 'm{/}`d{/}`Y `H:`M `A', // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
                           blocks: {
                               d: { mask: IMask.MaskedRange, from: 1, to: 31, placeholderChar: 'D', maxLength: 2, autofix: true },
-                              M: { mask: IMask.MaskedRange, from: 1, to: 12, placeholderChar: 'M', maxLength: 2, autofix: true },
-                              Y: { mask: IMask.MaskedRange, from: 1900, to: 2099, placeholderChar: 'Y', autofix: true },
-                              m: { mask: IMask.MaskedRange,from: 0, to: 59, placeholderChar: 'm', maxLength: 2, autofix: true },
-                              h: { mask: IMask.MaskedRange, from: 0, to: 12, maxLength: 2, placeholderChar: 'h', autofix: true },
-                              A: { mask: IMask.MaskedEnum, enum: ["AM", "am", "PM", "pm", "aM", "Am", "pM", "Pm"] }
+                              m: { mask: IMask.MaskedRange, from: 1, to: 12, placeholderChar: 'M', maxLength: 2, autofix: true },
+                              Y: { mask: IMask.MaskedRange, from: minYear || 1999, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
+                              M: { mask: IMask.MaskedRange,from: 0, to: 59, placeholderChar: 'm', maxLength: 2, autofix: true },
+                              H: { mask: IMask.MaskedRange, from: 0, to: 12, maxLength: 2, placeholderChar: 'h', autofix: true },
+                              A: { mask: IMask.MaskedEnum, maxLength: 2, enum: ["AM", "am", "PM", "pm", "aM", "Am", "pM", "Pm"] }
                           },
                           autofix: true,
                           lazy: false,
-                          overwrite: true
+                          overwrite: false,
                       } :
                       {
                           mask: 'M/d/Y',
@@ -9009,7 +9012,7 @@ var userOverride = {
                           blocks: {
                               d: { mask: IMask.MaskedRange, from: 1, to: 31, placeholderChar: 'D', maxLength: 2, autofix: true },
                               M: { mask: IMask.MaskedRange, from: 1, to: 12, placeholderChar: 'M', maxLength: 2, autofix: true },
-                              Y: { mask: IMask.MaskedRange, from: 1900, to: 2099, placeholderChar: 'Y', autofix: true },
+                              Y: { mask: IMask.MaskedRange, from: minYear || 1999, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
                           },
                           autofix: true,
                           lazy: false,
