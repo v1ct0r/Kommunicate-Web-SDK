@@ -771,6 +771,7 @@ $applozic.extend(true, Snap, {
         if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
             textBox.attr('data-text', '');
             textBox.attr('data-label', '');
+            textBox.attr('aria-label', '');
             textBox.attr('contenteditable', false);
             Snap.reloadElement('mck-textbox-container', 'mck-text-box');
             Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
@@ -779,6 +780,7 @@ $applozic.extend(true, Snap, {
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
             textBox.attr('data-text', hintTextForTextInput);
             textBox.attr('data-label', hintTextForTextInput);
+            textBox.attr('aria-label', hintTextForTextInput);
             textBox.attr('contenteditable', metadata.enable_text_input);
             Snap.reloadElement('mck-textbox-container', 'mck-text-box');
             Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
