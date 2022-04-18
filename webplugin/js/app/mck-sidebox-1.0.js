@@ -11677,6 +11677,7 @@ var userOverride = {
                         }
                         if (currentMessageObject.metadata.is_close_conversation)  {
                             $quick_reply_container.empty();
+                            $applozic('#mck-text-box').empty();
                         }
 
                         $mck_msg_inner.animate(
