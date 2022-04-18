@@ -5751,6 +5751,8 @@ var userOverride = {
                                 userDetail.userId
                             ] = userDetail;
                         }
+                        var audioSend = document.getElementById('audioSend');
+                        audioSend.play();
                     },
                     error: function () {
                         $mck_msg_error.html(
@@ -11674,7 +11676,7 @@ var userOverride = {
                             );
                         }
                         if (currentMessageObject.metadata.is_close_conversation)  {
-                            $quick_reply_container.empty()
+                            $quick_reply_container.empty();
                         }
 
                         $mck_msg_inner.animate(
@@ -11692,6 +11694,8 @@ var userOverride = {
                         Snap.changeTextInputState(currentMessageObject);
                     }
 
+                    var audioGet = document.getElementById('audioGet');
+                    audioGet.play();
 
                 }, MCK_BOT_MESSAGE_DELAY);
             };
