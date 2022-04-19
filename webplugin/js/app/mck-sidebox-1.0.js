@@ -1936,7 +1936,7 @@ var userOverride = {
             var FEEDBACK_UPDATE_URL = '/feedback/v2';
             _this.getLauncherHtml = function (isAnonymousChat) {
                 var defaultHtml = kmCustomTheme.customSideboxWidget();
-                var CHAT_CLOSE_BUTTON = `<div id="km-popup-close-button" aria-label="Close" role="button" class="km-custom-widget-background-color">
+                var CHAT_CLOSE_BUTTON = `<div id="km-popup-close-button" aria-hidden="true" class="km-custom-widget-background-color">
                     <svg width="64" xmlns="http://www.w3.org/2000/svg" height="64" viewBox="0 0 64 64">
                         <path fill="#fff" d="M28.941 31.786L.613 60.114a2.014 2.014 0 1 0 2.848 2.849l28.541-28.541 28.541 28.541c.394.394.909.59 1.424.59a2.014 2.014 0 0 0 1.424-3.439L35.064 31.786 63.41 3.438A2.014 2.014 0 1 0 60.562.589L32.003 29.15 3.441.59A2.015 2.015 0 0 0 .593 3.439l28.348 28.347z" stroke-width="6" stroke="#fff"/>
                     </svg>
@@ -1949,7 +1949,7 @@ var userOverride = {
                 </div>`;
                 if (isAnonymousChat) {
                     return (
-                        '<a href="#" target="_self" aria-hidden="true" aria-label="Open Chat" tabindex="0" role="button">' +
+                        '<a href="#" target="_self" tabindex="0" role="button">' +
                         CHAT_CLOSE_BUTTON +
                         (CUSTOM_CHAT_LAUNCHER
                             ? customLauncherHtml
@@ -1958,7 +1958,7 @@ var userOverride = {
                     );
                 } else {
                     return (
-                        '<div id="mck-sidebox-launcher" class="mck-sidebox-launcher launchershadow n-vis"><a href="#" target="_self" aria-hidden="true" aria-label="Open Chat" role="button" tabindex="0" aria-live="polite" class="applozic-launcher">' +
+                        '<div id="mck-sidebox-launcher" class="mck-sidebox-launcher launchershadow n-vis"><a href="#" target="_self" tabindex="0" class="applozic-launcher">' +
                         CHAT_CLOSE_BUTTON +
                         (CUSTOM_CHAT_LAUNCHER
                             ? customLauncherHtml
@@ -3571,6 +3571,8 @@ var userOverride = {
                           'vis',
                           'n-vis'
                       );
+                document.activeElement.blur();
+                $applozic("input").blur();
             };
             _this.toggleMediaOptions = function (el) {
                 var text = '';
@@ -4929,6 +4931,31 @@ var userOverride = {
                             return false;
                         }
                     }
+                    window.setTimeout(function () {
+                        $applozic('#mck-text-box').blur();
+                        $applozic('#mck-file-input').blur();
+                        $applozic('#mck-autosuggest-search-input').blur();
+                        $applozic('#mck-textbox-container').blur();
+                        $applozic('#mck-msg-form').blur();
+                        $applozic('input').blur();
+                        try {
+                            var event = document.createEvent('Events');
+                            event.initEvent('touchstart', true, true);
+                            var event2 = document.createEvent('Events');
+                            event2.initEvent('touchend', true, true);
+                            document.getElementById('mck-message-cell').dispatchEvent(event);
+                            document.getElementById('mck-message-cell').dispatchEvent(event2);
+                        }
+                        catch (e) {
+                            console.log(e);
+                        }
+                    }, 500);
+                    document.addEventListener('touchstart', function(e) {
+                        console.log('touchstart', e);
+                    });
+                    document.addEventListener('touchend', function(e) {
+                        console.log('touchend', e);
+                    });
                     _this.hideSendButton();
                     Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
                     _this.sendMessage(messagePxy);
@@ -5724,6 +5751,8 @@ var userOverride = {
                                 userDetail.userId
                             ] = userDetail;
                         }
+                        var audioSend = document.getElementById('audioSend');
+                        audioSend.play();
                     },
                     error: function () {
                         $mck_msg_error.html(
@@ -7414,7 +7443,7 @@ var userOverride = {
             var LINK_EXPRESSION = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
             var LINK_MATCHER = new RegExp(LINK_EXPRESSION);
             var markup =
-                '<div tabindex="-1" name="message" aria-live="polite" role="status" aria-atomic="false" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}" data-msgtime="${msgCreatedAtTime}"' +
+                '<div tabindex="-1" name="message" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}" data-msgtime="${msgCreatedAtTime}"' +
                 'data-msgcontent="${replyIdExpr}" data-msgkey="${msgKeyExpr}" data-contact="${toExpr}" class="mck-m-b ${msgKeyExpr} ${msgFloatExpr} ${msgAvatorClassExpr} ${botMsgDelayExpr}">' +
                 '<div class="mck-clear">' +
                 '<div class="${nameTextExpr} ${showNameExpr} mck-conversation-name"><span class="mck-ol-status ${contOlExpr}"><span class="mck-ol-icon" title="${onlineLabel}"></span>&nbsp;</span>${msgNameExpr}</div>' +
@@ -7430,7 +7459,7 @@ var userOverride = {
                 '<div class="mck-msgreply-border ${textreplyVisExpr}">${msgReply}</div>' +
                 '<div class="mck-msgreply-border ${msgpreviewvisExpr}">{{html msgPreview}}</div>' +
                 '</div>' +
-                '<div class="mck-msg-text mck-msg-content notranslate"></div>' +
+                '<div class="mck-msg-text mck-msg-content notranslate" aria-live="polite" role="status" aria-atomic="false"></div>' +
                 '</div>' +
                 '<div class="km-msg-box-attachment ${attachmentBoxExpr} ">{{html attachmentTemplate}}<div class="km-msg-box-progressMeter ${progressMeterClassExpr} ">{{html progressMeter}}</div></div>' +
                 '<div class="mck-msg-box-rich-text-container notranslate ${kmRichTextMarkupVisibility} ${containerType}">' +
@@ -7677,7 +7706,7 @@ var userOverride = {
                     $applozic('#mck-sidebox-ft')
                         .removeClass('n-vis')
                         .addClass('vis');
-                    // $quick_reply_container.removeClass('vis').addClass('n-vis');
+                    //$quick_reply_container.removeClass('vis').addClass('n-vis');
                     $mck_btn_clear_messages
                         .removeClass('n-vis')
                         .addClass('vis');
@@ -8495,9 +8524,9 @@ var userOverride = {
                 }
 
                 if (
-                  !kmRichTextMarkup.includes('km-div-slider') &&
-                  (kmRichTextMarkup.includes('km-quick-replies') ||
-                    kmRichTextMarkup.includes('km-btn-hidden-form'))
+                    (kmRichTextMarkup.includes('km-quick-replies') &&
+                        !kmRichTextMarkup.includes('km-div-slider')) ||
+                    kmRichTextMarkup.includes('km-btn-hidden-form')
                 ) {
                     //don't need to append buttons to the messageTemplate arrea,
                     //because we append them to the quick-reply-container
@@ -8519,24 +8548,10 @@ var userOverride = {
                         isLastSavedMessageInDialog ||
                         !arrayOfAllMessages
                     ) {
-                        setTimeout(function () {
-                            $quick_reply_container.empty();
-                            $quick_reply_container.append(
-                              $applozic(kmRichTextMarkup)
-                            );
-                            Snap.changeVisibilityStateForElement(
-                              $quick_reply_container,
-                              'show'
-                            );
-
-                            $mck_msg_inner.animate(
-                              {
-                                  scrollTop: $mck_msg_inner.prop('scrollHeight'),
-                              },
-                              0
-                            );
-                            _this.initDatepicker();
-                        }, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1300)
+                        $quick_reply_container.empty();
+                        $quick_reply_container.append(
+                            $applozic(kmRichTextMarkup)
+                        );
                     }
                 } else {
                     append
@@ -8549,6 +8564,7 @@ var userOverride = {
                                   '#mck-message-cell .mck-message-inner'
                               );
                 }
+                _this.initDatepicker();
 
                 if (
                     msg.contentType ==
@@ -8594,9 +8610,6 @@ var userOverride = {
                     } catch (e) {
                         console.error('suggestionList should be an array');
                     }
-
-                    autosuggetionMetadata.source.push({searchKey: 'default', message: "My question isn't here"});
-
                     $mck_autosuggest_search_input
                         .addClass('mck-text-box')
                         .removeClass('n-vis');
@@ -8849,6 +8862,17 @@ var userOverride = {
                 var $textMessage = $applozic(
                     '.' + replyId + ' .mck-msg-content'
                 );
+
+                if ( showWithoutDelay ||
+                  (!processMessageInQueue &&
+                    $quick_reply_container.children().length > 0)
+                ) {
+                    Snap.changeVisibilityStateForElement(
+                      $applozic('#quick-reply-container'),
+                      'show'
+                    );
+                }
+
                 if (
                     emoji_template.indexOf('emoji-inner') === -1 &&
                     msg.contentType === 0
@@ -8865,16 +8889,6 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-
-                        if ( showWithoutDelay ||
-                            (!processMessageInQueue &&
-                            $quick_reply_container.children().length > 0)
-                        ) {
-                            Snap.changeVisibilityStateForElement(
-                                $applozic('#quick-reply-container'),
-                                'show'
-                            );
-                        }
 
                         if (arrayOfAllMessages) {
                             if (isLastSavedMessageInDialog) {
@@ -8967,18 +8981,17 @@ var userOverride = {
             _this.initDatepicker = function () {
                 var popupDate = $applozic(".popup");
                 var inline = $applozic(".inline");
+                console.log(inline, inline.attr('min'), inline.attr('max'));
                 if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
                     flatpickr(popupDate[i], {
                         enableTime: !(popupDate[i].type === 'date'),
                         dateFormat: popupDate[i].type === 'date' ? "m/d/Y" : "m/d/Y H:i",
                         disableMobile: true,
-                        minDate:  popupDate.attr('min') ? popupDate.attr('min') : '01/01/1900',
-                        maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099'
                     });
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
-                    const minYear =  inline[i].getAttribute('min') && (new Date(inline[i].getAttribute('min'))).getFullYear();
-                    const maxYear = inline[i].getAttribute('max') && (new Date(inline[i].getAttribute('max'))).getFullYear();
+                    const minYear =  (new Date(inline[i].getAttribute('min'))).getFullYear();
+                    const maxYear = (new Date(inline[i].getAttribute('max'))).getFullYear();
                     const options = (inline[i].type === 'datetime-local') ?
                       {
                           mask: 'm/d/Y H:M A',
@@ -8986,7 +8999,7 @@ var userOverride = {
                           blocks: {
                               d: { mask: IMask.MaskedRange, from: 1, to: 31, placeholderChar: 'D', maxLength: 2, autofix: true },
                               m: { mask: IMask.MaskedRange, from: 1, to: 12, placeholderChar: 'M', maxLength: 2, autofix: true },
-                              Y: { mask: IMask.MaskedRange, from: minYear || 1900, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
+                              Y: { mask: IMask.MaskedRange, from: minYear || 1999, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
                               M: { mask: IMask.MaskedRange,from: 0, to: 59, placeholderChar: 'm', maxLength: 2, autofix: true },
                               H: { mask: IMask.MaskedRange, from: 0, to: 12, maxLength: 2, placeholderChar: 'h', autofix: true },
                               A: { mask: IMask.MaskedEnum, maxLength: 2, enum: ["AM", "am", "PM", "pm", "aM", "Am", "pM", "Pm"] }
@@ -9001,7 +9014,7 @@ var userOverride = {
                           blocks: {
                               d: { mask: IMask.MaskedRange, from: 1, to: 31, placeholderChar: 'D', maxLength: 2, autofix: true },
                               M: { mask: IMask.MaskedRange, from: 1, to: 12, placeholderChar: 'M', maxLength: 2, autofix: true },
-                              Y: { mask: IMask.MaskedRange, from: minYear || 1900, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
+                              Y: { mask: IMask.MaskedRange, from: minYear || 1999, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
                           },
                           autofix: true,
                           lazy: false,
@@ -9957,7 +9970,7 @@ var userOverride = {
                     },
                     matcher: function (item) {
                         var matcher1 = new RegExp(this.query, 'i');
-                        return matcher1.test(item.searchKey) || item.searchKey === 'default';
+                        return matcher1.test(item.searchKey);
                     },
                     highlighter: function (item) {
                         var metadata = JSON.parse(item.toString());
@@ -11650,18 +11663,22 @@ var userOverride = {
                     $applozic('.km-typing-wrapper').remove();
                     if (message) {
                         message.classList.remove('n-vis');
-
-                        // if ($quick_reply_container.children().length > 0) {
-                        //     Snap.changeVisibilityStateForElement(
-                        //         $applozic('#quick-reply-container'),
-                        //         'show'
-                        //     );
-                        // } else {
-                        //     Snap.changeVisibilityStateForElement(
-                        //         $applozic('#quick-reply-container'),
-                        //         'hide'
-                        //     );
-                        // }
+                        if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length <= 1
+                          && !currentMessageObject.metadata.is_close_conversation)  {
+                            Snap.changeVisibilityStateForElement(
+                                $applozic('#quick-reply-container'),
+                                'show'
+                            );
+                        } else {
+                            Snap.changeVisibilityStateForElement(
+                                $applozic('#quick-reply-container'),
+                                'hide'
+                            );
+                        }
+                        if (currentMessageObject.metadata.is_close_conversation)  {
+                            $quick_reply_container.empty();
+                            $applozic('#mck-text-box').empty();
+                        }
 
                         $mck_msg_inner.animate(
                             {
@@ -11677,6 +11694,9 @@ var userOverride = {
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
                     }
+
+                    var audioGet = document.getElementById('audioGet');
+                    audioGet.play();
 
                 }, MCK_BOT_MESSAGE_DELAY);
             };

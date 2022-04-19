@@ -7,7 +7,7 @@
 					<div class="km-conversation-header-title-container">
 						<div id="mck-tab-individual" class="mck-row n-vis">
 							<div class="mck-tab-link mck-back-btn-container">
-								<button id="mck-conversation-back-btn" aria-label="Back" role="button" tabindex="0" class="mck-conversation-tab-link">
+								<button id="mck-conversation-back-btn" tabindex="0" class="mck-conversation-tab-link">
 									<svg focusable="false" aria-hidden="true" class="mck-msg-list-icon" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" height="30" viewBox="0 0 24 24" width="30">
 										<path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z" />
 										<path d="M0-.5h24v24H0z" fill="none" />
@@ -39,7 +39,7 @@
 						</div>
 					</div>
 
-					<div class="km-faq-and-close-btn-container mck-flexi">
+					<div class="km-faq-and-close-btn-container mck-flexi" aria-hidden="true">
 						<div class="km-kb-container n-vis">
 							<button id="km-faq" class="km-faq" type="button" aria-label="FAQ" tabindex="0" role="button">FAQ</button>
 						</div>
@@ -86,7 +86,7 @@
 							<button type="button" class="mck-minimize-icon mck-box-close mck-close icon n-vis">
 								<span aria-hidden="true">&minus;</span>
 							</button>
-							<button type="button" id = "km-chat-widget-close-button" class="mck-box-close mck-close-sidebox move-right" data-dismiss="mckbox" aria-label="Close">
+							<button type="button" id = "km-chat-widget-close-button" class="mck-box-close mck-close-sidebox move-right" data-dismiss="mckbox" aria-hidden="true">
 								<svg focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
 									<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
 									<path d="M0 0h24v24H0z" fill="none" />
@@ -98,7 +98,7 @@
 				</div>
 			</div>
 			<div id="km-internet-disconnect-msg" class="km-offline-msg n-vis">  </div>
-			<div id="km-local-file-system-warning" class="n-vis">
+			<div id="km-local-file-system-warning" class="n-vis" aria-hidden="true">
 				<span id="km-local-file-system-warning-description">
 					Conversation will not be updated in real-time as you are running the installation script from your local file system.
 				</span>
@@ -376,7 +376,7 @@
 								<div id="mck-reply-msg"> </div>
 							</div>
 							<div class="mck-form-group last last-child">
-								<label class="sr-only placeholder-text control-label" aria-hidden="true" for="mck-textbox">Message</label>
+								<label class="sr-only placeholder-text control-label" for="mck-textbox" aria-hidden="true">Message</label>
 								<div id="mck-textbox-container" class="mck-textbox-container">
 									<div id="mck-btn-attach-box" class="mck-blk-2 mck-text-box-panel mck-mid-panel move-right mck-attach-menu-main-container vis">
 										<div id="mck-location-sharing-box" class="mck-location-sharing-box">
@@ -786,7 +786,7 @@
 							<div id="km-tab-title" class="mck-tab-title mck-truncate mck-display-name"></div>
 					</div>
 				<div class="blk-lg-2 mck-close-btn">
-					<button type="button" id="km-modal-close" class="mck-box-close km-close-sidebox move-right" data-dismiss="mckbox" tabindex="0" aria-label="Close" aria-hidden="false" role="button">
+					<button type="button" id="km-modal-close" class="mck-box-close km-close-sidebox move-right" data-dismiss="mckbox" tabindex="0" aria-label="Close" aria-hidden="true" role="button">
 						<svg focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" focusable="false" aria-hidden="true">
 							<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
 							<path d="M0 0h24v24H0z" fill="none" />
@@ -821,6 +821,6 @@
 		</div>
 	</div>
 </div>
-<div id="km-anonymous-chat-launcher" class="km-anonymous-chat-launcher km-hide-logo n-vis">
+<div id="km-anonymous-chat-launcher" class="km-anonymous-chat-launcher km-hide-logo n-vis" aria-hidden="true">
 </div>
 
