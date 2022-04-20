@@ -1958,7 +1958,7 @@ var userOverride = {
                     );
                 } else {
                     return (
-                        '<div id="mck-sidebox-launcher" class="mck-sidebox-launcher launchershadow n-vis"><a href="#" target="_self" tabindex="0" class="applozic-launcher">' +
+                        '<div id="mck-sidebox-launcher" class="mck-sidebox-launcher launchershadow n-vis"><a href="#" target="_self" aria-hidden="true" class="applozic-launcher">' +
                         CHAT_CLOSE_BUTTON +
                         (CUSTOM_CHAT_LAUNCHER
                             ? customLauncherHtml
@@ -7443,7 +7443,7 @@ var userOverride = {
             var LINK_EXPRESSION = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
             var LINK_MATCHER = new RegExp(LINK_EXPRESSION);
             var markup =
-                '<div tabindex="-1" name="message" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}" data-msgtime="${msgCreatedAtTime}"' +
+                '<div tabindex="0" name="message" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}" data-msgtime="${msgCreatedAtTime}"' +
                 'data-msgcontent="${replyIdExpr}" data-msgkey="${msgKeyExpr}" data-contact="${toExpr}" class="mck-m-b ${msgKeyExpr} ${msgFloatExpr} ${msgAvatorClassExpr} ${botMsgDelayExpr}">' +
                 '<div class="mck-clear">' +
                 '<div class="${nameTextExpr} ${showNameExpr} mck-conversation-name"><span class="mck-ol-status ${contOlExpr}"><span class="mck-ol-icon" title="${onlineLabel}"></span>&nbsp;</span>${msgNameExpr}</div>' +
@@ -11661,18 +11661,26 @@ var userOverride = {
                         'div[data-msgkey="' + MCK_BOT_MESSAGE_QUEUE[0] + '"]'
                     );
                     $applozic('.km-typing-wrapper').remove();
+
+                    MCK_BOT_MESSAGE_QUEUE.shift();
+
+                    if (MCK_BOT_MESSAGE_QUEUE.length !== 0) {
+                        _this.procesMessageTimerDelay();
+                    } else {
+                        Snap.changeTextInputState(currentMessageObject);
+                    }
                     if (message) {
                         message.classList.remove('n-vis');
-                        if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length <= 1
+                        if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
                           && !currentMessageObject.metadata.is_close_conversation)  {
                             Snap.changeVisibilityStateForElement(
-                                $applozic('#quick-reply-container'),
-                                'show'
+                              $applozic('#quick-reply-container'),
+                              'show'
                             );
                         } else {
                             Snap.changeVisibilityStateForElement(
-                                $applozic('#quick-reply-container'),
-                                'hide'
+                              $applozic('#quick-reply-container'),
+                              'hide'
                             );
                         }
                         if (currentMessageObject.metadata.is_close_conversation)  {
@@ -11681,20 +11689,12 @@ var userOverride = {
                         }
 
                         $mck_msg_inner.animate(
-                            {
-                                scrollTop: $mck_msg_inner.prop('scrollHeight'),
-                            },
-                            0
+                          {
+                              scrollTop: $mck_msg_inner.prop('scrollHeight'),
+                          },
+                          0
                         );
                     }
-                    MCK_BOT_MESSAGE_QUEUE.shift();
-
-                    if (MCK_BOT_MESSAGE_QUEUE.length !== 0) {
-                        _this.procesMessageTimerDelay();
-                    } else {
-                        Snap.changeTextInputState(currentMessageObject);
-                    }
-
                     var audioGet = document.getElementById('audioGet');
                     audioGet.play();
 
