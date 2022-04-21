@@ -8981,12 +8981,13 @@ var userOverride = {
             _this.initDatepicker = function () {
                 var popupDate = $applozic(".popup");
                 var inline = $applozic(".inline");
-                console.log(inline, inline.attr('min'), inline.attr('max'));
                 if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
                     flatpickr(popupDate[i], {
                         enableTime: !(popupDate[i].type === 'date'),
                         dateFormat: popupDate[i].type === 'date' ? "m/d/Y" : "m/d/Y H:i",
                         disableMobile: true,
+                        minDate:  popupDate.attr('min') ? (new Date(popupDate.attr('min'))).toLocaleDateString("en-US") : '01/01/1900',
+                        maxDate: popupDate.attr('max') ? (new Date(popupDate.attr('max'))).toLocaleDateString("en-US") : '01/01/2099'
                     });
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
