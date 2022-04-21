@@ -773,6 +773,7 @@ $applozic.extend(true, Snap, {
             textBox.attr('contenteditable', false);
             Snap.reloadElement('mck-textbox-container', 'mck-text-box');
             Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
+            Snap.reloadElement('mck-sidebox-content', 'quick-reply-container');
         } else {
             var metadata = msg.metadata;
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
@@ -783,6 +784,7 @@ $applozic.extend(true, Snap, {
             textBox.attr('contenteditable', metadata.enable_text_input);
             Snap.reloadElement('mck-textbox-container', 'mck-text-box');
             Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
+            Snap.reloadElement('mck-sidebox-content', 'quick-reply-container');
         }
 
         let checkEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
