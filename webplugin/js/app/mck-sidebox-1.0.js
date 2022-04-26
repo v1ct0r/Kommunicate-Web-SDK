@@ -8986,8 +8986,8 @@ var userOverride = {
                         enableTime: !(popupDate[i].type === 'date'),
                         dateFormat: popupDate[i].type === 'date' ? "m/d/Y" : "m/d/Y H:i",
                         disableMobile: true,
-                        minDate:  popupDate.attr('min') ? (new Date(popupDate.attr('min'))).toLocaleDateString("en-US") : '01/01/1900',
-                        maxDate: popupDate.attr('max') ? (new Date(popupDate.attr('max'))).toLocaleDateString("en-US") : '01/01/2099'
+                        minDate:  popupDate.attr('min') ? popupDate.attr('min') : '01/01/1900',
+                        maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099'
                     });
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
