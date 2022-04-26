@@ -250,7 +250,7 @@ Snap.markup = {
     getQuickRepliesTemplate: function () {
         return `
             {{#payload}}
-                 <button aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{title}}</button>
+                 <button aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}" tabindex="0">{{title}}</button>
             {{/payload}}
             `;
     },
