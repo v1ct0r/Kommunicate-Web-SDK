@@ -1,4 +1,4 @@
-//Snap = $applozic.extends(true,Snap||{})
+// Snap = $applozic.extends(true,Snap||{})
 Snap.markup = {
     getSingleRoomPaxInfo: function (roomCount) {
         roomCount = roomCount || '1';
@@ -340,7 +340,7 @@ Snap.markup = {
          <div class="km-faq-answer--body">
              <div class="km-faq-answer--body_container">
                  <p class="km-faq-answer--body_que">{{title}}</p>
-                 <p class="km-faq-answer--body_ans">{{{description}}}</p>
+                 <p class="km-faq-answer--body_ans"> {{{description}}} </p>
              </div>
          </div>
          <div class="km-faq-answer--footer">
@@ -600,7 +600,6 @@ Snap.markup.quickRepliesContainerTemplate = function (options, template) {
         payload[i].buttonClass = buttonClass;
         payload[i].hidePostCTA = hidePostCTA;
     }
-
     return Mustache.to_html(Snap.markup.getQuickRepliesTemplate(options.needLimitHeight), {
         payload: payload,
     });
