@@ -769,9 +769,17 @@ $applozic.extend(true, Snap, {
     changeTextInputState: function (msg) {
         var textBox = $applozic('#mck-text-box');
 
+        let isEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
+        if (isEnable) {
+            $applozic('.mck-box-form').removeClass('data-text');
+        } else {
+            $applozic('.mck-box-form').addClass('data-text');
+        }
+
         if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
             textBox.attr('data-text', '');
             textBox.attr('data-label', '');
+            textBox.attr('aria-label', '');
             textBox.attr('contenteditable', false);
             Snap.reloadElement('mck-textbox-container', 'mck-text-box');
             Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
@@ -781,17 +789,11 @@ $applozic.extend(true, Snap, {
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
             textBox.attr('data-text', hintTextForTextInput);
             textBox.attr('data-label', hintTextForTextInput);
+            textBox.attr('aria-label', isEnable ? hintTextForTextInput + "Multiline text box, double tap to edit" : hintTextForTextInput);
             textBox.attr('contenteditable', metadata.enable_text_input);
             Snap.reloadElement('mck-textbox-container', 'mck-text-box');
             Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
             Snap.reloadElement('mck-sidebox-content', 'quick-reply-container');
-        }
-
-        let checkEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
-        if (checkEnable) {
-            $applozic('.mck-box-form').removeClass('data-text');
-        } else {
-            $applozic('.mck-box-form').addClass('data-text');
         }
 
         if (msg.hasOwnProperty('metadata') && msg.metadata.is_numeric_input ) {

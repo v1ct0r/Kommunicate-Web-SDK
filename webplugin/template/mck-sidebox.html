@@ -1,6 +1,6 @@
 <div id="mck-sidebox" class="mck-sidebox mck-box fade" style="visibility: hidden;">
 	<div class="mck-box-dialog mck-box-sm mck-right mck-bg-white">
-		<div id="mck-sidebox-content" class="mck-sidebox-content mck-box-content" aria-live="polite" role="status" aria-relevant="additions">
+		<div id="mck-sidebox-content" class="mck-sidebox-content mck-box-content">
 			<div id="mck-conversation-header" class="mck-conversation-header mck-truncate n-vis"></div>
 			<div class="mck-box-top mck-title">
 				<div class="km-header-container">
@@ -169,7 +169,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="mck-box-body">
+			<div class="mck-box-body" aria-live="polite" role="status" aria-relevant="additions" aria-atomic="false">
 				<div id="mck-message-cell" class="mck-tab-cell mck-message-cell">
 					<div id="mck-price-widget" class="mck-row mck-price-widget mck-top-widget n-vis">
 						<div class="mck-widget-panel">
@@ -423,7 +423,7 @@
 
 									<textarea id="mck-autosuggest-search-input" data-provide="typeahead" placeholder="" class="mck-blk-8 n-vis mck-text mck-typeahead km-auto-expand" autocomplete="off" rows='1' data-autoresize form="mck-msg-form" method="post" type="text" aria-label="Select option" tabindex="0"></textarea>
 									<input id="mck-autosuggest-metadata" type="hidden" name="city-detail" />
-									<div id="mck-text-box" contenteditable="false" class="mck-blk-8 mck-text-box mck-text required notranslate" data-text="" aria-label="Multiline text box, double tap to edit" tabindex="2"></div>
+									<div id="mck-text-box" contenteditable="false" class="mck-blk-8 mck-text-box mck-text required notranslate" data-text="" tabindex="2" aria-live="polite" role="status" aria-relevant="additions" aria-atomic="false"></div>
 
 									<input id="mck-file-input" class="mck-file-input n-vis" type="file" name="files[]">
 									<div id="mck-file-box" class="n-vis"></div>
@@ -444,7 +444,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="quick-reply-container" class="quick-reply-container n-vis km-cta-multi-button-container" tabindex="3">
+			<div id="quick-reply-container" class="quick-reply-container n-vis km-cta-multi-button-container" tabindex="3" aria-live="polite" role="status" aria-relevant="additions" aria-atomic="false">
 			</div>
 			<div class="mck-running-on n-vis notranslate">
 					Chat <svg focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="10" height="15" style="vertical-align: middle;"><path fill="#513DD8" fill-rule="nonzero" d="M7.69879975.54941587L5.81596948 6.3447902l3.87961917.47635733c.13377998.01642612.19891133.17720919.10092463.28401145l-7.24573967 7.4456573c-.05838132.06073652-.1713319.01291556-.14228864-.0853757l1.54838036-5.83643965-3.71239422-.45582469C.11069114 8.15675014.0455598 7.99596707.1435465 7.8891648L7.55445767.48076424c.06043478-.07746063.17133188-.01291553.14434208.06865163z"/></svg> by
