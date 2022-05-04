@@ -256,7 +256,7 @@ Snap.markup = {
             +'</div>';
     },
     getGenericSuggestedReplyButton: function () {
-        return `<button aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{name}}</button>`;
+        return `<button aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{name}}</button>`;
     },
     getPassangerDetail: function (options) {
         if (!options.sessionId) {
@@ -407,7 +407,7 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper">
                                             {{#options}}
                                                 <div>
-                                                    <input type="{{type}}" name="{{name}}" value="{{value}}">
+                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}" tabindex="3">
                                                     <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
                                                 </div>                                     
                                             {{/options}}
@@ -418,7 +418,7 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper">
                                             {{#options}}
                                                 <div>
-                                                    <input type="{{type}}" name="{{name}}" value="{{value}}">
+                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}" tabindex="3">
                                                     <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
                                                 </div>                                     
                                             {{/options}}
@@ -427,7 +427,7 @@ Snap.markup = {
                                     {{#text}}
                                         <div class="mck-form-text-wrapper">
                                             <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>
-                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" data-regex="{{validation.regex}}" data-error-text="{{validation.errorText}}">
+                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" aria-label="{{label}}" data-regex="{{validation.regex}}" data-error-text="{{validation.errorText}}">
                                             {{#validation}}
                                                 <span class="mck-form-error-text mck-form-error-{{className}}"></span>
                                             {{/validation}}
@@ -445,7 +445,7 @@ Snap.markup = {
                                     {{#dropdown}}
                                         <div class="mck-form-dropdown-wrapper">
                                             <label for="{{name}}" class="mck-form-label">{{title}}</label><br>
-                                            <select name="{{name}}" data-error-text = "{{validation.errorText}}">
+                                            <select name="{{name}}" data-error-text = "{{validation.errorText}}" tabindex="3">
                                                 {{#options}}
                                                     {{#selected}}{{#disabled}}
                                                         <option value="{{value}}" selected disabled hidden>{{label}}</option>
@@ -470,14 +470,21 @@ Snap.markup = {
                                 {{^supported}}
                                     <div class="mck-form-text-wrapper">
                                         <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>
-                                        <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}">
+                                        {{#number}}
+                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" tabindex="3"
+                                            inputmode="numeric" pattern="\d*" aria-label="Date, text box, double tap to edit {{label}}" min="{{min}}" max="{{max}}">
+                                        {{/number}}  
+                                        {{^number}}
+                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" tabindex="3" min="{{min}}" max="{{max}}" 
+                                            aria-label="Date, text box, double tap to edit {{label}}">
+                                        {{/number}}
                                     </div>
                                 {{/supported}}
                             {{/.}}
                         {{/payload}}
                     </div>
                         {{#buttons}}
-                            <button type="{{type}}" class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button" data-requesttype="{{requestType}}" title="{{message}}" data-post-back-to-snap="{{postBackToSnap}}">{{label}}</button>      
+                            <button type="{{type}}" tabindex="3" class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button" data-requesttype="{{requestType}}" title="{{message}}" data-post-back-to-snap="{{postBackToSnap}}">{{label}}</button>      
                         {{/buttons}}   
                 </form>   
             </div>`;
@@ -592,6 +599,7 @@ Snap.markup.quickRepliesContainerTemplate = function (options, template) {
                 : payload.length == 2
                 ? 'km-cta-button-2'
                 : 'km-cta-button-many');
+
     for (var i = 0; i < payload.length; i++) {
         payload[i].replyMetadata =
             typeof payload[i].replyMetadata == 'object'
