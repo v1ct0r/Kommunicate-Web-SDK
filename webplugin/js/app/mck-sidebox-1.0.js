@@ -8446,7 +8446,7 @@ var userOverride = {
                 // }
 
                 var isLastSavedMessageInDialog = arrayOfAllMessages && msg.key === arrayOfAllMessages[0].key;
-
+                console.log('msg.key === arrayOfAllMessages[0].key:', msg.key === arrayOfAllMessages[0].key);
                 var msgList = [
                     {
                         msgReply: replyMsg ? replyMsg.message + '\n' : '',
@@ -8544,10 +8544,14 @@ var userOverride = {
                               );
 
                     //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
+                    console.log('arrayOfAllMessages:', arrayOfAllMessages, !arrayOfAllMessages);
+                    console.log('isLastSavedMessageInDialog:', isLastSavedMessageInDialog);
                     if (
                         isLastSavedMessageInDialog ||
                         !arrayOfAllMessages
                     ) {
+                        console.log('arrayOfAllMessages:', arrayOfAllMessages, !arrayOfAllMessages);
+                        console.log('isLastSavedMessageInDialog:', isLastSavedMessageInDialog);
                         $quick_reply_container.empty();
                         $quick_reply_container.append(
                             $applozic(kmRichTextMarkup)
@@ -8981,12 +8985,13 @@ var userOverride = {
             _this.initDatepicker = function () {
                 var popupDate = $applozic(".popup");
                 var inline = $applozic(".inline");
-                console.log(inline, inline.attr('min'), inline.attr('max'));
                 if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
                     flatpickr(popupDate[i], {
                         enableTime: !(popupDate[i].type === 'date'),
                         dateFormat: popupDate[i].type === 'date' ? "m/d/Y" : "m/d/Y H:i",
                         disableMobile: true,
+                        minDate:  popupDate.attr('min') ? popupDate.attr('min') : '01/01/1900',
+                        maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099'
                     });
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
@@ -8999,7 +9004,7 @@ var userOverride = {
                           blocks: {
                               d: { mask: IMask.MaskedRange, from: 1, to: 31, placeholderChar: 'D', maxLength: 2, autofix: true },
                               m: { mask: IMask.MaskedRange, from: 1, to: 12, placeholderChar: 'M', maxLength: 2, autofix: true },
-                              Y: { mask: IMask.MaskedRange, from: minYear || 1999, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
+                              Y: { mask: IMask.MaskedRange, from: minYear || 1900, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
                               M: { mask: IMask.MaskedRange,from: 0, to: 59, placeholderChar: 'm', maxLength: 2, autofix: true },
                               H: { mask: IMask.MaskedRange, from: 0, to: 12, maxLength: 2, placeholderChar: 'h', autofix: true },
                               A: { mask: IMask.MaskedEnum, maxLength: 2, enum: ["AM", "am", "PM", "pm", "aM", "Am", "pM", "Pm"] }
@@ -9014,7 +9019,7 @@ var userOverride = {
                           blocks: {
                               d: { mask: IMask.MaskedRange, from: 1, to: 31, placeholderChar: 'D', maxLength: 2, autofix: true },
                               M: { mask: IMask.MaskedRange, from: 1, to: 12, placeholderChar: 'M', maxLength: 2, autofix: true },
-                              Y: { mask: IMask.MaskedRange, from: minYear || 1999, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
+                              Y: { mask: IMask.MaskedRange, from: minYear || 1900, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
                           },
                           autofix: true,
                           lazy: false,
@@ -11460,7 +11465,7 @@ var userOverride = {
                                                         );
                                                     },
                                                     null,
-                                                    null,
+                                                    message,
                                                     true
                                                 );
                                             } else {
@@ -11473,7 +11478,7 @@ var userOverride = {
                                                     null,
                                                     null,
                                                     null,
-                                                    null,
+                                                    message,
                                                     null,
                                                     true
                                                 );
