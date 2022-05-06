@@ -8547,10 +8547,24 @@ var userOverride = {
                         isLastSavedMessageInDialog ||
                         !arrayOfAllMessages
                     ) {
-                        $quick_reply_container.empty();
-                        $quick_reply_container.append(
-                            $applozic(kmRichTextMarkup)
-                        );
+                        setTimeout(() => {
+                            $quick_reply_container.empty();
+                            $quick_reply_container.append(
+                              $applozic(kmRichTextMarkup)
+                            );
+                            Snap.changeVisibilityStateForElement(
+                              $quick_reply_container,
+                              'show'
+                            );
+
+                            $mck_msg_inner.animate(
+                              {
+                                  scrollTop: $mck_msg_inner.prop('scrollHeight'),
+                              },
+                              0
+                            );
+                        }, MCK_BOT_MESSAGE_DELAY + 500)
+
                     }
                 } else {
                     append
