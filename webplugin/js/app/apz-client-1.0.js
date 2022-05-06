@@ -210,7 +210,7 @@ window['APPLOZIC'] ||
                             }
                         }
                         document.activeElement.blur();
-                        $applozic('mck-sidebox').focus();
+                        $applozic('mck-box-body').focus();
                     },
                     error: function () {
                         if (typeof optns.callback === 'function') {
