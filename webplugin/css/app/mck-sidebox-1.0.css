@@ -5968,7 +5968,8 @@ body:not(.accesibility) :focus {
     outline: none;
 }
 body.accesibility :focus {
-    outline: 5px auto red !important;
+    outline: 5px auto #3b99fc !important;
+    border: 2px solid #3b99fc !important;
 }
 
 /* Chat Popup Template Code Starts */
