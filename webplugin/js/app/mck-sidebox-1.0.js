@@ -8445,8 +8445,7 @@ var userOverride = {
                 //     return ;
                 // }
 
-                var isLastSavedMessageInDialog = arrayOfAllMessages && msg.key === arrayOfAllMessages[0].key;
-                console.log('msg.key === arrayOfAllMessages[0].key:', msg.key === arrayOfAllMessages[0].key);
+                var isLastSavedMessageInDialog = arrayOfAllMessages && (arrayOfAllMessages[0] && arrayOfAllMessages[0].key) || arrayOfAllMessages.key;
                 var msgList = [
                     {
                         msgReply: replyMsg ? replyMsg.message + '\n' : '',
@@ -8544,14 +8543,10 @@ var userOverride = {
                               );
 
                     //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
-                    console.log('arrayOfAllMessages:', arrayOfAllMessages, !arrayOfAllMessages);
-                    console.log('isLastSavedMessageInDialog:', isLastSavedMessageInDialog);
                     if (
                         isLastSavedMessageInDialog ||
                         !arrayOfAllMessages
                     ) {
-                        console.log('arrayOfAllMessages:', arrayOfAllMessages, !arrayOfAllMessages);
-                        console.log('isLastSavedMessageInDialog:', isLastSavedMessageInDialog);
                         $quick_reply_container.empty();
                         $quick_reply_container.append(
                             $applozic(kmRichTextMarkup)
