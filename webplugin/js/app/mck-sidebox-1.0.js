@@ -5772,6 +5772,10 @@ var userOverride = {
                 $applozic('#mck-reply-to-div')
                     .removeClass('vis')
                     .addClass('n-vis');
+                var textBox = $applozic('#mck-text-box');
+                textBox.attr('data-text', '');
+                textBox.attr('data-label', '');
+                textBox.attr('aria-label', '');
             };
 
             _this.updateMessageMetadata = function (messagePxy) {
