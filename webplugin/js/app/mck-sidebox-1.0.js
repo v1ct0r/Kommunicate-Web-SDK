@@ -8563,7 +8563,7 @@ var userOverride = {
                               },
                               0
                             );
-                        }, MCK_BOT_MESSAGE_DELAY + 350)
+                        }, MCK_BOT_MESSAGE_DELAY + 600)
 
                     }
                 } else {
@@ -8909,7 +8909,7 @@ var userOverride = {
                             } else {
                                 Snap.changeTextInputState(msg);
                             }
-                        }, MCK_BOT_MESSAGE_DELAY + 300)
+                        }, MCK_BOT_MESSAGE_DELAY + 500)
                     }
                 } else {
                     $textMessage.html(emoji_template);
