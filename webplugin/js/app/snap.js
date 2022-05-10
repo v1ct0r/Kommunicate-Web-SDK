@@ -768,7 +768,6 @@ $applozic.extend(true, Snap, {
     },
     changeTextInputState: function (msg) {
         setTimeout(function () {
-            alert('changeTextInputState');
             var textBox = $applozic('#mck-text-box');
 
             let isEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
@@ -802,7 +801,7 @@ $applozic.extend(true, Snap, {
                 textBox.attr('pattern', '\d*');
                 textBox.attr('inputmode', 'numeric');
             }
-        }, 500);
+        }, 300);
     },
     sessionTimeout: function () {
         var parentWindow = window.parent;
