@@ -8547,7 +8547,7 @@ var userOverride = {
                         isLastSavedMessageInDialog ||
                         !arrayOfAllMessages
                     ) {
-                        setTimeout(() => {
+                        setTimeout(function () {
                             $quick_reply_container.empty();
                             $quick_reply_container.append(
                               $applozic(kmRichTextMarkup)
@@ -8901,7 +8901,7 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-                        setTimeout(() => {
+                        setTimeout(function () {
                             if (arrayOfAllMessages) {
                                 if (isLastSavedMessageInDialog) {
                                     Snap.changeTextInputState(msg);
