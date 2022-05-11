@@ -210,7 +210,7 @@ window['APPLOZIC'] ||
                             }
                         }
                         document.activeElement.blur();
-                        $applozic('mck-box-body').focus();
+                        // $applozic('mck-box-body').focus();
                     },
                     error: function () {
                         if (typeof optns.callback === 'function') {
@@ -222,6 +222,7 @@ window['APPLOZIC'] ||
                                 optns.callback(resp);
                             }
                         }
+                        document.activeElement.blur();
                     },
                 });
             };
