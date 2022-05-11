@@ -23,7 +23,7 @@
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
     line-height: 20px;
-    color: #333;
+    color: #42423D;
 }
 
 .mck-mike-btn {
@@ -116,11 +116,15 @@
 #mck-text-box[contenteditable='true']:empty:not(:focus):before {
     content: attr(data-text);
     color: #42423D;
+    font-style: italic;
+    speak: none;
 }
 
 #mck-text-box[contenteditable='false']:empty:before {
     content: attr(data-text);
     color: #42423D;
+    font-style: italic;
+    speak: none;
 }
 
 .mck-running-on > a:hover {
@@ -1817,7 +1821,7 @@ mck-sidebox .mck-group-member-list li a:hover {
 }
 .mck-box-ft .mck-box-form {
     padding: 10px 5px 10px 0px;
-    border: thin solid #cecbcb;
+    border: thin solid #757575;
     border-radius: 4px;
     background-color: white;
     position: relative;
@@ -2233,6 +2237,8 @@ mck-sidebox .mck-group-member-list li a:hover {
     white-space: pre-wrap;
     word-wrap: break-word;
     position: relative;
+    font-size: 16px!important;
+    line-height: 24px!important;
 }
 
 .mck-msg-content img {
@@ -4610,7 +4616,7 @@ mck-sidebox .mck-group-member-list li a:hover {
     line-height: normal;
     letter-spacing: 0.6px;
     text-align: left;
-    color: #949494 !important;
+    color: #757575 !important;
     /* Firefox */
 }
 #km-faq-search-input::-webkit-input-placeholder {
@@ -4624,7 +4630,7 @@ mck-sidebox .mck-group-member-list li a:hover {
     line-height: normal;
     letter-spacing: 0.6px;
     text-align: left;
-    color: #696464 !important;
+    color: #757575 !important;
 }
 
 #km-faq-search-input:-ms-input-placeholder {
@@ -4650,28 +4656,28 @@ mck-sidebox .mck-group-member-list li a:hover {
     line-height: normal;
     letter-spacing: 0.6px;
     text-align: left;
-    color: #949494 !important;
+    color: #757575 !important;
 }
 textarea::-webkit-input-placeholder {
-    color: #949494 !important;
+    color: #757575 !important;
 }
 
 textarea:-moz-placeholder {
     /* Firefox 18- */
-    color: #949494 !important;
+    color: #757575 !important;
 }
 
 textarea::-moz-placeholder {
     /* Firefox 19+ */
-    color: #949494 !important;
+    color: #757575 !important;
 }
 
 textarea:-ms-input-placeholder {
-    color: #949494 !important;
+    color: #757575 !important;
 }
 
 textarea::placeholder {
-    color: #949494 !important;
+    color: #757575 !important;
 }
 
 #mck-away-msg-box {
