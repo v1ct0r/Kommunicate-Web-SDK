@@ -117,12 +117,14 @@
     content: attr(data-text);
     color: #42423D;
     font-style: italic;
+    speak: none;
 }
 
 #mck-text-box[contenteditable='false']:empty:before {
     content: attr(data-text);
     color: #42423D;
     font-style: italic;
+    speak: none;
 }
 
 .mck-running-on > a:hover {
