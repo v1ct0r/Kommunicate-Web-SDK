@@ -8572,6 +8572,7 @@ var userOverride = {
                               },
                               0
                             );
+                            _this.initDatepicker();
                         }, MCK_BOT_MESSAGE_DELAY + 1100)
 
                     }
@@ -8586,7 +8587,6 @@ var userOverride = {
                                   '#mck-message-cell .mck-message-inner'
                               );
                 }
-                _this.initDatepicker();
 
                 if (
                     msg.contentType ==
@@ -9001,6 +9001,7 @@ var userOverride = {
                 }
             };
             _this.initDatepicker = function () {
+                console.log('initDatepicker');
                 var popupDate = $applozic(".popup");
                 var inline = $applozic(".inline");
                 if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
