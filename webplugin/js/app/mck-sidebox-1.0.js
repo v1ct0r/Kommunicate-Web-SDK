@@ -11715,7 +11715,7 @@ var userOverride = {
                         );
                     }
                     var audioGet = document.getElementById('audioGet');
-                    audioGet.play();
+                    currentMessageObject.message && audioGet.play();
 
                 }, MCK_BOT_MESSAGE_DELAY);
             };
