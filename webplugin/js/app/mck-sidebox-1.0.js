@@ -8517,10 +8517,10 @@ var userOverride = {
                     },
                 ];
 
-                Snap.changeVisibilityStateForElement(
-                    $applozic('#quick-reply-container'),
-                    'hide'
-                );
+                // Snap.changeVisibilityStateForElement(
+                //     $applozic('#quick-reply-container'),
+                //     'hide'
+                // );
 
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
@@ -8568,7 +8568,7 @@ var userOverride = {
                               0
                             );
                             _this.initDatepicker();
-                        }, MCK_BOT_MESSAGE_DELAY + 2100)
+                        }, MCK_BOT_MESSAGE_DELAY + 1500)
 
                     }
                 } else {
@@ -11690,18 +11690,18 @@ var userOverride = {
                     }
                     if (message) {
                         message.classList.remove('n-vis');
-                        if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
-                          && !currentMessageObject.metadata.is_close_conversation)  {
-                            Snap.changeVisibilityStateForElement(
-                              $applozic('#quick-reply-container'),
-                              'show'
-                            );
-                        } else {
-                            Snap.changeVisibilityStateForElement(
-                              $applozic('#quick-reply-container'),
-                              'hide'
-                            );
-                        }
+                        // if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
+                        //   && !currentMessageObject.metadata.is_close_conversation)  {
+                        //     Snap.changeVisibilityStateForElement(
+                        //       $applozic('#quick-reply-container'),
+                        //       'show'
+                        //     );
+                        // } else {
+                        //     Snap.changeVisibilityStateForElement(
+                        //       $applozic('#quick-reply-container'),
+                        //       'hide'
+                        //     );
+                        // }
                         if (currentMessageObject.metadata.is_close_conversation)  {
                             $quick_reply_container.empty();
                             $applozic('#mck-text-box').empty();
