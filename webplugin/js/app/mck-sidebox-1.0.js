@@ -5746,7 +5746,7 @@ var userOverride = {
                             ] = userDetail;
                         }
                         var audioSend = document.getElementById('audioSend');
-                        audioSend.play();
+                        audioSend && audioSend.play();
                     },
                     error: function () {
                         $mck_msg_error.html(
@@ -11663,6 +11663,7 @@ var userOverride = {
                 var currentMessageObject = ALStorage.getMessageByKey(
                   MCK_BOT_MESSAGE_QUEUE[0]
                 );
+                currentMessageObject.message && mckMessageLayout.messageClubbing(false);
                 if (!document.querySelector('.km-typing-wrapper') && currentMessageObject.message) {
                     $mck_msg_inner.append(
                         '<div class="km-typing-wrapper"><div class="km-typing-indicator"></div><div class="km-typing-indicator"></div><div class="km-typing-indicator"></div></div>'
@@ -11681,7 +11682,6 @@ var userOverride = {
                         'div[data-msgkey="' + MCK_BOT_MESSAGE_QUEUE[0] + '"]'
                     );
                     $applozic('.km-typing-wrapper').remove();
-                    currentMessageObject.message && mckMessageLayout.messageClubbing(false);
 
                     MCK_BOT_MESSAGE_QUEUE.shift();
 
@@ -11691,7 +11691,7 @@ var userOverride = {
                         Snap.changeTextInputState(currentMessageObject);
                     }
                     if (message) {
-                        currentMessageObject.message && message.classList.remove('n-vis');
+                        message.classList.remove('n-vis');
                         // if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
                         //   && !currentMessageObject.metadata.is_close_conversation)  {
                         //     Snap.changeVisibilityStateForElement(
@@ -11717,7 +11717,7 @@ var userOverride = {
                         );
                     }
                     var audioGet = document.getElementById('audioGet');
-                    currentMessageObject.message && audioGet.play();
+                    (currentMessageObject.message && audioGet) && audioGet.play();
 
                 }, MCK_BOT_MESSAGE_DELAY);
             };
