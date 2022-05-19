@@ -596,7 +596,8 @@ var userOverride = {
             5: MCK_LABELS['emoji.hover.text'].average,
             10: MCK_LABELS['emoji.hover.text'].great,
         };
-        var MCK_BOT_MESSAGE_DELAY =
+        var
+          MCK_BOT_MESSAGE_DELAY =
             WIDGET_SETTINGS && WIDGET_SETTINGS.botMessageDelayInterval
                 ? WIDGET_SETTINGS.botMessageDelayInterval
                 : 0;
@@ -8573,7 +8574,7 @@ var userOverride = {
                               0
                             );
                             _this.initDatepicker();
-                        }, MCK_BOT_MESSAGE_DELAY + 1100)
+                        }, MCK_BOT_MESSAGE_DELAY + 1500)
 
                     }
                 } else {
