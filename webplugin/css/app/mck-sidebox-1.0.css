@@ -1500,6 +1500,10 @@
     min-height: 1px;
 }
 
+.km-clubbing-last > div.mck-clear > div.blk-lg-12 {
+    position: static;
+}
+
 .mck-box .mck-contact-list li {
     float: left;
     width: 100%;
