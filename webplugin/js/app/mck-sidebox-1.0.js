@@ -8574,7 +8574,7 @@ var userOverride = {
                               0
                             );
                             _this.initDatepicker();
-                        }, MCK_BOT_MESSAGE_DELAY + 1500)
+                        }, MCK_BOT_MESSAGE_DELAY + 2100)
 
                     }
                 } else {
