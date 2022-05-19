@@ -11500,9 +11500,9 @@ var userOverride = {
                                                     '.km-typing-wrapper'
                                                 ).remove();
                                             }
-                                            mckMessageLayout.messageClubbing(
-                                                false
-                                            );
+                                            // mckMessageLayout.messageClubbing(
+                                            //     false
+                                            // );
                                         }
                                         mckMessageService.sendReadUpdate(
                                             message.pairedMessageKey
@@ -11661,7 +11661,7 @@ var userOverride = {
                 var currentMessageObject = ALStorage.getMessageByKey(
                   MCK_BOT_MESSAGE_QUEUE[0]
                 );
-
+                currentMessageObject.message && mckMessageLayout.messageClubbing(false);
                 if (!document.querySelector('.km-typing-wrapper') && currentMessageObject.message) {
                     $mck_msg_inner.append(
                         '<div class="km-typing-wrapper"><div class="km-typing-indicator"></div><div class="km-typing-indicator"></div><div class="km-typing-indicator"></div></div>'
