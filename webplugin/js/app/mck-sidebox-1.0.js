@@ -11658,8 +11658,11 @@ var userOverride = {
                         'mck-message-cell'
                     ),
                     message;
+                var currentMessageObject = ALStorage.getMessageByKey(
+                  MCK_BOT_MESSAGE_QUEUE[0]
+                );
 
-                if (!document.querySelector('.km-typing-wrapper')) {
+                if (!document.querySelector('.km-typing-wrapper') && currentMessageObject.message) {
                     $mck_msg_inner.append(
                         '<div class="km-typing-wrapper"><div class="km-typing-indicator"></div><div class="km-typing-indicator"></div><div class="km-typing-indicator"></div></div>'
                     );
@@ -11672,9 +11675,6 @@ var userOverride = {
                 }
 
                 setTimeout(function () {
-                    var currentMessageObject = ALStorage.getMessageByKey(
-                        MCK_BOT_MESSAGE_QUEUE[0]
-                    );
 
                     message = messageContainer.querySelector(
                         'div[data-msgkey="' + MCK_BOT_MESSAGE_QUEUE[0] + '"]'
