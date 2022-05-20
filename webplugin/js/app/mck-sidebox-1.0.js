@@ -8163,6 +8163,7 @@ var userOverride = {
                 processMessageInQueue = false,
                 showWithoutDelay = false
             ) {
+                msg.message && $applozic('.log').append('<div>' + msg.message + '</div>');
                 var metadatarepiledto = '';
                 var replymessage = '';
                 var replyMsg = '';
