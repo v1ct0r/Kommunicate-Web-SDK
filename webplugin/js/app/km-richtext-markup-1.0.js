@@ -201,7 +201,7 @@ Snap.markup = {
         );
     },
 
-    getButtonTemplate: function (options, requestType, buttonClass) {
+    getButtonTemplate: function (options, requestType, buttonClass, index = 0) {
         var linkSvg =
             '<span><svg width="16" height="16" viewBox="0 0 12 12"><path class="km-custom-widget-stroke" fill="none" stroke="#754794" d="M8.111 5.45v2.839A.711.711 0 0 1 7.4 9H1.711A.711.711 0 0 1 1 8.289V2.6a.71.71 0 0 1 .711-.711H4.58M5.889 1h2.667C8.8 1 9 1.199 9 1.444v2.667m-.222-2.889L4.503 5.497" /></svg></span>';
 
@@ -217,7 +217,7 @@ Snap.markup = {
                 encodeURI(options.url) +
                 '  " data-metadata="' +
                 options.replyMetadata +
-                '" data-buttontype="button" data-target="' +
+                '" data-buttontype="button" tabindex="'+ 3 + index + '" data-target="' +
                 Snap.markup.getLinkTarget(options) +
                 '" ">' +
                 options.name +
@@ -237,7 +237,7 @@ Snap.markup = {
                     options.name) +
                 '" data-metadata="' +
                 options.replyMetadata +
-                '" data-buttontype="submit" data-requesttype= "' +
+                '" data-buttontype="submit" tabindex="'+ 3 + index + '"data-requesttype= "' +
                 requestType +
                 '" class="km-cta-button km-custom-widget-text-color  ' +
                 buttonClass +
@@ -250,12 +250,12 @@ Snap.markup = {
     getQuickRepliesTemplate: function () {
         return `
             {{#payload}}
-                 <button aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{title}}</button>
+                 <button aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{title}}</button>
             {{/payload}}
             `;
     },
     getGenericSuggestedReplyButton: function () {
-        return `<button aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{name}}</button>`;
+        return `<button aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{name}}</button>`;
     },
     getPassangerDetail: function (options) {
         if (!options.sessionId) {
@@ -406,7 +406,7 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper">
                                             {{#options}}
                                                 <div>
-                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}">
+                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}" tabindex="3">
                                                     <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
                                                 </div>                                     
                                             {{/options}}
@@ -417,7 +417,7 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper">
                                             {{#options}}
                                                 <div>
-                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}">
+                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}" tabindex="3">
                                                     <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
                                                 </div>                                     
                                             {{/options}}
@@ -444,7 +444,7 @@ Snap.markup = {
                                     {{#dropdown}}
                                         <div class="mck-form-dropdown-wrapper">
                                             <label for="{{name}}" class="mck-form-label">{{title}}</label><br>
-                                            <select name="{{name}}" data-error-text = "{{validation.errorText}}">
+                                            <select name="{{name}}" data-error-text = "{{validation.errorText}}" tabindex="3">
                                                 {{#options}}
                                                     {{#selected}}{{#disabled}}
                                                         <option value="{{value}}" selected disabled hidden>{{label}}</option>
@@ -470,11 +470,12 @@ Snap.markup = {
                                     <div class="mck-form-text-wrapper">
                                         <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>
                                         {{#number}}
-                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" 
-                                            inputmode="numeric" pattern="\d*" aria-label="Date, text box, double tap to edit {{label}}">
+                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" tabindex="3"
+                                            inputmode="numeric" pattern="\d*" aria-label="Text box, double tap to edit" min="{{min}}" max="{{max}}">
                                         {{/number}}  
                                         {{^number}}
-                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" aria-label="Date, text box, double tap to edit {{label}}">
+                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" tabindex="3" min="{{min}}" max="{{max}}" 
+                                            aria-label="Text box, double tap to edit">
                                         {{/number}}
                                     </div>
                                 {{/supported}}
@@ -482,7 +483,7 @@ Snap.markup = {
                         {{/payload}}
                     </div>
                         {{#buttons}}
-                            <button type="{{type}}" class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button" data-requesttype="{{requestType}}" title="{{message}}" data-post-back-to-snap="{{postBackToSnap}}">{{label}}</button>      
+                            <button type="{{type}}" tabindex="4" class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button" data-requesttype="{{requestType}}" title="{{message}}" data-post-back-to-snap="{{postBackToSnap}}">{{label}}</button>      
                         {{/buttons}}   
                 </form>   
             </div>`;
@@ -537,7 +538,8 @@ Snap.markup.buttonContainerTemplate = function (options) {
         containerMarkup += Snap.markup.getButtonTemplate(
             payload[i],
             requestType,
-            buttonClass
+            buttonClass,
+            i
         );
         if (payload[i].type != 'link' && formData) {
             formData = JSON.parse(formData);
@@ -901,7 +903,8 @@ Snap.markup.getCarouselMarkup = function (options) {
                     Snap.markup.getButtonTemplate(
                         buttons[i].action.payload,
                         requestType,
-                        'km-carousel-card-button'
+                        'km-carousel-card-button',
+                        i
                     )
                 );
                 var formData = buttons[i].action.payload.formData;
@@ -1028,7 +1031,8 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
             buttonContainerHtml += Snap.markup.getButtonTemplate(
                 singlePayload,
                 singlePayload.action.requestType,
-                buttonClass
+                buttonClass,
+                i
             );
             singlePayload.type == 'submit' &&
                 (buttonContainerHtml += Snap.markup.getFormMarkup({

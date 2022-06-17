@@ -596,7 +596,8 @@ var userOverride = {
             5: MCK_LABELS['emoji.hover.text'].average,
             10: MCK_LABELS['emoji.hover.text'].great,
         };
-        var MCK_BOT_MESSAGE_DELAY =
+        var
+          MCK_BOT_MESSAGE_DELAY =
             WIDGET_SETTINGS && WIDGET_SETTINGS.botMessageDelayInterval
                 ? WIDGET_SETTINGS.botMessageDelayInterval
                 : 0;
@@ -820,7 +821,12 @@ var userOverride = {
                 );
             }
             document.addEventListener('keydown', function (e) {
-                document.body.classList.add('accesibility');
+                console.log(e);
+                if (e.key === 'Tab' || e.key === 'ArrowRight') {
+                    document.body.classList.add('accesibility');
+                } else {
+                    document.body.classList.remove('accesibility');
+                }
             });
             document.addEventListener('mousedown', function (e) {
                 document.body.classList.remove('accesibility');
@@ -1936,7 +1942,7 @@ var userOverride = {
             var FEEDBACK_UPDATE_URL = '/feedback/v2';
             _this.getLauncherHtml = function (isAnonymousChat) {
                 var defaultHtml = kmCustomTheme.customSideboxWidget();
-                var CHAT_CLOSE_BUTTON = `<div id="km-popup-close-button" aria-label="Close" role="button" class="km-custom-widget-background-color">
+                var CHAT_CLOSE_BUTTON = `<div id="km-popup-close-button" aria-hidden="true" class="km-custom-widget-background-color">
                     <svg width="64" xmlns="http://www.w3.org/2000/svg" height="64" viewBox="0 0 64 64">
                         <path fill="#fff" d="M28.941 31.786L.613 60.114a2.014 2.014 0 1 0 2.848 2.849l28.541-28.541 28.541 28.541c.394.394.909.59 1.424.59a2.014 2.014 0 0 0 1.424-3.439L35.064 31.786 63.41 3.438A2.014 2.014 0 1 0 60.562.589L32.003 29.15 3.441.59A2.015 2.015 0 0 0 .593 3.439l28.348 28.347z" stroke-width="6" stroke="#fff"/>
                     </svg>
@@ -1949,7 +1955,7 @@ var userOverride = {
                 </div>`;
                 if (isAnonymousChat) {
                     return (
-                        '<a href="#" target="_self" aria-label="Open Chat" tabindex="0" role="button">' +
+                        '<a href="#" target="_self" tabindex="0" role="button">' +
                         CHAT_CLOSE_BUTTON +
                         (CUSTOM_CHAT_LAUNCHER
                             ? customLauncherHtml
@@ -1958,7 +1964,7 @@ var userOverride = {
                     );
                 } else {
                     return (
-                        '<div id="mck-sidebox-launcher" class="mck-sidebox-launcher launchershadow n-vis"><a href="#" target="_self" aria-label="Open Chat" role="button" tabindex="0" aria-live="polite" class="applozic-launcher">' +
+                        '<div id="mck-sidebox-launcher" class="mck-sidebox-launcher launchershadow n-vis"><a href="#" target="_self" aria-hidden="true" class="applozic-launcher">' +
                         CHAT_CLOSE_BUTTON +
                         (CUSTOM_CHAT_LAUNCHER
                             ? customLauncherHtml
@@ -4931,31 +4937,25 @@ var userOverride = {
                             return false;
                         }
                     }
-                    window.setTimeout(function () {
-                        $applozic('#mck-text-box').blur();
-                        $applozic('#mck-file-input').blur();
-                        $applozic('#mck-autosuggest-search-input').blur();
-                        $applozic('#mck-textbox-container').blur();
-                        $applozic('#mck-msg-form').blur();
-                        $applozic('input').blur();
-                        try {
-                            var event = document.createEvent('Events');
-                            event.initEvent('touchstart', true, true);
-                            var event2 = document.createEvent('Events');
-                            event2.initEvent('touchend', true, true);
-                            document.getElementById('mck-message-cell').dispatchEvent(event);
-                            document.getElementById('mck-message-cell').dispatchEvent(event2);
-                        }
-                        catch (e) {
-                            console.log(e);
-                        }
-                    }, 500);
-                    document.addEventListener('touchstart', function(e) {
-                        console.log('touchstart', e);
-                    });
-                    document.addEventListener('touchend', function(e) {
-                        console.log('touchend', e);
-                    });
+                    // window.setTimeout(function () {
+                    //     $applozic('#mck-text-box').blur();
+                    //     $applozic('#mck-file-input').blur();
+                    //     $applozic('#mck-autosuggest-search-input').blur();
+                    //     $applozic('#mck-textbox-container').blur();
+                    //     $applozic('#mck-msg-form').blur();
+                    //     $applozic('input').blur();
+                    //     try {
+                    //         var event = document.createEvent('Events');
+                    //         event.initEvent('touchstart', true, true);
+                    //         var event2 = document.createEvent('Events');
+                    //         event2.initEvent('touchend', true, true);
+                    //         document.getElementById('mck-message-cell').dispatchEvent(event);
+                    //         document.getElementById('mck-message-cell').dispatchEvent(event2);
+                    //     }
+                    //     catch (e) {
+                    //         console.log(e);
+                    //     }
+                    // }, 500);
                     _this.hideSendButton();
                     Snap.typingAreaService.showMicIfSpeechRecognitionSupported();
                     _this.sendMessage(messagePxy);
@@ -5751,6 +5751,8 @@ var userOverride = {
                                 userDetail.userId
                             ] = userDetail;
                         }
+                        var audioSend = document.getElementById('audioSend');
+                        audioSend.play();
                     },
                     error: function () {
                         $mck_msg_error.html(
@@ -5770,6 +5772,10 @@ var userOverride = {
                 $applozic('#mck-reply-to-div')
                     .removeClass('vis')
                     .addClass('n-vis');
+                var textBox = $applozic('#mck-text-box');
+                textBox.attr('data-text', '');
+                textBox.attr('data-label', '');
+                textBox.attr('aria-label', '');
             };
 
             _this.updateMessageMetadata = function (messagePxy) {
@@ -7441,7 +7447,7 @@ var userOverride = {
             var LINK_EXPRESSION = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
             var LINK_MATCHER = new RegExp(LINK_EXPRESSION);
             var markup =
-                '<div tabindex="-1" name="message" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}" data-msgtime="${msgCreatedAtTime}"' +
+                '<div name="message" data-msgdelivered="${msgDeliveredExpr}" data-msgsent="${msgSentExpr}" data-msgtype="${msgTypeExpr}" data-msgtime="${msgCreatedAtTime}"' +
                 'data-msgcontent="${replyIdExpr}" data-msgkey="${msgKeyExpr}" data-contact="${toExpr}" class="mck-m-b ${msgKeyExpr} ${msgFloatExpr} ${msgAvatorClassExpr} ${botMsgDelayExpr}">' +
                 '<div class="mck-clear">' +
                 '<div class="${nameTextExpr} ${showNameExpr} mck-conversation-name"><span class="mck-ol-status ${contOlExpr}"><span class="mck-ol-icon" title="${onlineLabel}"></span>&nbsp;</span>${msgNameExpr}</div>' +
@@ -7457,12 +7463,12 @@ var userOverride = {
                 '<div class="mck-msgreply-border ${textreplyVisExpr}">${msgReply}</div>' +
                 '<div class="mck-msgreply-border ${msgpreviewvisExpr}">{{html msgPreview}}</div>' +
                 '</div>' +
-                '<div class="mck-msg-text mck-msg-content notranslate" tabindex="-1"></div>' +
+                '<div class="mck-msg-text mck-msg-content notranslate"></div>' +
                 '</div>' +
                 '<div class="km-msg-box-attachment ${attachmentBoxExpr} ">{{html attachmentTemplate}}<div class="km-msg-box-progressMeter ${progressMeterClassExpr} ">{{html progressMeter}}</div></div>' +
                 '<div class="mck-msg-box-rich-text-container notranslate ${kmRichTextMarkupVisibility} ${containerType}">' +
                 '<div class="email-message-indicator ${emailMsgIndicatorExpr}"><span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="11" viewBox="0 0 12 11"><path fill="#BCBABA" fill-rule="nonzero" d="M12 3.64244378L7.82144281 0v2.08065889h-.0112584c-1.2252898.0458706-2.30872368.23590597-3.23022417.58877205-1.03614858.39436807-1.89047392.92952513-2.56710409 1.60169828-.53552482.53356847-.95771502 1.14100649-1.27501442 1.8173497-.08349984.17792235-.16437271.35624185-.23304899.54349718-.32987128.89954044-.56029331 1.87632619-.49311816 2.87991943C.02781163 9.76011309.1572833 10.5.30795828 10.5c0 0 .18801538-1.03695368.94795775-2.22482365.23267371-.36259621.50437656-.70533502.81698495-1.02186205l.0350887.03038182v-.06533086c.19420749-.19301397.40079923-.37828356.63497407-.54588006.63272238-.45433742 1.40748832-.8141536 2.32279668-1.0796471.74962217-.21763716 1.60432278-.34412883 2.54909064-.39019801h.20809286l-.00150112 2.08085746L12 3.64244378z"/></svg></span><span>via email</span></div>{{html kmRichTextMarkup}}</div>' +
-                '<div class="${msgFloatExpr}-muted mck-text-light mck-text-xs mck-t-xs ${timeStampExpr} vis"><span class="mck-created-at-time notranslate">${createdAtTimeExpr}</span> <span class="mck-message-status notranslate" aria-hidden="${msgStatusAriaTag}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.06103 10.90199" width="24" height="24" class="${statusIconExpr} mck-message-status notranslate" focusable="false" aria-hidden="true" ><path fill="#859479" d="M16.89436.53548l-.57-.444a.434.434 0 0 0-.609.076l-6.39 8.2a.38.38 0 0 1-.577.039l-.427-.388a.381.381 0 0 0-.578.038l-.451.576a.5.5 0 0 0 .043.645l1.575 1.51a.38.38 0 0 0 .577-.039l7.483-9.6a.436.436 0 0 0-.076-.609z" class="mck-delivery-report--delivered-read"></path><path fill="#859479" d="M12.00236.53548l-.57-.444a.434.434 0 0 0-.609.076l-6.39 8.2a.38.38 0 0 1-.577.039l-2.614-2.558a.435.435 0 0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 3.8a.38.38 0 0 0 .577-.039l7.483-9.6A.435.435 0 0 0 12.00109.536l-.00073-.00052z"  class="mck-delivery-report--sent"></path><path fill="#859479" d="M9.75 7.713H8.244V5.359a.5.5 0 0 0-.5-.5H7.65a.5.5 0 0 0-.5.5v2.947a.5.5 0 0 0 .5.5h.094l.003-.001.003.002h2a.5.5 0 0 0 .5-.5v-.094a.5.5 0 0 0-.5-.5zm0-5.263h-3.5c-1.82 0-3.3 1.48-3.3 3.3v3.5c0 1.82 1.48 3.3 3.3 3.3h3.5c1.82 0 3.3-1.48 3.3-3.3v-3.5c0-1.82-1.48-3.3-3.3-3.3zm2 6.8a2 2 0 0 1-2 2h-3.5a2 2 0 0 1-2-2v-3.5a2 2 0 0 1 2-2h3.5a2 2 0 0 1 2 2v3.5z" class="mck-delivery-report--pending"></path></svg><p class="mck-sending-failed">Sending failed</p></span></div>' +
+                '<div class="${msgFloatExpr}-muted mck-text-light mck-text-xs mck-t-xs ${timeStampExpr} vis" aria-hidden="true"><span class="mck-created-at-time notranslate">${createdAtTimeExpr}</span> <span class="mck-message-status notranslate" aria-hidden="${msgStatusAriaTag}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.06103 10.90199" width="24" height="24" class="${statusIconExpr} mck-message-status notranslate" focusable="false" aria-hidden="true" ><path fill="#859479" d="M16.89436.53548l-.57-.444a.434.434 0 0 0-.609.076l-6.39 8.2a.38.38 0 0 1-.577.039l-.427-.388a.381.381 0 0 0-.578.038l-.451.576a.5.5 0 0 0 .043.645l1.575 1.51a.38.38 0 0 0 .577-.039l7.483-9.6a.436.436 0 0 0-.076-.609z" class="mck-delivery-report--delivered-read"></path><path fill="#859479" d="M12.00236.53548l-.57-.444a.434.434 0 0 0-.609.076l-6.39 8.2a.38.38 0 0 1-.577.039l-2.614-2.558a.435.435 0 0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 3.8a.38.38 0 0 0 .577-.039l7.483-9.6A.435.435 0 0 0 12.00109.536l-.00073-.00052z"  class="mck-delivery-report--sent"></path><path fill="#859479" d="M9.75 7.713H8.244V5.359a.5.5 0 0 0-.5-.5H7.65a.5.5 0 0 0-.5.5v2.947a.5.5 0 0 0 .5.5h.094l.003-.001.003.002h2a.5.5 0 0 0 .5-.5v-.094a.5.5 0 0 0-.5-.5zm0-5.263h-3.5c-1.82 0-3.3 1.48-3.3 3.3v3.5c0 1.82 1.48 3.3 3.3 3.3h3.5c1.82 0 3.3-1.48 3.3-3.3v-3.5c0-1.82-1.48-3.3-3.3-3.3zm2 6.8a2 2 0 0 1-2 2h-3.5a2 2 0 0 1-2-2v-3.5a2 2 0 0 1 2-2h3.5a2 2 0 0 1 2 2v3.5z" class="mck-delivery-report--pending"></path></svg><p class="mck-sending-failed">Sending failed</p></span></div>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -8157,6 +8163,7 @@ var userOverride = {
                 processMessageInQueue = false,
                 showWithoutDelay = false
             ) {
+                //msg.message && $applozic('.log').append('<div>' + msg.message + '</div>');
                 var metadatarepiledto = '';
                 var replymessage = '';
                 var replyMsg = '';
@@ -8443,8 +8450,7 @@ var userOverride = {
                 //     return ;
                 // }
 
-                var isLastSavedMessageInDialog = arrayOfAllMessages && msg.key === arrayOfAllMessages[0].key;
-
+                var isLastSavedMessageInDialog = arrayOfAllMessages && (arrayOfAllMessages[0] && arrayOfAllMessages[0].key) || (arrayOfAllMessages && arrayOfAllMessages.key);
                 var msgList = [
                     {
                         msgReply: replyMsg ? replyMsg.message + '\n' : '',
@@ -8512,10 +8518,10 @@ var userOverride = {
                     },
                 ];
 
-                Snap.changeVisibilityStateForElement(
-                    $applozic('#quick-reply-container'),
-                    'hide'
-                );
+                // Snap.changeVisibilityStateForElement(
+                //     $applozic('#quick-reply-container'),
+                //     'hide'
+                // );
 
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
@@ -8546,10 +8552,25 @@ var userOverride = {
                         isLastSavedMessageInDialog ||
                         !arrayOfAllMessages
                     ) {
-                        $quick_reply_container.empty();
-                        $quick_reply_container.append(
-                            $applozic(kmRichTextMarkup)
-                        );
+                        setTimeout(function () {
+                            $quick_reply_container.empty();
+                            $quick_reply_container.append(
+                              $applozic(kmRichTextMarkup)
+                            );
+                            Snap.changeVisibilityStateForElement(
+                              $quick_reply_container,
+                              'show'
+                            );
+
+                            $mck_msg_inner.animate(
+                              {
+                                  scrollTop: $mck_msg_inner.prop('scrollHeight'),
+                              },
+                              0
+                            );
+                            _this.initDatepicker();
+                        }, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 2000)
+
                     }
                 } else {
                     append
@@ -8562,7 +8583,6 @@ var userOverride = {
                                   '#mck-message-cell .mck-message-inner'
                               );
                 }
-                _this.initDatepicker();
 
                 if (
                     msg.contentType ==
@@ -8870,10 +8890,9 @@ var userOverride = {
                       'show'
                     );
                 }
-
                 if (
-                    emoji_template.indexOf('emoji-inner') === -1 &&
-                    msg.contentType === 0
+                  emoji_template.indexOf('emoji-inner') === -1 &&
+                  msg.contentType === 0
                 ) {
                     var nodes = emoji_template.split('<br/>');
                     for (var i = 0; i < nodes.length; i++) {
@@ -8887,14 +8906,15 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-
-                        if (arrayOfAllMessages) {
-                            if (isLastSavedMessageInDialog) {
-                                Snap.changeTextInputState(msg);
-                            }
-                        } else {
-                            Snap.changeTextInputState(msg);
-                        }
+                        // setTimeout(function () {
+                        //     if (arrayOfAllMessages) {
+                        //         if (isLastSavedMessageInDialog) {
+                        //             Snap.changeTextInputState(msg);
+                        //         }
+                        //     } else {
+                        //         Snap.changeTextInputState(msg);
+                        //     }
+                        // }, MCK_BOT_MESSAGE_DELAY + 1000)
                     }
                 } else {
                     $textMessage.html(emoji_template);
@@ -8977,6 +8997,7 @@ var userOverride = {
                 }
             };
             _this.initDatepicker = function () {
+                console.log('initDatepicker');
                 var popupDate = $applozic(".popup");
                 var inline = $applozic(".inline");
                 if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
@@ -8984,24 +9005,28 @@ var userOverride = {
                         enableTime: !(popupDate[i].type === 'date'),
                         dateFormat: popupDate[i].type === 'date' ? "m/d/Y" : "m/d/Y H:i",
                         disableMobile: true,
+                        minDate:  popupDate.attr('min') ? popupDate.attr('min') : '01/01/1900',
+                        maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099'
                     });
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
+                    const minYear =  (new Date(inline[i].getAttribute('min'))).getFullYear();
+                    const maxYear = (new Date(inline[i].getAttribute('max'))).getFullYear();
                     const options = (inline[i].type === 'datetime-local') ?
                       {
-                          mask: 'M/d/Y h:m A',
-                          pattern: 'M/`dd/`d `h:`m `A',  // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
+                          mask: 'm/d/Y H:M A',
+                          pattern: 'm{/}`d{/}`Y `H:`M `A', // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
                           blocks: {
                               d: { mask: IMask.MaskedRange, from: 1, to: 31, placeholderChar: 'D', maxLength: 2, autofix: true },
-                              M: { mask: IMask.MaskedRange, from: 1, to: 12, placeholderChar: 'M', maxLength: 2, autofix: true },
-                              Y: { mask: IMask.MaskedRange, from: 1900, to: 2099, placeholderChar: 'Y', autofix: true },
-                              m: { mask: IMask.MaskedRange,from: 0, to: 59, placeholderChar: 'm', maxLength: 2, autofix: true },
-                              h: { mask: IMask.MaskedRange, from: 0, to: 12, maxLength: 2, placeholderChar: 'h', autofix: true },
-                              A: { mask: IMask.MaskedEnum, enum: ["AM", "am", "PM", "pm", "aM", "Am", "pM", "Pm"] }
+                              m: { mask: IMask.MaskedRange, from: 1, to: 12, placeholderChar: 'M', maxLength: 2, autofix: true },
+                              Y: { mask: IMask.MaskedRange, from: minYear || 1900, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
+                              M: { mask: IMask.MaskedRange,from: 0, to: 59, placeholderChar: 'm', maxLength: 2, autofix: true },
+                              H: { mask: IMask.MaskedRange, from: 0, to: 12, maxLength: 2, placeholderChar: 'h', autofix: true },
+                              A: { mask: IMask.MaskedEnum, maxLength: 2, enum: ["AM", "am", "PM", "pm", "aM", "Am", "pM", "Pm"] }
                           },
                           autofix: true,
                           lazy: false,
-                          overwrite: true
+                          overwrite: false,
                       } :
                       {
                           mask: 'M/d/Y',
@@ -9009,7 +9034,7 @@ var userOverride = {
                           blocks: {
                               d: { mask: IMask.MaskedRange, from: 1, to: 31, placeholderChar: 'D', maxLength: 2, autofix: true },
                               M: { mask: IMask.MaskedRange, from: 1, to: 12, placeholderChar: 'M', maxLength: 2, autofix: true },
-                              Y: { mask: IMask.MaskedRange, from: 1900, to: 2099, placeholderChar: 'Y', autofix: true },
+                              Y: { mask: IMask.MaskedRange, from: minYear || 1900, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
                           },
                           autofix: true,
                           lazy: false,
@@ -11455,7 +11480,7 @@ var userOverride = {
                                                         );
                                                     },
                                                     null,
-                                                    null,
+                                                    message,
                                                     true
                                                 );
                                             } else {
@@ -11468,7 +11493,7 @@ var userOverride = {
                                                     null,
                                                     null,
                                                     null,
-                                                    null,
+                                                    message,
                                                     null,
                                                     true
                                                 );
@@ -11476,9 +11501,9 @@ var userOverride = {
                                                     '.km-typing-wrapper'
                                                 ).remove();
                                             }
-                                            mckMessageLayout.messageClubbing(
-                                                false
-                                            );
+                                            // mckMessageLayout.messageClubbing(
+                                            //     false
+                                            // );
                                         }
                                         mckMessageService.sendReadUpdate(
                                             message.pairedMessageKey
@@ -11634,8 +11659,10 @@ var userOverride = {
                         'mck-message-cell'
                     ),
                     message;
-
-                if (!document.querySelector('.km-typing-wrapper')) {
+                var currentMessageObject = ALStorage.getMessageByKey(
+                  MCK_BOT_MESSAGE_QUEUE[0]
+                );
+                if (!document.querySelector('.km-typing-wrapper') && currentMessageObject.message) {
                     $mck_msg_inner.append(
                         '<div class="km-typing-wrapper"><div class="km-typing-indicator"></div><div class="km-typing-indicator"></div><div class="km-typing-indicator"></div></div>'
                     );
@@ -11648,36 +11675,13 @@ var userOverride = {
                 }
 
                 setTimeout(function () {
-                    var currentMessageObject = ALStorage.getMessageByKey(
-                        MCK_BOT_MESSAGE_QUEUE[0]
-                    );
 
                     message = messageContainer.querySelector(
                         'div[data-msgkey="' + MCK_BOT_MESSAGE_QUEUE[0] + '"]'
                     );
                     $applozic('.km-typing-wrapper').remove();
-                    if (message) {
-                        message.classList.remove('n-vis');
-                        if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length <= 1
-                          && !currentMessageObject.metadata.is_close_conversation)  {
-                            Snap.changeVisibilityStateForElement(
-                                $applozic('#quick-reply-container'),
-                                'show'
-                            );
-                        } else {
-                            Snap.changeVisibilityStateForElement(
-                                $applozic('#quick-reply-container'),
-                                'hide'
-                            );
-                        }
+                    currentMessageObject.message && mckMessageLayout.messageClubbing(false);
 
-                        $mck_msg_inner.animate(
-                            {
-                                scrollTop: $mck_msg_inner.prop('scrollHeight'),
-                            },
-                            0
-                        );
-                    }
                     MCK_BOT_MESSAGE_QUEUE.shift();
 
                     if (MCK_BOT_MESSAGE_QUEUE.length !== 0) {
@@ -11685,7 +11689,34 @@ var userOverride = {
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
                     }
+                    if (message) {
+                        currentMessageObject.message && message.classList.remove('n-vis');
+                        // if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
+                        //   && !currentMessageObject.metadata.is_close_conversation)  {
+                        //     Snap.changeVisibilityStateForElement(
+                        //       $applozic('#quick-reply-container'),
+                        //       'show'
+                        //     );
+                        // } else {
+                        //     Snap.changeVisibilityStateForElement(
+                        //       $applozic('#quick-reply-container'),
+                        //       'hide'
+                        //     );
+                        // }
+                        if (currentMessageObject.metadata.is_close_conversation)  {
+                            $quick_reply_container.empty();
+                            $applozic('#mck-text-box').empty();
+                        }
 
+                        $mck_msg_inner.animate(
+                          {
+                              scrollTop: $mck_msg_inner.prop('scrollHeight'),
+                          },
+                          0
+                        );
+                    }
+                    var audioGet = document.getElementById('audioGet');
+                    currentMessageObject.message && audioGet.play();
 
                 }, MCK_BOT_MESSAGE_DELAY);
             };

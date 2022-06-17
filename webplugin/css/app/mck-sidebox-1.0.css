@@ -23,7 +23,7 @@
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
     line-height: 20px;
-    color: #757575;
+    color: #42423D;
 }
 
 .mck-mike-btn {
@@ -115,14 +115,16 @@
 
 #mck-text-box[contenteditable='true']:empty:not(:focus):before {
     content: attr(data-text);
-    color: #757575;
+    color: #42423D;
     font-style: italic;
+    speak: none;
 }
 
 #mck-text-box[contenteditable='false']:empty:before {
     content: attr(data-text);
-    color: #757575;
+    color: #42423D;
     font-style: italic;
+    speak: none;
 }
 
 .mck-running-on > a:hover {
@@ -1498,6 +1500,10 @@
     min-height: 1px;
 }
 
+.km-clubbing-last > div.mck-clear > div.blk-lg-12 {
+    position: static;
+}
+
 .mck-box .mck-contact-list li {
     float: left;
     width: 100%;
@@ -1899,7 +1905,7 @@ mck-sidebox .mck-group-member-list li a:hover {
     background-color: white;
     width: auto;
     outline: none !important;
-    margin: 0px;
+    margin: 0px 30px 0px 0px;
     font-size: 16px;
     overflow: auto;
     line-height: 1.2em;
@@ -1913,6 +1919,9 @@ mck-sidebox .mck-group-member-list li a:hover {
 
 .mck-text-box-panel {
     width: 25px !important;
+    position: absolute!important;
+    right: 0;
+    bottom: 0;
 }
 #mck-btn-attach-box.mck-text-box-panel {
     width: auto !important;
@@ -5519,7 +5528,7 @@ button {
     display: none;
 }
 .km-clubbing-last.mck-msg-avator-bubble.mck-msg-left .mck-msg-avator {
-    bottom: 22px;
+    bottom: 24px;
     top: auto;
 }
 button:focus,
@@ -5969,7 +5978,8 @@ body:not(.accesibility) :focus {
     outline: none;
 }
 body.accesibility :focus {
-    outline: 5px auto #3b99fc;
+    outline: 5px auto #3b99fc !important;
+    border: 2px solid #3b99fc !important;
 }
 
 /* Chat Popup Template Code Starts */

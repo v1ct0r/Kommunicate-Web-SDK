@@ -766,35 +766,63 @@ $applozic.extend(true, Snap, {
         }
     },
     changeTextInputState: function (msg) {
-        var textBox = $applozic('#mck-text-box');
+        setTimeout(function () {
+            var textBox = $applozic('#mck-text-box');
 
-        if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
-            textBox.attr('contenteditable', false);
-            textBox.attr('data-text', '');
-            textBox.attr('data-label', '');
-        } else {
-            var metadata = msg.metadata;
-            var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
+            let isEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
+            if (isEnable) {
+                $applozic('.mck-box-form').removeClass('data-text');
+            } else {
+                $applozic('.mck-box-form').addClass('data-text');
+            }
 
-            textBox.attr('contenteditable', metadata.enable_text_input);
-            textBox.attr('data-text', hintTextForTextInput);
-            textBox.attr('data-label', hintTextForTextInput);
-        }
+            if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
+                textBox.attr('data-text', '');
+                textBox.attr('data-label', '');
+                textBox.attr('aria-label', '')
+                extBox.attr('aria-labelledby', '');
+                textBox.attr('contenteditable', false);
+            } else {
+                var metadata = msg.metadata;
+                var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
+                textBox.attr('data-text', hintTextForTextInput);
+                textBox.attr('data-label', hintTextForTextInput);
+                textBox.attr('aria-labelledby', isEnable ? hintTextForTextInput + "Multiline text box, double tap to edit" : hintTextForTextInput);
+                textBox.attr('aria-label', isEnable ? hintTextForTextInput + "Multiline text box, double tap to edit" : hintTextForTextInput);
+                textBox.attr('contenteditable', metadata.enable_text_input);
+            }
 
-        let checkEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
-        if (checkEnable) {
-            $applozic('.mck-box-form').removeClass('data-text');
-        } else {
-            $applozic('.mck-box-form').addClass('data-text');
-        }
-
-        if (msg.hasOwnProperty('metadata') && msg.metadata.is_numeric_input ) {
-            textBox.attr('pattern', '\d*');
-            textBox.attr('inputmode', 'numeric');
-        }
+            if (msg.hasOwnProperty('metadata') && msg.metadata.is_numeric_input) {
+                textBox.attr('pattern', '\d*');
+                textBox.attr('inputmode', 'numeric');
+            }
+            Snap.reloadElement('mck-textbox-container', 'mck-text-box');
+            Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
+        }, 300);
     },
     sessionTimeout: function () {
         var parentWindow = window.parent;
         parentWindow.sessionTimeoutInitializer()
+    },
+    generateTouch: function (elemID) {
+        window.setTimeout(function () {
+            try {
+                var event = document.createEvent('Events');
+                event.initEvent('touchstart', true, true);
+                var event2 = document.createEvent('Events');
+                event2.initEvent('touchend', true, true);
+                document.getElementById(elemID).dispatchEvent(event);
+                document.getElementById(elemID).dispatchEvent(event2);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }, 500);
+    },
+    reloadElement: function (parentElement, elemID) {
+        var parent = document.getElementById(parentElement);
+        var child = document.getElementById(elemID);
+        parent.removeChild(child);
+        parent.append(child);
     }
 });
