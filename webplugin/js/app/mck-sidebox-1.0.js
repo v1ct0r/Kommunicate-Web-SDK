@@ -8963,8 +8963,8 @@ var userOverride = {
                     });
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
-                    const minYear =  (new Date(inline[i].getAttribute('min'))).getFullYear();
-                    const maxYear = (new Date(inline[i].getAttribute('max'))).getFullYear();
+                    const minYear =  inline[i].getAttribute('min') && (new Date(inline[i].getAttribute('min'))).getFullYear();
+                    const maxYear = inline[i].getAttribute('max') && (new Date(inline[i].getAttribute('max'))).getFullYear();
                     const options = (inline[i].type === 'datetime-local') ?
                       {
                           mask: 'm/d/Y H:M A',
