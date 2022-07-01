@@ -1419,6 +1419,8 @@
 .mck-form-radio-wrapper input {
     width: 16px;
     height: 16px;
+    min-width: 16px;
+    min-height: 16px;
     font-size: 14px;
     margin-right: 6px;
 }
