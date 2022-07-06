@@ -653,6 +653,8 @@ Snap.markup.getRoomDetailsContainerTemplate = function (roomList, sessionId) {
 Snap.markup.getListContainerMarkup = function (metadata) {
     const buttonClass = { link: 'km-link-button', submit: '' };
     if (metadata && metadata.payload) {
+        var classNames = metadata.ui_scale;
+        if (metadata.ui_trancate_text === 'false') classNames += ' no-trancate';
         var json = JSON.parse(metadata.payload);
         if (json.headerImgSrc) {
             json.headerImgSrc =
@@ -667,7 +669,7 @@ Snap.markup.getListContainerMarkup = function (metadata) {
                 '</p>';
         }
         if (json.elements && json.elements.length) {
-            json.elementClass = 'vis';
+            json.elementClass = 'vis ' + classNames;
             json.elements = json.elements.map(function (item) {
                 // checking for image
                 if (item.imgSrc) {

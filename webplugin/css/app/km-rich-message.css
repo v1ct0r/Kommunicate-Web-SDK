@@ -796,6 +796,18 @@
     color: grey;
     transition: all 0.3s ease-in-out;
 }
+
+.km-faq-list--body_list.compact .km-faq-list--body_img {
+    height: 0;
+    padding: 0;
+}
+
+.km-faq-list--body_list.no-trancate .km-faq-list--body_que {
+    text-overflow: unset;
+    white-space: normal;
+    overflow: auto;
+}
+
 .km-faq-list--body_que-ans {
     padding: 10px 12px;
     /*width: calc(100% - 106px);*/
@@ -890,7 +902,7 @@
 .km-faq-list--header_text-container {
     /*background-color: #e5e5e5;*/
     border: none !important;
-    min-height: 10px;
+    min-height: 0px;
 }
 
 .km-faq-list--footer_button-container button:not(:last-child) {
@@ -1009,7 +1021,7 @@
 .km-faq-list--header_text-container {
     /*background-color: #e5e5e5;*/
     border: none !important;
-    min-height: 10px;
+    min-height: 0px;
 }
 
 .km-faq-list--footer_button-container button:not(:last-child) {
