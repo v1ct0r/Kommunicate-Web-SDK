@@ -802,7 +802,7 @@
     padding: 0;
 }
 
-.km-faq-list--body_list.no-trancate .km-faq-list--body_que {
+.km-faq-list--body_list.no-truncate .km-faq-list--body_que {
     text-overflow: unset;
     white-space: normal;
     overflow: auto;
