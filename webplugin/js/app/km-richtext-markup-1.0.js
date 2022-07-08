@@ -654,7 +654,7 @@ Snap.markup.getListContainerMarkup = function (metadata) {
     const buttonClass = { link: 'km-link-button', submit: '' };
     if (metadata && metadata.payload) {
         var classNames = metadata.ui_scale;
-        "false" === metadata.ui_trancate_text && (classNames += " no-trancate");
+        "false" === metadata.ui_truncate_text && (classNames += " no-trancate");
         var json = JSON.parse(metadata.payload);
         if (json.headerImgSrc) {
             json.headerImgSrc =
