@@ -8522,6 +8522,10 @@ var userOverride = {
                         $quick_reply_container.append(
                             $applozic(kmRichTextMarkup)
                         );
+                        Snap.changeVisibilityStateForElement(
+                          $quick_reply_container,
+                          'show'
+                        );
                     }
                 } else {
                     append
@@ -11635,17 +11639,17 @@ var userOverride = {
                     if (message) {
                         message.classList.remove('n-vis');
 
-                        if ($quick_reply_container.children().length > 0) {
-                            Snap.changeVisibilityStateForElement(
-                                $applozic('#quick-reply-container'),
-                                'show'
-                            );
-                        } else {
-                            Snap.changeVisibilityStateForElement(
-                                $applozic('#quick-reply-container'),
-                                'hide'
-                            );
-                        }
+                        // if ($quick_reply_container.children().length > 0) {
+                        //     Snap.changeVisibilityStateForElement(
+                        //         $applozic('#quick-reply-container'),
+                        //         'show'
+                        //     );
+                        // } else {
+                        //     Snap.changeVisibilityStateForElement(
+                        //         $applozic('#quick-reply-container'),
+                        //         'hide'
+                        //     );
+                        // }
 
                         $mck_msg_inner.animate(
                             {
