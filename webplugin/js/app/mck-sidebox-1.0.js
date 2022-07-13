@@ -8518,14 +8518,24 @@ var userOverride = {
                         isLastSavedMessageInDialog ||
                         !arrayOfAllMessages
                     ) {
-                        $quick_reply_container.empty();
-                        $quick_reply_container.append(
-                            $applozic(kmRichTextMarkup)
-                        );
-                        Snap.changeVisibilityStateForElement(
-                          $quick_reply_container,
-                          'show'
-                        );
+                        setTimeout(function () {
+                            $quick_reply_container.empty();
+                            $quick_reply_container.append(
+                              $applozic(kmRichTextMarkup)
+                            );
+                            Snap.changeVisibilityStateForElement(
+                              $quick_reply_container,
+                              'show'
+                            );
+
+                            $mck_msg_inner.animate(
+                              {
+                                  scrollTop: $mck_msg_inner.prop('scrollHeight'),
+                              },
+                              0
+                            );
+                            _this.initDatepicker();
+                        }, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 300)
                     }
                 } else {
                     append
@@ -8538,7 +8548,6 @@ var userOverride = {
                                   '#mck-message-cell .mck-message-inner'
                               );
                 }
-                _this.initDatepicker();
 
                 if (
                     msg.contentType ==
