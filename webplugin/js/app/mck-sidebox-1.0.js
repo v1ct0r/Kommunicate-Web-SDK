@@ -596,8 +596,7 @@ var userOverride = {
             5: MCK_LABELS['emoji.hover.text'].average,
             10: MCK_LABELS['emoji.hover.text'].great,
         };
-        var
-          MCK_BOT_MESSAGE_DELAY =
+        var MCK_BOT_MESSAGE_DELAY =
             WIDGET_SETTINGS && WIDGET_SETTINGS.botMessageDelayInterval
                 ? WIDGET_SETTINGS.botMessageDelayInterval
                 : 0;
@@ -821,12 +820,7 @@ var userOverride = {
                 );
             }
             document.addEventListener('keydown', function (e) {
-                console.log(e);
-                if (e.key === 'Tab' || e.key === 'ArrowRight') {
-                    document.body.classList.add('accesibility');
-                } else {
-                    document.body.classList.remove('accesibility');
-                }
+                document.body.classList.add('accesibility');
             });
             document.addEventListener('mousedown', function (e) {
                 document.body.classList.remove('accesibility');
@@ -7974,7 +7968,7 @@ var userOverride = {
                     showMoreDateTime = data.createdAtTime;
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
-                    data.message.reverse().forEach(function (message, i) {
+                    $applozic.each(data.message.reverse(), function (i, message) {
                         if (!(typeof message.to === 'undefined')) {
                             !enableAttachment &&
                                 (enableAttachment =
