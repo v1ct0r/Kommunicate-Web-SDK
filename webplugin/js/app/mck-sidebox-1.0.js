@@ -7974,8 +7974,7 @@ var userOverride = {
                     showMoreDateTime = data.createdAtTime;
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
-
-                    data.message.reverse().forEach(function (i, message) {
+                    data.message.reverse().forEach(function (message, i) {
                         if (!(typeof message.to === 'undefined')) {
                             !enableAttachment &&
                                 (enableAttachment =
