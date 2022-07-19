@@ -8577,15 +8577,18 @@ var userOverride = {
 
                     }
                 } else {
-                    append
-                        ? $applozic
-                              .tmpl('messageTemplate', msgList)
-                              .appendTo('#mck-message-cell .mck-message-inner')
-                        : $applozic
-                              .tmpl('messageTemplate', msgList)
-                              .prependTo(
-                                  '#mck-message-cell .mck-message-inner'
-                              );
+                    $applozic
+                      .tmpl('messageTemplate', msgList)
+                      .appendTo('#mck-message-cell .mck-message-inner')
+                    // append
+                    //     ? $applozic
+                    //           .tmpl('messageTemplate', msgList)
+                    //           .appendTo('#mck-message-cell .mck-message-inner')
+                    //     : $applozic
+                    //           .tmpl('messageTemplate', msgList)
+                    //           .prependTo(
+                    //               '#mck-message-cell .mck-message-inner'
+                    //           );
                 }
 
                 if (
