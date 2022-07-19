@@ -11894,9 +11894,16 @@ var userOverride = {
                                 timeOffset <
                                     SnapConstants.MESSAGE_CLUBBING.TIME_FRAME
                             ) {
-                                allMessages[key].classList.add(
-                                    'km-clubbing-first'
-                                );
+                                if (allMessages[key].nextSibling.getAttribute(
+                                    'data-msgtype'
+                                  ) ==
+                                  allMessages[key].getAttribute(
+                                    'data-msgtype'
+                                  )) {
+                                    allMessages[key].classList.add(
+                                      'km-clubbing-first'
+                                    );
+                                }
                                 allMessages[key].nextSibling.classList.add(
                                     'km-clubbing-last'
                                 );
