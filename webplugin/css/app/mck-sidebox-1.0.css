@@ -115,8 +115,7 @@
 
 #mck-text-box[contenteditable='true']:empty:not(:focus):before {
     content: attr(data-text);
-    color: #949494;
-    opacity: 0.6;
+    color: #42423D;
 }
 
 #mck-text-box[contenteditable='false']:empty:before {
@@ -2770,7 +2769,7 @@ mck-sidebox .mck-group-member-list li a:hover {
 }
 .mck-message-status svg {
     vertical-align: baseline;
-    opacity: 0.7;
+    color: #42423D;
     margin-left: 1px;
     transform: translateY(-1px);
 }
@@ -2782,9 +2781,9 @@ mck-sidebox .mck-group-member-list li a:hover {
     opacity: 1;
 }
 .mck-created-at-time {
-    opacity: 0.4;
     vertical-align: middle;
     font-size: 11px;
+    color: #42423D;
 }
 
 .mck-sidebox-launcher {
