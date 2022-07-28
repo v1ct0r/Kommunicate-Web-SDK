@@ -5752,7 +5752,7 @@ var userOverride = {
                             ] = userDetail;
                         }
                         var audioSend = document.getElementById('audioSend');
-                        audioSend.play();
+                        audioSend && audioSend.play();
                     },
                     error: function () {
                         $mck_msg_error.html(
@@ -8449,7 +8449,7 @@ var userOverride = {
                 //     return ;
                 // }
 
-                var isLastSavedMessageInDialog = arrayOfAllMessages && (arrayOfAllMessages[0] && arrayOfAllMessages[0].key) || arrayOfAllMessages.key;
+                var isLastSavedMessageInDialog = arrayOfAllMessages && (arrayOfAllMessages[0] && arrayOfAllMessages[0].key) || (arrayOfAllMessages && arrayOfAllMessages.key);
                 var msgList = [
                     {
                         msgReply: replyMsg ? replyMsg.message + '\n' : '',
@@ -11715,7 +11715,7 @@ var userOverride = {
                         );
                     }
                     var audioGet = document.getElementById('audioGet');
-                    currentMessageObject.message && audioGet.play();
+                    (currentMessageObject.message && audioGet) && audioGet.play();
 
                 }, MCK_BOT_MESSAGE_DELAY);
             };
