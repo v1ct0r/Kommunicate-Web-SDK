@@ -120,8 +120,7 @@
 
 #mck-text-box[contenteditable='false']:empty:before {
     content: attr(data-text);
-    color: #949494;
-    opacity: 0.6;
+    color: #42423D;
 }
 
 .mck-running-on > a:hover {
