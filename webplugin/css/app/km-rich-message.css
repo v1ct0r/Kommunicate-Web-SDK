@@ -1232,7 +1232,9 @@
 }
 .km-carousel-card-header {
     position: relative;
-    height: 93px;
+    /*height: 93px;*/
+    border-top: 1px solid #e7e4e4;
+    border-radius: 7px 7px 0 0;
 }
 .km-carousel-card-title {
     font-size: 18px;

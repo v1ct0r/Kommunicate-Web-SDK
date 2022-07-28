@@ -251,7 +251,7 @@ Snap.markup = {
         var classList = needLimitHeight && 'limitHeight';
         return '<div class="' + classList + '">' +
                 `{{#payload}}
-                     <button aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{title}}</button>
+                     <button aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}">{{title}}</button>
                 {{/payload}}`
             +'</div>';
     },
@@ -372,7 +372,7 @@ Snap.markup = {
             <div class="km-carousel-card-template">
             <div class="km-carousel-card-header-container">
             {{#url}}<a href = {{url}} target="_blank"><span class="km-carousel-url-container"></span></a>{{/url}}
-            <div class="km-carousel-card-header {{carouselHeaderClass}}">{{{header}}}</div>
+            <div class="km-carousel-card-header">{{{pageSrc}}}</div>
             <div class="km-carousel-card-content-wrapper {{carouselInfoWrapperClass}}">{{{info}}}</div>
             </div>
             <div class="km-carousel-card-footer"><div class="km-cta-multi-button-container">{{{footer}}}</div></div>
@@ -384,8 +384,7 @@ Snap.markup = {
         return `{{#buttons}}<button aria-label="{{action.payload.title}}" class="km-carousel-card-button {{{class}}}">{{action.payload.title}}</button>{{/buttons}}`;
     },
     getCardHeaderTemplate: function () {
-        return `<img class="{{headerImageClass}}" src="{{imgSrc}}"></img>
-            <div class="{{headerOverlayTextClass}}">{{overlayText}}</div>`;
+        return `<div>{{{pageSrc}}}</div>`;
     },
     getCardInfoTemplate: function () {
         return `<div class="km-carousel-card-title-wrapper">
@@ -856,12 +855,7 @@ Snap.markup.getActionableFormMarkup = function (options) {
 Snap.markup.getCarouselMarkup = function (options) {
     var cardList = [];
     var cardHtml = {};
-    var image = true;
-    var footer, header, info;
-    var buttonClass;
-    var headerOverlayTextClass,
-        headerImageClass,
-        carouselHeaderClass,
+    var headerImageClass,
         carouselInfoWrapperClass;
     var createCardFooter = function (buttons) {
         var cardFooter = '';
@@ -927,18 +921,7 @@ Snap.markup.getCarouselMarkup = function (options) {
         options.payload = cards;
         for (var i = 0; i < cards.length; i++) {
             var item = cards[i];
-            item.header &&
-                (headerOverlayTextClass = item.header.overlayText
-                    ? item.header.imgSrc
-                        ? 'km-carousel-card-overlay-text '
-                        : 'km-carousel-card-overlay-text  km-carousel-card-overlay-text-without-img'
-                    : 'n-vis');
-            carouselHeaderClass = item.header
-                ? item.header.imgSrc
-                    ? 'km-carousel-card-header-with-img'
-                    : 'km-carousel-card-header-without-img'
-                : 'n-vis';
-            carouselInfoWrapperClass = item.header
+            carouselInfoWrapperClass = item.header && item.header.pageSrc
                 ? ''
                 : 'km-carousel-card-info-wrapper-without-header';
             carouselInfoWrapperClass = item.buttons
@@ -946,22 +929,13 @@ Snap.markup.getCarouselMarkup = function (options) {
                       ' km-carousel-card-info-wrapper-with-buttons'
                   )
                 : '';
-            item.header &&
-                (headerImageClass = item.header.imgSrc
-                    ? 'km-carousel-card-img'
-                    : 'n-vis');
-            item.header &&
-                (item.header[
-                    'headerOverlayTextClass'
-                ] = headerOverlayTextClass);
             item.header && (item.header['headerImageClass'] = headerImageClass);
             item['cardDescriptionClass'] = item.description
                 ? 'km-carousel-card-description-wrapper'
                 : 'n-vis';
-            cardHtml['carouselHeaderClass'] = carouselHeaderClass;
             cardHtml['carouselInfoWrapperClass'] = carouselInfoWrapperClass;
-            item.header &&
-                (cardHtml.header = Snap.markup.cardHeader(item.header));
+            item.header.pageSrc &&
+                (cardHtml.pageSrc = Snap.markup.cardHeader(item.header));
             cardHtml.info = Snap.markup.cardInfo(item);
             item.buttons && (cardHtml.footer = createCardFooter(item.buttons));
             cardList[i] = $applozic.extend([], cardHtml);
