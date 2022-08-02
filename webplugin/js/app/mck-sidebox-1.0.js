@@ -4938,6 +4938,7 @@ var userOverride = {
                         }
                     }
                     $applozic('#mck-autosuggest-search-input').blur();
+
                     // window.setTimeout(function () {
                     //     $applozic('#mck-text-box').blur();
                     //     $applozic('#mck-file-input').blur();
