@@ -793,7 +793,7 @@ $applozic.extend(true, Snap, {
                 textBox.attr('contenteditable', metadata.enable_text_input);
             }
 
-            if (msg.hasOwnProperty('metadata') && msg.metadata.is_numeric_input) {
+            if (msg.hasOwnProperty('metadata') && Boolean(msg.metadata.is_numeric_input)) {
                 textBox.attr('pattern', '\d*');
                 textBox.attr('inputmode', 'numeric');
             }
