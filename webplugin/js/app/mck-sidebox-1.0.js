@@ -5445,10 +5445,8 @@ var userOverride = {
                     timestamp: message.createdAtTime,
                     payload: message.metadata.payload
                 }
-                console.log(behaviorInfo);
+                w.console.log(behaviorInfo);
                 // _this.sendUserBehaviorInfo(behaviorInfo)
-
-                console.log(behaviorInfo);
 
                 $mck_box_form.removeClass('mck-text-req');
                 $mck_msg_sbmt.attr('disabled', false);
