@@ -794,22 +794,6 @@ Snap.richMsgEventHandler = {
             .setAttribute('data-quick-reply', true);
         Snap.sendMessage(messagePxy);
 
-        Snap.richMsgEventHandler.sendUserBehaviorInfo({
-            sender_id: '',
-            group_id: '',
-            url: '',
-            session_id: '',
-            browser_parameter: {},
-            event_type: '',
-            message_id: '',
-            button_id: '',
-            button_name: message,
-            button_type: '',
-            button_url: '',
-            timestamp: '',
-            payload: {}
-        })
-
         if (snap._globals.hidePostCTA) {
             var isClickedOnKmLinkButton = e.target.classList.contains(
                 'km-link-button'
