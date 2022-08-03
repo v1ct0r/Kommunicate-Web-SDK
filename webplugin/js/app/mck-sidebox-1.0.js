@@ -7981,12 +7981,12 @@ var userOverride = {
                         'last-message-received-time',
                         data.message[0].createdAtTime
                     );
-                if (allowReload) {
-                    scroll = false;
-                    data &&
-                        data.message &&
-                        (data.message = data.message.reverse());
-                }
+                // if (allowReload) {
+                //     scroll = false;
+                //     data &&
+                //         data.message &&
+                //         (data.message = data.message.reverse());
+                // }
                 if (typeof data.message.length === 'undefined') {
                     var messageArray = [];
                     messageArray.push(data.message);
@@ -8477,7 +8477,9 @@ var userOverride = {
                 //     return ;
                 // }
 
-                var isLastSavedMessageInDialog = arrayOfAllMessages && (arrayOfAllMessages[0] && arrayOfAllMessages[0].key) || (arrayOfAllMessages && arrayOfAllMessages.key);
+                var isLastSavedMessageInDialog = arrayOfAllMessages
+                    && (arrayOfAllMessages[0] && arrayOfAllMessages[0].key)
+                    || (arrayOfAllMessages && arrayOfAllMessages.key);
                 var msgList = [
                     {
                         msgReply: replyMsg ? replyMsg.message + '\n' : '',
@@ -8545,10 +8547,10 @@ var userOverride = {
                     },
                 ];
 
-                // Snap.changeVisibilityStateForElement(
-                //     $applozic('#quick-reply-container'),
-                //     'hide'
-                // );
+                Snap.changeVisibilityStateForElement(
+                    $applozic('#quick-reply-container'),
+                    'hide'
+                );
 
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
@@ -8580,14 +8582,15 @@ var userOverride = {
 
                     //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
                     if (
-                        isLastSavedMessageInDialog ||
-                        !arrayOfAllMessages
+                        (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
                     ) {
                         setTimeout(function () {
                             $quick_reply_container.empty();
-                            $quick_reply_container.append(
-                              $applozic(kmRichTextMarkup)
-                            );
+                            if (!Boolean(msg.metadata.is_close_conversation)) {
+                                $quick_reply_container.append(
+                                    $applozic(kmRichTextMarkup)
+                                );
+                            }
                             Snap.changeVisibilityStateForElement(
                               $quick_reply_container,
                               'show'
@@ -11720,26 +11723,34 @@ var userOverride = {
 
                     if (MCK_BOT_MESSAGE_QUEUE.length !== 0) {
                         _this.procesMessageTimerDelay();
+                        Snap.changeVisibilityStateForElement(
+                            $applozic('#quick-reply-container'),
+                            'hide'
+                        );
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
                     }
                     if (message) {
                         message.classList.remove('n-vis');
-                        // if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
-                        //   && !currentMessageObject.metadata.is_close_conversation)  {
-                        //     Snap.changeVisibilityStateForElement(
-                        //       $applozic('#quick-reply-container'),
-                        //       'show'
-                        //     );
-                        // } else {
-                        //     Snap.changeVisibilityStateForElement(
-                        //       $applozic('#quick-reply-container'),
-                        //       'hide'
-                        //     );
-                        // }
+                        if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
+                          && !currentMessageObject.metadata.is_close_conversation)  {
+                            Snap.changeVisibilityStateForElement(
+                              $applozic('#quick-reply-container'),
+                              'show'
+                            );
+                        } else {
+                            Snap.changeVisibilityStateForElement(
+                              $applozic('#quick-reply-container'),
+                              'hide'
+                            );
+                        }
                         if (currentMessageObject.metadata.is_close_conversation)  {
                             $quick_reply_container.empty();
                             $applozic('#mck-text-box').empty();
+                            Snap.changeVisibilityStateForElement(
+                                $applozic('#quick-reply-container'),
+                                'hide'
+                            );
                         }
 
                         $mck_msg_inner.animate(
