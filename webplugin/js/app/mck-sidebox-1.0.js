@@ -5437,14 +5437,15 @@ var userOverride = {
                     session_id: messagePxy.conversationId,
                     browser_parameter: {},
                     event_type: '',
-                    message_id: '',
-                    button_id: '',
+                    message_id: message.key,
+                    button_id: '0' + messagePxy.message,
                     button_name: messagePxy.message,
                     button_type: messagePxy.type,
                     button_url: '',
-                    timestamp: messagePxy.key,
-                    payload: {}
+                    timestamp: message.createdAtTime,
+                    payload: message.metadata.payload
                 }
+                console.log(behaviorInfo);
                 _this.sendUserBehaviorInfo(behaviorInfo)
 
                 console.log(behaviorInfo);
