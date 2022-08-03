@@ -794,6 +794,22 @@ Snap.richMsgEventHandler = {
             .setAttribute('data-quick-reply', true);
         Snap.sendMessage(messagePxy);
 
+        Snap.richMsgEventHandler.sendUserBehaviorInfo({
+            sender_id: '',
+            group_id: '',
+            url: '',
+            session_id: '',
+            browser_parameter: {},
+            event_type: '',
+            message_id: '',
+            button_id: '',
+            button_name: message,
+            button_type: '',
+            button_url: '',
+            timestamp: '',
+            payload: {}
+        })
+
         if (snap._globals.hidePostCTA) {
             var isClickedOnKmLinkButton = e.target.classList.contains(
                 'km-link-button'
@@ -884,5 +900,18 @@ Snap.richMsgEventHandler = {
     handleEmail: function (e) {
         const email = e.target.getAttribute("data-email");
         window.open('mailto:' + email, "_blank");
+    },
+    sendUserBehaviorInfo: function(data){
+        const url = 'http://50.116.37.183:1012/frontend_interaction_behavior';
+
+        return fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify(data)
+        }).catch(error => {
+            console.error(error)
+        })        
     }
 };
