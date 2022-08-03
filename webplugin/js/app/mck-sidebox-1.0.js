@@ -901,7 +901,7 @@ var userOverride = {
             var params = {
                 tabId: optns.userId,
                 isGroup: false,
-            };
+            };getQuickRepliesTemplate
             var params = {};
             if (optns.userId) {
                 params.tabId = userId;
@@ -5429,6 +5429,26 @@ var userOverride = {
                         }
                     });
                 }
+
+                const behaviorInfo = {
+                    sender_id: snap._globals.userId,
+                    group_id: contact.contactId,
+                    url: '',
+                    session_id: messagePxy.conversationId,
+                    browser_parameter: {},
+                    event_type: '',
+                    message_id: '',
+                    button_id: '',
+                    button_name: messagePxy.message,
+                    button_type: messagePxy.type,
+                    button_url: '',
+                    timestamp: messagePxy.key,
+                    payload: {}
+                }
+                _this.sendUserBehaviorInfo(behaviorInfo)
+
+                console.log(behaviorInfo);
+
                 $mck_box_form.removeClass('mck-text-req');
                 $mck_msg_sbmt.attr('disabled', false);
                 $applozic('.' + randomId + ' .mck-message-status')
@@ -5438,6 +5458,19 @@ var userOverride = {
                 mckMessageLayout.clearMessageField(true);
                 FILE_META = [];
                 delete TAB_MESSAGE_DRAFT[contact.contactId];
+            };
+            _this.sendUserBehaviorInfo = function(data){
+                const url = 'http://50.116.37.183:1012/frontend_interaction_behavior';
+
+                return fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).catch(error => {
+                    console.error(error)
+                })
             };
             _this.sendForwardMessage = function (forwardMessageKey) {
                 var forwardMessage = ALStorage.getMessageByKey(
