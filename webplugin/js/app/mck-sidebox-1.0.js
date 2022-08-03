@@ -5446,7 +5446,7 @@ var userOverride = {
                     payload: message.metadata.payload
                 }
                 console.log(behaviorInfo);
-                _this.sendUserBehaviorInfo(behaviorInfo)
+                // _this.sendUserBehaviorInfo(behaviorInfo)
 
                 console.log(behaviorInfo);
 
