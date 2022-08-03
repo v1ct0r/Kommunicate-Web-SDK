@@ -793,7 +793,7 @@ Snap.richMsgEventHandler = {
             .getElementById('mck-text-box')
             .setAttribute('data-quick-reply', true);
         Snap.sendMessage(messagePxy);
-
+        console.log(messagePxy);
         if (snap._globals.hidePostCTA) {
             var isClickedOnKmLinkButton = e.target.classList.contains(
                 'km-link-button'
