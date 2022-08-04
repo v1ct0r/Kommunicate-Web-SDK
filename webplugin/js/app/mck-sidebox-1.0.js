@@ -9051,6 +9051,7 @@ var userOverride = {
             _this.initDatepicker = function () {
                 var popupDate = $applozic(".popup");
                 var inline = $applozic(".inline");
+                var enableMins = popupDate.attr('enable_mins') || true;
                 if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
                     flatpickr(popupDate[i], {
                         enableTime: !(popupDate[i].type === 'date'),
@@ -9060,7 +9061,7 @@ var userOverride = {
                         maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099',
                         minuteIncrement: 60
                     });
-                    $applozic(".flatpickr-minute").attr('disabled', 'true')
+                    enableMins && $applozic(".flatpickr-minute").attr('disabled', 'true');
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
                     const minYear =  (new Date(inline[i].getAttribute('min'))).getFullYear();
