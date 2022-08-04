@@ -472,10 +472,10 @@ Snap.markup = {
                                         <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>
                                         {{#number}}
                                             <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" tabindex="3"
-                                            inputmode="numeric" pattern="\d*" aria-label="Text box, double tap to edit" min="{{min}}" max="{{max}}" data-enable-mins="{{enable_mins}}" autofocus>
+                                            inputmode="numeric" pattern="\d*" aria-label="Text box, double tap to edit" min="{{min}}" max="{{max}}" autofocus>
                                         {{/number}}  
                                         {{^number}}
-                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" tabindex="3" min="{{min}}" max="{{max}}" 
+                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" tabindex="3" min="{{min}}" max="{{max}}" data-enable-mins="{{enable_mins}}" 
                                             aria-label="Text box, double tap to edit" autofocus>
                                         {{/number}}
                                     </div>
