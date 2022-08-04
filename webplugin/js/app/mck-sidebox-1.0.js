@@ -9055,7 +9055,7 @@ var userOverride = {
                 if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
                     flatpickr(popupDate[i], {
                         enableTime: !(popupDate[i].type === 'date'),
-                        dateFormat: popupDate[i].type === 'date' ? "m/d/Y" : "m/d/Y H",
+                        dateFormat: popupDate[i].type === 'date' ? "m/d/Y" : "m/d/Y H:i",
                         disableMobile: true,
                         minDate:  popupDate.attr('min') ? popupDate.attr('min') : '01/01/1900',
                         maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099'
