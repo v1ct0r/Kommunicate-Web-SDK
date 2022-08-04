@@ -9058,7 +9058,8 @@ var userOverride = {
                         dateFormat: popupDate[i].type === 'date' ? "m/d/Y" : "m/d/Y H:i",
                         disableMobile: true,
                         minDate:  popupDate.attr('min') ? popupDate.attr('min') : '01/01/1900',
-                        maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099'
+                        maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099',
+                        minuteIncrement: 60
                     });
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
