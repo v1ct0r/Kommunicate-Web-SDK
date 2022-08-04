@@ -5430,18 +5430,34 @@ var userOverride = {
                     });
                 }
 
+                // const behaviorInfo = {
+                //     sender_id: snap._globals.userId,
+                //     group_id: contact.contactId,
+                //     url: '',
+                //     session_id: messagePxy.conversationId || messagePxy.key,
+                //     browser_parameter: {},
+                //     event_type: '',
+                //     message_id: message.key,
+                //     button_id: '0' + messagePxy.message,
+                //     button_name: messagePxy.message,
+                //     button_type: messagePxy.type,
+                //     button_url: '',
+                //     timestamp: message.createdAtTime,
+                //     payload: message.metadata.payload
+                // }
+
                 const behaviorInfo = {
                     sender_id: snap._globals.userId,
                     group_id: contact.contactId,
                     url: '',
-                    session_id: messagePxy.conversationId,
-                    browser_parameter: {},
+                    session_id: messagePxy.conversationId || messagePxy.key,
+                    browser_parameter: navigator.userAgent,
                     event_type: '',
                     message_id: message.key,
                     button_id: '0' + messagePxy.message,
                     button_name: messagePxy.message,
                     button_type: messagePxy.type,
-                    button_url: '',
+                    button_url: tabId,
                     timestamp: message.createdAtTime,
                     payload: message.metadata.payload
                 }
