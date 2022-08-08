@@ -5462,7 +5462,7 @@ var userOverride = {
                     payload: message.metadata.payload
                 }
                 w.console.log(behaviorInfo);
-                // _this.sendUserBehaviorInfo(behaviorInfo)
+                _this.sendUserBehaviorInfo(behaviorInfo);
 
                 $mck_box_form.removeClass('mck-text-req');
                 $mck_msg_sbmt.attr('disabled', false);
@@ -5475,7 +5475,7 @@ var userOverride = {
                 delete TAB_MESSAGE_DRAFT[contact.contactId];
             };
             _this.sendUserBehaviorInfo = function(data){
-                const url = 'http://50.116.37.183:1012/frontend_interaction_behavior';
+                const url = 'https://ohl5011637183.gera-it-dev.com/frontend_interaction_behavior';
 
                 return fetch(url, {
                     method: 'POST',
