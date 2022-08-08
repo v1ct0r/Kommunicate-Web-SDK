@@ -5449,10 +5449,10 @@ var userOverride = {
                 const behaviorInfo = {
                     sender_id: snap._globals.userId,
                     group_id: contact.contactId,
-                    url: '',
+                    url: locationMessage,
                     session_id: messagePxy.conversationId || messagePxy.key,
                     browser_parameter: navigator.userAgent,
-                    event_type: '',
+                    event_type: messagePxy.contentType,
                     message_id: message.key,
                     button_id: '0' + messagePxy.message,
                     button_name: messagePxy.message,
@@ -5479,6 +5479,7 @@ var userOverride = {
 
                 return fetch(url, {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json'
                     },
