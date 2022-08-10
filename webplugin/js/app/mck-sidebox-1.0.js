@@ -8566,33 +8566,17 @@ var userOverride = {
                     msgList[0].kmRichTextMarkup = '';
 
                     //append message to the messageTemplate arrea
-// <<<<<<< HEAD
-                    // append
-                    //     ? $applozic
-                    //           .tmpl('messageTemplate', msgList)
-                    //           .appendTo('#mck-message-cell .mck-message-inner')
-                    //     : $applozic
-                    //           .tmpl('messageTemplate', msgList)
-                    //           .prependTo(
-                    //               '#mck-message-cell .mck-message-inner'
-                    //           );
-
-                    $applozic
-                      .tmpl('messageTemplate', msgList)
-                      .appendTo('#mck-message-cell .mck-message-inner');
-// =======
-                    if (msg.message) {
-                        append
-                            ? $applozic
-                                .tmpl('messageTemplate', msgList)
-                                .appendTo('#mck-message-cell .mck-message-inner')
-                            : $applozic
-                                .tmpl('messageTemplate', msgList)
-                                .prependTo(
-                                    '#mck-message-cell .mck-message-inner'
-                                );
-                    }
-// >>>>>>> ae3edfdb ([fix] don't add empty message)
+                    // if (msg.message) {
+                    //     append
+                    //         ? $applozic
+                    //             .tmpl('messageTemplate', msgList)
+                    //             .appendTo('#mck-message-cell .mck-message-inner')
+                    //         : $applozic
+                    //             .tmpl('messageTemplate', msgList)
+                    //             .prependTo(
+                    //                 '#mck-message-cell .mck-message-inner'
+                    //             );
+                    // }
 
                     //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
                     if (
@@ -8620,19 +8604,17 @@ var userOverride = {
                         }, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1500)
 
                     }
-                } else {
-                    $applozic
-                      .tmpl('messageTemplate', msgList)
-                      .appendTo('#mck-message-cell .mck-message-inner')
-                    // append
-                    //     ? $applozic
-                    //           .tmpl('messageTemplate', msgList)
-                    //           .appendTo('#mck-message-cell .mck-message-inner')
-                    //     : $applozic
-                    //           .tmpl('messageTemplate', msgList)
-                    //           .prependTo(
-                    //               '#mck-message-cell .mck-message-inner'
-                    //           );
+                }
+                if (msg.message) {
+                    append
+                        ? $applozic
+                            .tmpl('messageTemplate', msgList)
+                            .appendTo('#mck-message-cell .mck-message-inner')
+                        : $applozic
+                            .tmpl('messageTemplate', msgList)
+                            .prependTo(
+                                '#mck-message-cell .mck-message-inner'
+                            );
                 }
 
                 if (
