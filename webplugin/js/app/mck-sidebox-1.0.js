@@ -5425,11 +5425,11 @@ var userOverride = {
                 const behaviorInfo = {
                     sender_id: snap._globals.userId,
                     group_id: contact.contactId,
-                    url: '',
+                    url: messagePxy.clientGroupId,
                     session_id: messagePxy.conversationId,
                     browser_parameter: {},
-                    event_type: '',
-                    message_id: '',
+                    event_type: messagePxy.contentType,
+                    message_id: locationMessage,
                     button_id: '',
                     button_name: messagePxy.message,
                     button_type: messagePxy.type,
@@ -8566,6 +8566,7 @@ var userOverride = {
                     msgList[0].kmRichTextMarkup = '';
 
                     //append message to the messageTemplate arrea
+// <<<<<<< HEAD
                     // append
                     //     ? $applozic
                     //           .tmpl('messageTemplate', msgList)
@@ -8579,6 +8580,19 @@ var userOverride = {
                     $applozic
                       .tmpl('messageTemplate', msgList)
                       .appendTo('#mck-message-cell .mck-message-inner');
+// =======
+                    if (msg.message) {
+                        append
+                            ? $applozic
+                                .tmpl('messageTemplate', msgList)
+                                .appendTo('#mck-message-cell .mck-message-inner')
+                            : $applozic
+                                .tmpl('messageTemplate', msgList)
+                                .prependTo(
+                                    '#mck-message-cell .mck-message-inner'
+                                );
+                    }
+// >>>>>>> ae3edfdb ([fix] don't add empty message)
 
                     //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
                     if (
