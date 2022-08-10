@@ -8589,17 +8589,17 @@ var userOverride = {
                     msgList[0].kmRichTextMarkup = '';
 
                     //append message to the messageTemplate arrea
-                    if (msg.message) {
-                        append
-                            ? $applozic
-                                .tmpl('messageTemplate', msgList)
-                                .appendTo('#mck-message-cell .mck-message-inner')
-                            : $applozic
-                                .tmpl('messageTemplate', msgList)
-                                .prependTo(
-                                    '#mck-message-cell .mck-message-inner'
-                                );
-                    }
+                    // if (msg.message) {
+                    //     append
+                    //         ? $applozic
+                    //             .tmpl('messageTemplate', msgList)
+                    //             .appendTo('#mck-message-cell .mck-message-inner')
+                    //         : $applozic
+                    //             .tmpl('messageTemplate', msgList)
+                    //             .prependTo(
+                    //                 '#mck-message-cell .mck-message-inner'
+                    //             );
+                    // }
 
                     //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
                     if (
@@ -8627,16 +8627,17 @@ var userOverride = {
                         }, MCK_BOT_MESSAGE_DELAY + 1500)
 
                     }
-                } else {
+                }
+                if (msg.message) {
                     append
                         ? $applozic
-                              .tmpl('messageTemplate', msgList)
-                              .appendTo('#mck-message-cell .mck-message-inner')
+                            .tmpl('messageTemplate', msgList)
+                            .appendTo('#mck-message-cell .mck-message-inner')
                         : $applozic
-                              .tmpl('messageTemplate', msgList)
-                              .prependTo(
-                                  '#mck-message-cell .mck-message-inner'
-                              );
+                            .tmpl('messageTemplate', msgList)
+                            .prependTo(
+                                '#mck-message-cell .mck-message-inner'
+                            );
                 }
 
                 if (
