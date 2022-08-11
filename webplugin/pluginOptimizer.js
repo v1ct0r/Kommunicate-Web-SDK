@@ -68,7 +68,6 @@ const compressAndOptimize = () => {
             path.resolve(__dirname, 'lib/js/flatpickr.min.js'),
             path.resolve(__dirname, 'lib/js//imask.min.js'),
             path.resolve(__dirname, 'lib/js/detect.js'),
-            // path.resolve(__dirname, 'lib/js/frodetect-browser.js'),
         ],
         output: path.resolve(
             __dirname,
