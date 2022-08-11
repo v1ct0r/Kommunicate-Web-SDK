@@ -8629,7 +8629,7 @@ var userOverride = {
                     }
                 }
 
-                if (msg.message && msg.metadata.templateId === '10') {
+                if (msg.message) {
                     append
                         ? $applozic
                             .tmpl('messageTemplate', msgList)
