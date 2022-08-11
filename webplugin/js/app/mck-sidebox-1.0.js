@@ -5461,6 +5461,8 @@ var userOverride = {
                     timestamp: message.createdAtTime,
                     payload: message.metadata.payload
                 }
+                w.console.log("message.metadata -> ", message.metadata);
+                w.console.log("message.metadata.payload -> ", message.metadata.payload);
                 w.console.log(behaviorInfo);
                 _this.sendUserBehaviorInfo(behaviorInfo);
 
