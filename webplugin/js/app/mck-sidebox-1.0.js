@@ -8628,17 +8628,19 @@ var userOverride = {
 
                     }
                 }
-                if (msg.message) {
-                    append
-                        ? $applozic
-                            .tmpl('messageTemplate', msgList)
-                            .appendTo('#mck-message-cell .mck-message-inner')
-                        : $applozic
-                            .tmpl('messageTemplate', msgList)
-                            .prependTo(
-                                '#mck-message-cell .mck-message-inner'
-                            );
-                }
+
+                //! Checking cards
+                // if (msg.message) {
+                //     append
+                //         ? $applozic
+                //             .tmpl('messageTemplate', msgList)
+                //             .appendTo('#mck-message-cell .mck-message-inner')
+                //         : $applozic
+                //             .tmpl('messageTemplate', msgList)
+                //             .prependTo(
+                //                 '#mck-message-cell .mck-message-inner'
+                //             );
+                // }
 
                 if (
                     msg.contentType ==
