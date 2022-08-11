@@ -5453,7 +5453,7 @@ var userOverride = {
                     group_id: contact.contactId,
                     url: locationMessage,
                     session_id: messagePxy.conversationId || messagePxy.key,
-                    browser_parameter: `${browserInfo.browser.family} ${user.browser.version}`,
+                    browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
                     event_type: messagePxy.contentType,
                     message_id: message.key,
                     button_id: buttonInfo.buttonId,
