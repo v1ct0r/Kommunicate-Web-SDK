@@ -5451,18 +5451,16 @@ var userOverride = {
                     group_id: contact.contactId,
                     url: locationMessage,
                     session_id: messagePxy.conversationId || messagePxy.key,
-                    browser_parameter: navigator.userAgent,
+                    browser_parameter: browser.getBrowser(),
                     event_type: messagePxy.contentType,
                     message_id: message.key,
-                    button_id: '0' + messagePxy.message,
+                    button_id: JSON.parse(message.metadata.payload).find(e => e.message === messagePxy.message).buttonId,
                     button_name: messagePxy.message,
                     button_type: messagePxy.type,
                     button_url: tabId,
                     timestamp: message.createdAtTime,
                     payload: message.metadata.payload
                 }
-                w.console.log("message.metadata -> ", message.metadata);
-                w.console.log("message.metadata.payload -> ", message.metadata.payload);
                 w.console.log(behaviorInfo);
                 _this.sendUserBehaviorInfo(behaviorInfo);
 
