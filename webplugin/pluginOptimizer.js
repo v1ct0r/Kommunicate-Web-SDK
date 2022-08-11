@@ -67,7 +67,7 @@ const compressAndOptimize = () => {
             path.resolve(__dirname, 'lib/js/sentry-error-tracker.js'),
             path.resolve(__dirname, 'lib/js/flatpickr.min.js'),
             path.resolve(__dirname, 'lib/js//imask.min.js'),
-            path.resolve(__dirname, 'lib/js/bowser.js'),
+            // path.resolve(__dirname, 'lib/js/bowser.js'),
         ],
         output: path.resolve(
             __dirname,
