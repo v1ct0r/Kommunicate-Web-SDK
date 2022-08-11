@@ -5447,6 +5447,7 @@ var userOverride = {
                 // }
 
                 const browserInfo = detect.parse(navigator.userAgent);
+                const buttonInfo = message.metadata.payload ? JSON.parse(message.metadata.payload).find(e => e.message === messagePxy.message) : undefined;
                 const behaviorInfo = {
                     sender_id: snap._globals.userId,
                     group_id: contact.contactId,
@@ -5455,7 +5456,7 @@ var userOverride = {
                     browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
                     event_type: messagePxy.contentType,
                     message_id: message.key,
-                    button_id: JSON.parse(message.metadata.payload).find(e => e.message === messagePxy.message).buttonId,
+                    button_id: buttonInfo.buttonId || messagePxy.message,
                     button_name: messagePxy.message,
                     button_type: messagePxy.type,
                     button_url: tabId,
