@@ -2585,6 +2585,7 @@ var userOverride = {
                         ? snapIframe.getAttribute('data-url') ||
                           parent.window.location.href
                         : w.location.href;
+                    w.console.log('Link button!');
                     var poweredByUrl =
                         'https://www.snap.io/poweredby?utm_source=' +
                         utmSourceUrl +
