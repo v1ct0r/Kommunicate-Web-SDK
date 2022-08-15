@@ -892,20 +892,20 @@ Snap.richMsgEventHandler = {
     },
     formUserBehaviorInfo: function(e){
         const behaviorInfo = {
-            sender_id: snap._globals.userId,
+            sender_id: "snap._globals.userId",
             group_id: "contact.contactId",
             url: "locationMessage",
             session_id: "messagePxy.conversationId || messagePxy.key",
-            browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
+            browser_parameter: "`${browserInfo.browser.family} ${browserInfo.browser.version}`",
             event_type: "messagePxy.contentType",
             message_id: "message.key",
             button_id: "buttonInfo ? buttonInfo.buttonId : messagePxy.message",
             button_name: "messagePxy.message",
             button_type: "messagePxy.type",
-            button_url: attachmentDiv[0].dataset.groupid,
+            button_url: "attachmentDiv[0].dataset.groupid",
             timestamp: "message.createdAtTime",
             payload: "message.metadata.payload"
-        }
+        };
         w.console.log(behaviorInfo);
         w.console.log(e.target.dataset);
     },
