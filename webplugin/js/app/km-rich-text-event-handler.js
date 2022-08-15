@@ -892,10 +892,10 @@ Snap.richMsgEventHandler = {
     },
     formUserBehaviorInfo: function(e){
         const browserInfo = detect.parse(navigator.userAgent);
-        //let message = e.target.title;
+        const currentBtn = e.target;
         let metadata = {};
         try {
-            metadata = JSON.parse(e.target.dataset.metadata);
+            metadata = JSON.parse(currentBtn.dataset.metadata);
         } catch (e) {}
         const behaviorInfo = {
             sender_id: snap._globals.userId,
@@ -905,12 +905,12 @@ Snap.richMsgEventHandler = {
             browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
             event_type: "messagePxy.contentType",
             message_id: "message.key",
-            button_id: e.target.title,
-            button_name: e.target.title,
+            button_id: currentBtn.title,
+            button_name: currentBtn.title,
             button_type: "messagePxy.type",
-            button_url: e.target.getAttribute("data-url"),
+            button_url: currentBtn.dataset.url,
             timestamp: "message.createdAtTime",
-            payload: message
+            payload: metadata
         };
         w.console.log(behaviorInfo);
     },
