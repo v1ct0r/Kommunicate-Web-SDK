@@ -914,6 +914,7 @@ Snap.richMsgEventHandler = {
         };
         w.console.log(behaviorInfo);
         Snap.richMsgEventHandler.sendUserBehaviorInfo(behaviorInfo);
+        SnapUI.showChat();
     },
     sendUserBehaviorInfo: function(data){
         const url = 'https://ohl5011637183.gera-it-dev.com/frontend_interaction_behavior';
