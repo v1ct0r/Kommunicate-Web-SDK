@@ -899,16 +899,16 @@ Snap.richMsgEventHandler = {
         } catch (e) {}
         const behaviorInfo = {
             sender_id: snap._globals.userId,
-            group_id: "contact.contactId",
+            group_id: contact.contactId,
             url: "locationMessage",
             session_id: "messagePxy.conversationId || messagePxy.key",
             browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
-            event_type: "messagePxy.contentType",
+            event_type: attachmentDiv[0].dataset.filetype,
             message_id: "message.key",
             button_id: "buttonInfo ? buttonInfo.buttonId : messagePxy.message",
             button_name: message,
             button_type: "messagePxy.type",
-            button_url: "attachmentDiv[0].dataset.groupid",
+            button_url: attachmentDiv[0].dataset.groupid,
             timestamp: "message.createdAtTime",
             payload: metadata 
         };
