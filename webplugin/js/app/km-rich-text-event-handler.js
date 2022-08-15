@@ -899,7 +899,7 @@ Snap.richMsgEventHandler = {
         } catch (e) {}
         const behaviorInfo = {
             sender_id: snap._globals.userId,
-            group_id: contact.contactId,
+            group_id: "contact.contactId",
             url: "locationMessage",
             session_id: "messagePxy.conversationId || messagePxy.key",
             browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
