@@ -92,7 +92,7 @@ Snap.attachEvents = function ($applozic) {
     );
     $applozic(messageCellQuickReplySelector).on(
         'click',
-        '.km-quick-replies',
+        '.km-link-button',
         Snap.richMsgEventHandler.formUserBehaviorInfo
     );
 };
@@ -891,10 +891,6 @@ Snap.richMsgEventHandler = {
         window.open('mailto:' + email, "_blank");
     },
     formUserBehaviorInfo: function(e){
-        var $mck_text_box = $applozic('#mck-text-box');
-        var message = $applozic.trim(
-            mckUtils.textVal($mck_text_box[0])
-        );
         const browserInfo = detect.parse(navigator.userAgent);
         //let message = e.target.title;
         let metadata = {};
@@ -909,14 +905,14 @@ Snap.richMsgEventHandler = {
             browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
             event_type: "messagePxy.contentType",
             message_id: "message.key",
-            button_id: "buttonInfo ? buttonInfo.buttonId : messagePxy.message",
+            button_id: e.target.title,
             button_name: e.target.title,
             button_type: "messagePxy.type",
-            button_url: "tabId",
+            button_url: e.target.getAttribute("data-url"),
             timestamp: "message.createdAtTime",
             payload: message
         };
-        w.console.log('New -> ', behaviorInfo);
+        w.console.log(behaviorInfo);
     },
     sendUserBehaviorInfo: function(data){
         const url = 'http://50.116.37.183:1012/frontend_interaction_behavior';
