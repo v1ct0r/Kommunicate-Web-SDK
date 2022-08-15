@@ -913,18 +913,20 @@ Snap.richMsgEventHandler = {
             payload: metadata
         };
         w.console.log(behaviorInfo);
+        Snap.richMsgEventHandler.sendUserBehaviorInfo(behaviorInfo);
     },
     sendUserBehaviorInfo: function(data){
-        const url = 'http://50.116.37.183:1012/frontend_interaction_behavior';
+        const url = 'https://ohl5011637183.gera-it-dev.com/frontend_interaction_behavior';
 
         return fetch(url, {
             method: 'POST',
+            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json'
-              },
+            },
             body: JSON.stringify(data)
-        }).catch(error => {
-            console.error(error)
-        })        
+            }).catch(error => {
+                console.error(error)
+            })      
     }
 };
