@@ -891,6 +891,7 @@ Snap.richMsgEventHandler = {
         window.open('mailto:' + email, "_blank");
     },
     formUserBehaviorInfo: function(e){
+        var $mck_text_box = $applozic('#mck-text-box');
         var message = $applozic.trim(
             mckUtils.textVal($mck_text_box[0])
         );
