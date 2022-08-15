@@ -90,6 +90,11 @@ Snap.attachEvents = function ($applozic) {
       '.email',
       Snap.richMsgEventHandler.handleEmail
     );
+    $applozic(messageCellQuickReplySelector).on(
+        'click',
+        '.km-quick-replies',
+        Snap.richMsgEventHandler.formUserBehaviorInfo
+    );
 };
 
 /**
@@ -884,6 +889,25 @@ Snap.richMsgEventHandler = {
     handleEmail: function (e) {
         const email = e.target.getAttribute("data-email");
         window.open('mailto:' + email, "_blank");
+    },
+    formUserBehaviorInfo: function(e){
+        const behaviorInfo = {
+            sender_id: snap._globals.userId,
+            group_id: contact.contactId,
+            url: locationMessage,
+            session_id: messagePxy.conversationId || messagePxy.key,
+            browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
+            event_type: messagePxy.contentType,
+            message_id: message.key,
+            button_id: buttonInfo ? buttonInfo.buttonId : messagePxy.message,
+            button_name: messagePxy.message,
+            button_type: messagePxy.type,
+            button_url: tabId,
+            timestamp: message.createdAtTime,
+            payload: message.metadata.payload
+        }
+        w.console.log(behaviorInfo);
+        w.console.log(e.target.dataset);
     },
     sendUserBehaviorInfo: function(data){
         const url = 'http://50.116.37.183:1012/frontend_interaction_behavior';
