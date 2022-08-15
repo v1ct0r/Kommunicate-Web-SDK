@@ -891,15 +891,9 @@ Snap.richMsgEventHandler = {
         window.open('mailto:' + email, "_blank");
     },
     formUserBehaviorInfo: function(e){
-        var key;
-        var message;
-        if (
-            Snap.internetStatus &&
-            $applozic("#mck-message-cell .mck-message-inner div[name='message']:last-child").data('msgkey') !== undefined
-        ) {
-            key = $applozic("#mck-message-cell .mck-message-inner div[name='message']:last-child").data('msgkey');
-            message = new AlMessageService().getReplyMessageByKey(key);
-        }
+        var message = $applozic.trim(
+            mckUtils.textVal($mck_text_box[0])
+        );
         const browserInfo = detect.parse(navigator.userAgent);
         //let message = e.target.title;
         let metadata = {};
