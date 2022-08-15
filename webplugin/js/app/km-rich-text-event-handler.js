@@ -891,13 +891,14 @@ Snap.richMsgEventHandler = {
         window.open('mailto:' + email, "_blank");
     },
     formUserBehaviorInfo: function(e){
+        const browserInfo = detect.parse(navigator.userAgent);
         let message = e.target.title;
         let metadata = {};
         try {
             metadata = JSON.parse(e.target.dataset.metadata);
         } catch (e) {}
         const behaviorInfo = {
-            sender_id: "snap._globals.userId",
+            sender_id: snap._globals.userId,
             group_id: "contact.contactId",
             url: "locationMessage",
             session_id: "messagePxy.conversationId || messagePxy.key",
@@ -911,8 +912,7 @@ Snap.richMsgEventHandler = {
             timestamp: "message.createdAtTime",
             payload: metadata 
         };
-        w.console.log(behaviorInfo);
-        w.console.log(e.target.dataset);
+        w.console.log('New -> ', behaviorInfo);
     },
     sendUserBehaviorInfo: function(data){
         const url = 'http://50.116.37.183:1012/frontend_interaction_behavior';

@@ -5474,7 +5474,7 @@ var userOverride = {
                     timestamp: message.createdAtTime,
                     payload: message.metadata.payload
                 }
-                //w.console.log(behaviorInfo);
+                w.console.log(behaviorInfo);
                 _this.sendUserBehaviorInfo(behaviorInfo);
 
                 $mck_box_form.removeClass('mck-text-req');
