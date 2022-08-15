@@ -892,6 +892,9 @@ Snap.richMsgEventHandler = {
     },
     formUserBehaviorInfo: function(e){
         const browserInfo = detect.parse(navigator.userAgent);
+        let attachmentDiv = $applozic(e.target)
+            .closest('.km-msg-box-attachment')
+            .children();
         let message = e.target.title;
         let metadata = {};
         try {
