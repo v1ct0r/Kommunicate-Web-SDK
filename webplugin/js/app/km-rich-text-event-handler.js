@@ -898,7 +898,7 @@ Snap.richMsgEventHandler = {
             $applozic("#mck-message-cell .mck-message-inner div[name='message']:last-child").data('msgkey') !== undefined
         ) {
             key = $applozic("#mck-message-cell .mck-message-inner div[name='message']:last-child").data('msgkey');
-            message = alMessageService.getReplyMessageByKey(key);
+            message = new AlMessageService().getReplyMessageByKey(key);
         }
         const browserInfo = detect.parse(navigator.userAgent);
         //let message = e.target.title;
@@ -919,7 +919,7 @@ Snap.richMsgEventHandler = {
             button_type: "messagePxy.type",
             button_url: "tabId",
             timestamp: "message.createdAtTime",
-            payload: message.metadata.payload 
+            payload: message
         };
         w.console.log('New -> ', behaviorInfo);
     },
