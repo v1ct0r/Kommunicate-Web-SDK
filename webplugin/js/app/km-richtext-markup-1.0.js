@@ -407,7 +407,7 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper">
                                             {{#options}}
                                                 <div>
-                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}" tabindex="3">
+                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
                                                     <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
                                                 </div>                                     
                                             {{/options}}
@@ -418,7 +418,7 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper">
                                             {{#options}}
                                                 <div>
-                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}" tabindex="3">
+                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
                                                     <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
                                                 </div>                                     
                                             {{/options}}
