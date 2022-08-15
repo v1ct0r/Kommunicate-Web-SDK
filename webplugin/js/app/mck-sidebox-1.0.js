@@ -11779,20 +11779,20 @@ var userOverride = {
                               'hide'
                             );
                         }
-                        if (currentMessageObject.metadata.is_close_conversation)  {
-                            $quick_reply_container.empty();
-                            $applozic('#mck-text-box').empty();
-                            Snap.changeVisibilityStateForElement(
-                                $applozic('#quick-reply-container'),
-                                'hide'
-                            );
-                        }
 
                         $mck_msg_inner.animate(
                           {
                               scrollTop: $mck_msg_inner.prop('scrollHeight'),
                           },
                           0
+                        );
+                    }
+                    if (currentMessageObject.metadata.is_close_conversation || !(currentMessageObject.metadata.payload) )  {
+                        $quick_reply_container.empty();
+                        $applozic('#mck-text-box').empty();
+                        Snap.changeVisibilityStateForElement(
+                            $applozic('#quick-reply-container'),
+                            'hide'
                         );
                     }
                     var audioGet = document.getElementById('audioGet');
