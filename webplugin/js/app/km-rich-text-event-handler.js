@@ -892,10 +892,7 @@ Snap.richMsgEventHandler = {
     },
     formUserBehaviorInfo: function(e){
         const browserInfo = detect.parse(navigator.userAgent);
-        let attachmentDiv = $applozic(e.target)
-            .closest('.km-msg-box-attachment')
-            .children();
-        let message = e.target.title;
+        //let message = e.target.title;
         let metadata = {};
         try {
             metadata = JSON.parse(e.target.dataset.metadata);
@@ -906,14 +903,14 @@ Snap.richMsgEventHandler = {
             url: "locationMessage",
             session_id: "messagePxy.conversationId || messagePxy.key",
             browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
-            event_type: attachmentDiv[0].dataset.filetype,
+            event_type: "messagePxy.contentType",
             message_id: "message.key",
             button_id: "buttonInfo ? buttonInfo.buttonId : messagePxy.message",
-            button_name: message,
+            button_name: e.target.title,
             button_type: "messagePxy.type",
-            button_url: attachmentDiv[0].dataset.groupid,
+            button_url: "tabId",
             timestamp: "message.createdAtTime",
-            payload: metadata 
+            payload: message.metadata.payload 
         };
         w.console.log('New -> ', behaviorInfo);
     },
