@@ -5468,7 +5468,7 @@ var userOverride = {
                     browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
                     event_type: messagePxy.contentType,
                     message_id: message.key,
-                    button_id: currentButtonInfo.buttonId,
+                    button_id: 'currentButtonInfo.buttonId',
                     button_name: messagePxy.message,
                     button_type: messagePxy.type,
                     button_url: tabId,
