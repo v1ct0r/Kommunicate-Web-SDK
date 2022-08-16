@@ -407,8 +407,10 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper">
                                             {{#options}}
                                                 <div>
-                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
-                                                    <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
+                                                    <label for="{{label}}" class="mck-form-label">
+                                                        <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
+                                                        <b>{{label}}</b>
+                                                    </label>   
                                                 </div>                                     
                                             {{/options}}
                                         </div>
@@ -418,8 +420,10 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper">
                                             {{#options}}
                                                 <div>
-                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
-                                                    <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
+                                                    <label for="{{label}}" class="mck-form-label">
+                                                        <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
+                                                        <b>{{label}}</b>
+                                                    </label>   
                                                 </div>                                     
                                             {{/options}}
                                         </div>

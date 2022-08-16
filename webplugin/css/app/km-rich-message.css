@@ -1429,18 +1429,19 @@
     display: flex;
     flex-wrap: wrap;
 }
-.mck-form-radio-wrapper div {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-}
 .mck-form-radio-wrapper input {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
     width: 16px;
     height: 16px;
-    min-width: 16px;
-    min-height: 16px;
     font-size: 14px;
     margin-right: 6px;
+}
+.mck-form-radio-wrapper label {
+    position: relative;
+    margin-left: 26px;
 }
 .mck-form-textarea-wrapper textarea {
     resize: vertical;
