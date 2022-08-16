@@ -5458,7 +5458,8 @@ var userOverride = {
                         return {}
                     }
                 }
-                const buttonInfo = buttonInfoCheck();
+                const currentPayload = buttonInfoCheck();
+                const currentButtonInfo = Array.isArray(currentPayload) ? currentPayload.find(e => e.message === messagePxy.message) : currentPayload;
                 const behaviorInfo = {
                     sender_id: snap._globals.userId,
                     group_id: contact.contactId,
@@ -5467,12 +5468,12 @@ var userOverride = {
                     browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
                     event_type: messagePxy.contentType,
                     message_id: message.key,
-                    button_id: 'buttonInfo.buttonId',
+                    button_id: currentButtonInfo.buttonId,
                     button_name: messagePxy.message,
                     button_type: messagePxy.type,
                     button_url: tabId,
                     timestamp: message.createdAtTime,
-                    payload: buttonInfo
+                    payload: currentPayload
                 }
                 w.console.log(behaviorInfo);
                 _this.sendUserBehaviorInfo(behaviorInfo);
