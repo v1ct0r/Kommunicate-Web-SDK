@@ -5455,7 +5455,7 @@ var userOverride = {
                         }
                         return JSON.parse(message.metadata.payload).find(e => e.message === messagePxy.message)
                     } catch (error) {
-                        return null
+                        return {}
                     }
                 }
                 const buttonInfo = buttonInfoCheck();
