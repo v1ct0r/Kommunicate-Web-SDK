@@ -5472,7 +5472,7 @@ var userOverride = {
                     button_type: messagePxy.type,
                     button_url: tabId,
                     timestamp: message.createdAtTime,
-                    payload: message.metadata.payload
+                    payload: buttonInfo
                 }
                 w.console.log(behaviorInfo);
                 _this.sendUserBehaviorInfo(behaviorInfo);
