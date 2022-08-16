@@ -5453,7 +5453,7 @@ var userOverride = {
                         if (typeof message.metadata.payload === 'object'){
                             return message.metadata.payload;
                         }
-                        return JSON.parse(message.metadata.payload).find(e => e.message === messagePxy.message)
+                        return JSON.parse(message.metadata.payload)
                     } catch (error) {
                         return {}
                     }
