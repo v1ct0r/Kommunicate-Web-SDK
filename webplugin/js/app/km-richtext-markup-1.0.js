@@ -218,7 +218,7 @@ Snap.markup = {
                 '  " data-buttonId="' +
                 currentButton.button_id +
                 '  " data-buttonAction="' +
-                JSON.stringify(currentButton.action) +
+                currentButton.action +
                 '  " data-metadata="' +
                 options.replyMetadata +
                 '" data-buttontype="button" tabindex="'+ 3 + index + '" data-target="' +
