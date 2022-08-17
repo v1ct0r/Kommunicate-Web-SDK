@@ -8586,7 +8586,8 @@ var userOverride = {
                     ) {
                         setTimeout(function () {
                             $quick_reply_container.empty();
-                            if (!Boolean(msg.metadata.is_close_conversation) && msg.payload) {
+                            w.console.log(msg);
+                            if (!Boolean(msg.metadata.is_close_conversation)) {
                                 $quick_reply_container.append(
                                     $applozic(kmRichTextMarkup)
                                 );
