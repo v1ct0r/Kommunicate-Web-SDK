@@ -217,8 +217,8 @@ Snap.markup = {
                 encodeURI(options.url) +
                 '  " data-buttonId="' +
                 options.button_id +
-                '  " data-buttonPayload="' +
-                options.action.payload +
+                '  " data-buttonAction="' +
+                `${options.action}` +
                 '  " data-metadata="' +
                 options.replyMetadata +
                 '" data-buttontype="button" tabindex="'+ 3 + index + '" data-target="' +
