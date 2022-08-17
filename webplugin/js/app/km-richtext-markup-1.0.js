@@ -985,7 +985,7 @@ Snap.markup.getLinkTarget = function (buttonInfo) {
 };
 
 Snap.markup.getGenericButtonMarkup = function (metadata) {
-    w.console.log(metadata);
+    // w.console.log(metadata);
     var buttonPayloadList = metadata.payload
         ? JSON.parse(metadata.payload)
         : [];
@@ -1021,13 +1021,17 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
             singlePayload.openLinkInNewTab =
                 buttonPayloadList[i].action.openLinkInNewTab;
             buttonClass += buttonClass + ' km-add-more-rooms';
-            let metadataObj = JSON.parse(metadata);
             buttonContainerHtml += Snap.markup.getButtonTemplate(
                 singlePayload,
                 singlePayload.action.requestType,
                 buttonClass,
                 i,
-                metadataObj
+                {
+                    button_id: '', 
+                    action: {
+                        payload: singlePayload
+                    }
+                } 
             );
             singlePayload.type == 'submit' &&
                 (buttonContainerHtml += Snap.markup.getFormMarkup({
