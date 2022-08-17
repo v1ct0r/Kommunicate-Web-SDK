@@ -9459,31 +9459,32 @@ var userOverride = {
                     }
                 }
                 if (contact.members && contact.type == 10) {
-                    if (
-                        message &&
-                        message.senderName &&
-                        alUserService.MCK_USER_DETAIL_MAP[message.senderName]
-                    ) {
-                        imgsrctag = alUserService.MCK_USER_DETAIL_MAP[
-                            message.senderName
-                        ].imageLink
-                            ? '<img src="' +
-                              alUserService.MCK_USER_DETAIL_MAP[
-                                  message.senderName
-                              ].imageLink +
-                              '" alt="' +
-                              profileDisplayName +
-                              '"/>'
-                            : _this.getImageUrlForGroupType(
-                                  contact,
-                                  displayName
-                              );
-                    } else {
-                        imgsrctag = _this.getImageUrlForGroupType(
-                            contact,
-                            displayName
-                        );
-                    }
+                    imgsrctag = '<img src="' + contact.imageUrl + '"/>';
+                    // if (
+                    //     message &&
+                    //     message.senderName &&
+                    //     alUserService.MCK_USER_DETAIL_MAP[message.senderName]
+                    // ) {
+                    //     imgsrctag = alUserService.MCK_USER_DETAIL_MAP[
+                    //         message.senderName
+                    //     ].imageLink
+                    //         ? '<img src="' +
+                    //           alUserService.MCK_USER_DETAIL_MAP[
+                    //               message.senderName
+                    //           ].imageLink +
+                    //           '" alt="' +
+                    //           profileDisplayName +
+                    //           '"/>'
+                    //         : _this.getImageUrlForGroupType(
+                    //               contact,
+                    //               displayName
+                    //           );
+                    // } else {
+                    //     imgsrctag = _this.getImageUrlForGroupType(
+                    //         contact,
+                    //         displayName
+                    //     );
+                    // }
                 } else if (contact.isGroup && contact.type !== 7) {
                     imgsrctag = mckGroupService.getGroupImage(contact.imageUrl);
                 } else {
