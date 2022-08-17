@@ -985,6 +985,7 @@ Snap.markup.getLinkTarget = function (buttonInfo) {
 };
 
 Snap.markup.getGenericButtonMarkup = function (metadata) {
+    w.console.log(metadata);
     var buttonPayloadList = metadata.payload
         ? JSON.parse(metadata.payload)
         : [];
