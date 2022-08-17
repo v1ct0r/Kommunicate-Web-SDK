@@ -820,7 +820,7 @@ var userOverride = {
                 );
             }
             document.addEventListener('keydown', function (e) {
-                document.body.classList.add('accesibility');
+                if (e.code === 'Tab') {document.body.classList.add('accesibility')};
             });
             document.addEventListener('mousedown', function (e) {
                 document.body.classList.remove('accesibility');
