@@ -8586,7 +8586,7 @@ var userOverride = {
                     ) {
                         setTimeout(function () {
                             $quick_reply_container.empty();
-                            if (!Boolean(msg.metadata.is_close_conversation)) {
+                            if (!Boolean(msg.metadata.is_close_conversation) && msg.payload) {
                                 $quick_reply_container.append(
                                     $applozic(kmRichTextMarkup)
                                 );
@@ -8595,7 +8595,6 @@ var userOverride = {
                               $quick_reply_container,
                               'show'
                             );
-                            Snap.changeTextInputState(msg);
 
                             $mck_msg_inner.animate(
                               {
@@ -8942,15 +8941,13 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-                        // setTimeout(function () {
-                        //     if (arrayOfAllMessages) {
-                        //         if (isLastSavedMessageInDialog) {
-                        //             Snap.changeTextInputState(msg);
-                        //         }
-                        //     } else {
-                        //         Snap.changeTextInputState(msg);
-                        //     }
-                        // }, MCK_BOT_MESSAGE_DELAY + 1000)
+                            if (arrayOfAllMessages) {
+                                if (isLastSavedMessageInDialog) {
+                                    Snap.changeTextInputState(msg);
+                                }
+                            } else {
+                                Snap.changeTextInputState(msg);
+                            }
                     }
                 } else {
                     $textMessage.html(emoji_template);
