@@ -8592,6 +8592,7 @@ var userOverride = {
                                     $applozic(kmRichTextMarkup)
                                 );
                             }
+                            Snap.changeTextInputState(msg, 0);
                             Snap.changeVisibilityStateForElement(
                               $quick_reply_container,
                               'show'
@@ -8942,13 +8943,13 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-                            if (arrayOfAllMessages) {
-                                if (isLastSavedMessageInDialog) {
-                                    Snap.changeTextInputState(msg);
-                                }
-                            } else {
-                                Snap.changeTextInputState(msg);
-                            }
+                            // if (arrayOfAllMessages) {
+                            //     if (isLastSavedMessageInDialog) {
+                            //         Snap.changeTextInputState(msg);
+                            //     }
+                            // } else {
+                            //     Snap.changeTextInputState(msg);
+                            // }
                     }
                 } else {
                     $textMessage.html(emoji_template);
