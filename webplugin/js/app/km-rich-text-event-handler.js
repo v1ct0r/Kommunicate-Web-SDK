@@ -910,9 +910,9 @@ Snap.richMsgEventHandler = {
             event_type: "follow the link",
             message_id: "",
             button_id: buttonId,
-            button_name: currentBtn.title,
+            button_name: e.target.title,
             button_type: "link-button",
-            button_url: currentBtn.dataset.url,
+            button_url: e.target.dataset.url,
             timestamp: new Date().getTime(),
             payload: metadata.payload
         };
