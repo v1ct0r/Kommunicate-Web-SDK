@@ -893,14 +893,7 @@ Snap.richMsgEventHandler = {
     formUserBehaviorInfo: function(e){
         const browserInfo = detect.parse(navigator.userAgent);
         const buttonId = e.target.dataset.buttonid;
-        const buttonInfoCheck = () => {
-            try {
-                return JSON.parse(e.target.dataset.buttonaction);
-            } catch (error) {
-                return {}
-            }
-        }
-        let metadata = buttonInfoCheck();
+        const buttonAction = JSON.parse(e.target.dataset.buttonaction);
         const behaviorInfo = {
             sender_id: snap._globals.userId,
             group_id: "",
@@ -914,7 +907,7 @@ Snap.richMsgEventHandler = {
             button_type: "link-button",
             button_url: e.target.dataset.url,
             timestamp: new Date().getTime(),
-            payload: metadata
+            payload: buttonAction
         };
         w.console.log(behaviorInfo);
         Snap.richMsgEventHandler.sendUserBehaviorInfo(behaviorInfo);
