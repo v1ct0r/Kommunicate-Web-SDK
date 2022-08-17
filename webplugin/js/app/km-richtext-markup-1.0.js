@@ -204,7 +204,7 @@ Snap.markup = {
     getButtonTemplate: function (options, requestType, buttonClass, index = 0, currentButton = {button_id: '', action: ''}) {
         var linkSvg =
             '<span><svg width="16" height="16" viewBox="0 0 12 12"><path class="km-custom-widget-stroke" fill="none" stroke="#754794" d="M8.111 5.45v2.839A.711.711 0 0 1 7.4 9H1.711A.711.711 0 0 1 1 8.289V2.6a.71.71 0 0 1 .711-.711H4.58M5.889 1h2.667C8.8 1 9 1.199 9 1.444v2.667m-.222-2.889L4.503 5.497" /></svg></span>';
-        w.console.log(options);
+        // w.console.log(options);
         if (options.type == 'link') {
             return (
                 '<button aria-label="' +
@@ -241,6 +241,10 @@ Snap.markup = {
                     options.name) +
                 '" data-metadata="' +
                 options.replyMetadata +
+                '  " data-buttonId="' +
+                currentButton.button_id +
+                '  " data-buttonAction="' +
+                JSON.stringify(currentButton.action) +
                 '" data-buttontype="submit" tabindex="'+ 3 + index + '"data-requesttype= "' +
                 requestType +
                 '" class="km-cta-button km-custom-widget-text-color  ' +

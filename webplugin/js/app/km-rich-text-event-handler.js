@@ -892,11 +892,13 @@ Snap.richMsgEventHandler = {
     },
     formUserBehaviorInfo: function(e){
         const browserInfo = detect.parse(navigator.userAgent);
-        const currentBtn = e.target;
+        const buttonId = e.target.dataset.buttonid;
         let metadata = {};
         try {
-            metadata = JSON.parse(currentBtn.dataset.metadata);
-        } catch (e) {}
+            metadata = JSON.parse(e.target.dataset.buttonaction);
+        } catch (error) {
+            return {}
+        }
         const behaviorInfo = {
             sender_id: snap._globals.userId,
             group_id: "",
@@ -905,12 +907,12 @@ Snap.richMsgEventHandler = {
             browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
             event_type: "follow the link",
             message_id: "",
-            button_id: currentBtn.title,
+            button_id: buttonId,
             button_name: currentBtn.title,
             button_type: "link-button",
             button_url: currentBtn.dataset.url,
             timestamp: new Date().getTime(),
-            payload: metadata
+            payload: metadata.payload
         };
         w.console.log(behaviorInfo);
         Snap.richMsgEventHandler.sendUserBehaviorInfo(behaviorInfo);
