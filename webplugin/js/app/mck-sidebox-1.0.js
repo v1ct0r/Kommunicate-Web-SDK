@@ -5441,6 +5441,8 @@ var userOverride = {
 
                 console.log(behaviorInfo);
 
+                $quick_reply_container.empty();
+
                 $mck_box_form.removeClass('mck-text-req');
                 $mck_msg_sbmt.attr('disabled', false);
                 $applozic('.' + randomId + ' .mck-message-status')
