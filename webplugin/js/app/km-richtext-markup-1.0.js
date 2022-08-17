@@ -1020,12 +1020,13 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
             singlePayload.openLinkInNewTab =
                 buttonPayloadList[i].action.openLinkInNewTab;
             buttonClass += buttonClass + ' km-add-more-rooms';
+            let metadataObj = JSON.parse(metadata)
             buttonContainerHtml += Snap.markup.getButtonTemplate(
                 singlePayload,
                 singlePayload.action.requestType,
                 buttonClass,
                 i,
-                metadata
+                metadataObj
             );
             singlePayload.type == 'submit' &&
                 (buttonContainerHtml += Snap.markup.getFormMarkup({
