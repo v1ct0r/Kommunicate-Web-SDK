@@ -780,7 +780,7 @@ $applozic.extend(true, Snap, {
                 textBox.attr('data-text', '');
                 textBox.attr('data-label', '');
                 textBox.attr('aria-label', '')
-                extBox.attr('aria-labelledby', '');
+                textBox.attr('aria-labelledby', '');
                 textBox.attr('contenteditable', false);
             } else {
                 var metadata = msg.metadata;
