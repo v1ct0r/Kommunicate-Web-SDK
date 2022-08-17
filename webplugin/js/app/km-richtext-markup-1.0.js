@@ -934,6 +934,7 @@ Snap.markup.getCarouselMarkup = function (options) {
         options.payload = cards;
         for (var i = 0; i < cards.length; i++) {
             var item = cards[i];
+            w.console.log(item);
             carouselInfoWrapperClass = item.header && item.header.pageSrc
                 ? ''
                 : 'km-carousel-card-info-wrapper-without-header';
