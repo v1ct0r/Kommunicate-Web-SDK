@@ -1027,9 +1027,9 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
                 buttonClass,
                 i,
                 {
-                    button_id: '', 
+                    button_id: metadata[i] ? metadata[i].button_id : '', 
                     action: {
-                        payload: singlePayload
+                        payload: metadata[i] ? metadata[i].action.payload : singlePayload
                     }
                 } 
             );
