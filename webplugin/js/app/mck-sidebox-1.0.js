@@ -8595,6 +8595,7 @@ var userOverride = {
                               $quick_reply_container,
                               'show'
                             );
+                            Snap.changeTextInputState(msg);
 
                             $mck_msg_inner.animate(
                               {
