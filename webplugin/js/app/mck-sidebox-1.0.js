@@ -8581,9 +8581,9 @@ var userOverride = {
                     // }
 
                     //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
-                    if (
-                        (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
-                    ) {
+                    // if (
+                    //     (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
+                    // ) {
                         setTimeout(function () {
                             $quick_reply_container.empty();
                             w.console.log(msg);
@@ -8607,7 +8607,7 @@ var userOverride = {
                             _this.initDatepicker();
                         }, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1500)
 
-                    }
+                    // }
                 }
                 if (msg.message) {
                     append
