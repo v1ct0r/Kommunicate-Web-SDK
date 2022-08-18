@@ -8192,7 +8192,6 @@ var userOverride = {
                 processMessageInQueue = false,
                 showWithoutDelay = false
             ) {
-                //msg.message && $applozic('.log').append('<div>' + msg.message + '</div>');
                 var metadatarepiledto = '';
                 var replymessage = '';
                 var replyMsg = '';
@@ -8557,7 +8556,11 @@ var userOverride = {
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
-
+                if (
+                    (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
+                ) {
+                    Snap.changeTextInputState(msg, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 300);
+                }
                 if (
                     (kmRichTextMarkup.includes('km-quick-replies') &&
                         !kmRichTextMarkup.includes('km-div-slider')) ||
@@ -8579,14 +8582,12 @@ var userOverride = {
                     //                 '#mck-message-cell .mck-message-inner'
                     //             );
                     // }
-
                     //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
                     if (
                         (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
                     ) {
                         setTimeout(function () {
                             $quick_reply_container.empty();
-                            w.console.log(msg);
                             if (!Boolean(msg.metadata.is_close_conversation)) {
                                 $quick_reply_container.append(
                                     $applozic(kmRichTextMarkup)
