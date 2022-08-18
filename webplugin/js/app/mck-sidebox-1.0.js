@@ -5451,11 +5451,11 @@ var userOverride = {
                 let localPayload = message.metadata.payload;
                 let currentButtonInfo = {};
                 if (typeof localPayload === 'string' && localPayload) {
-                    localPayload = JSON.parse(localPayload);
-                    if (Array.isArray(localPayload)) {
-                        currentButtonInfo = localPayload.find(e => e.message === messagePxy.message);
+                    const payloadObj = JSON.parse(localPayload);
+                    if (Array.isArray(payloadObj)) {
+                        currentButtonInfo = payloadObj.find(e => e.message === messagePxy.message);
                     } else {
-                        currentButtonInfo = localPayload;
+                        currentButtonInfo = payloadObj;
                     }
                 } else if (Array.isArray(localPayload) && localPayload){
                     if (localPayload.length === 1) {
@@ -5463,8 +5463,9 @@ var userOverride = {
                     } else {
                         currentButtonInfo = localPayload.find(e => e.message === messagePxy.message);
                     }
+                    localPayload = JSON.stringify(localPayload);
                 } else if (!!localPayload){
-                    localPayload = {};
+                    localPayload = '{}';
                 }
 
                 const behaviorInfo = {
