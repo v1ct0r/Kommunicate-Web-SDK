@@ -1030,11 +1030,12 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
                 buttonClass,
                 i,
                 {
-                    button_id: metadata[i] ? metadata[i].button_id : '', 
+                    button_id: buttonPayloadList[i].button_id ? buttonPayloadList[i].button_id : '', 
                     action: {
-                        payload: metadata[i] ? metadata[i].action.payload : singlePayload
+                        payload: singlePayload
                     }
-                } 
+                },
+                metadata 
             );
             singlePayload.type == 'submit' &&
                 (buttonContainerHtml += Snap.markup.getFormMarkup({
