@@ -765,7 +765,7 @@ $applozic.extend(true, Snap, {
             $element.removeClass('vis').addClass('n-vis');
         }
     },
-    changeTextInputState: function (msg) {
+    changeTextInputState: function (msg, delay = 300) {
         setTimeout(function () {
             var textBox = $applozic('#mck-text-box');
 
@@ -780,7 +780,7 @@ $applozic.extend(true, Snap, {
                 textBox.attr('data-text', '');
                 textBox.attr('data-label', '');
                 textBox.attr('aria-label', '')
-                extBox.attr('aria-labelledby', '');
+                textBox.attr('aria-labelledby', '');
                 textBox.attr('contenteditable', false);
             } else {
                 var metadata = msg.metadata;
@@ -798,7 +798,7 @@ $applozic.extend(true, Snap, {
             }
             Snap.reloadElement('mck-textbox-container', 'mck-text-box');
             Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
-        }, 300);
+        }, delay);
     },
     sessionTimeout: function () {
         var parentWindow = window.parent;
