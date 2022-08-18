@@ -201,7 +201,7 @@ Snap.markup = {
         );
     },
 
-    getButtonTemplate: function (options, requestType, buttonClass, index = 0, currentButton = {button_id: '', action: ''}) {
+    getButtonTemplate: function (options, requestType, buttonClass, index = 0, currentButton = {button_id: '', action: ''}, state = {templateId: ''}) {
         var linkSvg =
             '<span><svg width="16" height="16" viewBox="0 0 12 12"><path class="km-custom-widget-stroke" fill="none" stroke="#754794" d="M8.111 5.45v2.839A.711.711 0 0 1 7.4 9H1.711A.711.711 0 0 1 1 8.289V2.6a.71.71 0 0 1 .711-.711H4.58M5.889 1h2.667C8.8 1 9 1.199 9 1.444v2.667m-.222-2.889L4.503 5.497" /></svg></span>';
         // w.console.log("options -> ", options);
@@ -218,6 +218,8 @@ Snap.markup = {
                 encodeURI(options.url) +
                 '  " data-buttonId="' +
                 currentButton.button_id +
+                '  " data-groupId="' +
+                state.templateId +
                 '  " data-buttonAction="' +
                 encodeURIComponent(JSON.stringify(currentButton.action)) +
                 '  " data-metadata="' +
@@ -878,7 +880,7 @@ Snap.markup.getCarouselMarkup = function (options) {
     var cardHtml = {};
     var headerImageClass,
         carouselInfoWrapperClass;
-    var createCardFooter = function (buttons) {
+    var createCardFooter = function (buttons, sessionOptions) {
         var cardFooter = '';
         var requestType;
         for (var i = 0; i < buttons.length; i++) {
@@ -916,7 +918,8 @@ Snap.markup.getCarouselMarkup = function (options) {
                         requestType,
                         'km-carousel-card-button',
                         i,
-                        buttons[i]
+                        buttons[i],
+                        sessionOptions
                     )
                 );
                 var formData = buttons[i].action.payload.formData;
@@ -960,7 +963,7 @@ Snap.markup.getCarouselMarkup = function (options) {
             item.header.pageSrc &&
                 (cardHtml.pageSrc = Snap.markup.cardHeader(item.header));
             cardHtml.info = Snap.markup.cardInfo(item);
-            item.buttons && (cardHtml.footer = createCardFooter(item.buttons));
+            item.buttons && (cardHtml.footer = createCardFooter(item.buttons, options));
             cardList[i] = $applozic.extend([], cardHtml);
             cardList[i].url = item.url;
         }

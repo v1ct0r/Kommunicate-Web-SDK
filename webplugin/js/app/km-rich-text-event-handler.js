@@ -893,16 +893,17 @@ Snap.richMsgEventHandler = {
     formUserBehaviorInfo: function(e){
         const browserInfo = detect.parse(navigator.userAgent);
         const buttonId = e.target.dataset.buttonid;
+        const groupId = e.target.dataset.groupId;
         const buttonAction = e.target.dataset.buttonaction ? JSON.parse(decodeURIComponent(e.target.dataset.buttonaction)) : {};
         const behaviorInfo = {
             sender_id: snap._globals.userId,
-            group_id: "",
+            group_id: groupId.trim(),
             url: "",
             session_id: "",
             browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
             event_type: "follow the link",
             message_id: "",
-            button_id: buttonId,
+            button_id: buttonId.trim(),
             button_name: e.target.title,
             button_type: "link-button",
             button_url: e.target.dataset.url,
