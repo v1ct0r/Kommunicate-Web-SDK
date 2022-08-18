@@ -5450,18 +5450,22 @@ var userOverride = {
                 const browserInfo = detect.parse(navigator.userAgent);
                 const localPayload = message.metadata.payload;
                 const currentButtonInfo = {};
-                // if (typeof localPayload === 'string') {
-                //     currentButtonInfo = JSON.parse(localPayload);
-                //     if (Array.isArray(currentButtonInfo)) {
-                //         if(){
-
-                //         } else {
-                //             currentButtonInfo = currentButtonInfo.find(e => e.message === messagePxy.message);
-                //         }
-                //     }
-                // } else if (Array.isArray(localPayload)){
-                //     currentButtonInfo = localPayload[0];
-                // }
+                if (typeof localPayload === 'string' && localPayload) {
+                    localPayload = JSON.parse(localPayload);
+                    if (Array.isArray(localPayload)) {
+                        currentButtonInfo = localPayload.find(e => e.message === messagePxy.message);
+                    } else {
+                        currentButtonInfo = localPayload;
+                    }
+                } else if (Array.isArray(localPayload) && localPayload){
+                    if (localPayload.length === 1) {
+                        currentButtonInfo = localPayload[0];
+                    } else {
+                        currentButtonInfo = localPayload.find(e => e.message === messagePxy.message);
+                    }
+                } else if (!!localPayload){
+                    localPayload = {};
+                }
 
                 // const buttonInfoCheck = () => {
                 //     try {
