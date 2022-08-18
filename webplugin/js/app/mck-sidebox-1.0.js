@@ -5448,24 +5448,39 @@ var userOverride = {
                 // }
 
                 const browserInfo = detect.parse(navigator.userAgent);
-                const buttonInfoCheck = () => {
-                    try {
-                        if (typeof message.metadata.payload === 'object'){
-                            return message.metadata.payload;
-                        }
-                        return JSON.parse(message.metadata.payload)
-                    } catch (error) {
-                        return {}
-                    }
-                }
-                const getCurrentButtonInfo = (peyload) => {
-                    if(Array.isArray(peyload)){
-                        return peyload.length > 1 ? peyload.find(e => e.message === messagePxy.message) : peyload[0];
-                    }
-                    return currentPayload;
-                }
-                const currentPayload = buttonInfoCheck();
-                const currentButtonInfo = getCurrentButtonInfo(currentPayload);
+                const localPayload = message.metadata.payload;
+                const currentButtonInfo = {};
+                // if (typeof localPayload === 'string') {
+                //     currentButtonInfo = JSON.parse(localPayload);
+                //     if (Array.isArray(currentButtonInfo)) {
+                //         if(){
+
+                //         } else {
+                //             currentButtonInfo = currentButtonInfo.find(e => e.message === messagePxy.message);
+                //         }
+                //     }
+                // } else if (Array.isArray(localPayload)){
+                //     currentButtonInfo = localPayload[0];
+                // }
+
+                // const buttonInfoCheck = () => {
+                //     try {
+                //         if (typeof message.metadata.payload === 'object'){
+                //             return message.metadata.payload;
+                //         }
+                //         return JSON.parse(message.metadata.payload)
+                //     } catch (error) {
+                //         return {}
+                //     }
+                // }
+                // const getCurrentButtonInfo = (peyload) => {
+                //     if(Array.isArray(peyload)){
+                //         return peyload.length > 1 ? peyload.find(e => e.message === messagePxy.message) : peyload[0];
+                //     }
+                //     return currentPayload;
+                // }
+                // const currentPayload = buttonInfoCheck();
+                // const currentButtonInfo = getCurrentButtonInfo(currentPayload);
                 const behaviorInfo = {
                     sender_id: snap._globals.userId,
                     group_id: CURRENT_GROUP_DATA.tabId,
@@ -5479,7 +5494,7 @@ var userOverride = {
                     button_type: messagePxy.type,
                     button_url: tabId,
                     timestamp: message.createdAtTime,
-                    payload: currentPayload
+                    payload: localPayload
                 }
                 w.console.log(behaviorInfo);
                 _this.sendUserBehaviorInfo(behaviorInfo);
