@@ -216,11 +216,11 @@ Snap.markup = {
                 buttonClass +
                 '  " data-url="' +
                 encodeURI(options.url) +
-                '  " data-buttonId="' +
+                '  " data-buttonid="' +
                 currentButton.button_id +
-                '  " data-groupId="' +
+                '  " data-buttontype="' +
                 state.templateId +
-                '  " data-buttonAction="' +
+                '  " data-buttonaction="' +
                 encodeURIComponent(JSON.stringify(currentButton.action)) +
                 '  " data-metadata="' +
                 options.replyMetadata +
