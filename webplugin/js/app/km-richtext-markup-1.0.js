@@ -262,7 +262,7 @@ Snap.markup = {
         var classList = needLimitHeight && 'limitHeight';
         return '<div class="' + classList + '">' +
                 `{{#payload}}
-                     <button aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}">{{title}}</button>
+                     <button aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-payload="{{metadata.payload}}">{{title}}</button>
                 {{/payload}}`
             +'</div>';
     },
@@ -624,6 +624,8 @@ Snap.markup.quickRepliesContainerTemplate = function (options, template) {
         payload[i].buttonClass = buttonClass;
         payload[i].hidePostCTA = hidePostCTA;
     }
+    w.console.log(payload);
+
     return Mustache.to_html(Snap.markup.getQuickRepliesTemplate(options.needLimitHeight), {
         payload: payload,
     });
