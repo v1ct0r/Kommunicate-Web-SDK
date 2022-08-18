@@ -5451,9 +5451,6 @@ var userOverride = {
 
                 const browserInfo = detect.parse(navigator.userAgent);
                 let localPayload = message.metadata.payload;
-                w.console.log('ALStorage -> ', ALStorage.getLatestMessageArray().find(e => e.key === message.key));
-                w.console.log('message -> ', message);
-                w.console.log('messagePxy -> ', messagePxy);
                 let currentButtonInfo = {};
                 if (typeof localPayload === 'string' && localPayload) {
                     localPayload = JSON.parse(localPayload);
@@ -5485,7 +5482,7 @@ var userOverride = {
                     button_type: messagePxy.type,
                     button_url: tabId,
                     timestamp: message.createdAtTime,
-                    payload: localPayload
+                    payload: localPayload || messagePxy.payload
                 }
                 w.console.log(behaviorInfo);
                 _this.sendUserBehaviorInfo(behaviorInfo);
