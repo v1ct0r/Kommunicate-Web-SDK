@@ -5448,8 +5448,8 @@ var userOverride = {
                 // }
 
                 const browserInfo = detect.parse(navigator.userAgent);
-                const localPayload = message.metadata.payload;
-                const currentButtonInfo = {};
+                let localPayload = message.metadata.payload;
+                let currentButtonInfo = {};
                 if (typeof localPayload === 'string' && localPayload) {
                     localPayload = JSON.parse(localPayload);
                     if (Array.isArray(localPayload)) {
