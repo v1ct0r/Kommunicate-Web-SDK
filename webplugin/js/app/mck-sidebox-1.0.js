@@ -5449,7 +5449,7 @@ var userOverride = {
 
                 const browserInfo = detect.parse(navigator.userAgent);
                 let localPayload = message.metadata.payload;
-                w.console.log('ALStorage -> ', ALStorage);
+                w.console.log('ALStorage -> ', ALStorage.getLatestMessageArray());
                 w.console.log('message -> ', message);
                 w.console.log('messagePxy -> ', messagePxy);
                 let currentButtonInfo = {};
