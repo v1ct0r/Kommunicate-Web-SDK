@@ -1566,6 +1566,7 @@ var userOverride = {
             }
         };
         _this.sendMessage = function (params) {
+            
             if (typeof params === 'object') {
                 params = $applozic.extend(
                     true,
@@ -1589,7 +1590,6 @@ var userOverride = {
                     type: params.messageType,
                     contentType: params.type,
                     message: message,
-                    buttonId: params.buttonId,
                     metadata: params.metadata,
                 };
                 mckMessageService.sendMessage(messagePxy);
@@ -1636,6 +1636,7 @@ var userOverride = {
                     type: params.messageType,
                     contentType: params.type,
                     message: message,
+                    buttonId: params.buttonId,
                     metadata: params.metadata || {},
                 };
                 $applozic.extend(messagePxy.metadata, {
