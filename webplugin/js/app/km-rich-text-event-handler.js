@@ -785,14 +785,19 @@ Snap.richMsgEventHandler = {
     processQuickReplies: function (e) {
         var message = e.target.title;
         var metadata = {};
+        var buttonId;
         try {
             metadata = JSON.parse(e.target.dataset.metadata);
+        } catch (e) {}
+        try {
+            buttonId = JSON.parse(e.target.dataset.buttonId);
         } catch (e) {}
         var languageCode = e.target.dataset.languagecode;
         languageCode && Snap.updateUserLanguage(languageCode);
         var messagePxy = {
             message: message, //message to send
             metadata: metadata,
+            buttonId: buttonId
         };
         document
             .getElementById('mck-text-box')
