@@ -891,16 +891,13 @@ Snap.richMsgEventHandler = {
         window.open('mailto:' + email, "_blank");
     },
     formUserBehaviorInfo: function(e){
-        // w.console.log('group -> ', group.contactId);
-        // w.console.log('contact -> ', contact.contactId);
-        w.console.log(mckGroupUtils);
         const browserInfo = detect.parse(navigator.userAgent);
         const buttonId = e.target.dataset.buttonid;
         const buttonType = e.target.dataset.buttontype;
         const buttonAction = e.target.dataset.buttonaction ? JSON.parse(decodeURIComponent(e.target.dataset.buttonaction)) : {};
         const behaviorInfo = {
             sender_id: snap._globals.userId,
-            group_id: "",
+            group_id: CURRENT_GROUP_DATA.tabId,
             url: "",
             session_id: "",
             browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
