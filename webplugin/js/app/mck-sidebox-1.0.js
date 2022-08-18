@@ -1589,6 +1589,7 @@ var userOverride = {
                     type: params.messageType,
                     contentType: params.type,
                     message: message,
+                    buttonId: params.buttonId,
                     metadata: params.metadata,
                 };
                 mckMessageService.sendMessage(messagePxy);
