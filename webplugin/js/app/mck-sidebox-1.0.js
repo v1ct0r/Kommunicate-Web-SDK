@@ -8559,7 +8559,8 @@ var userOverride = {
                 if (
                     (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
                 ) {
-                    Snap.changeTextInputState(msg, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 300);
+                    w.console.log('changeTextInputState', msg);
+                    Snap.changeTextInputState(msg, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1200);
                 }
                 if (
                     (kmRichTextMarkup.includes('km-quick-replies') &&
