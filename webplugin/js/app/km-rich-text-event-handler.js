@@ -897,7 +897,7 @@ Snap.richMsgEventHandler = {
         const buttonAction = e.target.dataset.buttonaction ? JSON.parse(decodeURIComponent(e.target.dataset.buttonaction)) : {};
         const behaviorInfo = {
             sender_id: snap._globals.userId,
-            group_id: CURRENT_GROUP_DATA.tabId,
+            group_id: +CURRENT_GROUP_DATA.tabId,
             url: "",
             session_id: "",
             browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
