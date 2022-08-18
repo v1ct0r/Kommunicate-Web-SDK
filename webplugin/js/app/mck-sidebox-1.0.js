@@ -5467,24 +5467,6 @@ var userOverride = {
                     localPayload = {};
                 }
 
-                // const buttonInfoCheck = () => {
-                //     try {
-                //         if (typeof message.metadata.payload === 'object'){
-                //             return message.metadata.payload;
-                //         }
-                //         return JSON.parse(message.metadata.payload)
-                //     } catch (error) {
-                //         return {}
-                //     }
-                // }
-                // const getCurrentButtonInfo = (peyload) => {
-                //     if(Array.isArray(peyload)){
-                //         return peyload.length > 1 ? peyload.find(e => e.message === messagePxy.message) : peyload[0];
-                //     }
-                //     return currentPayload;
-                // }
-                // const currentPayload = buttonInfoCheck();
-                // const currentButtonInfo = getCurrentButtonInfo(currentPayload);
                 const behaviorInfo = {
                     sender_id: snap._globals.userId,
                     group_id: CURRENT_GROUP_DATA.tabId,
