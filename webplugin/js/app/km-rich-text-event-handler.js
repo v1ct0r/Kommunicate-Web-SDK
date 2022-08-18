@@ -785,12 +785,9 @@ Snap.richMsgEventHandler = {
     processQuickReplies: function (e) {
         var message = e.target.title;
         var metadata = {};
-        var buttonId;
+        var buttonId = e.target.dataset.buttonid;
         try {
             metadata = JSON.parse(e.target.dataset.metadata);
-        } catch (e) {}
-        try {
-            buttonId = JSON.parse(e.target.dataset.buttonid);
         } catch (e) {}
         var languageCode = e.target.dataset.languagecode;
         languageCode && Snap.updateUserLanguage(languageCode);
