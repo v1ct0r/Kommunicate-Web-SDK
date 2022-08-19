@@ -5460,7 +5460,7 @@ var userOverride = {
 
                 const behaviorInfo = {
                     sender_id: snap._globals.userId,
-                    group_id: `${CURRENT_GROUP_DATA.tabId}`.trim(),
+                    group_id: CURRENT_GROUP_DATA.tabId.toString(),
                     url: locationMessage,
                     session_id: messagePxy.conversationId || messagePxy.key,
                     browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
