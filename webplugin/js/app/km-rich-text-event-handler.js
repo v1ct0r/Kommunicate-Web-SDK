@@ -786,6 +786,7 @@ Snap.richMsgEventHandler = {
         var message = e.target.title;
         var metadata = {};
         var buttonId = e.target.dataset.buttonid;
+        var payload = e.target.dataset.payload;
         try {
             metadata = JSON.parse(e.target.dataset.metadata);
         } catch (e) {}
@@ -794,7 +795,8 @@ Snap.richMsgEventHandler = {
         var messagePxy = {
             message: message, //message to send
             metadata: metadata,
-            buttonId: buttonId
+            buttonId: buttonId,
+            payload: payload
         };
         document
             .getElementById('mck-text-box')

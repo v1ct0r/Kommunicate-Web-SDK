@@ -1637,6 +1637,7 @@ var userOverride = {
                     contentType: params.type,
                     message: message,
                     buttonId: params.buttonId,
+                    payload: params.payload,
                     metadata: params.metadata || {},
                 };
                 $applozic.extend(messagePxy.metadata, {
@@ -5450,21 +5451,9 @@ var userOverride = {
                 // }
 
                 const browserInfo = detect.parse(navigator.userAgent);
-                let localPayload = message.metadata.payload;
-                let currentButtonInfo = {};
-                if (typeof localPayload === 'string' && localPayload) {
+                let localPayload = messagePxy.payload ? messagePxy.payload : message.metadata.payload;
+                if (localPayload && typeof localPayload === 'string') {
                     localPayload = JSON.parse(localPayload);
-                    // if (Array.isArray(localPayload)) {
-                    //     currentButtonInfo = localPayload.find(e => e.message === messagePxy.message);
-                    // } else {
-                    //     currentButtonInfo = localPayload;
-                    // }
-                } else if (Array.isArray(localPayload) && localPayload){
-                    // if (localPayload.length === 1) {
-                    //     currentButtonInfo = localPayload[0];
-                    // } else {
-                    //     currentButtonInfo = localPayload.find(e => e.message === messagePxy.message);
-                    // }
                 } else if (!!localPayload){
                     localPayload = {};
                 }
@@ -5482,7 +5471,7 @@ var userOverride = {
                     button_type: messagePxy.type,
                     button_url: tabId,
                     timestamp: message.createdAtTime,
-                    payload: localPayload || messagePxy.payload
+                    payload: localPayload
                 }
                 w.console.log(behaviorInfo);
                 _this.sendUserBehaviorInfo(behaviorInfo);

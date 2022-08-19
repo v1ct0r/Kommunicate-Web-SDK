@@ -267,7 +267,7 @@ Snap.markup = {
             +'</div>';
     },
     getGenericSuggestedReplyButton: function () {
-        return `<button aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}" data-buttonId="{{button_id}}">{{name}}</button>`;
+        return `<button aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}" data-buttonId="{{button_id}}" data-payload="{{payload}}">{{name}}</button>`;
     },
     getPassangerDetail: function (options) {
         if (!options.sessionId) {
@@ -1051,6 +1051,7 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
                 singlePayload.action.message || singlePayload.name;
             singlePayload.type == 'quickReply' &&
                 (singlePayload.hidePostCTA = snap._globals.hidePostCTA);
+            singlePayload.payload = metadata.payload;
             buttonContainerHtml += Mustache.to_html(
                 Snap.markup.getGenericSuggestedReplyButton(),
                 singlePayload
