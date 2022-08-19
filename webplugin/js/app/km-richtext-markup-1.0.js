@@ -262,7 +262,7 @@ Snap.markup = {
         var classList = needLimitHeight && 'limitHeight';
         return '<div class="' + classList + '">' +
                 `{{#payload}}
-                     <button aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button>
+                     <button aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button>
                 {{/payload}}`
             +'</div>';
     },
