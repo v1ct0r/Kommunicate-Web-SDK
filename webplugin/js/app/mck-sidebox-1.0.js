@@ -596,8 +596,7 @@ var userOverride = {
             5: MCK_LABELS['emoji.hover.text'].average,
             10: MCK_LABELS['emoji.hover.text'].great,
         };
-        var
-          MCK_BOT_MESSAGE_DELAY =
+        var MCK_BOT_MESSAGE_DELAY =
             WIDGET_SETTINGS && WIDGET_SETTINGS.botMessageDelayInterval
                 ? WIDGET_SETTINGS.botMessageDelayInterval
                 : 0;
@@ -821,12 +820,7 @@ var userOverride = {
                 );
             }
             document.addEventListener('keydown', function (e) {
-                console.log(e);
-                if (e.key === 'Tab' || e.key === 'ArrowRight') {
-                    document.body.classList.add('accesibility');
-                } else {
-                    document.body.classList.remove('accesibility');
-                }
+                if (e.code === 'Tab') {document.body.classList.add('accesibility')};
             });
             document.addEventListener('mousedown', function (e) {
                 document.body.classList.remove('accesibility');
@@ -901,7 +895,7 @@ var userOverride = {
             var params = {
                 tabId: optns.userId,
                 isGroup: false,
-            };
+            };getQuickRepliesTemplate
             var params = {};
             if (optns.userId) {
                 params.tabId = userId;
@@ -5427,6 +5421,28 @@ var userOverride = {
                         }
                     });
                 }
+
+                const behaviorInfo = {
+                    sender_id: snap._globals.userId,
+                    group_id: contact.contactId,
+                    url: messagePxy.clientGroupId,
+                    session_id: messagePxy.conversationId,
+                    browser_parameter: {},
+                    event_type: messagePxy.contentType,
+                    message_id: locationMessage,
+                    button_id: '',
+                    button_name: messagePxy.message,
+                    button_type: messagePxy.type,
+                    button_url: '',
+                    timestamp: messagePxy.key,
+                    payload: {}
+                }
+                _this.sendUserBehaviorInfo(behaviorInfo)
+
+                console.log(behaviorInfo);
+
+                $applozic('#quick-reply-container').empty();
+
                 $mck_box_form.removeClass('mck-text-req');
                 $mck_msg_sbmt.attr('disabled', false);
                 $applozic('.' + randomId + ' .mck-message-status')
@@ -5436,6 +5452,19 @@ var userOverride = {
                 mckMessageLayout.clearMessageField(true);
                 FILE_META = [];
                 delete TAB_MESSAGE_DRAFT[contact.contactId];
+            };
+            _this.sendUserBehaviorInfo = function(data){
+                const url = 'http://50.116.37.183:1012/frontend_interaction_behavior';
+
+                return fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).catch(error => {
+                    console.error(error)
+                })
             };
             _this.sendForwardMessage = function (forwardMessageKey) {
                 var forwardMessage = ALStorage.getMessageByKey(
@@ -5752,7 +5781,7 @@ var userOverride = {
                             ] = userDetail;
                         }
                         var audioSend = document.getElementById('audioSend');
-                        audioSend.play();
+                        audioSend && audioSend.play();
                     },
                     error: function () {
                         $mck_msg_error.html(
@@ -7954,12 +7983,12 @@ var userOverride = {
                         'last-message-received-time',
                         data.message[0].createdAtTime
                     );
-                if (allowReload) {
-                    scroll = false;
-                    data &&
-                        data.message &&
-                        (data.message = data.message.reverse());
-                }
+                // if (allowReload) {
+                //     scroll = false;
+                //     data &&
+                //         data.message &&
+                //         (data.message = data.message.reverse());
+                // }
                 if (typeof data.message.length === 'undefined') {
                     var messageArray = [];
                     messageArray.push(data.message);
@@ -8163,7 +8192,6 @@ var userOverride = {
                 processMessageInQueue = false,
                 showWithoutDelay = false
             ) {
-                //msg.message && $applozic('.log').append('<div>' + msg.message + '</div>');
                 var metadatarepiledto = '';
                 var replymessage = '';
                 var replyMsg = '';
@@ -8450,7 +8478,9 @@ var userOverride = {
                 //     return ;
                 // }
 
-                var isLastSavedMessageInDialog = arrayOfAllMessages && (arrayOfAllMessages[0] && arrayOfAllMessages[0].key) || (arrayOfAllMessages && arrayOfAllMessages.key);
+                var isLastSavedMessageInDialog = arrayOfAllMessages
+                    && (arrayOfAllMessages[0] && arrayOfAllMessages[0].key)
+                    || (arrayOfAllMessages && arrayOfAllMessages.key);
                 var msgList = [
                     {
                         msgReply: replyMsg ? replyMsg.message + '\n' : '',
@@ -8518,15 +8548,20 @@ var userOverride = {
                     },
                 ];
 
-                // Snap.changeVisibilityStateForElement(
-                //     $applozic('#quick-reply-container'),
-                //     'hide'
-                // );
+                Snap.changeVisibilityStateForElement(
+                    $applozic('#quick-reply-container'),
+                    'hide'
+                );
 
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
-
+                if (
+                    (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
+                ) {
+                    w.console.log('changeTextInputState', msg);
+                    Snap.changeTextInputState(msg, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1200);
+                }
                 if (
                     (kmRichTextMarkup.includes('km-quick-replies') &&
                         !kmRichTextMarkup.includes('km-div-slider')) ||
@@ -8537,26 +8572,29 @@ var userOverride = {
                     msgList[0].kmRichTextMarkup = '';
 
                     //append message to the messageTemplate arrea
-                    append
-                        ? $applozic
-                              .tmpl('messageTemplate', msgList)
-                              .appendTo('#mck-message-cell .mck-message-inner')
-                        : $applozic
-                              .tmpl('messageTemplate', msgList)
-                              .prependTo(
-                                  '#mck-message-cell .mck-message-inner'
-                              );
-
+                    // if (msg.message) {
+                    //     append
+                    //         ? $applozic
+                    //             .tmpl('messageTemplate', msgList)
+                    //             .appendTo('#mck-message-cell .mck-message-inner')
+                    //         : $applozic
+                    //             .tmpl('messageTemplate', msgList)
+                    //             .prependTo(
+                    //                 '#mck-message-cell .mck-message-inner'
+                    //             );
+                    // }
                     //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
                     if (
-                        isLastSavedMessageInDialog ||
-                        !arrayOfAllMessages
+                        (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
                     ) {
                         setTimeout(function () {
                             $quick_reply_container.empty();
-                            $quick_reply_container.append(
-                              $applozic(kmRichTextMarkup)
-                            );
+                            if (!Boolean(msg.metadata.is_close_conversation)) {
+                                $quick_reply_container.append(
+                                    $applozic(kmRichTextMarkup)
+                                );
+                            }
+                            Snap.changeTextInputState(msg, 0);
                             Snap.changeVisibilityStateForElement(
                               $quick_reply_container,
                               'show'
@@ -8569,19 +8607,20 @@ var userOverride = {
                               0
                             );
                             _this.initDatepicker();
-                        }, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 2000)
+                        }, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + ('sendToDevice' in msg) ? 1500 : 0)
 
                     }
-                } else {
+                }
+                if (msg.message) {
                     append
                         ? $applozic
-                              .tmpl('messageTemplate', msgList)
-                              .appendTo('#mck-message-cell .mck-message-inner')
+                            .tmpl('messageTemplate', msgList)
+                            .appendTo('#mck-message-cell .mck-message-inner')
                         : $applozic
-                              .tmpl('messageTemplate', msgList)
-                              .prependTo(
-                                  '#mck-message-cell .mck-message-inner'
-                              );
+                            .tmpl('messageTemplate', msgList)
+                            .prependTo(
+                                '#mck-message-cell .mck-message-inner'
+                            );
                 }
 
                 if (
@@ -8906,15 +8945,13 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-                        // setTimeout(function () {
-                        //     if (arrayOfAllMessages) {
-                        //         if (isLastSavedMessageInDialog) {
-                        //             Snap.changeTextInputState(msg);
-                        //         }
-                        //     } else {
-                        //         Snap.changeTextInputState(msg);
-                        //     }
-                        // }, MCK_BOT_MESSAGE_DELAY + 1000)
+                            // if (arrayOfAllMessages) {
+                            //     if (isLastSavedMessageInDialog) {
+                            //         Snap.changeTextInputState(msg);
+                            //     }
+                            // } else {
+                            //     Snap.changeTextInputState(msg);
+                            // }
                     }
                 } else {
                     $textMessage.html(emoji_template);
@@ -9006,7 +9043,8 @@ var userOverride = {
                         dateFormat: popupDate[i].type === 'date' ? "m/d/Y" : "m/d/Y H:i",
                         disableMobile: true,
                         minDate:  popupDate.attr('min') ? popupDate.attr('min') : '01/01/1900',
-                        maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099'
+                        maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099',
+                        minuteIncrement: 60
                     });
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
@@ -9423,31 +9461,32 @@ var userOverride = {
                     }
                 }
                 if (contact.members && contact.type == 10) {
-                    if (
-                        message &&
-                        message.senderName &&
-                        alUserService.MCK_USER_DETAIL_MAP[message.senderName]
-                    ) {
-                        imgsrctag = alUserService.MCK_USER_DETAIL_MAP[
-                            message.senderName
-                        ].imageLink
-                            ? '<img src="' +
-                              alUserService.MCK_USER_DETAIL_MAP[
-                                  message.senderName
-                              ].imageLink +
-                              '" alt="' +
-                              profileDisplayName +
-                              '"/>'
-                            : _this.getImageUrlForGroupType(
-                                  contact,
-                                  displayName
-                              );
-                    } else {
-                        imgsrctag = _this.getImageUrlForGroupType(
-                            contact,
-                            displayName
-                        );
-                    }
+                    imgsrctag = '<img src="' + contact.imageUrl + '"/>';
+                    // if (
+                    //     message &&
+                    //     message.senderName &&
+                    //     alUserService.MCK_USER_DETAIL_MAP[message.senderName]
+                    // ) {
+                    //     imgsrctag = alUserService.MCK_USER_DETAIL_MAP[
+                    //         message.senderName
+                    //     ].imageLink
+                    //         ? '<img src="' +
+                    //           alUserService.MCK_USER_DETAIL_MAP[
+                    //               message.senderName
+                    //           ].imageLink +
+                    //           '" alt="' +
+                    //           profileDisplayName +
+                    //           '"/>'
+                    //         : _this.getImageUrlForGroupType(
+                    //               contact,
+                    //               displayName
+                    //           );
+                    // } else {
+                    //     imgsrctag = _this.getImageUrlForGroupType(
+                    //         contact,
+                    //         displayName
+                    //     );
+                    // }
                 } else if (contact.isGroup && contact.type !== 7) {
                     imgsrctag = mckGroupService.getGroupImage(contact.imageUrl);
                 } else {
@@ -11662,6 +11701,7 @@ var userOverride = {
                 var currentMessageObject = ALStorage.getMessageByKey(
                   MCK_BOT_MESSAGE_QUEUE[0]
                 );
+                currentMessageObject.message && mckMessageLayout.messageClubbing(false);
                 if (!document.querySelector('.km-typing-wrapper') && currentMessageObject.message) {
                     $mck_msg_inner.append(
                         '<div class="km-typing-wrapper"><div class="km-typing-indicator"></div><div class="km-typing-indicator"></div><div class="km-typing-indicator"></div></div>'
@@ -11680,32 +11720,39 @@ var userOverride = {
                         'div[data-msgkey="' + MCK_BOT_MESSAGE_QUEUE[0] + '"]'
                     );
                     $applozic('.km-typing-wrapper').remove();
-                    currentMessageObject.message && mckMessageLayout.messageClubbing(false);
 
                     MCK_BOT_MESSAGE_QUEUE.shift();
 
                     if (MCK_BOT_MESSAGE_QUEUE.length !== 0) {
                         _this.procesMessageTimerDelay();
+                        Snap.changeVisibilityStateForElement(
+                            $applozic('#quick-reply-container'),
+                            'hide'
+                        );
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
                     }
                     if (message) {
-                        currentMessageObject.message && message.classList.remove('n-vis');
-                        // if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
-                        //   && !currentMessageObject.metadata.is_close_conversation)  {
-                        //     Snap.changeVisibilityStateForElement(
-                        //       $applozic('#quick-reply-container'),
-                        //       'show'
-                        //     );
-                        // } else {
-                        //     Snap.changeVisibilityStateForElement(
-                        //       $applozic('#quick-reply-container'),
-                        //       'hide'
-                        //     );
-                        // }
+                        message.classList.remove('n-vis');
+                        if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
+                          && !currentMessageObject.metadata.is_close_conversation)  {
+                            Snap.changeVisibilityStateForElement(
+                              $applozic('#quick-reply-container'),
+                              'show'
+                            );
+                        } else {
+                            Snap.changeVisibilityStateForElement(
+                              $applozic('#quick-reply-container'),
+                              'hide'
+                            );
+                        }
                         if (currentMessageObject.metadata.is_close_conversation)  {
                             $quick_reply_container.empty();
                             $applozic('#mck-text-box').empty();
+                            Snap.changeVisibilityStateForElement(
+                                $applozic('#quick-reply-container'),
+                                'hide'
+                            );
                         }
 
                         $mck_msg_inner.animate(
@@ -11716,7 +11763,7 @@ var userOverride = {
                         );
                     }
                     var audioGet = document.getElementById('audioGet');
-                    currentMessageObject.message && audioGet.play();
+                    (currentMessageObject.message && audioGet) && audioGet.play();
 
                 }, MCK_BOT_MESSAGE_DELAY);
             };
@@ -11887,9 +11934,16 @@ var userOverride = {
                                 timeOffset <
                                     SnapConstants.MESSAGE_CLUBBING.TIME_FRAME
                             ) {
-                                allMessages[key].classList.add(
-                                    'km-clubbing-first'
-                                );
+                                if (allMessages[key].nextSibling.getAttribute(
+                                    'data-msgtype'
+                                  ) ==
+                                  allMessages[key].getAttribute(
+                                    'data-msgtype'
+                                  )) {
+                                    allMessages[key].classList.add(
+                                      'km-clubbing-first'
+                                    );
+                                }
                                 allMessages[key].nextSibling.classList.add(
                                     'km-clubbing-last'
                                 );
