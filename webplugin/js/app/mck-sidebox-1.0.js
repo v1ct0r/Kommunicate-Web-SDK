@@ -11753,7 +11753,7 @@ var userOverride = {
                     );
                     $applozic('.km-typing-wrapper').remove();
 
-                    
+                    MCK_BOT_MESSAGE_QUEUE.shift();
 
                     if (MCK_BOT_MESSAGE_QUEUE.length !== 0) {
                         _this.procesMessageTimerDelay();
@@ -11764,9 +11764,6 @@ var userOverride = {
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
                     }
-
-                    MCK_BOT_MESSAGE_QUEUE.shift();
-
                     if (message) {
                         message.classList.remove('n-vis');
                         if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
