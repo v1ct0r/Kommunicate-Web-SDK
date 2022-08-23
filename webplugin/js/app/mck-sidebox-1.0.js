@@ -8592,9 +8592,9 @@ var userOverride = {
                 }
 
                 if (
-                    (kmRichTextMarkup.includes('km-quick-replies') &&
-                        !kmRichTextMarkup.includes('km-div-slider')) ||
-                    kmRichTextMarkup.includes('km-btn-hidden-form')
+                    (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider'))
+                    || kmRichTextMarkup.includes('km-btn-hidden-form')
+                    || kmRichTextMarkup.includes('km-cta-multi-button-container')
                 ) {
                     //don't need to append buttons to the messageTemplate arrea,
                     //because we append them to the quick-reply-container
@@ -8619,7 +8619,7 @@ var userOverride = {
                     ) {
                         setTimeout(function () {
                             $quick_reply_container.empty();
-                            if (!Boolean(msg.metadata.is_close_conversation)) {
+                            if (msg.metadata.is_close_conversation !== 'true') {
                                 $quick_reply_container.append(
                                     $applozic(kmRichTextMarkup)
                                 );
