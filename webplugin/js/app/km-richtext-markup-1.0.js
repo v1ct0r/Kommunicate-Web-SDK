@@ -993,7 +993,7 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
     var buttonPayloadList = metadata.payload
         ? JSON.parse(metadata.payload)
         : [];
-    var buttonContainerHtml = '<div class="km-cta-multi-button-container">';
+    var buttonContainerHtml = '<div class="km-cta-multi-button-container km-cta-multi-button-links-container">';
     var buttonClass =
         ' km-custom-widget-border-color ' +
         (buttonPayloadList.length == 1
