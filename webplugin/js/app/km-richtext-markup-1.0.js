@@ -224,7 +224,7 @@ Snap.markup = {
                 encodeURIComponent(JSON.stringify(currentButton.action)) +
                 '  " data-metadata="' +
                 options.replyMetadata +
-                '" data-buttontype="button" tabindex="'+ 3 + index + '" data-target="' +
+                '" data-buttontype="button" tabindex="'+ 3 +'" data-target="' +
                 Snap.markup.getLinkTarget(options) +
                 '" rel = "noopener noreferrer">' +
                 options.name +
