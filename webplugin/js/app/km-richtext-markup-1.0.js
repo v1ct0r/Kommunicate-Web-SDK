@@ -226,7 +226,7 @@ Snap.markup = {
                 options.replyMetadata +
                 '" data-buttontype="button" tabindex="'+ 3 + index + '" data-target="' +
                 Snap.markup.getLinkTarget(options) +
-                '" ">' +
+                '" rel = "noopener noreferrer">' +
                 options.name +
                 '' +
                 linkSvg +
