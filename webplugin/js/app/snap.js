@@ -782,6 +782,7 @@ $applozic.extend(true, Snap, {
                 textBox.attr('aria-label', '')
                 textBox.attr('aria-labelledby', '');
                 textBox.attr('contenteditable', false);
+                textBox.attr('aria-hidden', true);
             } else {
                 var metadata = msg.metadata;
                 var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
