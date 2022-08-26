@@ -791,6 +791,7 @@ $applozic.extend(true, Snap, {
                 textBox.attr('aria-labelledby', isEnable ? hintTextForTextInput + "Multiline text box, double tap to edit" : hintTextForTextInput);
                 textBox.attr('aria-label', isEnable ? hintTextForTextInput + "Multiline text box, double tap to edit" : hintTextForTextInput);
                 textBox.attr('contenteditable', metadata.enable_text_input);
+                textBox.attr('aria-hidden', false);
             }
 
             if (msg.hasOwnProperty('metadata')) {
