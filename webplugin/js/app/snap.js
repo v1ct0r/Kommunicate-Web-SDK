@@ -798,7 +798,7 @@ $applozic.extend(true, Snap, {
             }
             Snap.reloadElement('mck-textbox-container', 'mck-text-box');
             Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
-        }, delay);
+        }, 300);
     },
     sessionTimeout: function () {
         var parentWindow = window.parent;
