@@ -8594,7 +8594,7 @@ var userOverride = {
                                     $applozic(kmRichTextMarkup)
                                 );
                             }
-                            Snap.changeTextInputState(msg, 0);
+                            Snap.changeTextInputState(msg, 300);
                             Snap.changeVisibilityStateForElement(
                               $quick_reply_container,
                               'show'

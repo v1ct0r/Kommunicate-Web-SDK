@@ -782,7 +782,6 @@ $applozic.extend(true, Snap, {
                 textBox.attr('aria-label', '')
                 textBox.attr('aria-labelledby', '');
                 textBox.attr('contenteditable', false);
-                textBox.attr('aria-hidden', true);
             } else {
                 var metadata = msg.metadata;
                 var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
@@ -791,7 +790,6 @@ $applozic.extend(true, Snap, {
                 textBox.attr('aria-labelledby', isEnable ? hintTextForTextInput + "Multiline text box, double tap to edit" : hintTextForTextInput);
                 textBox.attr('aria-label', isEnable ? hintTextForTextInput + "Multiline text box, double tap to edit" : hintTextForTextInput);
                 textBox.attr('contenteditable', metadata.enable_text_input);
-                textBox.attr('aria-hidden', false);
             }
 
             if (msg.hasOwnProperty('metadata')) {
