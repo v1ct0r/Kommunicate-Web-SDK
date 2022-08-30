@@ -8594,7 +8594,7 @@ var userOverride = {
                                     $applozic(kmRichTextMarkup)
                                 );
                             }
-                            Snap.changeTextInputState(msg, 300);
+                            Snap.changeTextInputState(msg, 0);
                             Snap.changeVisibilityStateForElement(
                               $quick_reply_container,
                               'show'
@@ -8608,7 +8608,7 @@ var userOverride = {
                             );
                             _this.initDatepicker();
                         }, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + ('sendToDevice' in msg) ? 1500 : 0)
-
+                        //MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + ('sendToDevice' in msg) ? 1500 : 0
                     }
                 }
                 if (msg.message) {

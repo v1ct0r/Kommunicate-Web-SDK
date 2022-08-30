@@ -766,7 +766,15 @@ $applozic.extend(true, Snap, {
         }
     },
     changeTextInputState: function (msg, delay = 300) {
-        setTimeout(function () {
+        if(!!delay){
+            setTimeout(function () {
+                Snap.changeTextInputStateRendering(msg);
+            }, delay);
+        } else {
+            Snap.changeTextInputStateRendering(msg);
+        }  
+    },
+    changeTextInputStateRendering: function (msg) {
             var textBox = $applozic('#mck-text-box');
 
             let isEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
@@ -804,7 +812,6 @@ $applozic.extend(true, Snap, {
             
             Snap.reloadElement('mck-textbox-container', 'mck-text-box');
             Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
-        }, delay);
     },
     sessionTimeout: function () {
         var parentWindow = window.parent;
