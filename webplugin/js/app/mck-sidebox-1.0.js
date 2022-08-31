@@ -8556,12 +8556,12 @@ var userOverride = {
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
-                if (
-                    (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
-                ) {
-                    w.console.log('changeTextInputState', msg);
-                    Snap.changeTextInputState(msg, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1200);
-                }
+                // if (
+                //     (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
+                // ) {
+                //     w.console.log('changeTextInputState', msg);
+                //     Snap.changeTextInputState(msg, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1200);
+                // }
                 if (
                     (kmRichTextMarkup.includes('km-quick-replies') &&
                         !kmRichTextMarkup.includes('km-div-slider')) ||
