@@ -417,12 +417,10 @@ Snap.markup = {
                                         <p class="mck-radio-group-title">{{title}}</p>
                                         <div class="mck-form-radio-wrapper">
                                             {{#options}}
-                                                <div>
                                                     <label for="{{label}}" class="mck-form-label">
                                                         <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
                                                         <b>{{label}}</b>
-                                                    </label>   
-                                                </div>                                     
+                                                    </label>                                      
                                             {{/options}}
                                         </div>
                                     {{/radio}}
@@ -430,12 +428,10 @@ Snap.markup = {
                                         <p class="mck-radio-group-title">{{title}}</p>
                                         <div class="mck-form-radio-wrapper">
                                             {{#options}}
-                                                <div>
                                                     <label for="{{label}}" class="mck-form-label">
                                                         <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
                                                         <b>{{label}}</b>
-                                                    </label>   
-                                                </div>                                     
+                                                    </label>                                       
                                             {{/options}}
                                         </div>
                                     {{/checkbox}}

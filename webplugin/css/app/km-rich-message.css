@@ -1442,6 +1442,7 @@
 .mck-form-radio-wrapper label {
     position: relative;
     padding-left: 26px;
+    margin-bottom: 13px;
 }
 .mck-form-textarea-wrapper textarea {
     resize: vertical;
