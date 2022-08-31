@@ -8589,7 +8589,7 @@ var userOverride = {
                     ) {
                         setTimeout(function () {
                             $quick_reply_container.empty();
-                            if (!Boolean(msg.metadata.is_close_conversation)) {
+                            if (msg.metadata.is_close_conversation !== 'true') {
                                 $quick_reply_container.append(
                                     $applozic(kmRichTextMarkup)
                                 );
@@ -8607,7 +8607,7 @@ var userOverride = {
                               0
                             );
                             _this.initDatepicker();
-                        }, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + ('sendToDevice' in msg) ? 1500 : 0)
+                        }, MCK_BOT_MESSAGE_DELAY + 1500)
                         //MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + ('sendToDevice' in msg) ? 1500 : 0
                     }
                 }
