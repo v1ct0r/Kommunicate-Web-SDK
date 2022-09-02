@@ -906,7 +906,7 @@ Snap.richMsgEventHandler = {
             session_id: "",
             browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
             event_type: "follow the link",
-            message_id: "",
+            message_id: CURRENT_GROUP_DATA.messageId,
             button_id: `${buttonId}`.trim(),
             button_name: `${e.target.title}`.trim(),
             button_type: `${buttonType}`.trim(),

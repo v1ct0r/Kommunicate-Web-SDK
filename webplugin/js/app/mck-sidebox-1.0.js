@@ -5465,7 +5465,7 @@ var userOverride = {
                     session_id: messagePxy.conversationId || messagePxy.key,
                     browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
                     event_type: messagePxy.contentType,
-                    message_id: message.key,
+                    message_id: CURRENT_GROUP_DATA.messageId,
                     button_id: messagePxy.buttonId,
                     button_name: messagePxy.message,
                     button_type: messagePxy.type,
@@ -15780,6 +15780,7 @@ var userOverride = {
                                         conversationStatus.toUpperCase()
                                     ]);
                             CURRENT_GROUP_DATA.tabId = resp.message.groupId;
+                            CURRENT_GROUP_DATA.messageId = resp.id ? resp.id : '';
                             CURRENT_GROUP_DATA.conversationStatus =
                                 Snap.conversationHelper.status[
                                     conversationStatus.toUpperCase()
@@ -15819,6 +15820,7 @@ var userOverride = {
                             resp.message.metadata
                         ) {
                             CURRENT_GROUP_DATA.tabId = resp.message.groupId;
+                            CURRENT_GROUP_DATA.messageId = resp.id ? resp.id : '';
                             if (
                                 resp.message.metadata.KM_STATUS ===
                                     SnapConstants.CONVERSATION_CLOSED_STATUS ||
