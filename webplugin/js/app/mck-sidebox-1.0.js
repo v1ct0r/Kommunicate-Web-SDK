@@ -8056,7 +8056,6 @@ var userOverride = {
                                 allowReload,
                                 data.message
                             );
-                            window.Applozic.ALSocket.reconnect();
                             Snap.appendEmailToIframe(message);
                             showMoreDateTime = message.createdAtTime;
                             allowReload &&
