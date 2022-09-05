@@ -11762,6 +11762,7 @@ var userOverride = {
                             'hide'
                         );
                     } else {
+                        window.Applozic.ALSocket.reconnect();
                         Snap.changeTextInputState(currentMessageObject);
                     }
                     if (message) {
