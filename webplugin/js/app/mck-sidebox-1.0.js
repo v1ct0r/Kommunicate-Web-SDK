@@ -9064,8 +9064,6 @@ var userOverride = {
                 if (typeof callback == 'function') {
                     callback();
                 }
-
-                window.Applozic.ALSocket.reconnect();
             };
             _this.initDatepicker = function () {
                 var popupDate = $applozic(".popup");
