@@ -803,7 +803,7 @@ Snap.richMsgEventHandler = {
                 Snap.hideMessage(e.target);
             }
         }
-        window.Applozic.ALSocket.reconnect();
+        // window.Applozic.ALSocket.reconnect();
     },
     processClickOnListItem: function (e) {
         var target = e.currentTarget;
