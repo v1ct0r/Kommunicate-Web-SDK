@@ -15780,7 +15780,9 @@ var userOverride = {
                                         conversationStatus.toUpperCase()
                                     ]);
                             CURRENT_GROUP_DATA.tabId = resp.message.groupId;
-                            CURRENT_GROUP_DATA.messageId = resp.message.metadata.message_id ? resp.message.metadata.message_id : '';
+                            if(resp.message.metadata.message_id){
+                                CURRENT_GROUP_DATA.messageId = resp.message.metadata.message_id;
+                            }
                             CURRENT_GROUP_DATA.conversationStatus =
                                 Snap.conversationHelper.status[
                                     conversationStatus.toUpperCase()
@@ -15820,7 +15822,9 @@ var userOverride = {
                             resp.message.metadata
                         ) {
                             CURRENT_GROUP_DATA.tabId = resp.message.groupId;
-                            CURRENT_GROUP_DATA.messageId = resp.message.metadata.message_id ? resp.message.metadata.message_id : '';
+                            if(resp.message.metadata.message_id){
+                                CURRENT_GROUP_DATA.messageId = resp.message.metadata.message_id;
+                            }
                             if (
                                 resp.message.metadata.KM_STATUS ===
                                     SnapConstants.CONVERSATION_CLOSED_STATUS ||
