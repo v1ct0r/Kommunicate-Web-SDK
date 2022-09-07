@@ -767,45 +767,53 @@ $applozic.extend(true, Snap, {
         }
     },
     changeTextInputState: function (msg) {
-        setTimeout(function () {
-            var textBox = $applozic('#mck-text-box');
+        var textBoxArrtLength = $applozic('#mck-text-box').attr('data-text').length;
+        if(!textBoxArrtLength){
+            setTimeout(function () {
+                Snap.changeTextInputStateRendering(msg);
+            }, 300);
+        } else {
+            Snap.changeTextInputStateRendering(msg);
+        }  
+    },
+    changeTextInputStateRendering: function (msg) {
+        var textBox = $applozic('#mck-text-box');
 
-            let isEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
-            if (isEnable) {
-                $applozic('.mck-box-form').removeClass('data-text');
+        let isEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
+        if (isEnable) {
+            $applozic('.mck-box-form').removeClass('data-text');
+        } else {
+            $applozic('.mck-box-form').addClass('data-text');
+        }
+
+        if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
+            textBox.attr('data-text', '');
+            textBox.attr('data-label', '');
+            textBox.attr('aria-label', '')
+            textBox.attr('aria-labelledby', '');
+            textBox.attr('contenteditable', false);
+        } else {
+            var metadata = msg.metadata;
+            var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
+            textBox.attr('data-text', hintTextForTextInput);
+            textBox.attr('data-label', hintTextForTextInput);
+            textBox.attr('aria-labelledby', isEnable ? hintTextForTextInput + "Multiline text box, double tap to edit" : hintTextForTextInput);
+            textBox.attr('aria-label', isEnable ? hintTextForTextInput + "Multiline text box, double tap to edit" : hintTextForTextInput);
+            textBox.attr('contenteditable', metadata.enable_text_input);
+        }
+
+        if (msg.hasOwnProperty('metadata')) {
+            if(msg.metadata.is_numeric_input === 'true'){
+                textBox.attr('pattern', '\d*');
+                textBox.attr('inputmode', 'numeric');
             } else {
-                $applozic('.mck-box-form').addClass('data-text');
+                textBox.attr('pattern', '\w*');
+                textBox.attr('inputmode', 'text');
             }
+        }
 
-            if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
-                textBox.attr('data-text', '');
-                textBox.attr('data-label', '');
-                textBox.attr('aria-label', '')
-                textBox.attr('aria-labelledby', '');
-                textBox.attr('contenteditable', false);
-            } else {
-                var metadata = msg.metadata;
-                var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
-                textBox.attr('data-text', hintTextForTextInput);
-                textBox.attr('data-label', hintTextForTextInput);
-                textBox.attr('aria-labelledby', isEnable ? hintTextForTextInput + "Multiline text box, double tap to edit" : hintTextForTextInput);
-                textBox.attr('aria-label', isEnable ? hintTextForTextInput + "Multiline text box, double tap to edit" : hintTextForTextInput);
-                textBox.attr('contenteditable', metadata.enable_text_input);
-            }
-
-            if (msg.hasOwnProperty('metadata')) {
-                if(msg.metadata.is_numeric_input === 'true'){
-                    textBox.attr('pattern', '\d*');
-                    textBox.attr('inputmode', 'numeric');
-                } else {
-                    textBox.attr('pattern', '\w*');
-                    textBox.attr('inputmode', 'text');
-                }
-            }
-
-            Snap.reloadElement('mck-textbox-container', 'mck-text-box');
-            Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
-        }, 300);
+        Snap.reloadElement('mck-textbox-container', 'mck-text-box');
+        Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
     },
     sessionTimeout: function () {
         var parentWindow = window.parent;
