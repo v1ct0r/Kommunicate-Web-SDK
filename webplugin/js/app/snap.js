@@ -767,13 +767,13 @@ $applozic.extend(true, Snap, {
         }
     },
     changeTextInputState: function (msg) {
-        var textBoxArrtLength = $applozic('#mck-text-box').attr('data-text').length;
-        if(!textBoxArrtLength){
+        var replyContainerChildren = $applozic('#quick-reply-container').children().length;
+        if(!replyContainerChildren){
+            Snap.changeTextInputStateRendering(msg);
+        } else {
             setTimeout(function () {
                 Snap.changeTextInputStateRendering(msg);
             }, 300);
-        } else {
-            Snap.changeTextInputStateRendering(msg);
         }  
     },
     changeTextInputStateRendering: function (msg) {
