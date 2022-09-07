@@ -768,7 +768,7 @@ $applozic.extend(true, Snap, {
     },
     changeTextInputState: function (msg) {
         var replyContainerChildren = $applozic('#quick-reply-container').children().length;
-        if(!replyContainerChildren){
+        if(!!replyContainerChildren){
             Snap.changeTextInputStateRendering(msg);
         } else {
             setTimeout(function () {
