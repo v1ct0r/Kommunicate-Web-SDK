@@ -767,14 +767,15 @@ $applozic.extend(true, Snap, {
         }
     },
     changeTextInputState: function (msg) {
-        var replyContainerChildren = $applozic('#quick-reply-container').children().length;
-        if(!!replyContainerChildren){
-            Snap.changeTextInputStateRendering(msg);
-        } else {
-            setTimeout(function () {
-                Snap.changeTextInputStateRendering(msg);
-            }, 300);
-        }  
+        // var replyContainerChildren = $applozic('#quick-reply-container').children().length;
+        // if(!!replyContainerChildren){
+        //     Snap.changeTextInputStateRendering(msg);
+        // } else {
+        //     setTimeout(function () {
+        //         Snap.changeTextInputStateRendering(msg);
+        //     }, 300);
+        // }
+        Snap.changeTextInputStateRendering(msg);  
     },
     changeTextInputStateRendering: function (msg) {
         var textBox = $applozic('#mck-text-box');
