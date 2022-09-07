@@ -775,7 +775,9 @@ $applozic.extend(true, Snap, {
         //         Snap.changeTextInputStateRendering(msg);
         //     }, 300);
         // }
-        Snap.changeTextInputStateRendering(msg);  
+        setTimeout(function () {
+            Snap.changeTextInputStateRendering(msg);
+        }, 300);
     },
     changeTextInputStateRendering: function (msg) {
         var textBox = $applozic('#mck-text-box');
