@@ -9000,6 +9000,8 @@ var userOverride = {
                             "div[data-msgkey='" + msg.key + "'] .km-div-slider"
                         )
                     );
+                    var $controlButtons = $applozic(".tns-controls");
+                    w.console.log($controlButtons);
                 }
 
                 if (msg.fileMeta) {
