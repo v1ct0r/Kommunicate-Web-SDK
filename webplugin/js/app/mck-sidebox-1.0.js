@@ -9000,7 +9000,7 @@ var userOverride = {
                             "div[data-msgkey='" + msg.key + "'] .km-div-slider"
                         )
                     );
-                    var $controlButtons = $applozic(".tns-controls");
+                    var $controlButtons = $applozic(".tns-controls button[data-controls='prev']");
                     w.console.log($controlButtons);
                 }
 
