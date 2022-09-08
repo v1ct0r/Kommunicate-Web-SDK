@@ -9000,8 +9000,8 @@ var userOverride = {
                             "div[data-msgkey='" + msg.key + "'] .km-div-slider"
                         )
                     );
-                    $applozic(".tns-controls button[data-controls='prev']").attr('data-text', 'card slide button');
-                    $applozic(".tns-controls button[data-controls='next']").attr('data-text', 'card slide button');
+                    $applozic(".tns-controls button[data-controls='prev']").attr('aria-label', 'card slide button');
+                    $applozic(".tns-controls button[data-controls='next']").attr('aria-label', 'card slide button');
                 }
 
                 if (msg.fileMeta) {
