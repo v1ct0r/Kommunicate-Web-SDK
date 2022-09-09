@@ -11748,7 +11748,7 @@ var userOverride = {
                     );
                 }
 
-                // setTimeout(function () {
+                setTimeout(function () {
 
                     message = messageContainer.querySelector(
                         'div[data-msgkey="' + MCK_BOT_MESSAGE_QUEUE[0] + '"]'
@@ -11800,7 +11800,7 @@ var userOverride = {
                     var audioGet = document.getElementById('audioGet');
                     (currentMessageObject.message && audioGet) && audioGet.play();
 
-                // }, MCK_BOT_MESSAGE_DELAY);
+                }, MCK_BOT_MESSAGE_DELAY);
             };
 
             _this.getMessageFeed = function (message) {
