@@ -11724,11 +11724,11 @@ var userOverride = {
                     MCK_BOT_MESSAGE_QUEUE.shift();
 
                     if (MCK_BOT_MESSAGE_QUEUE.length !== 0) {
-                        _this.procesMessageTimerDelay();
                         Snap.changeVisibilityStateForElement(
                             $applozic('#quick-reply-container'),
                             'hide'
                         );
+                        _this.procesMessageTimerDelay();
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
                     }
@@ -11746,20 +11746,20 @@ var userOverride = {
                               'hide'
                             );
                         }
-                        if (currentMessageObject.metadata.is_close_conversation)  {
-                            $quick_reply_container.empty();
-                            $applozic('#mck-text-box').empty();
-                            Snap.changeVisibilityStateForElement(
-                                $applozic('#quick-reply-container'),
-                                'hide'
-                            );
-                        }
 
                         $mck_msg_inner.animate(
                           {
                               scrollTop: $mck_msg_inner.prop('scrollHeight'),
                           },
                           0
+                        );
+                    }
+                    if (currentMessageObject.metadata.is_close_conversation || !(currentMessageObject.metadata.payload))  {
+                        $quick_reply_container.empty();
+                        $applozic('#mck-text-box').empty();
+                        Snap.changeVisibilityStateForElement(
+                            $applozic('#quick-reply-container'),
+                            'hide'
                         );
                     }
                     var audioGet = document.getElementById('audioGet');
