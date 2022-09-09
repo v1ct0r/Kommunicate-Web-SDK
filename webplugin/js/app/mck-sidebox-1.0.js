@@ -8958,6 +8958,11 @@ var userOverride = {
                       $applozic('#quick-reply-container'),
                       'show'
                     );
+                } else {
+                    Snap.changeVisibilityStateForElement(
+                        $applozic('#quick-reply-container'),
+                        'hide'
+                      );
                 }
                 if (
                   emoji_template.indexOf('emoji-inner') === -1 &&
