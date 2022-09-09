@@ -11758,11 +11758,12 @@ var userOverride = {
                     MCK_BOT_MESSAGE_QUEUE.shift();
 
                     if (MCK_BOT_MESSAGE_QUEUE.length !== 0) {
-                        _this.procesMessageTimerDelay();
+                        // _this.procesMessageTimerDelay();
                         Snap.changeVisibilityStateForElement(
                             $applozic('#quick-reply-container'),
                             'hide'
                         );
+                        _this.procesMessageTimerDelay();
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
                     }
