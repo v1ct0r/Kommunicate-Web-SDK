@@ -46,12 +46,12 @@ const configEnv = {
         },
     },
     staging: {
-        port: '3031',
+        port: '3030',
         urls: {
-            applozicBaseUrl: 'https://apps-test.applozic.com',
-            snapBaseUrl: 'https://api-staging.snap.io',
-            botPlatformApi: 'https://bots-test.snap.io',
-            hostUrl: 'https://widget-staging.snap.io',
+            applozicBaseUrl: 'https://rxinfo-qa.aetna.com',
+            snapBaseUrl: 'https://rxinfo-qa.aetna.com',
+            botPlatformApi: 'https://rxinfo-qa.aetna.com',
+            hostUrl: 'https://rxinfo-qa.aetna.com',
         },
         pluginProperties: {
             pseudoNameEnabled: true,
