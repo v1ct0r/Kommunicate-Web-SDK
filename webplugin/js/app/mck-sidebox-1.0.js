@@ -1990,7 +1990,7 @@ var userOverride = {
                         '<div class="mck-row mck-preview-content">' +
                         '<div class="mck-preview-msg-content"></div>' +
                         '<div class="mck-preview-file-content mck-msg-text notranslate blk-lg-12 mck-attachment n-vis"></div>' +
-                        '</div></div></div><div id="mck-msg-preview-btns" class="n-vis"><button id="mck-vid-call-accept">Accept</button><button id="mck-vid-call-reject">reject</div></div>'
+                        '</div></div></div><div id="mck-msg-preview-btns" class="n-vis"><button type="button" id="mck-vid-call-accept">Accept</button><button type="button" id="mck-vid-call-reject">reject</div></div>'
                     );
                 }
             };
@@ -8765,7 +8765,7 @@ var userOverride = {
                             payload = $applozic.parseJSON(msg.metadata.payload);
                             if (!payload[0].hidden) {
                                 var elem =
-                                    "<div style='width: 100px; margin: auto;'><button style='height: 27px;color: #FFF;background-color: #000;border-radius: 10px; width: 100px; margin: 10px;'>" +
+                                    "<div style='width: 100px; margin: auto;'><button type='button' style='height: 27px;color: #FFF;background-color: #000;border-radius: 10px; width: 100px; margin: 10px;'>" +
                                     payload[0].title +
                                     '</button></div>';
                             }
@@ -8773,7 +8773,7 @@ var userOverride = {
                                 for (var i = 1; i < payload.length; i++) {
                                     if (!payload[i].hidden) {
                                         elem +=
-                                            "<div style='width: 100px; margin: auto;'><button style='height: 27px;color: #FFF;background-color: #000;border-radius: 10px; width: 100px; margin: 10px;'>" +
+                                            "<div style='width: 100px; margin: auto;'><button type='button' style='height: 27px;color: #FFF;background-color: #000;border-radius: 10px; width: 100px; margin: 10px;'>" +
                                             payload[i].title +
                                             '</button></div>';
                                     }
@@ -8787,7 +8787,7 @@ var userOverride = {
                                 'msg.contentType === 23 && metadata.msg_type === BUTTON'
                             );
                             var elem =
-                                "<div style='width: 100px; margin: auto;'><button style='height: 27px;color: #FFF;background-color: #000;border-radius: 10px; width: 100px; margin: 10px;'>Button</button></div>";
+                                "<div style='width: 100px; margin: auto;'><button type='button' style='height: 27px;color: #FFF;background-color: #000;border-radius: 10px; width: 100px; margin: 10px;'>Button</button></div>";
                             $applozic(
                                 "div[data-msgkey='" + msg.key + "'] .blk-lg-12"
                             ).after(elem);
@@ -8804,7 +8804,7 @@ var userOverride = {
                         var elem =
                             "<div style='float: left; margin: 13px; width: 100%'><input id='input-for-email' type='text' style='background-color: #FFF;width: 60%;height:35px;' placeholder='Enter your email...'/>";
                         elem +=
-                            "<button id='send-email-button' style='height: 27px; width: 11%;color: #FFF;background-color: #000;border-radius: 0 10px 10px 0;'>Submit</button></div>";
+                            "<button type='button' id='send-email-button' style='height: 27px; width: 11%;color: #FFF;background-color: #000;border-radius: 0 10px 10px 0;'>Submit</button></div>";
                         $applozic(
                             "div[data-msgkey='" + msg.key + "'] .blk-lg-12"
                         ).after(elem);
@@ -8834,7 +8834,7 @@ var userOverride = {
                                     payload[0].type.toLowerCase() === 'button'
                                 ) {
                                     elem =
-                                        "<div style='width: 100px; margin: auto;'><button style='height: 27px;color: #FFF;background-color: #000;border-radius: 10px; width: 100px; margin: 10px;'>" +
+                                        "<div style='width: 100px; margin: auto;'><button type='button' style='height: 27px;color: #FFF;background-color: #000;border-radius: 10px; width: 100px; margin: 10px;'>" +
                                         payload[0].title +
                                         '</button></div>';
                                 } else if (
@@ -8843,7 +8843,7 @@ var userOverride = {
                                     elem =
                                         "<div style='float: left; margin: 13px; width: 100%'><input type='text' style='background-color: #FFF;width: 60%;height:35px;' placeholder='Enter your email...'/>";
                                     elem +=
-                                        "<button style='height: 27px; width: 11%;color: #FFF;background-color: #000;border-radius: 0 10px 10px 0;'>" +
+                                        "<button type='button' style='height: 27px; width: 11%;color: #FFF;background-color: #000;border-radius: 0 10px 10px 0;'>" +
                                         payload[0].title +
                                         '</button></div>';
                                 }
@@ -8857,7 +8857,7 @@ var userOverride = {
                                             'button'
                                         ) {
                                             elem +=
-                                                "<div style='width: 100px; margin: auto;'><button style='height: 27px;color: #FFF;background-color: #000;border-radius: 10px; width: 100px; margin: 10px;'>" +
+                                                "<div style='width: 100px; margin: auto;'><button type='button' style='height: 27px;color: #FFF;background-color: #000;border-radius: 10px; width: 100px; margin: 10px;'>" +
                                                 payload[i].title +
                                                 '</button></div>';
                                         } else if (
@@ -8867,7 +8867,7 @@ var userOverride = {
                                             elem +=
                                                 "<div style='float: left; margin: 13px; width: 100%'><input type='text' style='background-color: #FFF;width: 60%;height:35px;' placeholder='Enter your email...'/>";
                                             elem +=
-                                                "<button style='height: 27px; width: 11%;color: #FFF;background-color: #000;border-radius: 0 10px 10px 0;'>" +
+                                                "<button type='button' style='height: 27px; width: 11%;color: #FFF;background-color: #000;border-radius: 0 10px 10px 0;'>" +
                                                 payload[i].title +
                                                 '</button></div>';
                                         }
@@ -8940,7 +8940,7 @@ var userOverride = {
                     emoji_template = 'Final agreed price: ' + emoji_template;
                     if (!MCK_PRICE_WIDGET_ENABLED)
                         emoji_template +=
-                            '<br/><button class="mck-accept" data-mck-topic-price="' +
+                            '<br/><button type="button" class="mck-accept" data-mck-topic-price="' +
                             priceText +
                             '" data-mck-conversationid="' +
                             msg.conversationId +

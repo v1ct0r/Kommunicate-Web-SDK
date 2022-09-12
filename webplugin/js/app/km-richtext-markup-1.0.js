@@ -117,7 +117,7 @@ Snap.markup = {
             </div>
         </div>
         <div class="km-card-message-footer">
-            <button class="km-card-message-footer-button" data-resultindex= ` +
+            <button type="button" class="km-card-message-footer-button" data-resultindex= ` +
             options.ResultIndex +
             ` data-sessionid= ` +
             sessionId +
@@ -181,7 +181,7 @@ Snap.markup = {
                             </div>
                         </div>
                         <div class="km-blocked-room-button-container">
-                            <button class="km-block-room-button" data-sessionId= ` +
+                            <button type="button" class="km-block-room-button" data-sessionId= ` +
             sessionId +
             ` data-roomIndex=` +
             options.RoomIndex +
@@ -208,7 +208,7 @@ Snap.markup = {
         // w.console.log("currentButton -> ", currentButton);
         if (options.type == 'link') {
             return (
-                '<button aria-label="' +
+                '<button type="button" aria-label="' +
                 (options.replyText || options.name) +
                 '" title= "' +
                 (options.replyText || options.name) +
@@ -234,7 +234,7 @@ Snap.markup = {
             );
         } else {
             return (
-                '<button aria-label="' +
+                '<button type="button" aria-label="' +
                 (options.replyText ||
                     (options.action && options.action.message) ||
                     options.name) +
@@ -262,12 +262,12 @@ Snap.markup = {
         var classList = needLimitHeight && 'limitHeight';
         return '<div class="' + classList + '">' +
                 `{{#payload}}
-                     <button aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button>
+                     <button type="button" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button>
                 {{/payload}}`
             +'</div>';
     },
     getGenericSuggestedReplyButton: function () {
-        return `<button aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}" data-buttonId="{{button_id}}" data-payload="{{payload}}">{{name}}</button>`;
+        return `<button type="button" aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}" data-buttonId="{{button_id}}" data-payload="{{payload}}">{{name}}</button>`;
     },
     getPassangerDetail: function (options) {
         if (!options.sessionId) {
@@ -293,7 +293,7 @@ Snap.markup = {
                     <div class= "km-mandatory-field-error n-vis"><span> All fields are mandatory.</span></div>
                 </div>
                 <div class="km-guest-button-container">
-                    <button class="km-add-more-rooms km-submit-person-detail" data-sessionid= ` +
+                    <button type="button" class="km-add-more-rooms km-submit-person-detail" data-sessionid= ` +
             options.sessionId +
             `>Submit</button>
                 </div>
@@ -338,7 +338,7 @@ Snap.markup = {
          <div class="km-faq-list--footer">
                  <div class="km-faq-list--footer_button-container">
                     {{#buttons}}
-                        <button aria-label="{{name}}" class="{{buttonClass}} km-cta-button km-custom-widget-border-color km-custom-widget-text-color km-add-more-rooms {{handlerClass}} km-faq-list-link-button" data-type ="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-url={{href}} type="button" data-target={{target}} data-reply="{{dataReply}}">{{name}}</button>
+                        <button type="button" aria-label="{{name}}" class="{{buttonClass}} km-cta-button km-custom-widget-border-color km-custom-widget-text-color km-add-more-rooms {{handlerClass}} km-faq-list-link-button" data-type ="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-url={{href}} data-target={{target}} data-reply="{{dataReply}}">{{name}}</button>
                     {{/buttons}}  
              </div>
          </div>
@@ -358,7 +358,7 @@ Snap.markup = {
              <div class="km-faq-answer--footer_button-text-container">
                  <p>{{buttonLabel}}</p>
                  {{#buttons}}
-                 <button aria-label="{{name}}" class="km-faq-dialog-button km-quick-replies km-add-more-rooms" data-reply="{{name}}" data-metadata ="{{replyMetadata}}">{{name}}</button>
+                 <button type="button" aria-label="{{name}}" class="km-faq-dialog-button km-quick-replies km-add-more-rooms" data-reply="{{name}}" data-metadata ="{{replyMetadata}}">{{name}}</button>
                 {{/buttons}}
              </div>
          </div>
@@ -392,7 +392,7 @@ Snap.markup = {
         </div>`;
     },
     getButtonListTemplate: function () {
-        return `{{#buttons}}<button aria-label="{{action.payload.title}}" class="km-carousel-card-button {{{class}}}">{{action.payload.title}}</button>{{/buttons}}`;
+        return `{{#buttons}}<button type="button" aria-label="{{action.payload.title}}" class="km-carousel-card-button {{{class}}}">{{action.payload.title}}</button>{{/buttons}}`;
     },
     getCardHeaderTemplate: function () {
         return `<div>{{{pageSrc}}}</div>`;
@@ -634,8 +634,8 @@ Snap.markup.getHotelRoomPaxInfoTemplate = function (roomCount) {
         `</div>
             <hr>
             <div class="km-add-room-button-container">
-                <button  class="km-add-more-rooms km-btn-add-more-rooms" data-roomcount=1>ADD ROOM</button>
-                <button class=" km-add-more-rooms km-done-button">DONE</button>
+                <button type="button" class="km-add-more-rooms km-btn-add-more-rooms" data-roomcount=1>ADD ROOM</button>
+                <button type="button" class=" km-add-more-rooms km-done-button">DONE</button>
             </div>
         </div>`
     );
