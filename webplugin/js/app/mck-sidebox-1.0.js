@@ -8588,8 +8588,10 @@ var userOverride = {
                 );
 
                 $quick_reply_container.empty();
-
-                // Snap.resetTextInputState();
+                
+                if(Object.keys(msg.metadata).length === 0){
+                    Snap.resetTextInputState();
+                }
 
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
