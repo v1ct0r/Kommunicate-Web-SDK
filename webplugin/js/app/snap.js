@@ -790,11 +790,7 @@ $applozic.extend(true, Snap, {
         }
 
         if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
-            textBox.attr('data-text', '');
-            textBox.attr('data-label', '');
-            textBox.attr('aria-label', '')
-            textBox.attr('aria-labelledby', '');
-            textBox.attr('contenteditable', false);
+            Snap.resetTextInputState();
         } else {
             var metadata = msg.metadata;
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
@@ -817,6 +813,15 @@ $applozic.extend(true, Snap, {
 
         Snap.reloadElement('mck-textbox-container', 'mck-text-box');
         Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
+    },
+    resetTextInputState: function () {
+        var textBox = $applozic('#mck-text-box');
+
+        textBox.attr('data-text', '');
+        textBox.attr('data-label', '');
+        textBox.attr('aria-label', '')
+        textBox.attr('aria-labelledby', '');
+        textBox.attr('contenteditable', false);
     },
     sessionTimeout: function () {
         var parentWindow = window.parent;

@@ -8587,6 +8587,8 @@ var userOverride = {
                     'hide'
                 );
 
+                Snap.resetTextInputState();
+
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
