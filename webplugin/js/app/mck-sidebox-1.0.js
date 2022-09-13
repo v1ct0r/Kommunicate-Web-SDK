@@ -8582,12 +8582,14 @@ var userOverride = {
                     },
                 ];
 
-                Snap.changeVisibilityStateForElement(
-                    $applozic('#quick-reply-container'),
-                    'hide'
-                );
+                // Snap.changeVisibilityStateForElement(
+                //     $quick_reply_container,
+                //     'hide'
+                // );
 
-                Snap.changeTextInputState(msg);
+                $quick_reply_container.removeClass('vis').addClass('n-vis');
+
+                Snap.resetTextInputState();
 
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
