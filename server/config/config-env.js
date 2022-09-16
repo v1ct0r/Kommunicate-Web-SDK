@@ -6,6 +6,7 @@ const configEnv = {
             snapBaseUrl: 'https://api-test.snap.io',
             botPlatformApi: 'https://bots-test.snap.io',
             hostUrl: 'http://localhost:3030',
+            sendUserBehaviorInfoUrl: 'https://ohl5011637183.gera-it-dev.com/frontend_interaction_behavior',
         },
         pluginProperties: {
             pseudoNameEnabled: true,
@@ -29,6 +30,7 @@ const configEnv = {
             snapBaseUrl: 'https://api-test.snap.io',
             botPlatformApi: 'https://bots-test.snap.io',
             hostUrl: 'https://widget-test.snap.io',
+            sendUserBehaviorInfoUrl: 'https://ohl5011637183.gera-it-dev.com/frontend_interaction_behavior',
         },
         pluginProperties: {
             pseudoNameEnabled: true,
