@@ -5487,19 +5487,22 @@ var userOverride = {
                 delete TAB_MESSAGE_DRAFT[contact.contactId];
             };
             _this.sendUserBehaviorInfo = function(data){
-                const url = config.urls.sendUserBehaviorInfoUrl ? config.urls.sendUserBehaviorInfoUrl : '';
-                if (url) {
-                    return fetch(url, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                }).catch(error => {
-                    throw error
-                })
-                }
+                try{
+                    const url = config.urls.sendUserBehaviorInfoUrl;
+
+                    fetch(url, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    }).catch(error => {
+                        throw error
+                    })
+                } catch(error) {
+                    throw error;
+                } 
             };
             _this.sendForwardMessage = function (forwardMessageKey) {
                 var forwardMessage = ALStorage.getMessageByKey(
