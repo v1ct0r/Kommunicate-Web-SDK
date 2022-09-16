@@ -8556,12 +8556,12 @@ var userOverride = {
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
-                if (
-                    (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
-                ) {
-                    w.console.log('changeTextInputState', msg);
-                    Snap.changeTextInputState(msg, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1200);
-                }
+                // if (
+                //     (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
+                // ) {
+                //     w.console.log('changeTextInputState', msg);
+                //     Snap.changeTextInputState(msg, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1200);
+                // }
                 if (
                     (kmRichTextMarkup.includes('km-quick-replies') &&
                         !kmRichTextMarkup.includes('km-div-slider')) ||
@@ -8589,12 +8589,12 @@ var userOverride = {
                     ) {
                         setTimeout(function () {
                             $quick_reply_container.empty();
-                            if (!Boolean(msg.metadata.is_close_conversation)) {
+                            if (msg.metadata.is_close_conversation !== 'true') {
                                 $quick_reply_container.append(
                                     $applozic(kmRichTextMarkup)
                                 );
                             }
-                            Snap.changeTextInputState(msg, 0);
+                            // Snap.changeTextInputState(msg, 0);
                             Snap.changeVisibilityStateForElement(
                               $quick_reply_container,
                               'show'
@@ -8607,8 +8607,8 @@ var userOverride = {
                               0
                             );
                             _this.initDatepicker();
-                        }, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + ('sendToDevice' in msg) ? 1500 : 0)
-
+                        }, MCK_BOT_MESSAGE_DELAY + 1500)
+                        //MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + ('sendToDevice' in msg) ? 1500 : 0
                     }
                 }
                 if (msg.message) {
@@ -11724,11 +11724,11 @@ var userOverride = {
                     MCK_BOT_MESSAGE_QUEUE.shift();
 
                     if (MCK_BOT_MESSAGE_QUEUE.length !== 0) {
-                        _this.procesMessageTimerDelay();
                         Snap.changeVisibilityStateForElement(
                             $applozic('#quick-reply-container'),
                             'hide'
                         );
+                        _this.procesMessageTimerDelay();
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
                     }
@@ -11746,20 +11746,20 @@ var userOverride = {
                               'hide'
                             );
                         }
-                        if (currentMessageObject.metadata.is_close_conversation)  {
-                            $quick_reply_container.empty();
-                            $applozic('#mck-text-box').empty();
-                            Snap.changeVisibilityStateForElement(
-                                $applozic('#quick-reply-container'),
-                                'hide'
-                            );
-                        }
 
                         $mck_msg_inner.animate(
                           {
                               scrollTop: $mck_msg_inner.prop('scrollHeight'),
                           },
                           0
+                        );
+                    }
+                    if (currentMessageObject.metadata.is_close_conversation || !(currentMessageObject.metadata.payload))  {
+                        $quick_reply_container.empty();
+                        $applozic('#mck-text-box').empty();
+                        Snap.changeVisibilityStateForElement(
+                            $applozic('#quick-reply-container'),
+                            'hide'
                         );
                     }
                     var audioGet = document.getElementById('audioGet');

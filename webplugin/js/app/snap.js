@@ -766,7 +766,15 @@ $applozic.extend(true, Snap, {
         }
     },
     changeTextInputState: function (msg, delay = 300) {
-        setTimeout(function () {
+        if(!!delay){
+            setTimeout(function () {
+                Snap.changeTextInputStateRendering(msg);
+            }, delay);
+        } else {
+            Snap.changeTextInputStateRendering(msg);
+        }  
+    },
+    changeTextInputStateRendering: function (msg) {
             var textBox = $applozic('#mck-text-box');
 
             let isEnable = (typeof msg.metadata.enable_text_input === 'boolean' && msg.metadata.enable_text_input) || msg.metadata.enable_text_input == 'true';
@@ -792,13 +800,18 @@ $applozic.extend(true, Snap, {
                 textBox.attr('contenteditable', metadata.enable_text_input);
             }
 
-            if (msg.hasOwnProperty('metadata') && msg.metadata.is_numeric_input) {
-                textBox.attr('pattern', '\d*');
-                textBox.attr('inputmode', 'numeric');
+            if (msg.hasOwnProperty('metadata')) {
+                if(msg.metadata.is_numeric_input === 'true'){
+                    textBox.attr('pattern', '\d*');
+                    textBox.attr('inputmode', 'numeric');
+                } else {
+                    textBox.attr('pattern', '\w*');
+                    textBox.attr('inputmode', 'text');
+                }
             }
+            
             Snap.reloadElement('mck-textbox-container', 'mck-text-box');
             Snap.reloadElement('mck-textbox-container', 'send-button-wrapper');
-        }, delay);
     },
     sessionTimeout: function () {
         var parentWindow = window.parent;

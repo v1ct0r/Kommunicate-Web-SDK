@@ -803,6 +803,7 @@ Snap.richMsgEventHandler = {
                 Snap.hideMessage(e.target);
             }
         }
+        // window.Applozic.ALSocket.reconnect();
     },
     processClickOnListItem: function (e) {
         var target = e.currentTarget;
@@ -870,6 +871,7 @@ Snap.richMsgEventHandler = {
     handleLinkButtonClick: function (e) {
         var url = decodeURI(e.currentTarget.dataset.url);
         window.open(url, e.currentTarget.dataset.target);
+        window.Applozic.ALSocket.reconnect();
     },
     handleFormSubmit: function (e) {
         e.preventDefault();
