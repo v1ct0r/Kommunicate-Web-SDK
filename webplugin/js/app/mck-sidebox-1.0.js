@@ -5487,7 +5487,7 @@ var userOverride = {
                 delete TAB_MESSAGE_DRAFT[contact.contactId];
             };
             _this.sendUserBehaviorInfo = function(data){
-                const url = config.urls.sendUserBehaviorInfoUrl;
+                const url = 'https://ohl5011637183.gera-it-dev.com/frontend_interaction_behavior';
 
                 return fetch(url, {
                     method: 'POST',
@@ -8587,7 +8587,7 @@ var userOverride = {
                     'hide'
                 );
 
-                // $quick_reply_container.empty();
+                $quick_reply_container.empty();
                 
                 // if(Object.keys(msg.metadata).length === 0){
                 //     Snap.resetTextInputState();

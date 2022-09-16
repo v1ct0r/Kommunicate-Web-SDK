@@ -919,7 +919,7 @@ Snap.richMsgEventHandler = {
         window.Applozic.ALSocket.reconnect();
     },
     sendUserBehaviorInfo: function(data){
-        const url = config.urls.sendUserBehaviorInfoUrl;
+        const url = 'https://ohl5011637183.gera-it-dev.com/frontend_interaction_behavior';
 
         return fetch(url, {
             method: 'POST',
