@@ -8587,7 +8587,7 @@ var userOverride = {
                     'hide'
                 );
 
-                $quick_reply_container.empty();
+                // $quick_reply_container.empty();
                 
                 // if(Object.keys(msg.metadata).length === 0){
                 //     Snap.resetTextInputState();
