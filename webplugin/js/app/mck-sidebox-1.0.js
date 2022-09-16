@@ -5488,8 +5488,8 @@ var userOverride = {
             };
             _this.sendUserBehaviorInfo = function(data){
                 const url = config.urls.sendUserBehaviorInfoUrl;
-
-                return fetch(url, {
+                if (url) {
+                    return fetch(url, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -5499,6 +5499,7 @@ var userOverride = {
                 }).catch(error => {
                     throw error
                 })
+                }
             };
             _this.sendForwardMessage = function (forwardMessageKey) {
                 var forwardMessage = ALStorage.getMessageByKey(

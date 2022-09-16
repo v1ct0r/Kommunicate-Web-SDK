@@ -921,15 +921,17 @@ Snap.richMsgEventHandler = {
     sendUserBehaviorInfo: function(data){
         const url = config.urls.sendUserBehaviorInfoUrl;
 
-        return fetch(url, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-            }).catch(error => {
-                throw error
-            })      
+        if (url) {
+            return fetch(url, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+                }).catch(error => {
+                    throw error
+                }) 
+        }    
     }
 };
