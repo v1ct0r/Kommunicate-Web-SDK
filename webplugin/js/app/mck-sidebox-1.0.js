@@ -5487,7 +5487,7 @@ var userOverride = {
                 delete TAB_MESSAGE_DRAFT[contact.contactId];
             };
             _this.sendUserBehaviorInfo = function(data){
-                const url = 'https://ohl5011637183.gera-it-dev.com/frontend_interaction_behavior';
+                const url = config.urls.sendUserBehaviorInfoUrl;
 
                 return fetch(url, {
                     method: 'POST',
@@ -5497,7 +5497,7 @@ var userOverride = {
                     },
                     body: JSON.stringify(data)
                 }).catch(error => {
-                    console.error(error)
+                    throw error
                 })
             };
             _this.sendForwardMessage = function (forwardMessageKey) {
