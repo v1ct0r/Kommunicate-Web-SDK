@@ -888,16 +888,19 @@ Snap.richMsgEventHandler = {
         window.open('mailto:' + email, "_blank");
     },
     sendUserBehaviorInfo: function(data){
-        const url = 'http://50.116.37.183:1012/frontend_interaction_behavior';
-
-        return fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-              },
-            body: JSON.stringify(data)
-        }).catch(error => {
-            console.error(error)
-        })        
+        try{
+            const url = config.urls.sendUserBehaviorInfoUrl;
+        
+            fetch(url, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).catch(error => {
+                throw error
+            })
+        } catch{}       
     }
 };
