@@ -790,7 +790,11 @@ $applozic.extend(true, Snap, {
         }
 
         if (!msg.hasOwnProperty('metadata') || !msg.metadata.hasOwnProperty('enable_text_input')) {
-            Snap.resetTextInputState();
+            textBox.attr('data-text', '');
+            textBox.attr('data-label', '');
+            textBox.attr('aria-label', '')
+            textBox.attr('aria-labelledby', '');
+            textBox.attr('contenteditable', false);
         } else {
             var metadata = msg.metadata;
             var hintTextForTextInput = metadata.hasOwnProperty('text_input_hint') ? metadata.text_input_hint : '';
