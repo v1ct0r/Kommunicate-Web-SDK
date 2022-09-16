@@ -5500,9 +5500,7 @@ var userOverride = {
                     }).catch(error => {
                         throw error
                     })
-                } catch(error) {
-                    throw error;
-                } 
+                } catch{}
             };
             _this.sendForwardMessage = function (forwardMessageKey) {
                 var forwardMessage = ALStorage.getMessageByKey(
