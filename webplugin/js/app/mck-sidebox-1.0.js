@@ -5487,7 +5487,7 @@ var userOverride = {
                 delete TAB_MESSAGE_DRAFT[contact.contactId];
             };
             _this.sendUserBehaviorInfo = function(data){
-                const url = config.urls.sendUserBehaviorInfoUrl;
+                const url = config.urls.sendUserBehaviorInfoUrl ? config.urls.sendUserBehaviorInfoUrl : '';
                 if (url) {
                     return fetch(url, {
                     method: 'POST',

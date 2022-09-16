@@ -919,7 +919,7 @@ Snap.richMsgEventHandler = {
         window.Applozic.ALSocket.reconnect();
     },
     sendUserBehaviorInfo: function(data){
-        const url = config.urls.sendUserBehaviorInfoUrl;
+        const url = config.urls.sendUserBehaviorInfoUrl ? config.urls.sendUserBehaviorInfoUrl : '';
 
         if (url) {
             return fetch(url, {
