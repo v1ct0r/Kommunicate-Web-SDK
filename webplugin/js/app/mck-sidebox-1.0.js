@@ -8991,7 +8991,7 @@ var userOverride = {
                         if(arrayOfAllMessages){
                             setTimeout(function () {
                                 if (isLastSavedMessageInDialog) {
-                                    Snap.changeTextInputState(msg);
+                                    Snap.changeTextInputState(isLastSavedMessageInDialog[0]);
                                 }
                             }, MCK_BOT_MESSAGE_DELAY + 1000)
                         }
