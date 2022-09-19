@@ -8988,22 +8988,15 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-                        if (arrayOfAllMessages) {
-                            if (isLastSavedMessageInDialog) {
+                        setTimeout(function () {
+                            if (arrayOfAllMessages) {
+                                if (isLastSavedMessageInDialog) {
+                                    Snap.changeTextInputState(msg);
+                                }
+                            } else {
                                 Snap.changeTextInputState(msg);
                             }
-                        } else {
-                            Snap.changeTextInputState(msg);
-                        }
-                        // setTimeout(function () {
-                        //     if (arrayOfAllMessages) {
-                        //         if (isLastSavedMessageInDialog) {
-                        //             Snap.changeTextInputState(msg);
-                        //         }
-                        //     } else {
-                        //         Snap.changeTextInputState(msg);
-                        //     }
-                        // }, MCK_BOT_MESSAGE_DELAY + 1000)
+                        }, MCK_BOT_MESSAGE_DELAY + 1000)
                     }
                 } else {
                     $textMessage.html(emoji_template);
