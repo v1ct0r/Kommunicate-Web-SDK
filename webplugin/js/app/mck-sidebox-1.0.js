@@ -8003,7 +8003,6 @@ var userOverride = {
                 allowReload
             ) {
                 // allowReload parameter is using to reload chat widget when the socket connect
-                window.Applozic.ALSocket.reconnect();
                 var showMoreDateTime;
                 var $scrollToDiv = $mck_msg_inner.children(
                     "div[name='message']:first"
