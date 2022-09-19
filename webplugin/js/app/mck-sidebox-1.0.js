@@ -8989,6 +8989,13 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
+                        if (arrayOfAllMessages) {
+                            if (isLastSavedMessageInDialog) {
+                                Snap.changeTextInputState(msg);
+                            }
+                        } else {
+                            Snap.changeTextInputState(msg);
+                        }
                         // setTimeout(function () {
                         //     if (arrayOfAllMessages) {
                         //         if (isLastSavedMessageInDialog) {
