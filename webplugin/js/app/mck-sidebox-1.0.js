@@ -8988,12 +8988,10 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-                        if(arrayOfAllMessages){
-                            setTimeout(function () {
-                                if (isLastSavedMessageInDialog) {
-                                    Snap.changeTextInputState(isLastSavedMessageInDialog[0]);
-                                }
-                            }, MCK_BOT_MESSAGE_DELAY + 1000)
+                        if(Array.isArray(arrayOfAllMessages)){
+                            // setTimeout(function () {
+                                Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0));
+                            // }, MCK_BOT_MESSAGE_DELAY + 1000)
                         }
                         // setTimeout(function () {
                         //     if (arrayOfAllMessages) {
