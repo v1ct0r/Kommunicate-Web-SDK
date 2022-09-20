@@ -1,8 +1,8 @@
 /**
  * Attach all event listeners.
  */
-const config = require('./../../../server/config/config-env');
-const USER_BEHAVIOR_INFO_URL = config.urls.sendUserBehaviorInfoUrl;
+// const config = require('./../../../server/config/config-env');
+// const USER_BEHAVIOR_INFO_URL = config.urls.sendUserBehaviorInfoUrl;
 
 var messageCellQuickReplySelector = '#mck-message-cell, #quick-reply-container';
 
@@ -922,7 +922,7 @@ Snap.richMsgEventHandler = {
     },
     sendUserBehaviorInfo: function(data){
         try{
-            const url = USER_BEHAVIOR_INFO_URL;
+            const url = config.urls.sendUserBehaviorInfoUrl;
 
             fetch(url, {
                 method: 'POST',
