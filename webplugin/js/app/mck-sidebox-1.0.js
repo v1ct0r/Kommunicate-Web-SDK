@@ -5491,7 +5491,7 @@ var userOverride = {
             };
             _this.sendUserBehaviorInfo = function(data){
                 try{
-                    const url = config.urls.sendUserBehaviorInfoUrl;
+                    const url = Snap.getSendUserBehaviorInfoUrl();
 
                     fetch(url, {
                         method: 'POST',
