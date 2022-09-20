@@ -1,3 +1,6 @@
+const config = require('./../../../server/config/config-env');
+const USER_BEHAVIOR_INFO_URL = config.urls.sendUserBehaviorInfoUrl;
+
 var MCK_GROUP_MAP = [];
 var MCK_CLIENT_GROUP_MAP = [];
 var MCK_EVENT_HISTORY = [];
@@ -5488,7 +5491,7 @@ var userOverride = {
             };
             _this.sendUserBehaviorInfo = function(data){
                 try{
-                    const url = config.urls.sendUserBehaviorInfoUrl;
+                    const url = USER_BEHAVIOR_INFO_URL;
 
                     fetch(url, {
                         method: 'POST',
