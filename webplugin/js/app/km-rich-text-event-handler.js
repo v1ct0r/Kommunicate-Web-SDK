@@ -1,9 +1,6 @@
 /**
  * Attach all event listeners.
  */
-// const config = require('./../../../server/config/config-env');
-// const USER_BEHAVIOR_INFO_URL = config.urls.sendUserBehaviorInfoUrl;
-
 var messageCellQuickReplySelector = '#mck-message-cell, #quick-reply-container';
 
 Snap.attachEvents = function ($applozic) {
@@ -922,7 +919,7 @@ Snap.richMsgEventHandler = {
     },
     sendUserBehaviorInfo: function(data){
         try{
-            const url = config.urls.sendUserBehaviorInfoUrl;
+            const url = Snap.getSendUserBehaviorInfoUrl();
 
             fetch(url, {
                 method: 'POST',
