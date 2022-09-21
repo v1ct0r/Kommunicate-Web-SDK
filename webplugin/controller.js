@@ -28,6 +28,8 @@ const generatePluginFile = async (req, res) => {
         PLUGIN_SETTING.snapApiUrl || config.urls.snapBaseUrl;
     PLUGIN_SETTING.applozicBaseUrl =
         PLUGIN_SETTING.applozicBaseUrl || config.urls.applozicBaseUrl;
+    PLUGIN_SETTING.sendUserBehaviorInfoUrl = 
+        PLUGIN_SETTING.sendUserBehaviorInfoUrl || config.urls.sendUserBehaviorInfoUrl;
 
     console.log('setting context and static path', MCK_CONTEXTPATH);
     var data = await util.promisify(fs.readFile)(

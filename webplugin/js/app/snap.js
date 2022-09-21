@@ -10,6 +10,9 @@ $applozic.extend(true, Snap, {
     getBaseUrl: function () {
         return KM_PLUGIN_SETTINGS.snapApiUrl;
     },
+    getSendUserBehaviorInfoUrl: function () {
+        return KM_PLUGIN_SETTINGS.sendUserBehaviorInfoUrl;
+    },
     setDefaultAgent: function (agentName) {
         //snap.defaultAgent  = agentName;
         throw new Error('not implemented');
