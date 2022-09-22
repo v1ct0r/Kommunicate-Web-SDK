@@ -260,11 +260,11 @@ Snap.markup = {
     },
     getQuickRepliesTemplate: function (needLimitHeight) {
         var classList = needLimitHeight && 'limitHeight';
-        return '<div class="' + classList + '">' +
+        return '<div class="' + classList + '"><ul class="quick-reply-container-list">' +
                 `{{#payload}}
-                     <button type="button" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button>
+                     <li><button type="button" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button></li>
                 {{/payload}}`
-            +'</div>';
+            +'<ul></div>';
     },
     getGenericSuggestedReplyButton: function () {
         return `<button type="button" aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}" data-buttonId="{{button_id}}" data-payload="{{payload}}">{{name}}</button>`;
@@ -531,7 +531,7 @@ Snap.markup = {
 };
 
 Snap.markup.buttonContainerTemplate = function (options) {
-    var containerMarkup = '<div class="km-cta-multi-button-container"><ul>';
+    var containerMarkup = '<div class="km-cta-multi-button-container"><ul class="quick-reply-container-list">';
     var payload = JSON.parse(options.payload);
     var formData = options.formData || '';
     var buttonClass = 'km-add-more-rooms ';
@@ -991,7 +991,7 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
     var buttonPayloadList = metadata.payload
         ? JSON.parse(metadata.payload)
         : [];
-    var buttonContainerHtml = '<div class="km-cta-multi-button-container km-cta-multi-button-links-container"><ul>';
+    var buttonContainerHtml = '<div class="km-cta-multi-button-container km-cta-multi-button-links-container"><ul class="quick-reply-container-list">';
     var buttonClass =
         ' km-custom-widget-border-color ' +
         (buttonPayloadList.length == 1
