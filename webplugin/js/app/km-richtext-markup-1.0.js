@@ -989,7 +989,7 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
     var buttonPayloadList = metadata.payload
         ? JSON.parse(metadata.payload)
         : [];
-    var buttonContainerHtml = '<div class="km-cta-multi-button-container km-cta-multi-button-links-container">';
+    var buttonContainerHtml = '<div class="km-cta-multi-button-container km-cta-multi-button-links-container"><ul>';
     var buttonClass =
         ' km-custom-widget-border-color ' +
         (buttonPayloadList.length == 1
@@ -1015,6 +1015,7 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
             ));
         singlePayload.hidePostCTA = false;
         if (singlePayload.type == 'link' || singlePayload.type == 'submit') {
+            buttonContainerHtml += '<li>';
             singlePayload.url =
                 buttonPayloadList[i].action.url ||
                 buttonPayloadList[i].action.formAction;
@@ -1038,10 +1039,12 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
                 (buttonContainerHtml += Snap.markup.getFormMarkup({
                     payload: singlePayload.action,
                 }));
+            buttonContainerHtml += '</li>';
         } else if (
             singlePayload.type == 'quickReply' ||
             singlePayload.type == 'suggestedReply'
         ) {
+            buttonContainerHtml += '<li>';
             singlePayload.buttonClass = 'km-quick-rpy-btn ' + buttonClass;
             singlePayload.message =
                 singlePayload.action.message || singlePayload.name;
@@ -1052,13 +1055,14 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
                 Snap.markup.getGenericSuggestedReplyButton(),
                 singlePayload
             );
+            buttonContainerHtml += '</li>';
         } else if (
             singlePayload.action &&
             singlePayload.action.type == 'submit'
         ) {
         }
     }
-    return buttonContainerHtml + '</div>';
+    return buttonContainerHtml + '</ul></div>';
 };
 Snap.markup.getVideoMarkup = function (options) {
     if (options && options.payload) {
