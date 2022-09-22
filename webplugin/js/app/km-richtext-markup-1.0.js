@@ -531,7 +531,7 @@ Snap.markup = {
 };
 
 Snap.markup.buttonContainerTemplate = function (options) {
-    var containerMarkup = '<div class="km-cta-multi-button-container">';
+    var containerMarkup = '<div class="km-cta-multi-button-container"><ul>';
     var payload = JSON.parse(options.payload);
     var formData = options.formData || '';
     var buttonClass = 'km-add-more-rooms ';
@@ -543,6 +543,7 @@ Snap.markup.buttonContainerTemplate = function (options) {
             : 'km-cta-button-many km-custom-widget-border-color';
     var requestType = options.requestType;
     for (var i = 0; i < payload.length; i++) {
+        containerMarkup += '<li>';
         payload[i].replyMetadata =
             typeof payload[i].replyMetadata == 'object'
                 ? JSON.stringify(payload[i].replyMetadata)
@@ -558,8 +559,9 @@ Snap.markup.buttonContainerTemplate = function (options) {
             Object.keys(formData).length > 0 &&
                 (containerMarkup += Snap.markup.getFormMarkup(options));
         }
+        containerMarkup += '</li>';
     }
-    containerMarkup += '</div>';
+    containerMarkup += '</ul></div>';
     return containerMarkup;
 };
 Snap.markup.getFormMarkup = function (options) {
