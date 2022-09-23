@@ -15021,11 +15021,12 @@ var userOverride = {
                     $mck_msg_preview_visual_indicator
                         .removeClass('n-vis')
                         .addClass('vis');
-                } 
-                // else {
-                //     // $mck_preview_msg_content.html('');
-                //     $mck_msg_preview_visual_indicator_text.html('');
-                // }
+                } else {
+                    // $mck_preview_msg_content.html('');
+                    //$mck_msg_preview_visual_indicator_text.html('');
+                    const $badge_count = document.getElementById('applozic-badge-count');
+                    --$badge_count.innerHTML;
+                }
                 if (message.fileMetaKey) {
                     // $mck_preview_file_content.html(alFileService.getFileIcon(message));
                     $mck_msg_preview_visual_indicator_text.html(
