@@ -417,7 +417,7 @@ Snap.markup = {
                                         <p class="mck-radio-group-title">{{title}}</p>
                                         <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list">
                                             {{#options}}
-                                                    <li><label for="{{label}}" class="mck-form-label">
+                                                    <li><label class="mck-form-label">
                                                         <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
                                                         <b>{{label}}</b>
                                                     </label></li>                                      
@@ -428,7 +428,7 @@ Snap.markup = {
                                         <p class="mck-radio-group-title">{{title}}</p>
                                         <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list">
                                             {{#options}}
-                                                    <li><label for="{{label}}" class="mck-form-label">
+                                                    <li><label class="mck-form-label">
                                                         <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
                                                         <b>{{label}}</b>
                                                     </label></li>                                       
