@@ -264,7 +264,7 @@ Snap.markup = {
                 `{{#payload}}
                      <li><button type="button" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button></li>
                 {{/payload}}`
-            +'<ul></div>';
+            +'</ul></div>';
     },
     getGenericSuggestedReplyButton: function () {
         return `<button type="button" aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}" data-buttonId="{{button_id}}" data-payload="{{payload}}">{{name}}</button>`;
@@ -415,25 +415,25 @@ Snap.markup = {
                                 {{#supported}}
                                     {{#radio}}
                                         <p class="mck-radio-group-title">{{title}}</p>
-                                        <div class="mck-form-radio-wrapper">
+                                        <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list">
                                             {{#options}}
-                                                    <label for="{{label}}" class="mck-form-label">
+                                                    <li><label for="{{label}}" class="mck-form-label">
                                                         <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
                                                         <b>{{label}}</b>
-                                                    </label>                                      
+                                                    </label></li>                                      
                                             {{/options}}
-                                        </div>
+                                        </ul></div>
                                     {{/radio}}
                                     {{#checkbox}}
                                         <p class="mck-radio-group-title">{{title}}</p>
-                                        <div class="mck-form-radio-wrapper">
+                                        <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list">
                                             {{#options}}
-                                                    <label for="{{label}}" class="mck-form-label">
+                                                    <li><label for="{{label}}" class="mck-form-label">
                                                         <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
                                                         <b>{{label}}</b>
-                                                    </label>                                       
+                                                    </label></li>                                       
                                             {{/options}}
-                                        </div>
+                                        </ul></div>
                                     {{/checkbox}}
                                     {{#text}}
                                         <div class="mck-form-text-wrapper">
