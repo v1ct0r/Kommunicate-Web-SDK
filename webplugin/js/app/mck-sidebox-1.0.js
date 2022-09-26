@@ -8951,7 +8951,7 @@ var userOverride = {
                         }
                         $textMessage.append(x);
                         if(Array.isArray(arrayOfAllMessages)){
-                            Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0));
+                            Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0), 0);
                         }
                         // setTimeout(function () {
                         //     if (arrayOfAllMessages) {
