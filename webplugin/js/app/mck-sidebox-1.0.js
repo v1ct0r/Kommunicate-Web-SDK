@@ -8556,6 +8556,8 @@ var userOverride = {
                     'hide'
                 );
 
+                $quick_reply_container.empty();
+
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
