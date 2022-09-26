@@ -9049,6 +9049,7 @@ var userOverride = {
                         maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099',
                         minuteIncrement: 60
                     });
+                    $applozic(".flatpickr-minute").attr('disabled', 'true');
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
                     const minYear =  (new Date(inline[i].getAttribute('min'))).getFullYear();
