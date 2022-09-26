@@ -8934,6 +8934,11 @@ var userOverride = {
                       'show'
                     );
                 }
+
+                if(Array.isArray(arrayOfAllMessages)){
+                    Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0), 0);
+                }
+
                 if (
                   emoji_template.indexOf('emoji-inner') === -1 &&
                   msg.contentType === 0
@@ -8950,9 +8955,9 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-                        if(Array.isArray(arrayOfAllMessages)){
-                            Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0), 0);
-                        }
+                        // if(Array.isArray(arrayOfAllMessages)){
+                        //     Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0), 0);
+                        // }
                         // setTimeout(function () {
                         //     if (arrayOfAllMessages) {
                         //         if (isLastSavedMessageInDialog) {
