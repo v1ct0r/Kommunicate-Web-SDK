@@ -8556,6 +8556,8 @@ var userOverride = {
                     'hide'
                 );
 
+                $quick_reply_container.empty();
+
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
@@ -8932,6 +8934,11 @@ var userOverride = {
                       'show'
                     );
                 }
+
+                if(Array.isArray(arrayOfAllMessages)){
+                    Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0), 0);
+                }
+
                 if (
                   emoji_template.indexOf('emoji-inner') === -1 &&
                   msg.contentType === 0
@@ -8948,13 +8955,18 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-                            // if (arrayOfAllMessages) {
-                            //     if (isLastSavedMessageInDialog) {
-                            //         Snap.changeTextInputState(msg);
-                            //     }
-                            // } else {
-                            //     Snap.changeTextInputState(msg);
-                            // }
+                        // if(Array.isArray(arrayOfAllMessages)){
+                        //     Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0), 0);
+                        // }
+                        // setTimeout(function () {
+                        //     if (arrayOfAllMessages) {
+                        //         if (isLastSavedMessageInDialog) {
+                        //             Snap.changeTextInputState(msg);
+                        //         }
+                        //     } else {
+                        //         Snap.changeTextInputState(msg);
+                        //     }
+                        // }, MCK_BOT_MESSAGE_DELAY + 1000)
                     }
                 } else {
                     $textMessage.html(emoji_template);
@@ -9049,6 +9061,7 @@ var userOverride = {
                         maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099',
                         minuteIncrement: 60
                     });
+                    $applozic(".flatpickr-minute").attr('disabled', 'true');
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
                     const minYear =  (new Date(inline[i].getAttribute('min'))).getFullYear();
