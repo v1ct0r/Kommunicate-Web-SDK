@@ -207,7 +207,7 @@ Snap.markup = {
 
         if (options.type == 'link') {
             return (
-                '<button type="button" tabindex="3" aria-label="' +
+                '<button type="button" tabindex="-1" aria-label="' +
                 (options.replyText || options.name) +
                 '" title= "' +
                 (options.replyText || options.name) +
@@ -250,7 +250,7 @@ Snap.markup = {
     getQuickRepliesTemplate: function () {
         return `<ul class="quick-reply-container-list">
             {{#payload}}
-                <li><button type="button" tabindex="3" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{title}}</button></li>
+                <li><button type="button" tabindex="-1" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{title}}</button></li>
             {{/payload}}
             </ul>`;
     },
@@ -406,7 +406,7 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list">
                                             {{#options}}
                                                 <li>
-                                                    <input tabindex="3" type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}">
+                                                    <input tabindex="-1" type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}">
                                                     <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
                                                 </li>                                     
                                             {{/options}}
@@ -417,7 +417,7 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list">
                                             {{#options}}
                                                 <li>
-                                                    <input tabindex="3" type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}">
+                                                    <input tabindex="-1" type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}">
                                                     <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
                                                 </li>                                     
                                             {{/options}}
