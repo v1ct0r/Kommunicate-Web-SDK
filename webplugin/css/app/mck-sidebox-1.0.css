@@ -6534,11 +6534,11 @@ body.accesibility :focus {
     margin-bottom: 5px;
 }
 
-/* .quick-reply-container-list{
+.quick-reply-container-list{
     list-style: none;
     padding: 0;
 }
 
 .quick-reply-container-list button{
     width: 95%;
-} */
+}
