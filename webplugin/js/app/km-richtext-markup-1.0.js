@@ -248,11 +248,11 @@ Snap.markup = {
         }
     },
     getQuickRepliesTemplate: function () {
-        return `<ul class="quick-reply-container-list">
+        return `<div><ul class="quick-reply-container-list">
             {{#payload}}
                 <li><button type="button" tabindex="3" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{title}}</button></li>
             {{/payload}}
-            </ul>`;
+            </ul></div>`;
     },
     getGenericSuggestedReplyButton: function () {
         return `<button aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{name}}</button>`;
