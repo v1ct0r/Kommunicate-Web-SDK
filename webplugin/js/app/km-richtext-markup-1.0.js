@@ -248,12 +248,11 @@ Snap.markup = {
         }
     },
     getQuickRepliesTemplate: function () {
-        var classList = needLimitHeight && 'limitHeight';
-        return `<div class="' + classList + '"><ul class="quick-reply-container-list">
+        return `<ul class="quick-reply-container-list">
             {{#payload}}
                 <li><button type="button" tabindex="3" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{title}}</button></li>
             {{/payload}}
-            </ul></div>`;
+            </ul>`;
     },
     getGenericSuggestedReplyButton: function () {
         return `<button aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{name}}</button>`;
@@ -395,10 +394,9 @@ Snap.markup = {
             <div class="km-carousel-card-sub-title">{{subtitle}}</div>
             <div class="{{cardDescriptionClass}}"><div class="km-carousel-card-description">{{description}}</div></div>`;
     },
-    getFormTemplate: function (needLimitHeight) {
-        var classList = needLimitHeight && 'limitHeight';
-        return '<div class="mck-msg-box-rich-text-container mck-form-template-container ' + classList  + '">' +
-                `<form class="km-btn-hidden-form mck-actionable-form" action="{{actionUrl}}" method="post">
+    getFormTemplate: function () {
+        return `<div class="mck-msg-box-rich-text-container mck-form-template-container">
+                <form class="km-btn-hidden-form mck-actionable-form" action="{{actionUrl}}" method="post">
                     <div class="mck-form-template-wrapper">
                         {{#payload}}
                             {{#.}}
@@ -593,7 +591,7 @@ Snap.markup.quickRepliesContainerTemplate = function (options, template) {
             break;
         case SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL:
             buttonClass =
-              'km-carousel-card-button km-carousel-card-quick-rpy-button ';
+                'km-carousel-card-button km-carousel-card-quick-rpy-button ';
             break;
     }
     template == SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.QUICK_REPLY &&
@@ -603,6 +601,7 @@ Snap.markup.quickRepliesContainerTemplate = function (options, template) {
                 : payload.length == 2
                 ? 'km-cta-button-2'
                 : 'km-cta-button-many');
+
     for (var i = 0; i < payload.length; i++) {
         payload[i].replyMetadata =
             typeof payload[i].replyMetadata == 'object'
@@ -611,8 +610,7 @@ Snap.markup.quickRepliesContainerTemplate = function (options, template) {
         payload[i].buttonClass = buttonClass;
         payload[i].hidePostCTA = hidePostCTA;
     }
-
-    return Mustache.to_html(Snap.markup.getQuickRepliesTemplate(options.needLimitHeight), {
+    return Mustache.to_html(Snap.markup.getQuickRepliesTemplate(), {
         payload: payload,
     });
 };
@@ -858,7 +856,7 @@ Snap.markup.getActionableFormMarkup = function (options) {
                 }
             }
         });
-        return Mustache.to_html(Snap.markup.getFormTemplate(options.needLimitHeight), options);
+        return Mustache.to_html(Snap.markup.getFormTemplate(), options);
     }
 };
 Snap.markup.getCarouselMarkup = function (options) {
