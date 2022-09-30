@@ -1346,7 +1346,7 @@
     width: 12px;
     height: 12px;
     margin-top: 2.4px;
-    background: white;
+    background: transparent;
 }
 .km-carousel-card-overlay-text-without-img {
     position: static;
