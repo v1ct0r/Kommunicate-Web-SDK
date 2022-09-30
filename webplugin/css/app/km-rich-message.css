@@ -423,7 +423,7 @@
 
 .km-cta-button.km-carousel-card-button,
 .km-cta-button.km-faq-list-link-button,
-.km-carousel-card-footer .km-quick-replies{
+.km-carousel-card-footer .km-cta-multi-button-container button.km-quick-replies{
     border: 1px solid #e7e4e4;
     text-align: center;
     padding-left: 0px;
