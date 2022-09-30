@@ -429,6 +429,11 @@
     padding-left: 0px;
     font-size: 12px;
 }
+
+.km-carousel-card-footer ul{
+    margin-bottom: 0 !important;
+}
+
 .km-cta-button.km-faq-list-link-button {
     border: none;
     font-size: 14px;
@@ -1364,7 +1369,7 @@
 }
 .km-carousel-card-info-wrapper-without-header {
     border-top: 1px solid #e7e4e4;
-    border-radius: 7px 7px 0 0;
+    /* border-radius: 7px 7px 0 0; */
 }
 .km-carousel-card-info-wrapper-with-buttons {
     border-bottom: 0;
