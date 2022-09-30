@@ -1239,8 +1239,9 @@
 .km-carousel-card-header {
     position: relative;
     /*height: 93px;*/
-    border-top: 1px solid #e7e4e4;
+    border: 1px solid #e7e4e4;
     border-radius: 7px 7px 0 0;
+    overflow: hidden;
 }
 .km-carousel-card-title {
     font-size: 18px;
@@ -1367,10 +1368,10 @@
 .km-carousel-card-description-wrapper {
     /*height: 44px;*/
 }
-.km-carousel-card-info-wrapper-without-header {
+/* .km-carousel-card-info-wrapper-without-header {
     border-top: 1px solid #e7e4e4;
-    /* border-radius: 7px 7px 0 0; */
-}
+    border-radius: 7px 7px 0 0;
+} */
 .km-carousel-card-info-wrapper-with-buttons {
     border-bottom: 0;
 }
