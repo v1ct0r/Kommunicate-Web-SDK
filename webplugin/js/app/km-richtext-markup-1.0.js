@@ -207,7 +207,7 @@ Snap.markup = {
 
         if (options.type == 'link') {
             return (
-                '<button aria-label="' +
+                '<button type="button" tabindex="3" aria-label="' +
                 (options.replyText || options.name) +
                 '" title= "' +
                 (options.replyText || options.name) +
@@ -217,7 +217,7 @@ Snap.markup = {
                 encodeURI(options.url) +
                 '  " data-metadata="' +
                 options.replyMetadata +
-                '" data-buttontype="button" tabindex="'+ 3 + index + '" data-target="' +
+                '" data-buttontype="button" data-target="' +
                 Snap.markup.getLinkTarget(options) +
                 '" ">' +
                 options.name +
@@ -227,7 +227,7 @@ Snap.markup = {
             );
         } else {
             return (
-                '<button aria-label="' +
+                '<button type="button" tabindex="3" aria-label="' +
                 (options.replyText ||
                     (options.action && options.action.message) ||
                     options.name) +
@@ -237,7 +237,7 @@ Snap.markup = {
                     options.name) +
                 '" data-metadata="' +
                 options.replyMetadata +
-                '" data-buttontype="submit" tabindex="'+ 3 + index + '"data-requesttype= "' +
+                '" data-buttontype="submit" data-requesttype= "' +
                 requestType +
                 '" class="km-cta-button km-custom-widget-text-color  ' +
                 buttonClass +
@@ -248,11 +248,11 @@ Snap.markup = {
         }
     },
     getQuickRepliesTemplate: function () {
-        return `<ul class="quick-reply-container-list">
+        return `<div><ul class="quick-reply-container-list">
             {{#payload}}
-                <li><button aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{title}}</button></li>
+                <li><button type="button" tabindex="3" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{title}}</button></li>
             {{/payload}}
-            </ul>`;
+            </ul></div>`;
     },
     getGenericSuggestedReplyButton: function () {
         return `<button aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}">{{name}}</button>`;
@@ -406,7 +406,7 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list">
                                             {{#options}}
                                                 <li>
-                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}" tabindex="3">
+                                                    <input tabindex="3" type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}">
                                                     <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
                                                 </li>                                     
                                             {{/options}}
@@ -417,7 +417,7 @@ Snap.markup = {
                                         <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list">
                                             {{#options}}
                                                 <li>
-                                                    <input type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}" tabindex="3">
+                                                    <input tabindex="3" type="{{type}}" name="{{name}}" value="{{value}}" aria-label="{{label}}">
                                                     <label for="{{label}}" class="mck-form-label"><b>{{label}}</b></label>   
                                                 </li>                                     
                                             {{/options}}
