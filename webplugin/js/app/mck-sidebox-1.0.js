@@ -8937,6 +8937,11 @@ var userOverride = {
                       $applozic('#quick-reply-container'),
                       'show'
                     );
+                } else {
+                    Snap.changeVisibilityStateForElement(
+                        $applozic('#quick-reply-container'),
+                        'hide'
+                      );
                 }
 
                 if(Array.isArray(arrayOfAllMessages)){
