@@ -822,7 +822,7 @@ var userOverride = {
             }
             document.addEventListener('keydown', function (e) {
                 console.log(e);
-                if (e.key === 'Tab' || e.key === 'ArrowRight') {
+                if (e.key === 'Tab' || e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                     document.body.classList.add('accesibility');
                 } else {
                     document.body.classList.remove('accesibility');
