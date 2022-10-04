@@ -803,9 +803,14 @@ $applozic.extend(true, Snap, {
                 textBox.attr('contenteditable', metadata.enable_text_input);
             }
 
-            if (msg.hasOwnProperty('metadata') && msg.metadata.is_numeric_input === 'true') {
-                textBox.attr('pattern', '\d*');
-                textBox.attr('inputmode', 'numeric');
+            if (msg.hasOwnProperty('metadata')) {
+                if(msg.metadata.is_numeric_input === 'true'){
+                    textBox.attr('pattern', '\d*');
+                    textBox.attr('inputmode', 'numeric');
+                } else {
+                    textBox.attr('pattern', '\w*');
+                    textBox.attr('inputmode', 'text');
+                }
             }
             
             Snap.reloadElement('mck-textbox-container', 'mck-text-box');
