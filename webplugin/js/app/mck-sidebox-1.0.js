@@ -8556,7 +8556,7 @@ var userOverride = {
                 ];
 
                 Snap.changeVisibilityStateForElement(
-                    '#quick-reply-container',
+                    $applozic('#quick-reply-container'),
                     'hide'
                 );
 
@@ -8571,10 +8571,10 @@ var userOverride = {
                 //     w.console.log('changeTextInputState', msg);
                 //     Snap.changeTextInputState(msg, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1200);
                 // }
-                if (	
-                    (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider'))	
-                    || kmRichTextMarkup.includes('km-btn-hidden-form')	
-                    || kmRichTextMarkup.includes('km-cta-multi-button-links-container')	
+                if (
+                    (kmRichTextMarkup.includes('km-quick-replies') &&
+                        !kmRichTextMarkup.includes('km-div-slider')) ||
+                    kmRichTextMarkup.includes('km-btn-hidden-form')
                 ) {
                     //don't need to append buttons to the messageTemplate arrea,
                     //because we append them to the quick-reply-container
@@ -8620,7 +8620,7 @@ var userOverride = {
                         //MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + ('sendToDevice' in msg) ? 1500 : 0
                     }
                 }
-                if (msg.message || msg.metadata.templateId === '10') {
+                if (msg.message) {
                     append
                         ? $applozic
                             .tmpl('messageTemplate', msgList)
@@ -8992,8 +8992,6 @@ var userOverride = {
                             "div[data-msgkey='" + msg.key + "'] .km-div-slider"
                         )
                     );
-                    $applozic(".tns-controls button[data-controls='prev']").attr('aria-label', 'card slide button');	
-                    $applozic(".tns-controls button[data-controls='next']").attr('aria-label', 'card slide button');
                 }
 
                 if (msg.fileMeta) {
