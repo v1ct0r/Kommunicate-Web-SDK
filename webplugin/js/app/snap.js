@@ -813,8 +813,8 @@ $applozic.extend(true, Snap, {
                 textBox.attr('pattern', '\d*');
                 textBox.attr('inputmode', 'numeric');
             } else {
-                textBox.attr('pattern', '\w*');
-                textBox.attr('inputmode', 'text');
+                textBox.removeAttr('pattern');
+                textBox.removeAttr('inputmode');
             }
         }
 
