@@ -410,6 +410,13 @@
 .km-undecorated-link {
     text-decoration: none;
 }
+.km-undecorated-link--button{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #e5e5e5;
+    text-align: start;
+    background-color: transparent;
+}
 .km-cta-button.km-link-button {
     text-align: left;
     line-height: var(--btn-line-height);
