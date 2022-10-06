@@ -417,10 +417,12 @@ Snap.markup = {
                                         <p class="mck-radio-group-title">{{title}}</p>
                                         <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list">
                                             {{#options}}
-                                                    <li><label class="mck-form-label">
-                                                        <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3">
-                                                        <b>{{label}}</b>
-                                                    </label></li>                                      
+                                                    <li>
+                                                        <label class="mck-form-label">
+                                                            <input type="radio" name="{{name}}" value="{{value}}" tabindex="3">
+                                                            <b>{{label}}</b>
+                                                        </label>
+                                                    </li>                                      
                                             {{/options}}
                                         </ul></div>
                                     {{/radio}}
@@ -428,10 +430,12 @@ Snap.markup = {
                                         <p class="mck-radio-group-title">{{title}}</p>
                                         <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list">
                                             {{#options}}
-                                                    <li><label class="mck-form-label">
-                                                        <input type="{{type}}" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true">
-                                                        <b>{{label}}</b>
-                                                    </label></li>                                       
+                                                    <li>
+                                                        <label class="mck-form-label">
+                                                            <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true">
+                                                            <b>{{label}}</b>
+                                                        </label>
+                                                    </li>                                       
                                             {{/options}}
                                         </ul></div>
                                     {{/checkbox}}
