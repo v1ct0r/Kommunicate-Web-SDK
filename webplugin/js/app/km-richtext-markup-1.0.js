@@ -315,7 +315,7 @@ Snap.markup = {
                  <ul class="km-faq-list--body_list {{elementClass}}">
                      {{#elements}}
                      <li class="{{handlerClass}}" data-type="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-reply = "{{dataReply}}" data-languageCode = "{{updateLanguage}}" data-articleid= "{{dataArticleId}}" data-source="{{source}}">
-                        <button type="button" tabindex="3" aria-label="{{title}}" title="{{title}}" {{target}} class="km-undecorated-link km-undecorated-link--button km-custom-widget-text-color" >
+                        <button type="button" tabindex="3" aria-label="{{title}}" title="{{title}}" data-target="{{target}}" class="km-undecorated-link km-undecorated-link--button km-custom-widget-text-color" >
                             <div class="km-faq-list--body_img">
                                 {{{imgSrc}}}
                             </div>
