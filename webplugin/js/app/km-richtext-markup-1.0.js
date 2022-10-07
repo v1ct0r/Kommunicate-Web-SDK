@@ -419,7 +419,7 @@ Snap.markup = {
                                                     <li>
                                                         <label class="mck-form-label">
                                                             <input type="radio" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true">
-                                                            <b>{{label}}</b>
+                                                            {{label}}
                                                         </label>
                                                     </li>                                      
                                             {{/options}}
@@ -432,7 +432,7 @@ Snap.markup = {
                                                     <li>
                                                         <label class="mck-form-label">
                                                             <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true">
-                                                            <b>{{label}}</b>
+                                                            {{label}}
                                                         </label>
                                                     </li>                                       
                                             {{/options}}
