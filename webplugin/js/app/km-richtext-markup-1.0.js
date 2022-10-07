@@ -320,7 +320,7 @@ Snap.markup = {
                                 {{{imgSrc}}}
                             </div>
                             <div class="km-faq-list--body_que-ans">
-                                 <p class="km-faq-list--body_que">
+                                 <p class="km-faq-list--body_que" aria-hidden="true">
                                     {{title}}
                                  </p>
                                  <p class="km-faq-list--body_ans">  
