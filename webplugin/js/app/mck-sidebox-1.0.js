@@ -820,7 +820,11 @@ var userOverride = {
                 );
             }
             document.addEventListener('keydown', function (e) {
-                if (e.code === 'Tab') {document.body.classList.add('accesibility')};
+                if (e.key === 'Tab' || e.key === 'ArrowRight') {
+                    document.body.classList.add('accesibility');
+                } else {
+                    document.body.classList.remove('accesibility');
+                }
             });
             document.addEventListener('mousedown', function (e) {
                 document.body.classList.remove('accesibility');
@@ -8568,9 +8572,9 @@ var userOverride = {
                 //     Snap.changeTextInputState(msg, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1200);
                 // }
                 if (
-                    (kmRichTextMarkup.includes('km-quick-replies') &&
-                        !kmRichTextMarkup.includes('km-div-slider')) ||
-                    kmRichTextMarkup.includes('km-btn-hidden-form')
+                    (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider'))	
+                    || kmRichTextMarkup.includes('km-btn-hidden-form')	
+                    || kmRichTextMarkup.includes('km-cta-multi-button-links-container')
                 ) {
                     //don't need to append buttons to the messageTemplate arrea,
                     //because we append them to the quick-reply-container
@@ -8933,6 +8937,11 @@ var userOverride = {
                       $applozic('#quick-reply-container'),
                       'show'
                     );
+                } else {
+                    Snap.changeVisibilityStateForElement(
+                        $applozic('#quick-reply-container'),
+                        'hide'
+                      );
                 }
 
                 if(Array.isArray(arrayOfAllMessages)){
@@ -8983,6 +8992,8 @@ var userOverride = {
                             "div[data-msgkey='" + msg.key + "'] .km-div-slider"
                         )
                     );
+                    $applozic(".tns-controls button[data-controls='prev']").attr('aria-label', 'card slide button');	
+                    $applozic(".tns-controls button[data-controls='next']").attr('aria-label', 'card slide button');
                 }
 
                 if (msg.fileMeta) {
