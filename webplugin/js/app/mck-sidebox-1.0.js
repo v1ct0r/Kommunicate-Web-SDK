@@ -8603,6 +8603,7 @@ var userOverride = {
                     (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider'))
                     || kmRichTextMarkup.includes('km-btn-hidden-form')
                     || kmRichTextMarkup.includes('km-cta-multi-button-links-container')
+                    || kmRichTextMarkup.includes('km-chat-faq-list')
                 ) {
                     //don't need to append buttons to the messageTemplate arrea,
                     //because we append them to the quick-reply-container
