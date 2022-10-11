@@ -8327,7 +8327,7 @@ var userOverride = {
                 var statusIcon = 'mck-pending-icon';
                 var contactExpr = 'vis';
                 var timeStamp = 'mck-timestamp-' + msg.key;
-                if (msg.type === 4 || msg.type === 6) {
+                if (msg.type === 0 || msg.type === 4 || msg.type === 6) {
                     floatWhere = 'mck-msg-left';
                 }
                 if (
@@ -8370,7 +8370,7 @@ var userOverride = {
                     msg.groupId &&
                     msg.contentType !== 4 &&
                     contact.type !== 7 &&
-                    (msg.type === 4 || msg.type === 6)
+                    (msg.type === 0 || msg.type === 4 || msg.type === 6)
                 ) {
                     displayName = _this.getTabDisplayName(msg.to, false);
                     showNameExpr = 'vis';
@@ -8603,6 +8603,7 @@ var userOverride = {
                     (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider'))
                     || kmRichTextMarkup.includes('km-btn-hidden-form')
                     || kmRichTextMarkup.includes('km-cta-multi-button-links-container')
+                    || kmRichTextMarkup.includes('km-chat-faq-list')
                 ) {
                     //don't need to append buttons to the messageTemplate arrea,
                     //because we append them to the quick-reply-container
@@ -10811,7 +10812,8 @@ var userOverride = {
                 if (
                     msg.type === 7 ||
                     msg.type === 6 ||
-                    msg.type === 4
+                    msg.type === 4 ||
+                    msg.type === 0
                 ) {
                     return '';
                 }
