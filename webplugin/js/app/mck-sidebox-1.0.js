@@ -8599,6 +8599,10 @@ var userOverride = {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
 
+                if(kmRichTextMarkup.includes('km-chat-faq-list') && !msg.message){
+                    msg.message = 'test';
+                }
+
                 if (
                     (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider'))
                     || kmRichTextMarkup.includes('km-btn-hidden-form')
