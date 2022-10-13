@@ -8243,6 +8243,10 @@ var userOverride = {
 
                 if (!Snap.visibleMessage(msg)) return;
 
+                if(msg.message.match(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g)){
+                    msg.message = null;
+                }
+
                 if (
                     typeof msg.metadata === 'object' &&
                     typeof msg.metadata.AL_REPLY !== 'undefined'
