@@ -8599,8 +8599,11 @@ var userOverride = {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
 
-                if(kmRichTextMarkup.includes('km-chat-faq-list') && !msg.message){
-                    msg.message = 'test';
+                if(
+                    (!msg.message && kmRichTextMarkup.includes('km-chat-faq-list'))
+                    || (!msg.message && kmRichTextMarkup.includes('km-template-img'))
+                ){
+                    msg.message = 'no message';
                 }
 
                 if (
