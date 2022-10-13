@@ -8606,10 +8606,6 @@ var userOverride = {
                     msg.message = 'no message';
                 }
 
-                if(msg.message.match(/<(.)>.?|<(.*)>/g)){
-                    msg.message = null;
-                }
-
                 if (
                     (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider'))
                     || kmRichTextMarkup.includes('km-btn-hidden-form')
