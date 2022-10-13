@@ -8243,7 +8243,7 @@ var userOverride = {
 
                 if (!Snap.visibleMessage(msg)) return;
 
-                if(msg.message.match(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g)){
+                if(msg.message && msg.message.match(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g)){
                     msg.message = null;
                 }
 
