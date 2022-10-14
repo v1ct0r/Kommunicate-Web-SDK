@@ -5451,6 +5451,7 @@ var userOverride = {
                 // }
 
                 const browserInfo = detect.parse(navigator.userAgent);
+                let localButtonId = messagePxy.buttonId;
                 let localPayload = messagePxy.payload ? messagePxy.payload : message.metadata.payload;
                 if (localPayload && typeof localPayload === 'string') {
                     localPayload = JSON.parse(localPayload);
@@ -5458,8 +5459,8 @@ var userOverride = {
                     localPayload = {};
                 }
 
-                if(!messagePxy.buttonId && messagePxy.message && Array.isArray(localPayload)){
-                    messagePxy.buttonId = localPayload.find(e => e.title === messagePxy.message).button_id
+                if(!localButtonId && messagePxy.message && Array.isArray(localPayload)){
+                    localButtonId = localPayload.find(e => e.title === messagePxy.message).button_id
                 }
 
                 const behaviorInfo = {
@@ -5470,7 +5471,7 @@ var userOverride = {
                     browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
                     event_type: messagePxy.contentType,
                     message_id: CURRENT_GROUP_DATA.messageId,
-                    button_id: messagePxy.buttonId,
+                    button_id: localButtonId,
                     button_name: messagePxy.message,
                     button_type: messagePxy.type,
                     button_url: tabId,
