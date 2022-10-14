@@ -5460,10 +5460,10 @@ var userOverride = {
                 }
 
                 if(!localButtonId && messagePxy.message){
-                    let localPayloadArray = localPayload.elements || localPayload || null;
-                    // if(Array.isArray(localPayloadArray)){
-                    //     localButtonId = localPayloadArray.find(e => e.title === messagePxy.message)?.button_id;
-                    // }
+                    let localPayloadArray = localPayload.elements || localPayload;
+                    if(localPayloadArray && Array.isArray(localPayloadArray)){
+                        localButtonId = localPayloadArray.find(e => e.title === messagePxy.message).button_id;
+                    }
                 }
 
                 const behaviorInfo = {
