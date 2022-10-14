@@ -5458,6 +5458,10 @@ var userOverride = {
                     localPayload = {};
                 }
 
+                if(!messagePxy.buttonId && messagePxy.message && Array.isArray(localPayload)){
+                    messagePxy.buttonId = localPayload.find(e => e.title === messagePxy.message).button_id
+                }
+
                 const behaviorInfo = {
                     sender_id: snap._globals.userId,
                     group_id: CURRENT_GROUP_DATA.tabId.toString(),
