@@ -260,9 +260,9 @@ Snap.markup = {
     },
     getQuickRepliesTemplate: function (needLimitHeight) {
         var classList = needLimitHeight && 'limitHeight';
-        return '<div class="' + classList + '"><ul class="quick-reply-container-list" tabindex="0">' +
+        return '<div class="' + classList + '"><ul class="quick-reply-container-list" tabindex="-1">' +
                 `{{#payload}}
-                     <li tabindex="-1"><button type="button" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button></li>
+                     <li tabindex="0"><button type="button" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " tabindex="3" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button></li>
                 {{/payload}}`
             +'</ul></div>';
     },
@@ -312,9 +312,9 @@ Snap.markup = {
          </div>
          <div class="km-faq-list--body">
              <div class="km-faq-list--body_list-container">
-                 <ul class="km-faq-list--body_list {{elementClass}}" tabindex="0">
+                 <ul class="km-faq-list--body_list {{elementClass}}" tabindex="-1">
                      {{#elements}}
-                     <li tabindex="-1" class="{{handlerClass}}" data-type="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-reply = "{{dataReply}}" data-languageCode = "{{updateLanguage}}" data-articleid= "{{dataArticleId}}" data-source="{{source}}">
+                     <li tabindex="0" class="{{handlerClass}}" data-type="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-reply = "{{dataReply}}" data-languageCode = "{{updateLanguage}}" data-articleid= "{{dataArticleId}}" data-source="{{source}}">
                         <button type="button" tabindex="3" aria-label="{{title}}" title="{{title}}" data-buttonid="{{button_id}}" data-target="{{target}}" class="km-undecorated-link km-undecorated-link--button km-custom-widget-text-color" >
                             <div class="km-faq-list--body_img">
                                 {{{imgSrc}}}
@@ -414,9 +414,9 @@ Snap.markup = {
                                 {{#supported}}
                                     {{#radio}}
                                         <p class="mck-radio-group-title">{{title}}</p>
-                                        <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list" tabindex="0">
+                                        <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list" tabindex="-1">
                                             {{#options}}
-                                                    <li tabindex="-1">
+                                                    <li tabindex="0">
                                                         <label class="mck-form-label">
                                                             <input type="radio" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true">
                                                             {{label}}
@@ -427,9 +427,9 @@ Snap.markup = {
                                     {{/radio}}
                                     {{#checkbox}}
                                         <p class="mck-radio-group-title">{{title}}</p>
-                                        <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list" tabindex="0">
+                                        <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list" tabindex="-1">
                                             {{#options}}
-                                                    <li tabindex="-1">
+                                                    <li tabindex="0">
                                                         <label class="mck-form-label">
                                                             <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true">
                                                             {{label}}
@@ -534,7 +534,7 @@ Snap.markup = {
 };
 
 Snap.markup.buttonContainerTemplate = function (options) {
-    var containerMarkup = '<div class="km-cta-multi-button-container"><ul class="quick-reply-container-list" tabindex="0">';
+    var containerMarkup = '<div class="km-cta-multi-button-container"><ul class="quick-reply-container-list" tabindex="-1">';
     var payload = JSON.parse(options.payload);
     var formData = options.formData || '';
     var buttonClass = 'km-add-more-rooms ';
@@ -546,7 +546,7 @@ Snap.markup.buttonContainerTemplate = function (options) {
             : 'km-cta-button-many km-custom-widget-border-color';
     var requestType = options.requestType;
     for (var i = 0; i < payload.length; i++) {
-        containerMarkup += '<li tabindex="-1">';
+        containerMarkup += '<li tabindex="0">';
         payload[i].replyMetadata =
             typeof payload[i].replyMetadata == 'object'
                 ? JSON.stringify(payload[i].replyMetadata)
@@ -994,7 +994,7 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
     var buttonPayloadList = metadata.payload
         ? JSON.parse(metadata.payload)
         : [];
-    var buttonContainerHtml = '<div class="km-cta-multi-button-container km-cta-multi-button-links-container"><ul class="quick-reply-container-list" tabindex="0">';
+    var buttonContainerHtml = '<div class="km-cta-multi-button-container km-cta-multi-button-links-container"><ul class="quick-reply-container-list" tabindex="-1">';
     var buttonClass =
         ' km-custom-widget-border-color ' +
         (buttonPayloadList.length == 1
@@ -1020,7 +1020,7 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
             ));
         singlePayload.hidePostCTA = false;
         if (singlePayload.type == 'link' || singlePayload.type == 'submit') {
-            buttonContainerHtml += '<li tabindex="-1">';
+            buttonContainerHtml += '<li tabindex="0">';
             singlePayload.url =
                 buttonPayloadList[i].action.url ||
                 buttonPayloadList[i].action.formAction;
