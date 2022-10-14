@@ -5462,7 +5462,7 @@ var userOverride = {
                 if(!localButtonId && messagePxy.message){
                     let localPayloadArray = localPayload.elements || localPayload || null;
                     if(Array.isArray(localPayloadArray)){
-                        button_id = localPayloadArray.find(e => e.title === messagePxy.message)?.button_id;
+                        localButtonId = localPayloadArray.find(e => e.title === messagePxy.message)?.button_id;
                     }
                 }
 
