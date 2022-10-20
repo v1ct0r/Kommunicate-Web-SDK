@@ -624,6 +624,7 @@ Snap.markup.quickRepliesContainerTemplate = function (options, template) {
                 : payload[i].replyMetadata;
         payload[i].buttonClass = buttonClass;
         payload[i].hidePostCTA = hidePostCTA;
+        payload[i].button_id = options.button_id;
     }
 
     return Mustache.to_html(Snap.markup.getQuickRepliesTemplate(options.needLimitHeight), {
