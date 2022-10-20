@@ -5452,7 +5452,11 @@ var userOverride = {
 
                 const browserInfo = detect.parse(navigator.userAgent);
                 let localButtonId = messagePxy.buttonId;
-                let localPayload = messagePxy.payload ? messagePxy.payload : message.metadata.payload;
+                let localPayload = message.metadata.payload;
+                if (messagePxy.payload) {
+                    localPayload = messagePxy.payload
+                }
+
                 if (localPayload && typeof localPayload === 'string') {
                     localPayload = JSON.parse(localPayload);
                 } else if (!!localPayload){
