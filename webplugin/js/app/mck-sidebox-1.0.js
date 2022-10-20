@@ -5464,8 +5464,8 @@ var userOverride = {
                     if(localPayloadArray && Array.isArray(localPayloadArray)){
                         localButtonId = localPayloadArray.find(e => e.title === messagePxy.message).button_id;
                     }
-                    if(!localButtonId){
-                        let localButtonIdArr = arr.filter(e => e.hasOwnProperty('buttons')).map(e => e = e.buttons).flat();
+                    if(!localButtonId && localPayloadArray && Array.isArray(localPayloadArray)){
+                        let localButtonIdArr = localPayloadArray.filter(e => e.hasOwnProperty('buttons')).map(e => e = e.buttons).flat();
                         if(localButtonIdArr.length){
                             localButtonId = localButtonIdArr.find(e => e.name === messagePxy.message).button_id;
                         }
