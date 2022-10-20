@@ -892,10 +892,11 @@ Snap.markup.getCarouselMarkup = function (options) {
                 buttons[i].action.payload = JSON.stringify([
                     buttons[i].action.payload,
                 ]);
+                buttons[i].action.button_id = buttons[i].button_id;
                 cardFooter = cardFooter.concat(
                     Snap.markup.quickRepliesContainerTemplate(
                         buttons[i].action,
-                        SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL
+                        SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL,
                     )
                 );
             } else if (
