@@ -664,7 +664,8 @@ Snap.richMsgEventHandler = {
             return;
         }
         if(data.hasOwnProperty('Date')){
-            data.Date = data.Date.toLocaleDateString("en-US");
+            const newDate = new Date(data.Date);
+            data.Date = newDate.toLocaleDateString("en-US");
         }
         if (requestType == 'json') {
             var xhr = new XMLHttpRequest();
