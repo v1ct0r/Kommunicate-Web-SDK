@@ -663,10 +663,10 @@ Snap.richMsgEventHandler = {
         if (isActionableForm && validationResults.indexOf('failed') != -1) {
             return;
         }
-        if(data.hasOwnProperty('Date')){
-            const newDate = new Date(data.Date);
-            data.Date = newDate.toLocaleDateString("en-US");
-        }
+        // if(data.hasOwnProperty('Date')){
+        //     const newDate = new Date(data.Date);
+        //     data.Date = newDate.toLocaleDateString("en-US");
+        // }
         if (requestType == 'json') {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
