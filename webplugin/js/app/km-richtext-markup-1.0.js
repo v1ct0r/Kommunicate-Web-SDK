@@ -224,7 +224,7 @@ Snap.markup = {
                 encodeURIComponent(JSON.stringify(currentButton.action)) +
                 '  " data-metadata="' +
                 options.replyMetadata +
-                '" data-buttontype="button" tabindex="0" data-target="' +
+                '" data-buttontype="button" tabindex="3" data-target="' +
                 Snap.markup.getLinkTarget(options) +
                 '" rel = "noopener noreferrer">' +
                 options.name +
@@ -262,12 +262,12 @@ Snap.markup = {
         var classList = needLimitHeight && 'limitHeight';
         return '<div class="' + classList + '"><ul class="quick-reply-container-list" tabindex="-1">' +
                 `{{#payload}}
-                     <li><button type="button" tabindex="0" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button></li>
+                     <li tabindex="-1"><button type="button" tabindex="3" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button></li>
                 {{/payload}}`
             +'</ul></div>';
     },
     getGenericSuggestedReplyButton: function () {
-        return `<button type="button" tabindex="0" aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}" data-buttonId="{{button_id}}" data-payload="{{payload}}">{{name}}</button>`;
+        return `<button type="button" tabindex="3" aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}" data-buttonId="{{button_id}}" data-payload="{{payload}}">{{name}}</button>`;
     },
     getPassangerDetail: function (options) {
         if (!options.sessionId) {
@@ -314,8 +314,8 @@ Snap.markup = {
              <div class="km-faq-list--body_list-container">
                  <ul class="km-faq-list--body_list {{elementClass}}" tabindex="-1">
                      {{#elements}}
-                     <li class="{{handlerClass}}" data-type="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-reply = "{{dataReply}}" data-languageCode = "{{updateLanguage}}" data-articleid= "{{dataArticleId}}" data-source="{{source}}">
-                        <button type="button" tabindex="0" aria-label="{{title}}" title="{{title}}" data-buttonid="{{button_id}}" data-target="{{target}}" class="km-undecorated-link km-undecorated-link--button km-custom-widget-text-color" >
+                     <li tabindex="-1" class="{{handlerClass}}" data-type="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-reply = "{{dataReply}}" data-languageCode = "{{updateLanguage}}" data-articleid= "{{dataArticleId}}" data-source="{{source}}">
+                        <button type="button" tabindex="3" aria-label="{{title}}" title="{{title}}" data-buttonid="{{button_id}}" data-target="{{target}}" class="km-undecorated-link km-undecorated-link--button km-custom-widget-text-color" >
                             <div class="km-faq-list--body_img">
                                 {{{imgSrc}}}
                             </div>
@@ -337,7 +337,7 @@ Snap.markup = {
          <div class="km-faq-list--footer">
                  <div class="km-faq-list--footer_button-container">
                     {{#buttons}}
-                        <button type="button" tabindex="0" aria-label="{{name}}" class="{{buttonClass}} km-cta-button km-custom-widget-border-color km-custom-widget-text-color km-add-more-rooms {{handlerClass}} km-faq-list-link-button" data-type ="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-url={{href}} data-target={{target}} data-reply="{{dataReply}}">{{name}}</button>
+                        <button type="button" tabindex="3" aria-label="{{name}}" class="{{buttonClass}} km-cta-button km-custom-widget-border-color km-custom-widget-text-color km-add-more-rooms {{handlerClass}} km-faq-list-link-button" data-type ="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-url={{href}} data-target={{target}} data-reply="{{dataReply}}">{{name}}</button>
                     {{/buttons}}  
              </div>
          </div>
@@ -391,7 +391,7 @@ Snap.markup = {
         </div>`;
     },
     getButtonListTemplate: function () {
-        return `{{#buttons}}<button type="button" tabindex="0" aria-label="{{action.payload.title}}" class="km-carousel-card-button {{{class}}}">{{action.payload.title}}</button>{{/buttons}}`;
+        return `{{#buttons}}<button type="button" tabindex="3" aria-label="{{action.payload.title}}" class="km-carousel-card-button {{{class}}}">{{action.payload.title}}</button>{{/buttons}}`;
     },
     getCardHeaderTemplate: function () {
         return `<div>{{{pageSrc}}}</div>`;
@@ -416,8 +416,8 @@ Snap.markup = {
                                         <p class="mck-radio-group-title">{{title}}</p>
                                         <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list" tabindex="-1">
                                             {{#options}}
-                                                    <li tabindex="0">
-                                                        <label class="mck-form-label">
+                                                    <li tabindex="-1">
+                                                        <label class="mck-form-label" tabindex="-1">
                                                             <input type="radio" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true">
                                                             {{label}}
                                                         </label>
@@ -429,8 +429,8 @@ Snap.markup = {
                                         <p class="mck-radio-group-title">{{title}}</p>
                                         <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list" tabindex="-1">
                                             {{#options}}
-                                                    <li tabindex="0">
-                                                        <label class="mck-form-label">
+                                                    <li tabindex="-1">
+                                                        <label class="mck-form-label" tabindex="-1">
                                                             <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true">
                                                             {{label}}
                                                         </label>
@@ -546,7 +546,7 @@ Snap.markup.buttonContainerTemplate = function (options) {
             : 'km-cta-button-many km-custom-widget-border-color';
     var requestType = options.requestType;
     for (var i = 0; i < payload.length; i++) {
-        containerMarkup += '<li>';
+        containerMarkup += '<li tabindex="-1">';
         payload[i].replyMetadata =
             typeof payload[i].replyMetadata == 'object'
                 ? JSON.stringify(payload[i].replyMetadata)
@@ -1022,7 +1022,7 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
             ));
         singlePayload.hidePostCTA = false;
         if (singlePayload.type == 'link' || singlePayload.type == 'submit') {
-            buttonContainerHtml += '<li>';
+            buttonContainerHtml += '<li tabindex="-1">';
             singlePayload.url =
                 buttonPayloadList[i].action.url ||
                 buttonPayloadList[i].action.formAction;
@@ -1051,7 +1051,7 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
             singlePayload.type == 'quickReply' ||
             singlePayload.type == 'suggestedReply'
         ) {
-            buttonContainerHtml += '<li>';
+            buttonContainerHtml += '<li tabindex="-1">';
             singlePayload.buttonClass = 'km-quick-rpy-btn ' + buttonClass;
             singlePayload.message =
                 singlePayload.action.message || singlePayload.name;
