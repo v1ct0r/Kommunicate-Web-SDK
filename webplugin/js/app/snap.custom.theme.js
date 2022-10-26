@@ -86,7 +86,7 @@ function KmCustomTheme() {
                 ];
             }
         } else {
-            return SnapConstants.CUSTOM_WIDGETS_SVG[1]; // DEFAULT ICON
+            return SnapConstants.CUSTOM_WIDGETS_SVG[5]; // DEFAULT ICON
         }
     };
 
