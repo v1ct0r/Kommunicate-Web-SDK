@@ -820,7 +820,11 @@ var userOverride = {
                 );
             }
             document.addEventListener('keydown', function (e) {
-                if (e.code === 'Tab') {document.body.classList.add('accesibility')};
+                if (e.key === 'Tab' || e.key === 'ArrowRight') {
+                    document.body.classList.add('accesibility');
+                } else {
+                    document.body.classList.remove('accesibility');
+                }
             });
             document.addEventListener('mousedown', function (e) {
                 document.body.classList.remove('accesibility');
@@ -5454,17 +5458,20 @@ var userOverride = {
                 delete TAB_MESSAGE_DRAFT[contact.contactId];
             };
             _this.sendUserBehaviorInfo = function(data){
-                const url = 'http://50.116.37.183:1012/frontend_interaction_behavior';
+                try{
+                    const url = Snap.getSendUserBehaviorInfoUrl();
 
-                return fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                }).catch(error => {
-                    console.error(error)
-                })
+                    fetch(url, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    }).catch(error => {
+                        throw error
+                    })
+                } catch{}
             };
             _this.sendForwardMessage = function (forwardMessageKey) {
                 var forwardMessage = ALStorage.getMessageByKey(
@@ -8553,19 +8560,21 @@ var userOverride = {
                     'hide'
                 );
 
+                $quick_reply_container.empty();
+
                 if (msg.metadata.MESSAGE_TEMPLATE) {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
+                // if (
+                //     (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
+                // ) {
+                //     w.console.log('changeTextInputState', msg);
+                //     Snap.changeTextInputState(msg, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1200);
+                // }
                 if (
-                    (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
-                ) {
-                    w.console.log('changeTextInputState', msg);
-                    Snap.changeTextInputState(msg, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + 1200);
-                }
-                if (
-                    (kmRichTextMarkup.includes('km-quick-replies') &&
-                        !kmRichTextMarkup.includes('km-div-slider')) ||
-                    kmRichTextMarkup.includes('km-btn-hidden-form')
+                    (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider'))	
+                    || kmRichTextMarkup.includes('km-btn-hidden-form')	
+                    || kmRichTextMarkup.includes('km-cta-multi-button-links-container')
                 ) {
                     //don't need to append buttons to the messageTemplate arrea,
                     //because we append them to the quick-reply-container
@@ -8589,12 +8598,12 @@ var userOverride = {
                     ) {
                         setTimeout(function () {
                             $quick_reply_container.empty();
-                            if (!Boolean(msg.metadata.is_close_conversation)) {
+                            if (msg.metadata.is_close_conversation !== 'true') {
                                 $quick_reply_container.append(
                                     $applozic(kmRichTextMarkup)
                                 );
                             }
-                            Snap.changeTextInputState(msg, 0);
+                            // Snap.changeTextInputState(msg, 0);
                             Snap.changeVisibilityStateForElement(
                               $quick_reply_container,
                               'show'
@@ -8607,8 +8616,8 @@ var userOverride = {
                               0
                             );
                             _this.initDatepicker();
-                        }, MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + ('sendToDevice' in msg) ? 1500 : 0)
-
+                        }, MCK_BOT_MESSAGE_DELAY + 1500)
+                        //MCK_BOT_MESSAGE_DELAY * MCK_BOT_MESSAGE_QUEUE.length + ('sendToDevice' in msg) ? 1500 : 0
                     }
                 }
                 if (msg.message) {
@@ -8928,7 +8937,17 @@ var userOverride = {
                       $applozic('#quick-reply-container'),
                       'show'
                     );
+                } else {
+                    Snap.changeVisibilityStateForElement(
+                        $applozic('#quick-reply-container'),
+                        'hide'
+                      );
                 }
+
+                if(Array.isArray(arrayOfAllMessages)){
+                    Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0), 0);
+                }
+
                 if (
                   emoji_template.indexOf('emoji-inner') === -1 &&
                   msg.contentType === 0
@@ -8945,13 +8964,18 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-                            // if (arrayOfAllMessages) {
-                            //     if (isLastSavedMessageInDialog) {
-                            //         Snap.changeTextInputState(msg);
-                            //     }
-                            // } else {
-                            //     Snap.changeTextInputState(msg);
-                            // }
+                        // if(Array.isArray(arrayOfAllMessages)){
+                        //     Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0), 0);
+                        // }
+                        // setTimeout(function () {
+                        //     if (arrayOfAllMessages) {
+                        //         if (isLastSavedMessageInDialog) {
+                        //             Snap.changeTextInputState(msg);
+                        //         }
+                        //     } else {
+                        //         Snap.changeTextInputState(msg);
+                        //     }
+                        // }, MCK_BOT_MESSAGE_DELAY + 1000)
                     }
                 } else {
                     $textMessage.html(emoji_template);
@@ -8968,6 +8992,8 @@ var userOverride = {
                             "div[data-msgkey='" + msg.key + "'] .km-div-slider"
                         )
                     );
+                    $applozic(".tns-controls button[data-controls='prev']").attr('aria-label', 'card slide button');	
+                    $applozic(".tns-controls button[data-controls='next']").attr('aria-label', 'card slide button');
                 }
 
                 if (msg.fileMeta) {
@@ -9046,6 +9072,7 @@ var userOverride = {
                         maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099',
                         minuteIncrement: 60
                     });
+                    $applozic(".flatpickr-minute").attr('disabled', 'true');
                 }
                 if (inline.length) for (let i=0; i<inline.length; i++) {
                     const minYear =  (new Date(inline[i].getAttribute('min'))).getFullYear();
@@ -11724,11 +11751,11 @@ var userOverride = {
                     MCK_BOT_MESSAGE_QUEUE.shift();
 
                     if (MCK_BOT_MESSAGE_QUEUE.length !== 0) {
-                        _this.procesMessageTimerDelay();
                         Snap.changeVisibilityStateForElement(
                             $applozic('#quick-reply-container'),
                             'hide'
                         );
+                        _this.procesMessageTimerDelay();
                     } else {
                         Snap.changeTextInputState(currentMessageObject);
                     }
@@ -11746,20 +11773,20 @@ var userOverride = {
                               'hide'
                             );
                         }
-                        if (currentMessageObject.metadata.is_close_conversation)  {
-                            $quick_reply_container.empty();
-                            $applozic('#mck-text-box').empty();
-                            Snap.changeVisibilityStateForElement(
-                                $applozic('#quick-reply-container'),
-                                'hide'
-                            );
-                        }
 
                         $mck_msg_inner.animate(
                           {
                               scrollTop: $mck_msg_inner.prop('scrollHeight'),
                           },
                           0
+                        );
+                    }
+                    if (currentMessageObject.metadata.is_close_conversation || !(currentMessageObject.metadata.payload))  {
+                        $quick_reply_container.empty();
+                        $applozic('#mck-text-box').empty();
+                        Snap.changeVisibilityStateForElement(
+                            $applozic('#quick-reply-container'),
+                            'hide'
                         );
                     }
                     var audioGet = document.getElementById('audioGet');

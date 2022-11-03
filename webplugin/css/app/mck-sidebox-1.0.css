@@ -6533,3 +6533,12 @@ body.accesibility :focus {
     margin-top: 0;
     margin-bottom: 5px;
 }
+
+.quick-reply-container-list{
+    list-style: none;
+    padding: 0;
+}
+
+.quick-reply-container-list button{
+    width: 95%;
+}

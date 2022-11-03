@@ -52,6 +52,7 @@ const configEnv = {
             snapBaseUrl: 'https://api-staging.snap.io',
             botPlatformApi: 'https://bots-test.snap.io',
             hostUrl: 'https://widget-staging.snap.io',
+            sendUserBehaviorInfoUrl: 'https://ohl5011637183.gera-it-dev.com/frontend_interaction_behavior',
         },
         pluginProperties: {
             pseudoNameEnabled: true,
