@@ -224,7 +224,7 @@ Snap.markup = {
                 encodeURIComponent(JSON.stringify(currentButton.action)) +
                 '  " data-metadata="' +
                 options.replyMetadata +
-                '" data-buttontype="button" tabindex="3" data-target="' +
+                '" data-buttontype="button" tabindex="1" data-target="' +
                 Snap.markup.getLinkTarget(options) +
                 '" rel = "noopener noreferrer">' +
                 options.name +
@@ -248,7 +248,7 @@ Snap.markup = {
                 currentButton.button_id +
                 '  " data-buttonAction="' +
                 JSON.stringify(currentButton.action) +
-                '" data-buttontype="submit" tabindex="3" data-requesttype= "' +
+                '" data-buttontype="submit" tabindex="1" data-requesttype= "' +
                 requestType +
                 '" class="km-cta-button km-custom-widget-text-color  ' +
                 buttonClass +
@@ -262,7 +262,7 @@ Snap.markup = {
         var classList = needLimitHeight && 'limitHeight';
         return '<div class="' + classList + '"><ul class="quick-reply-container-list" tabindex="-1">' +
                 `{{#payload}}
-                     <li tabindex="-1"><button type="button" tabindex="3" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button></li>
+                     <li tabindex="-1"><button type="button" tabindex="1" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button></li>
                 {{/payload}}`
             +'</ul></div>';
     },
@@ -418,7 +418,7 @@ Snap.markup = {
                                             {{#options}}
                                                     <li tabindex="-1">
                                                         <label class="mck-form-label" tabindex="-1">
-                                                            <input type="radio" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true">
+                                                            <input type="radio" name="{{name}}" value="{{value}}" tabindex="1" aria-hidden="true">
                                                             {{label}}
                                                         </label>
                                                     </li>                                      
@@ -431,7 +431,7 @@ Snap.markup = {
                                             {{#options}}
                                                     <li tabindex="-1">
                                                         <label class="mck-form-label" tabindex="-1">
-                                                            <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true">
+                                                            <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="1" aria-hidden="true">
                                                             {{label}}
                                                         </label>
                                                     </li>                                       
