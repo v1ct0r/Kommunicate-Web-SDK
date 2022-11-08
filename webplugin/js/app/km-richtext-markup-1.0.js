@@ -224,7 +224,7 @@ Snap.markup = {
                 encodeURIComponent(JSON.stringify(currentButton.action)) +
                 '  " data-metadata="' +
                 options.replyMetadata +
-                '" data-buttontype="button" data-target="' +
+                '" data-buttontype="button" tabindex="1" data-target="' +
                 Snap.markup.getLinkTarget(options) +
                 '" rel = "noopener noreferrer">' +
                 options.name +
@@ -248,7 +248,7 @@ Snap.markup = {
                 currentButton.button_id +
                 '  " data-buttonAction="' +
                 JSON.stringify(currentButton.action) +
-                '" data-buttontype="submit" data-requesttype= "' +
+                '" data-buttontype="submit" tabindex="1" data-requesttype= "' +
                 requestType +
                 '" class="km-cta-button km-custom-widget-text-color  ' +
                 buttonClass +
@@ -260,14 +260,14 @@ Snap.markup = {
     },
     getQuickRepliesTemplate: function (needLimitHeight) {
         var classList = needLimitHeight && 'limitHeight';
-        return '<div class="' + classList + '"><ul class="quick-reply-container-list">' +
+        return '<div class="' + classList + '"><ul class="quick-reply-container-list" tabindex="-1">' +
                 `{{#payload}}
-                     <li><button type="button" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button></li>
+                     <li tabindex="-1"><button type="button" tabindex="1" aria-label="{{title}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}"  data-buttonId="{{button_id}}">{{title}}</button></li>
                 {{/payload}}`
             +'</ul></div>';
     },
     getGenericSuggestedReplyButton: function () {
-        return `<button type="button" aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}" data-buttonId="{{button_id}}" data-payload="{{payload}}">{{name}}</button>`;
+        return `<button type="button" tabindex="3" aria-label="{{name}}" title='{{message}}' class="km-quick-replies km-custom-widget-text-color {{buttonClass}} " data-metadata = "{{replyMetadata}}" data-languageCode = "{{action.updateLanguage}}" data-hidePostCTA="{{hidePostCTA}}" data-buttonId="{{button_id}}" data-payload="{{payload}}">{{name}}</button>`;
     },
     getPassangerDetail: function (options) {
         if (!options.sessionId) {
@@ -312,10 +312,10 @@ Snap.markup = {
          </div>
          <div class="km-faq-list--body">
              <div class="km-faq-list--body_list-container">
-                 <ul class="km-faq-list--body_list {{elementClass}}">
+                 <ul class="km-faq-list--body_list {{elementClass}}" tabindex="-1">
                      {{#elements}}
-                     <li class="{{handlerClass}}" data-type="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-reply = "{{dataReply}}" data-languageCode = "{{updateLanguage}}" data-articleid= "{{dataArticleId}}" data-source="{{source}}">
-                        <button type="button" aria-label="{{title}}" title="{{title}}" data-buttonid="{{button_id}}" data-target="{{target}}" class="km-undecorated-link km-undecorated-link--button km-custom-widget-text-color" >
+                     <li tabindex="-1" class="{{handlerClass}}" data-type="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-reply = "{{dataReply}}" data-languageCode = "{{updateLanguage}}" data-articleid= "{{dataArticleId}}" data-source="{{source}}">
+                        <button type="button" tabindex="3" aria-label="{{title}}" title="{{title}}" data-buttonid="{{button_id}}" data-target="{{target}}" class="km-undecorated-link km-undecorated-link--button km-custom-widget-text-color" >
                             <div class="km-faq-list--body_img">
                                 {{{imgSrc}}}
                             </div>
@@ -337,7 +337,7 @@ Snap.markup = {
          <div class="km-faq-list--footer">
                  <div class="km-faq-list--footer_button-container">
                     {{#buttons}}
-                        <button type="button" aria-label="{{name}}" class="{{buttonClass}} km-cta-button km-custom-widget-border-color km-custom-widget-text-color km-add-more-rooms {{handlerClass}} km-faq-list-link-button" data-type ="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-url={{href}} data-target={{target}} data-reply="{{dataReply}}">{{name}}</button>
+                        <button type="button" tabindex="3" aria-label="{{name}}" class="{{buttonClass}} km-cta-button km-custom-widget-border-color km-custom-widget-text-color km-add-more-rooms {{handlerClass}} km-faq-list-link-button" data-type ="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-url={{href}} data-target={{target}} data-reply="{{dataReply}}">{{name}}</button>
                     {{/buttons}}  
              </div>
          </div>
@@ -391,7 +391,7 @@ Snap.markup = {
         </div>`;
     },
     getButtonListTemplate: function () {
-        return `{{#buttons}}<button type="button" aria-label="{{action.payload.title}}" class="km-carousel-card-button {{{class}}}">{{action.payload.title}}</button>{{/buttons}}`;
+        return `{{#buttons}}<button type="button" tabindex="3" aria-label="{{action.payload.title}}" class="km-carousel-card-button {{{class}}}">{{action.payload.title}}</button>{{/buttons}}`;
     },
     getCardHeaderTemplate: function () {
         return `<div>{{{pageSrc}}}</div>`;
@@ -414,11 +414,11 @@ Snap.markup = {
                                 {{#supported}}
                                     {{#radio}}
                                         <p class="mck-radio-group-title">{{title}}</p>
-                                        <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list">
+                                        <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list" tabindex="-1">
                                             {{#options}}
-                                                    <li>
-                                                        <label class="mck-form-label">
-                                                            <input type="radio" name="{{name}}" value="{{value}}" aria-hidden="true">
+                                                    <li tabindex="-1">
+                                                        <label class="mck-form-label" tabindex="-1">
+                                                            <input type="radio" name="{{name}}" value="{{value}}" tabindex="1" aria-hidden="true">
                                                             {{label}}
                                                         </label>
                                                     </li>                                      
@@ -427,11 +427,11 @@ Snap.markup = {
                                     {{/radio}}
                                     {{#checkbox}}
                                         <p class="mck-radio-group-title">{{title}}</p>
-                                        <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list">
+                                        <div class="mck-form-radio-wrapper"><ul class="quick-reply-container-list" tabindex="-1">
                                             {{#options}}
-                                                    <li>
-                                                        <label class="mck-form-label">
-                                                            <input type="checkbox" name="{{name}}" value="{{value}}" aria-hidden="true">
+                                                    <li tabindex="-1">
+                                                        <label class="mck-form-label" tabindex="-1">
+                                                            <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="1" aria-hidden="true">
                                                             {{label}}
                                                         </label>
                                                     </li>                                       
@@ -534,7 +534,7 @@ Snap.markup = {
 };
 
 Snap.markup.buttonContainerTemplate = function (options) {
-    var containerMarkup = '<div class="km-cta-multi-button-container"><ul class="quick-reply-container-list">';
+    var containerMarkup = '<div class="km-cta-multi-button-container"><ul class="quick-reply-container-list" tabindex="-1">';
     var payload = JSON.parse(options.payload);
     var formData = options.formData || '';
     var buttonClass = 'km-add-more-rooms ';
@@ -546,7 +546,7 @@ Snap.markup.buttonContainerTemplate = function (options) {
             : 'km-cta-button-many km-custom-widget-border-color';
     var requestType = options.requestType;
     for (var i = 0; i < payload.length; i++) {
-        containerMarkup += '<li>';
+        containerMarkup += '<li tabindex="-1">';
         payload[i].replyMetadata =
             typeof payload[i].replyMetadata == 'object'
                 ? JSON.stringify(payload[i].replyMetadata)
@@ -996,7 +996,7 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
     var buttonPayloadList = metadata.payload
         ? JSON.parse(metadata.payload)
         : [];
-    var buttonContainerHtml = '<div class="km-cta-multi-button-container km-cta-multi-button-links-container"><ul class="quick-reply-container-list">';
+    var buttonContainerHtml = '<div class="km-cta-multi-button-container km-cta-multi-button-links-container"><ul class="quick-reply-container-list" tabindex="-1">';
     var buttonClass =
         ' km-custom-widget-border-color ' +
         (buttonPayloadList.length == 1
@@ -1022,7 +1022,7 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
             ));
         singlePayload.hidePostCTA = false;
         if (singlePayload.type == 'link' || singlePayload.type == 'submit') {
-            buttonContainerHtml += '<li>';
+            buttonContainerHtml += '<li tabindex="-1">';
             singlePayload.url =
                 buttonPayloadList[i].action.url ||
                 buttonPayloadList[i].action.formAction;
@@ -1051,7 +1051,7 @@ Snap.markup.getGenericButtonMarkup = function (metadata) {
             singlePayload.type == 'quickReply' ||
             singlePayload.type == 'suggestedReply'
         ) {
-            buttonContainerHtml += '<li>';
+            buttonContainerHtml += '<li tabindex="-1">';
             singlePayload.buttonClass = 'km-quick-rpy-btn ' + buttonClass;
             singlePayload.message =
                 singlePayload.action.message || singlePayload.name;
