@@ -9118,10 +9118,10 @@ var userOverride = {
                         minuteIncrement: 60,
                         "disable": [
                             function(date) {
-                                // if(popupDate.dataset.hide_weekend === 'true'){
-                                //     return (date.getDay() === 0 || date.getDay() === 6);
-                                // }
-                                return true
+                                if(popupDate.dataset.hideweekend === 'true'){
+                                    return (date.getDay() === 0 || date.getDay() === 6);
+                                }
+                                return false
                             }
                         ],
                     });
