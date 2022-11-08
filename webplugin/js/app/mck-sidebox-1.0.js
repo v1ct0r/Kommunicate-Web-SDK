@@ -9116,7 +9116,7 @@ var userOverride = {
                         minDate:  popupDate.attr('min') ? popupDate.attr('min') : '01/01/1900',
                         maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099',
                         minuteIncrement: 60,
-                        disable: [
+                        "disable": [
                             function(date) {
                                 if(popupDate.dataset.hide_weekend === 'true'){
                                     return (date.getDay() === 0 || date.getDay() === 6);
