@@ -9115,7 +9115,15 @@ var userOverride = {
                         disableMobile: true,
                         minDate:  popupDate.attr('min') ? popupDate.attr('min') : '01/01/1900',
                         maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099',
-                        minuteIncrement: 60
+                        minuteIncrement: 60,
+                        disable: [
+                            function(date) {
+                                if(popupDate.attr('hide_weekend') === 'true'){
+                                    return (date.getDay() === 0 || date.getDay() === 6);
+                                }
+                                return false
+                            }
+                        ],
                     });
                     enableMins && $applozic(".flatpickr-minute").attr('disabled', 'true');
                 }

@@ -489,7 +489,7 @@ Snap.markup = {
                                             inputmode="numeric" pattern="\d*" aria-label="Text box, double tap to edit" min="{{min}}" max="{{max}}">
                                         {{/number}}  
                                         {{^number}}
-                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" tabindex="3" min="{{min}}" max="{{max}}" data-enable-mins="{{enable_mins}}" 
+                                            <input type="{{type}}" placeholder="{{placeholder}}" name="{{label}}" class="{{datepicker_type}}" tabindex="3" min="{{min}}" max="{{max}}" data-hide-weekend="{{hide_weekend}}" data-enable-mins="{{enable_mins}}" 
                                             aria-label="Text box, double tap to edit">
                                         {{/number}}
                                     </div>
