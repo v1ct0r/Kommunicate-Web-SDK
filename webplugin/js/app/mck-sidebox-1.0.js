@@ -9108,7 +9108,7 @@ var userOverride = {
                 var popupDate = $applozic(".popup");
                 var inline = $applozic(".inline");
                 var enableMins = popupDate.attr('enable_mins') || true;
-                var hideweekend = popupDate.dataset.hideweekend === 'true';
+                var hideweekend = popupDate.attr('hide-weekend') === 'true';
                 w.console.log(hideweekend);
                 if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
                     flatpickr(popupDate[i], {
