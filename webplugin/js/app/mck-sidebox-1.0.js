@@ -9108,11 +9108,7 @@ var userOverride = {
                 var popupDate = $applozic(".popup");
                 var inline = $applozic(".inline");
                 var enableMins = popupDate.attr('enable_mins') || true;
-                // var hideweekend = popupDate.attr('hide_weekend') === 'true';
-                // w.console.log(hideweekend);
-                // w.console.log(popupDate.attr('hide-weekend'));
-                w.console.log(popupDate.attr('data-hideweekend'));
-                w.console.log(popupDate.dataset.hideweekend);
+                var hideweekend = popupDate.attr('data-hideweekend') === 'true';
                 if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
                     flatpickr(popupDate[i], {
                         enableTime: !(popupDate[i].type === 'date'),
@@ -9123,9 +9119,9 @@ var userOverride = {
                         minuteIncrement: 60,
                         "disable": [
                             function(date) {
-                                // if(popupDate.dataset.hideweekend === 'true'){
-                                //     return (date.getDay() === 0 || date.getDay() === 6);
-                                // }
+                                if(hideweekend){
+                                    return (date.getDay() === 0 || date.getDay() === 6);
+                                }
                                 return false
                             }
                         ],
