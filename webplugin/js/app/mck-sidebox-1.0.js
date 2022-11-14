@@ -5291,6 +5291,7 @@ var userOverride = {
                                 );
                             }
                         );
+                        window.Applozic.ALSocket.reconnect();
                     }
                     var optns = {
                         tabId: contact.contactId,
