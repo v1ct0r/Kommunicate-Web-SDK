@@ -8048,7 +8048,8 @@ var userOverride = {
                     showMoreDateTime = data.createdAtTime;
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
-                    $applozic.each(data.message, function (i, message) {
+                    let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
+                    $applozic.each(sortedMessageArr, function (i, message) {
                         if (!(typeof message.to === 'undefined')) {
                             !enableAttachment &&
                                 (enableAttachment =
