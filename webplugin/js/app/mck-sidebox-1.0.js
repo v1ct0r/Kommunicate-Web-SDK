@@ -9110,7 +9110,25 @@ var userOverride = {
                 var popupDate = $applozic(".popup");
                 var inline = $applozic(".inline");
                 var enableMins = popupDate.attr('enable_mins') || true;
-                var hideweekend = popupDate.attr('data-hideweekend') === 'true';
+                var hideWeekend = popupDate.attr('data-hideweekend') === 'true';
+                var hideHoliday = popupDate.attr('data-hideholiday') === 'true';
+                var holidayVersion = popupDate.attr('data-holidayversion');
+                const holidayMap = new Map([
+                    [
+                      "Aetna",
+                      [
+                        "12/31/2021",
+                        "1/17/2022",
+                        "5/30/2022",
+                        "7/4/2022",
+                        "9/5/2022",
+                        "10/10/2022",
+                        "11/11/2022",
+                        "11/24/2022",
+                        "12/26/2022",
+                      ],
+                    ],
+                  ]);
                 if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
                     flatpickr(popupDate[i], {
                         enableTime: !(popupDate[i].type === 'date'),
@@ -9121,8 +9139,14 @@ var userOverride = {
                         minuteIncrement: 60,
                         "disable": [
                             function(date) {
-                                if(hideweekend){
-                                    return (date.getDay() === 0 || date.getDay() === 6);
+                                if(hideWeekend || hideHoliday){
+                                    if(date.getDay() === 0 || date.getDay() === 6){
+                                        return true
+                                    }
+                                    if(holidayVersion && hideHoliday && holidayMap.has(holidayVersion)){
+                                        let stringDate = date.toLocaleDateString("en-US");
+                                        return holidayMap.get(holidayVersion).indexOf(stringDate) !== -1
+                                    }
                                 }
                                 return false
                             }
