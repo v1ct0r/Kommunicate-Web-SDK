@@ -6538,6 +6538,6 @@ body.accesibility :focus {
     padding: 0;
 }
 
-/* .quick-reply-container-list button{
-    width: 95%;
-} */
+.quick-reply-container-list button{
+    width: 94%;
+}
