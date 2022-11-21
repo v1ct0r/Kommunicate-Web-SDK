@@ -8047,7 +8047,7 @@ var userOverride = {
                         isValidated
                     );
                     showMoreDateTime = data.createdAtTime;
-                } else if (data.message.length <= 2, MCK_BOT_MESSAGE_DELAY !== 0){
+                } else if (data.message.length <= 2 && MCK_BOT_MESSAGE_DELAY !== 0){
                     ALStorage.updateMckMessageArray(data.message);
                     $applozic.each(data.message, function (i, message) {
                         if (!(typeof message.to === 'undefined')) {
