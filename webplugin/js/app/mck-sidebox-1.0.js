@@ -8047,10 +8047,9 @@ var userOverride = {
                         isValidated
                     );
                     showMoreDateTime = data.createdAtTime;
-                } else {
+                } else if (data.message.length <= 2, MCK_BOT_MESSAGE_DELAY !== 0){
                     ALStorage.updateMckMessageArray(data.message);
-                    let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
-                    $applozic.each(sortedMessageArr, function (i, message) {
+                    $applozic.each(data.message, function (i, message) {
                         if (!(typeof message.to === 'undefined')) {
                             !enableAttachment &&
                                 (enableAttachment =
@@ -8058,13 +8057,6 @@ var userOverride = {
                                     message.metadata.KM_ENABLE_ATTACHMENT
                                         ? message.metadata.KM_ENABLE_ATTACHMENT
                                         : '');
-                            if (
-                                MCK_BOT_MESSAGE_DELAY !== 0 &&
-                                _this.isMessageSentByBot(
-                                    message,
-                                    contact
-                                )
-                            ){
                                 _this.addMessage(
                                     message,
                                     contact,
@@ -8081,7 +8073,25 @@ var userOverride = {
                                     data.message,
                                     true
                                 );
-                            } else {
+                            Snap.appendEmailToIframe(message);
+                            showMoreDateTime = message.createdAtTime;
+                            allowReload &&
+                                !scroll &&
+                                message.contentType != 10 &&
+                                (scroll = true);
+                        }
+                    });
+                } else {
+                    ALStorage.updateMckMessageArray(data.message);
+                    let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
+                    $applozic.each(sortedMessageArr, function (i, message) {
+                        if (!(typeof message.to === 'undefined')) {
+                            !enableAttachment &&
+                                (enableAttachment =
+                                    typeof message.metadata === 'object' &&
+                                    message.metadata.KM_ENABLE_ATTACHMENT
+                                        ? message.metadata.KM_ENABLE_ATTACHMENT
+                                        : '');
                                 _this.addMessage(
                                     message,
                                     contact,
@@ -8093,7 +8103,6 @@ var userOverride = {
                                     allowReload,
                                     data.message
                                 );
-                            }
                             Snap.appendEmailToIframe(message);
                             showMoreDateTime = message.createdAtTime;
                             allowReload &&
