@@ -8058,17 +8058,42 @@ var userOverride = {
                                     message.metadata.KM_ENABLE_ATTACHMENT
                                         ? message.metadata.KM_ENABLE_ATTACHMENT
                                         : '');
-                            _this.addMessage(
-                                message,
-                                contact,
-                                append,
-                                false,
-                                isValidated,
-                                enableAttachment,
-                                null,
-                                allowReload,
-                                data.message
-                            );
+                            if (
+                                MCK_BOT_MESSAGE_DELAY !== 0 &&
+                                _this.isMessageSentByBot(
+                                    message,
+                                    contact
+                                )
+                            ){
+                                _this.addMessage(
+                                    message,
+                                    contact,
+                                    append,
+                                    false,
+                                    isValidated,
+                                    enableAttachment,
+                                    function () {
+                                        _this.processMessageInQueue(
+                                            message
+                                        );
+                                    },
+                                    allowReload,
+                                    data.message,
+                                    true
+                                );
+                            } else {
+                                _this.addMessage(
+                                    message,
+                                    contact,
+                                    append,
+                                    false,
+                                    isValidated,
+                                    enableAttachment,
+                                    null,
+                                    allowReload,
+                                    data.message
+                                );
+                            }
                             Snap.appendEmailToIframe(message);
                             showMoreDateTime = message.createdAtTime;
                             allowReload &&
