@@ -8076,7 +8076,7 @@ var userOverride = {
                                         data.message,
                                         true
                                     );
-                                Snap.changeTextInputState({});
+                                Snap.changeTextInputState(message, 600);
                                 Snap.appendEmailToIframe(message);
                                 showMoreDateTime = message.createdAtTime;
                                 allowReload &&
@@ -8085,7 +8085,6 @@ var userOverride = {
                                     (scroll = true);
                             }
                         });
-                    Snap.changeTextInputState(messageArrPayload[0]);
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
                     let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);

@@ -769,7 +769,7 @@ $applozic.extend(true, Snap, {
             $element.removeClass('vis').addClass('n-vis');
         }
     },
-    changeTextInputState: function (msg) {
+    changeTextInputState: function (msg, timeout = 300) {
         // var replyContainerChildren = $applozic('#quick-reply-container').children().length;
         // if(!!replyContainerChildren){
         //     Snap.changeTextInputStateRendering(msg);
@@ -780,7 +780,7 @@ $applozic.extend(true, Snap, {
         // }
         setTimeout(function () {
             Snap.changeTextInputStateRendering(msg);
-        }, 300);
+        }, timeout);
     },
     changeTextInputStateRendering: function (msg) {
         var textBox = $applozic('#mck-text-box');
