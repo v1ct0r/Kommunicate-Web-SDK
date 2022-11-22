@@ -8091,9 +8091,9 @@ var userOverride = {
                             }
                     });
                     let textInputHintObj = sortedMessageArr.find(e => e.metadata.hasOwnProperty('text_input_hint'));
-                    if(textInputHintObj){
-                        Snap.changeTextInputState(textInputHintObj, 2000);
-                    }
+                    // if(textInputHintObj){
+                    //     Snap.changeTextInputState(textInputHintObj, 2000);
+                    // }
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
                     let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
