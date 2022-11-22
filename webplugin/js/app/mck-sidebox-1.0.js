@@ -8052,7 +8052,6 @@ var userOverride = {
                     let messageArrPayload = data.message.filter(e => e.metadata && e.metadata.hasOwnProperty('payload'));
                     let sortedMessageArr = [...messageArrNoPayload, ...messageArrPayload];
                     ALStorage.updateMckMessageArray(sortedMessageArr);
-                    let textInputHintObj;
                     $applozic.each(sortedMessageArr, function (i, message) {
                             if (!(typeof message.to === 'undefined')) {
                                 !enableAttachment &&
@@ -8062,7 +8061,8 @@ var userOverride = {
                                             ? message.metadata.KM_ENABLE_ATTACHMENT
                                             : '');
                                     if(message.metadata.hasOwnProperty('text_input_hint')){
-                                        textInputHintObj = JSON.parse(JSON.stringify(message));
+                                        Snap.changeTextInputState(message, MCK_BOT_MESSAGE_DELAY + 300);
+                                        // textInputHintObj = JSON.parse(JSON.stringify(message));
                                         delete message.metadata.text_input_hint;
                                     }
                                     _this.addMessage(
@@ -8089,9 +8089,6 @@ var userOverride = {
                                     (scroll = true);
                             }
                         });
-                    if(textInputHintObj){
-                        Snap.changeTextInputState(textInputHintObj, MCK_BOT_MESSAGE_DELAY + 300);
-                    }
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
                     let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
