@@ -8052,8 +8052,7 @@ var userOverride = {
                     let messageArrPayload = data.message.filter(e => e.metadata && e.metadata.hasOwnProperty('payload'));
                     let sortedMessageArr = [...messageArrNoPayload, ...messageArrPayload];
                     ALStorage.updateMckMessageArray(sortedMessageArr);
-                    if(messageArrNoPayload.length){
-                        $applozic.each(messageArrNoPayload, function (i, message) {
+                    $applozic.each(sortedMessageArr, function (i, message) {
                             if (!(typeof message.to === 'undefined')) {
                                 !enableAttachment &&
                                     (enableAttachment =
@@ -8085,36 +8084,35 @@ var userOverride = {
                                     (scroll = true);
                             }
                         });
-                    }
-                    if(messageArrPayload.length){
-                        $applozic.each(messageArrPayload, function (i, message) {
-                            if (!(typeof message.to === 'undefined')) {
-                                !enableAttachment &&
-                                    (enableAttachment =
-                                        typeof message.metadata === 'object' &&
-                                        message.metadata.KM_ENABLE_ATTACHMENT
-                                            ? message.metadata.KM_ENABLE_ATTACHMENT
-                                            : '');
-                                    _this.addMessage(
-                                        message,
-                                        contact,
-                                        append,
-                                        false,
-                                        isValidated,
-                                        enableAttachment,
-                                        null,
-                                        allowReload,
-                                        data.message
-                                    );
-                                Snap.appendEmailToIframe(message);
-                                showMoreDateTime = message.createdAtTime;
-                                allowReload &&
-                                    !scroll &&
-                                    message.contentType != 10 &&
-                                    (scroll = true);
-                            }
-                        });
-                    }
+                    // if(messageArrPayload.length){
+                    //     $applozic.each(messageArrPayload, function (i, message) {
+                    //         if (!(typeof message.to === 'undefined')) {
+                    //             !enableAttachment &&
+                    //                 (enableAttachment =
+                    //                     typeof message.metadata === 'object' &&
+                    //                     message.metadata.KM_ENABLE_ATTACHMENT
+                    //                         ? message.metadata.KM_ENABLE_ATTACHMENT
+                    //                         : '');
+                    //                 _this.addMessage(
+                    //                     message,
+                    //                     contact,
+                    //                     append,
+                    //                     false,
+                    //                     isValidated,
+                    //                     enableAttachment,
+                    //                     null,
+                    //                     allowReload,
+                    //                     data.message
+                    //                 );
+                    //             Snap.appendEmailToIframe(message);
+                    //             showMoreDateTime = message.createdAtTime;
+                    //             allowReload &&
+                    //                 !scroll &&
+                    //                 message.contentType != 10 &&
+                    //                 (scroll = true);
+                    //         }
+                    //     });
+                    // }
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
                     let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
