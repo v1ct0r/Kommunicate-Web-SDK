@@ -8082,6 +8082,7 @@ var userOverride = {
                                     !scroll &&
                                     message.contentType != 10 &&
                                     (scroll = true);
+                                window.Applozic.ALSocket.reconnect();
                             }
                     });
                 } else {
