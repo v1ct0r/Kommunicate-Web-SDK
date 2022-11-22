@@ -8048,41 +8048,73 @@ var userOverride = {
                     );
                     showMoreDateTime = data.createdAtTime;
                 } else if (append && MCK_BOT_MESSAGE_DELAY !== 0){
-                    let sortedMessageArr = [...data.message.filter(e => !e.metadata || !e.metadata.hasOwnProperty('payload')),
-                                            ...data.message.filter(e => e.metadata && e.metadata.hasOwnProperty('payload'))]
+                    let messageArrNoPayload = data.message.filter(e => !e.metadata || !e.metadata.hasOwnProperty('payload'));
+                    let messageArrPayload = data.message.filter(e => e.metadata && e.metadata.hasOwnProperty('payload'));
+                    let sortedMessageArr = [...messageArrNoPayload, ...messageArrPayload];
                     ALStorage.updateMckMessageArray(sortedMessageArr);
-                    $applozic.each(sortedMessageArr, function (i, message) {
-                        if (!(typeof message.to === 'undefined')) {
-                            !enableAttachment &&
-                                (enableAttachment =
-                                    typeof message.metadata === 'object' &&
-                                    message.metadata.KM_ENABLE_ATTACHMENT
-                                        ? message.metadata.KM_ENABLE_ATTACHMENT
-                                        : '');
-                                _this.addMessage(
-                                    message,
-                                    contact,
-                                    append,
-                                    false,
-                                    isValidated,
-                                    enableAttachment,
-                                    function () {
-                                        _this.processMessageInQueue(
-                                            message
-                                        );
-                                    },
-                                    null,
-                                    data.message,
-                                    true
-                                );
-                            Snap.appendEmailToIframe(message);
-                            showMoreDateTime = message.createdAtTime;
-                            allowReload &&
-                                !scroll &&
-                                message.contentType != 10 &&
-                                (scroll = true);
-                        }
-                    });
+                    if(messageArrNoPayload.length){
+                        $applozic.each(messageArrNoPayload, function (i, message) {
+                            if (!(typeof message.to === 'undefined')) {
+                                !enableAttachment &&
+                                    (enableAttachment =
+                                        typeof message.metadata === 'object' &&
+                                        message.metadata.KM_ENABLE_ATTACHMENT
+                                            ? message.metadata.KM_ENABLE_ATTACHMENT
+                                            : '');
+                                    _this.addMessage(
+                                        message,
+                                        contact,
+                                        append,
+                                        false,
+                                        isValidated,
+                                        enableAttachment,
+                                        function () {
+                                            _this.processMessageInQueue(
+                                                message
+                                            );
+                                        },
+                                        null,
+                                        data.message,
+                                        true
+                                    );
+                                Snap.appendEmailToIframe(message);
+                                showMoreDateTime = message.createdAtTime;
+                                allowReload &&
+                                    !scroll &&
+                                    message.contentType != 10 &&
+                                    (scroll = true);
+                            }
+                        });
+                    }
+                    if(messageArrPayload.length){
+                        $applozic.each(sortedMessageArr, function (i, message) {
+                            if (!(typeof message.to === 'undefined')) {
+                                !enableAttachment &&
+                                    (enableAttachment =
+                                        typeof message.metadata === 'object' &&
+                                        message.metadata.KM_ENABLE_ATTACHMENT
+                                            ? message.metadata.KM_ENABLE_ATTACHMENT
+                                            : '');
+                                    _this.addMessage(
+                                        message,
+                                        contact,
+                                        append,
+                                        false,
+                                        isValidated,
+                                        enableAttachment,
+                                        null,
+                                        allowReload,
+                                        data.message
+                                    );
+                                Snap.appendEmailToIframe(message);
+                                showMoreDateTime = message.createdAtTime;
+                                allowReload &&
+                                    !scroll &&
+                                    message.contentType != 10 &&
+                                    (scroll = true);
+                            }
+                        });
+                    }
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
                     let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
