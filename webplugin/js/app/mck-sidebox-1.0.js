@@ -8053,7 +8053,7 @@ var userOverride = {
                     let sortedMessageArr = [...messageArrNoPayload, ...messageArrPayload];
                     ALStorage.updateMckMessageArray(sortedMessageArr);
                     $applozic.each(sortedMessageArr, function (i, message) {
-                        setTimeout(function () {
+                        // setTimeout(function () {
                             if (!(typeof message.to === 'undefined')) {
                                 !enableAttachment &&
                                     (enableAttachment =
@@ -8061,11 +8061,12 @@ var userOverride = {
                                         message.metadata.KM_ENABLE_ATTACHMENT
                                             ? message.metadata.KM_ENABLE_ATTACHMENT
                                             : '');
-                                    // if(message.metadata.hasOwnProperty('text_input_hint')){
-                                    //     Snap.changeTextInputState(message, 1000);
-                                    //     // textInputHintObj = JSON.parse(JSON.stringify(message));
-                                    //     delete message.metadata.text_input_hint;
-                                    // }
+                                    if(message.metadata.hasOwnProperty('text_input_hint')){
+                                        message = JSON.parse(JSON.stringify(message));
+                                        // Snap.changeTextInputState(message, 1000);
+                                        // textInputHintObj = JSON.parse(JSON.stringify(message));
+                                        delete message.metadata.text_input_hint;
+                                    }
                                     _this.addMessage(
                                         message,
                                         contact,
@@ -8089,8 +8090,12 @@ var userOverride = {
                                     message.contentType != 10 &&
                                     (scroll = true);
                             }
-                        }, 1000);
+                        // }, 1000);
                     });
+                    let textInputHintObj = sortedMessageArr.find(e => e.metadata.hasOwnProperty('text_input_hint'));
+                    if(textInputHintObj){
+                        Snap.changeTextInputState(textInputHintObj, 600);
+                    }
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
                     let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
