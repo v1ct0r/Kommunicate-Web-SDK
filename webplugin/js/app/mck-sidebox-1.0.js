@@ -8076,7 +8076,7 @@ var userOverride = {
                                         data.message,
                                         true
                                     );
-                                Snap.changeTextInputState(message);
+                                Snap.changeTextInputState({});
                                 Snap.appendEmailToIframe(message);
                                 showMoreDateTime = message.createdAtTime;
                                 allowReload &&
@@ -8085,35 +8085,7 @@ var userOverride = {
                                     (scroll = true);
                             }
                         });
-                    // if(messageArrPayload.length){
-                    //     $applozic.each(messageArrPayload, function (i, message) {
-                    //         if (!(typeof message.to === 'undefined')) {
-                    //             !enableAttachment &&
-                    //                 (enableAttachment =
-                    //                     typeof message.metadata === 'object' &&
-                    //                     message.metadata.KM_ENABLE_ATTACHMENT
-                    //                         ? message.metadata.KM_ENABLE_ATTACHMENT
-                    //                         : '');
-                    //                 _this.addMessage(
-                    //                     message,
-                    //                     contact,
-                    //                     append,
-                    //                     false,
-                    //                     isValidated,
-                    //                     enableAttachment,
-                    //                     null,
-                    //                     allowReload,
-                    //                     data.message
-                    //                 );
-                    //             Snap.appendEmailToIframe(message);
-                    //             showMoreDateTime = message.createdAtTime;
-                    //             allowReload &&
-                    //                 !scroll &&
-                    //                 message.contentType != 10 &&
-                    //                 (scroll = true);
-                    //         }
-                    //     });
-                    // }
+                    Snap.changeTextInputState(messageArrPayload[0]);
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
                     let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
