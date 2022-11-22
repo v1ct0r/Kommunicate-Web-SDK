@@ -8048,8 +8048,10 @@ var userOverride = {
                     );
                     showMoreDateTime = data.createdAtTime;
                 } else if (append && MCK_BOT_MESSAGE_DELAY !== 0){
-                    ALStorage.updateMckMessageArray(data.message);
-                    $applozic.each(data.message, function (i, message) {
+                    let sortedMessageArr = [...data.message.filter(e => !e.metadata || !e.metadata.hasOwnProperty('payload')),
+                                            ...data.message.filter(e => e.metadata && e.metadata.hasOwnProperty('payload'))]
+                    ALStorage.updateMckMessageArray(sortedMessageArr);
+                    $applozic.each(sortedMessageArr, function (i, message) {
                         if (!(typeof message.to === 'undefined')) {
                             !enableAttachment &&
                                 (enableAttachment =
