@@ -8052,6 +8052,7 @@ var userOverride = {
                     let messageArrPayload = data.message.filter(e => e.metadata && e.metadata.hasOwnProperty('payload'));
                     let sortedMessageArr = [...messageArrNoPayload, ...messageArrPayload];
                     ALStorage.updateMckMessageArray(sortedMessageArr);
+                    let textInputHintObj;
                     $applozic.each(sortedMessageArr, function (i, message) {
                             if (!(typeof message.to === 'undefined')) {
                                 !enableAttachment &&
@@ -8060,6 +8061,10 @@ var userOverride = {
                                         message.metadata.KM_ENABLE_ATTACHMENT
                                             ? message.metadata.KM_ENABLE_ATTACHMENT
                                             : '');
+                                    if(message.metadata.hasOwnProperty('text_input_hint')){
+                                        textInputHintObj = JSON.parse(JSON.stringify(message));
+                                        message.metadata.text_input_hint = "";
+                                    }
                                     _this.addMessage(
                                         message,
                                         contact,
@@ -8076,7 +8081,7 @@ var userOverride = {
                                         data.message,
                                         true
                                     );
-                                Snap.changeTextInputState(message, 600);
+                                Snap.resetTextInputState();
                                 Snap.appendEmailToIframe(message);
                                 showMoreDateTime = message.createdAtTime;
                                 allowReload &&
@@ -8085,6 +8090,9 @@ var userOverride = {
                                     (scroll = true);
                             }
                         });
+                    if(textInputHintObj){
+                        Snap.changeTextInputStateRendering(textInputHintObj);
+                    }
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
                     let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
