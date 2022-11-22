@@ -8087,7 +8087,7 @@ var userOverride = {
                         });
                     }
                     if(messageArrPayload.length){
-                        $applozic.each(sortedMessageArr, function (i, message) {
+                        $applozic.each(messageArrPayload, function (i, message) {
                             if (!(typeof message.to === 'undefined')) {
                                 !enableAttachment &&
                                     (enableAttachment =
