@@ -8060,12 +8060,6 @@ var userOverride = {
                                         message.metadata.KM_ENABLE_ATTACHMENT
                                             ? message.metadata.KM_ENABLE_ATTACHMENT
                                             : '');
-                                    if(message.metadata.hasOwnProperty('text_input_hint')){
-                                        message = JSON.parse(JSON.stringify(message));
-                                        // Snap.changeTextInputState(message, 1000);
-                                        // textInputHintObj = JSON.parse(JSON.stringify(message));
-                                        delete message.metadata.text_input_hint;
-                                    }
                                     _this.addMessage(
                                         message,
                                         contact,
@@ -8090,10 +8084,6 @@ var userOverride = {
                                     (scroll = true);
                             }
                     });
-                    let textInputHintObj = sortedMessageArr.find(e => e.metadata.hasOwnProperty('text_input_hint'));
-                    // if(textInputHintObj){
-                    //     Snap.changeTextInputState(textInputHintObj, 2000);
-                    // }
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
                     let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
