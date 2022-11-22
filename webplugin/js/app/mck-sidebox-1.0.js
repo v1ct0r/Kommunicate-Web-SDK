@@ -8053,6 +8053,7 @@ var userOverride = {
                     let sortedMessageArr = [...messageArrNoPayload, ...messageArrPayload];
                     ALStorage.updateMckMessageArray(sortedMessageArr);
                     $applozic.each(sortedMessageArr, function (i, message) {
+                        setTimeout(function () {
                             if (!(typeof message.to === 'undefined')) {
                                 !enableAttachment &&
                                     (enableAttachment =
@@ -8088,7 +8089,8 @@ var userOverride = {
                                     message.contentType != 10 &&
                                     (scroll = true);
                             }
-                        });
+                        }, 600);
+                    });
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
                     let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
