@@ -8063,7 +8063,7 @@ var userOverride = {
                                             : '');
                                     if(message.metadata.hasOwnProperty('text_input_hint')){
                                         textInputHintObj = JSON.parse(JSON.stringify(message));
-                                        message.metadata.text_input_hint = "";
+                                        delete message.metadata.text_input_hint;
                                     }
                                     _this.addMessage(
                                         message,
@@ -8090,7 +8090,7 @@ var userOverride = {
                             }
                         });
                     if(textInputHintObj){
-                        Snap.changeTextInputState(textInputHintObj, 600);
+                        Snap.changeTextInputState(textInputHintObj, MCK_BOT_MESSAGE_DELAY + 300);
                     }
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
