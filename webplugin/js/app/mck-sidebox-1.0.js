@@ -11880,7 +11880,7 @@ var userOverride = {
                         );
                         _this.procesMessageTimerDelay();
                     } else {
-                        Snap.changeTextInputState(currentMessageObject);
+                        Snap.changeTextInputState(currentMessageObject, 600);
                     }
                     if (message) {
                         message.classList.remove('n-vis');
