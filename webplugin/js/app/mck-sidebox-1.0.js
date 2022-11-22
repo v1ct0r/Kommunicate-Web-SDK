@@ -8060,11 +8060,11 @@ var userOverride = {
                                         message.metadata.KM_ENABLE_ATTACHMENT
                                             ? message.metadata.KM_ENABLE_ATTACHMENT
                                             : '');
-                                    if(message.metadata.hasOwnProperty('text_input_hint')){
-                                        Snap.changeTextInputState(message, 1000);
-                                        // textInputHintObj = JSON.parse(JSON.stringify(message));
-                                        delete message.metadata.text_input_hint;
-                                    }
+                                    // if(message.metadata.hasOwnProperty('text_input_hint')){
+                                    //     Snap.changeTextInputState(message, 1000);
+                                    //     // textInputHintObj = JSON.parse(JSON.stringify(message));
+                                    //     delete message.metadata.text_input_hint;
+                                    // }
                                     _this.addMessage(
                                         message,
                                         contact,
