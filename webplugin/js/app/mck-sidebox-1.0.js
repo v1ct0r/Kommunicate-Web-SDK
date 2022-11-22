@@ -8092,7 +8092,7 @@ var userOverride = {
                     });
                     let textInputHintObj = sortedMessageArr.find(e => e.metadata.hasOwnProperty('text_input_hint'));
                     if(textInputHintObj){
-                        Snap.changeTextInputState(textInputHintObj, 1000);
+                        Snap.changeTextInputState(textInputHintObj, 2000);
                     }
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
@@ -11885,7 +11885,7 @@ var userOverride = {
                         );
                         _this.procesMessageTimerDelay();
                     } else {
-                        Snap.changeTextInputState(currentMessageObject, 600);
+                        Snap.changeTextInputState(currentMessageObject, 300);
                     }
                     if (message) {
                         message.classList.remove('n-vis');
