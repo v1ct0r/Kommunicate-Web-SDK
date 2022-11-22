@@ -8061,7 +8061,7 @@ var userOverride = {
                                             ? message.metadata.KM_ENABLE_ATTACHMENT
                                             : '');
                                     if(message.metadata.hasOwnProperty('text_input_hint')){
-                                        Snap.changeTextInputState(message, MCK_BOT_MESSAGE_DELAY + 300);
+                                        Snap.changeTextInputState(message, 1000);
                                         // textInputHintObj = JSON.parse(JSON.stringify(message));
                                         delete message.metadata.text_input_hint;
                                     }
