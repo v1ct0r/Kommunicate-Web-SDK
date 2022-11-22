@@ -8089,7 +8089,7 @@ var userOverride = {
                                     message.contentType != 10 &&
                                     (scroll = true);
                             }
-                        }, 600);
+                        }, 1000);
                     });
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
