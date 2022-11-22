@@ -8081,7 +8081,6 @@ var userOverride = {
                                         data.message,
                                         true
                                     );
-                                Snap.resetTextInputState();
                                 Snap.appendEmailToIframe(message);
                                 showMoreDateTime = message.createdAtTime;
                                 allowReload &&
@@ -8091,7 +8090,7 @@ var userOverride = {
                             }
                         });
                     if(textInputHintObj){
-                        Snap.changeTextInputStateRendering(textInputHintObj);
+                        Snap.changeTextInputState(textInputHintObj, 600);
                     }
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
