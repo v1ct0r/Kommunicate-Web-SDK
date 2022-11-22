@@ -8076,13 +8076,13 @@ var userOverride = {
                                         data.message,
                                         true
                                     );
-                                Snap.appendEmailToIframe(message);
-                                showMoreDateTime = message.createdAtTime;
-                                allowReload &&
-                                    !scroll &&
-                                    message.contentType != 10 &&
-                                    (scroll = true);
-                                window.Applozic.ALSocket.reconnect();
+                                // Snap.appendEmailToIframe(message);
+                                // showMoreDateTime = message.createdAtTime;
+                                // allowReload &&
+                                //     !scroll &&
+                                //     message.contentType != 10 &&
+                                //     (scroll = true);
+                                // window.Applozic.ALSocket.reconnect();
                             }
                     });
                 } else {
