@@ -8053,7 +8053,6 @@ var userOverride = {
                     let sortedMessageArr = [...messageArrNoPayload, ...messageArrPayload];
                     ALStorage.updateMckMessageArray(sortedMessageArr);
                     $applozic.each(sortedMessageArr, function (i, message) {
-                        // setTimeout(function () {
                             if (!(typeof message.to === 'undefined')) {
                                 !enableAttachment &&
                                     (enableAttachment =
@@ -8090,11 +8089,10 @@ var userOverride = {
                                     message.contentType != 10 &&
                                     (scroll = true);
                             }
-                        // }, 1000);
                     });
                     let textInputHintObj = sortedMessageArr.find(e => e.metadata.hasOwnProperty('text_input_hint'));
                     if(textInputHintObj){
-                        Snap.changeTextInputState(textInputHintObj, 600);
+                        Snap.changeTextInputState(textInputHintObj, 1000);
                     }
                 } else {
                     ALStorage.updateMckMessageArray(data.message);
