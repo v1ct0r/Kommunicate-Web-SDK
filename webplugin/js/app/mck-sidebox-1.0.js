@@ -8067,15 +8067,17 @@ var userOverride = {
                                         false,
                                         isValidated,
                                         enableAttachment,
-                                        function () {
-                                            _this.processMessageInQueue(
-                                                message
-                                            );
-                                        },
+                                        null,  
                                         null,
                                         data.message,
                                         true
                                     );
+                                    // function () {
+                                    //     _this.processMessageInQueue(
+                                    //         message
+                                    //     );
+                                    // },
+
                                 // Snap.appendEmailToIframe(message);
                                 // showMoreDateTime = message.createdAtTime;
                                 // allowReload &&
