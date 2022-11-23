@@ -8051,7 +8051,11 @@ var userOverride = {
                     let messageArrNoPayload = data.message.filter(e => !e.metadata || !e.metadata.hasOwnProperty('text_input_hint'));
                     let messageArrPayload = data.message.filter(e => e.metadata && e.metadata.hasOwnProperty('text_input_hint'));
                     if (messageArrPayload.length > 1) {
-                        messageArrPayload = messageArrPayload.slice(0, 1)
+                        let messageArrPayloadRest = messageArrPayload.slice(1);
+                        messageArrPayloadRest.forEach(e => {
+                            delete e.metadata.text_input_hint
+                        });
+                        messageArrPayload = [...messageArrPayload.slice(0, -1), ...messageArrPayloadRest]
                     }
                     let sortedMessageArr = [...messageArrNoPayload, ...messageArrPayload];
                     ALStorage.updateMckMessageArray(sortedMessageArr);
