@@ -8076,7 +8076,7 @@ var userOverride = {
                                         data.message,
                                         true,
                                         false,
-                                        true
+                                        messageArrPayload.length === 1
                                     );
                                 // Snap.appendEmailToIframe(message);
                                 // showMoreDateTime = message.createdAtTime;
