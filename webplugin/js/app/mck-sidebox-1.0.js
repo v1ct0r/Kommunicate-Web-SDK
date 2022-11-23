@@ -8074,6 +8074,8 @@ var userOverride = {
                                         },
                                         null,
                                         data.message,
+                                        true,
+                                        false,
                                         true
                                     );
                                 // Snap.appendEmailToIframe(message);
@@ -8275,7 +8277,8 @@ var userOverride = {
                 allowReload,
                 arrayOfAllMessages,
                 processMessageInQueue = false,
-                showWithoutDelay = false
+                showWithoutDelay = false,
+                newMessageArray = false
             ) {
                 var metadatarepiledto = '';
                 var replymessage = '';
@@ -9047,7 +9050,7 @@ var userOverride = {
                             });
                         }
                         $textMessage.append(x);
-                        if(Array.isArray(arrayOfAllMessages)){
+                        if(Array.isArray(arrayOfAllMessages) && !newMessageArray){
                             // setTimeout(function () {
                                 Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0));
                             // }, MCK_BOT_MESSAGE_DELAY + 1000)
