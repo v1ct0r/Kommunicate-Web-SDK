@@ -8302,7 +8302,7 @@ var userOverride = {
 
                 if (!Snap.visibleMessage(msg)) return;
 
-                if(msg.message && msg.message.match(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g)) return;
+                // if(msg.message && msg.message.match(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g)) return;
 
                 if (
                     typeof msg.metadata === 'object' &&
