@@ -596,7 +596,7 @@ Snap.markup.getFormMarkup = function (options) {
         return formMarkup;
     }
 };
-Snap.markup.quickRepliesContainerTemplate = function (options, template, tabindex = 1) {
+Snap.markup.quickRepliesContainerTemplate = function (options, template) {
     var payload = JSON.parse(options.payload);
     var buttonClass;
     var hidePostCTA = snap._globals.hidePostCTA;
@@ -625,7 +625,7 @@ Snap.markup.quickRepliesContainerTemplate = function (options, template, tabinde
         payload[i].buttonClass = buttonClass;
         payload[i].hidePostCTA = hidePostCTA;
         payload[i].button_id = options.button_id;
-        payload[i].tabindex = tabindex + 3;
+        payload[i].tabindex = options.tabindex;
     }
 
     return Mustache.to_html(Snap.markup.getQuickRepliesTemplate(options.needLimitHeight), {
@@ -895,11 +895,11 @@ Snap.markup.getCarouselMarkup = function (options) {
                     buttons[i].action.payload,
                 ]);
                 buttons[i].action.button_id = buttons[i].button_id;
+                buttons[i].action.tabindex = i;
                 cardFooter = cardFooter.concat(
                     Snap.markup.quickRepliesContainerTemplate(
                         buttons[i].action,
                         SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL,
-                        i
                     )
                 );
             } else if (
