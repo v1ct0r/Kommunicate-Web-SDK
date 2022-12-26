@@ -945,14 +945,14 @@ Snap.richMsgEventHandler = {
     changeCheckbox: function(e){
         if (e.target.checked) {
             if (e.target.value.toLowerCase() === "anytime") {
-                $('.quick-reply-checkbox:not([value!="anytime"])').prop('disabled', true);
+                $('.quick-reply-checkbox').not('[value="Anytime"]').prop('disabled', true);
             }
             if (e.target.value.toLowerCase() === "all of above") {
-                $('.quick-reply-checkbox:not([value!="anytime"])').prop('checked', true);
+                $('.quick-reply-checkbox').not('[value="Anytime"]').prop('checked', true);
             }
         } else {
             if (e.target.value.toLowerCase() === "anytime") {
-                $('.quick-reply-checkbox:not([value!="anytime"])').prop('disabled', false);
+                $('.quick-reply-checkbox').not('[value="Anytime"]').prop('disabled', false);
             }
         }
         w.console.log(e);
