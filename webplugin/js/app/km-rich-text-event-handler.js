@@ -903,6 +903,7 @@ Snap.richMsgEventHandler = {
         window.open('mailto:' + email, "_blank");
     },
     formUserBehaviorInfo: function(e){
+        document.activeElement.blur();
         const browserInfo = detect.parse(navigator.userAgent);
         const buttonId = e.target.dataset.buttonid;
         const buttonType = e.target.dataset.buttontype;
