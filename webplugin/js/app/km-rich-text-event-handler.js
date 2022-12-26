@@ -943,6 +943,11 @@ Snap.richMsgEventHandler = {
         } catch{}
     },
     changeCheckbox: function(e){
+        if (e.target.checked) {
+            if (e.target.value.toLowerCase() === "anytime") {
+                $('.quick-reply-checkbox').prop('checked', true);
+            }
+        }
         w.console.log(e);
     }
 };
