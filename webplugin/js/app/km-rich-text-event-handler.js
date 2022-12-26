@@ -945,6 +945,7 @@ Snap.richMsgEventHandler = {
     changeCheckbox: function(e){
         if (e.target.checked) {
             if (e.target.value.toLowerCase() === "anytime") {
+                $('.quick-reply-checkbox').not('[value="Anytime"]').prop('checked', false);
                 $('.quick-reply-checkbox').not('[value="Anytime"]').prop('disabled', true);
             }
             if (e.target.value.toLowerCase() === "all of above") {
@@ -955,6 +956,5 @@ Snap.richMsgEventHandler = {
                 $('.quick-reply-checkbox').not('[value="Anytime"]').prop('disabled', false);
             }
         }
-        w.console.log(e);
     }
 };
