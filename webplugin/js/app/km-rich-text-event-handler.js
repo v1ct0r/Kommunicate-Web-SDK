@@ -94,6 +94,11 @@ Snap.attachEvents = function ($applozic) {
         '.km-link-button',
         Snap.richMsgEventHandler.formUserBehaviorInfo
     );
+    $applozic(messageCellQuickReplySelector).on(
+        'click',
+        '.quick-reply-checkbox',
+        Snap.richMsgEventHandler.changeCheckbox
+    );
 };
 
 /**
@@ -936,5 +941,8 @@ Snap.richMsgEventHandler = {
                 throw error
             })
         } catch{}
+    },
+    changeCheckbox: function(e){
+        w.console.log(e);
     }
 };

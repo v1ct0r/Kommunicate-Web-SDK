@@ -431,7 +431,7 @@ Snap.markup = {
                                             {{#options}}
                                                     <li tabindex="-1">
                                                         <label class="mck-form-label" tabindex="-1">
-                                                            <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true">
+                                                            <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true" class="quick-reply-checkbox">
                                                             {{label}}
                                                         </label>
                                                     </li>                                       
