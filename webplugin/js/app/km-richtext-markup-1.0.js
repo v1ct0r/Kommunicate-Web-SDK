@@ -1088,6 +1088,6 @@ Snap.markup.getVideoMarkup = function (options) {
             video.height = video.height || '250px';
         }
         options.payload = payload;
-        return Mustache.to_html(Snap.markup.getVideoTemplate(), options);
+        return Mustache.to_html(Snap.markup.getVideoTemplate(), options.payload[0]);
     }
 };
