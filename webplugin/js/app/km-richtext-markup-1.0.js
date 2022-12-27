@@ -520,11 +520,9 @@ Snap.markup = {
     //     {{/caption}}
     // {{/payload}}
     return `<div class="mck-rich-video-container">
-        {{#payload}}
-            <p>{{width}}</p>
-            <p>{{height}}</p>
-            <p>{{url}}</p>
-        {{/payload}}
+        <p>{{width}}</p>
+        <p>{{height}}</p>
+        <p>{{url}}</p>
     </div>`;
     },
     getFormDataMessageTemplate: function (data) {
@@ -1089,7 +1087,7 @@ Snap.markup.getVideoMarkup = function (options) {
             video.width = video.width || '100%';
             video.height = video.height || '250px';
         }
-        options.payload = payload[0];
-        return Mustache.to_html(Snap.markup.getVideoTemplate(), options);
+        options.payload = payload;
+        return Mustache.to_html(Snap.markup.getVideoTemplate(), options.payload);
     }
 };
