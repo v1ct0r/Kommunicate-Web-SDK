@@ -504,21 +504,24 @@ Snap.markup = {
             </div>`;
     },
     getVideoTemplate: function () {
+    //     {{#payload}}
+    //     {{#source}}
+    //         <iframe width="{{width}}" height="{{height}}" src="{{url}}" url="{{url}}" class= "mck-rich-video-iframe"></iframe>
+    //     {{/source}}
+    //     {{^source}}
+    //     <video width="{{width}}" height="{{height}}" controls class= "mck-rich-video">
+    //          <source src="{{url}}" type="{{type}}">
+    //      </video>
+    //     {{/source}}
+    //     {{#caption}}
+    //     <div class="km-template-video-caption-wrapper" style="width:{{width}};">
+    //        <p class="km-template-video-caption">{{caption}}</p>
+    //     </div>
+    //     {{/caption}}
+    // {{/payload}}
         return `<div class= "mck-rich-video-container">
     {{#payload}}
-        {{#source}}
-            <iframe width="{{width}}" height="{{height}}" src="{{url}}" url="{{url}}" class= "mck-rich-video-iframe"></iframe>
-        {{/source}}
-        {{^source}}
-        <video width="{{width}}" height="{{height}}" controls class= "mck-rich-video">
-             <source src="{{url}}" type="{{type}}">
-         </video>
-        {{/source}}
-        {{#caption}}
-        <div class="km-template-video-caption-wrapper" style="width:{{width}};">
-           <p class="km-template-video-caption">{{caption}}</p>
-        </div>
-        {{/caption}}
+        <iframe width="{{width}}" height="{{height}}" src="{{url}}" url="{{url}}" class= "mck-rich-video-iframe"></iframe>
     {{/payload}}
     </div>`;
     },
