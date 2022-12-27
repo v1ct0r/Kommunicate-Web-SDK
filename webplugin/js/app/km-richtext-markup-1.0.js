@@ -519,10 +519,12 @@ Snap.markup = {
     //     </div>
     //     {{/caption}}
     // {{/payload}}
-        return `<div class= "mck-rich-video-container">
-    {{#payload}}
-        <iframe width="{{width}}" height="{{height}}" src="{{url}}" url="{{url}}" class= "mck-rich-video-iframe"></iframe>
-    {{/payload}}
+    return `<div class="mck-rich-video-container">
+        {{#payload}}
+            <video width="{{width}}" height="{{height}}" controls class="mck-rich-video">
+                 <source src="{{url}}" type="video/mp4">
+            </video>
+        {{/payload}}
     </div>`;
     },
     getFormDataMessageTemplate: function (data) {
