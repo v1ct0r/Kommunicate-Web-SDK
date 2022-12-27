@@ -504,25 +504,22 @@ Snap.markup = {
             </div>`;
     },
     getVideoTemplate: function () {
-    //     {{#payload}}
-    //     {{#source}}
-    //         <iframe width="{{width}}" height="{{height}}" src="{{url}}" url="{{url}}" class= "mck-rich-video-iframe"></iframe>
-    //     {{/source}}
-    //     {{^source}}
-    //     <video width="{{width}}" height="{{height}}" controls class= "mck-rich-video">
-    //          <source src="{{url}}" type="{{type}}">
-    //      </video>
-    //     {{/source}}
-    //     {{#caption}}
-    //     <div class="km-template-video-caption-wrapper" style="width:{{width}};">
-    //        <p class="km-template-video-caption">{{caption}}</p>
-    //     </div>
-    //     {{/caption}}
-    // {{/payload}}
     return `<div class="mck-rich-video-container">
-        <p>{{width}}</p>
-        <p>{{height}}</p>
-        <p>{{url}}</p>
+    {{#payload}}
+        {{#source}}
+            <iframe width="{{width}}" height="{{height}}" src="{{url}}" url="{{url}}" class= "mck-rich-video-iframe"></iframe>
+        {{/source}}
+        {{^source}}
+            <video width="{{width}}" height="{{height}}" controls class= "mck-rich-video">
+                <source src="{{url}}" type="{{type}}">
+            </video>
+        {{/source}}
+        {{#caption}}
+            <div class="km-template-video-caption-wrapper" style="width:{{width}};">
+                <p class="km-template-video-caption">{{caption}}</p>
+            </div>
+        {{/caption}}
+    {{/payload}}
     </div>`;
     },
     getFormDataMessageTemplate: function (data) {
@@ -1087,7 +1084,8 @@ Snap.markup.getVideoMarkup = function (options) {
             video.width = video.width || '100%';
             video.height = video.height || '250px';
         }
-        options.payload = payload[0];
-        return Mustache.to_html(Snap.markup.getVideoTemplate(), options.payload);
+        options.payload = payload;
+        return Mustache.to_html(Snap.markup.getVideoTemplate(), options);
     }
+    return '';
 };
