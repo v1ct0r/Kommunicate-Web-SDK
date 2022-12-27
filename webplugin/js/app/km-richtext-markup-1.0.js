@@ -521,9 +521,9 @@ Snap.markup = {
     // {{/payload}}
     return `<div class="mck-rich-video-container">
         {{#payload}}
-            <video width="{{width}}" height="{{height}}" controls class="mck-rich-video">
-                 <source src="{{url}}" type="video/mp4">
-            </video>
+            <p>{{width}}</p>
+            <p>{{height}}</p>
+            <p>{{url}}</p>
         {{/payload}}
     </div>`;
     },
