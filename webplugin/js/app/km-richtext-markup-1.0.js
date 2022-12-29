@@ -843,7 +843,7 @@ Snap.markup.getActionableFormMarkup = function (options) {
                 resultPayload.forEach(el => {
                     el.rule = carrentPayload[0].section_rule
                 });
-                options.payload[0].options = resultPayload
+                options.payload[0].options = resultPayload.concat()
                 options.payload[0].type = carrentPayload[0].section_type
             }
         }
