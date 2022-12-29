@@ -845,9 +845,10 @@ Snap.markup.getActionableFormMarkup = function (options) {
                 });
                 options.payload[0].options = resultPayload.concat()
                 options.payload[0].type = carrentPayload[0].section_type
+                options.payload[0].subtype = "checkbox-multi_section"
             }
         }
-        if (snapCommons.isObject(options.payload[0].data) && options.payload[0].type !== "checkbox-multi_section") {
+        if (snapCommons.isObject(options.payload[0].data) && options.payload[0].subtype !== "checkbox-multi_section") {
             options.payload = options.payload.map(function (item) {
                 data = {};
                 data.type = item.type;
