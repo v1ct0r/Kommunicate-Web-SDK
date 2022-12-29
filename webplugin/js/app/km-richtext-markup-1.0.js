@@ -825,6 +825,22 @@ Snap.markup.getActionableFormMarkup = function (options) {
     var action = {};
     var data = {};
     var isActionObject = false;
+
+    if (options && Array.isArray(options.payload) && options.payload[0].type === "checkbox-multi_section") {
+        let carrentPayload = options.payload[0].options
+        if (carrentPayload && Array.isArray(carrentPayload)) {
+            let resultPayload = [];
+            carrentPayload.forEach(el => {
+                resultPayload = resultPayload.concat(el.section_data)
+            });
+            resultPayload.forEach(el => {
+                el.type = resultPayload[0].section_type
+                el.rule = resultPayload[0].section_rule
+            });
+            options.payload = resultPayload
+        }
+    }
+
     if (options && options.payload) {
         var payload =
             typeof options.payload == 'string'
@@ -832,7 +848,7 @@ Snap.markup.getActionableFormMarkup = function (options) {
                 : {};
         options.payload = payload;
         options.buttons = [];
-        if (snapCommons.isObject(options.payload[0].data)) {
+        if (snapCommons.isObject(options.payload[0].data) && options.payload[0].type !== "checkbox-multi_section") {
             options.payload = options.payload.map(function (item) {
                 data = {};
                 data.type = item.type;
