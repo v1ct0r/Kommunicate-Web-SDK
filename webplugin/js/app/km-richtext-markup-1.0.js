@@ -841,10 +841,10 @@ Snap.markup.getActionableFormMarkup = function (options) {
                     resultPayload = resultPayload.concat(el.section_data)
                 });
                 resultPayload.forEach(el => {
-                    el.type = resultPayload[0].section_type
-                    el.rule = resultPayload[0].section_rule
+                    el.rule = carrentPayload[0].section_rule
                 });
-                payload = resultPayload
+                options.payload[0].options = resultPayload
+                options.payload[0].type = carrentPayload[0].section_type
             }
         }
         if (snapCommons.isObject(options.payload[0].data) && options.payload[0].type !== "checkbox-multi_section") {
