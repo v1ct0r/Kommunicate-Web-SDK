@@ -431,7 +431,7 @@ Snap.markup = {
                                             {{#options}}
                                                     <li tabindex="-1">
                                                         <label class="mck-form-label" tabindex="-1">
-                                                            <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true" class="quick-reply-checkbox">
+                                                            <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true" class="quick-reply-checkbox" data-rule="{{rule}}">
                                                             {{label}}
                                                         </label>
                                                     </li>                                       
@@ -846,6 +846,9 @@ Snap.markup.getActionableFormMarkup = function (options) {
                 options.payload[0].options = resultPayload.concat()
                 options.payload[0].type = carrentPayload[0].section_type
                 options.payload[0].subtype = "checkbox-multi_section"
+                if(!options.payload[1].hasOwnProperty('name') && options.payload[1].data.hasOwnProperty('name')){
+                    options.payload[1].name = options.payload[1].data.name
+                }
             }
         }
         if (snapCommons.isObject(options.payload[0].data) && options.payload[0].subtype !== "checkbox-multi_section") {
