@@ -944,22 +944,25 @@ Snap.richMsgEventHandler = {
         } catch{}
     },
     changeCheckbox: function(e){
-        if (e.target.checked) {
-            if (e.target.value.toLowerCase() === "anytime") {
-                $('.quick-reply-checkbox').not('[value="Anytime"]').prop('checked', false);
-                $('.quick-reply-checkbox').not('[value="Anytime"]').prop('disabled', true);
-            }
-            if (e.target.value.toLowerCase() === "all of above") {
-                $('.quick-reply-checkbox').not('[value="Anytime"]').prop('checked', true);
-                $('.quick-reply-checkbox').not('[value="All of above"]').prop('disabled', true);
-            }
-        } else {
-            if (e.target.value.toLowerCase() === "anytime") {
-                $('.quick-reply-checkbox').not('[value="Anytime"]').prop('disabled', false);
-            }
-            if (e.target.value.toLowerCase() === "all of above") {
-                $('.quick-reply-checkbox').not('[value="Anytime"]').prop('checked', false);
-                $('.quick-reply-checkbox').not('[value="All of above"]').prop('disabled', false);
+        let rule = e.target.getAttribute("data-rule");
+        if(rule === 's1'){
+            if (e.target.checked) {
+                if (e.target.value.toLowerCase() === "anytime") {
+                    $('.quick-reply-checkbox').not('[value="Anytime"]').prop('checked', false);
+                    $('.quick-reply-checkbox').not('[value="Anytime"]').prop('disabled', true);
+                }
+                if (e.target.value.toLowerCase() === "all of above") {
+                    $('.quick-reply-checkbox').not('[value="Anytime"]').prop('checked', true);
+                    $('.quick-reply-checkbox').not('[value="All of above"]').prop('disabled', true);
+                }
+            } else {
+                if (e.target.value.toLowerCase() === "anytime") {
+                    $('.quick-reply-checkbox').not('[value="Anytime"]').prop('disabled', false);
+                }
+                if (e.target.value.toLowerCase() === "all of above") {
+                    $('.quick-reply-checkbox').not('[value="Anytime"]').prop('checked', false);
+                    $('.quick-reply-checkbox').not('[value="All of above"]').prop('disabled', false);
+                }
             }
         }
     }
