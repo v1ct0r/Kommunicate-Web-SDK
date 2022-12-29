@@ -834,7 +834,7 @@ Snap.markup.getActionableFormMarkup = function (options) {
         options.payload = payload;
         options.buttons = [];
         if (options.payload[0].type === "checkbox-multi_section") {
-            let carrentPayload = payload[0].options
+            let carrentPayload = payload[0].data.options
             if (carrentPayload && Array.isArray(carrentPayload)) {
                 let resultPayload = [];
                 carrentPayload.forEach(el => {
