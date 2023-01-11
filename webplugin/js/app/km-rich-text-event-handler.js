@@ -948,27 +948,21 @@ Snap.richMsgEventHandler = {
         if(rule === 's1'){
             if (e.target.checked) {
                 if (e.target.getAttribute('data-selector') === "anytime") {
-                    // $('.quick-reply-checkbox[data-selector="anytime"]').prop('checked', true);
                     $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('checked', false);
                     $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('disabled', true);
                 } else if (e.target.getAttribute('data-selector') === "all of above") {
                     $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('checked', true);
-                    // $('.quick-reply-checkbox').not('[data-selector="all of above"]').prop('disabled', true);
                 } else {
                     $('.quick-reply-checkbox[data-selector="anytime"]').prop('checked', false);
+                    $('.quick-reply-checkbox[data-selector="anytime"]').prop('disabled', true);
                     $('.quick-reply-checkbox[data-selector="all of above"]').prop('checked', false);
+                    $('.quick-reply-checkbox[data-selector="all of above"]').prop('disabled', true);
                 }
             } else {
-                if (!$('.quick-reply-checkbox[data-selector="anytime"]:checked').length) {
+                if (!$('.quick-reply-checkbox[data-selector="anytime"]:checked').length 
+                    || !$('.quick-reply-checkbox:checked').not('[data-selector="anytime"]').length) {
                     $('.quick-reply-checkbox').prop('disabled', false);
                 }
-                // if (e.target.getAttribute('data-selector') === "anytime") {
-                //     $('.quick-reply-checkbox[data-selector="anytime"]').prop('checked', false);
-                //     $('.quick-reply-checkbox').prop('disabled', false);
-                // } else if (e.target.getAttribute('data-selector') === "all of above") {
-                //     $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('checked', false);
-                //     $('.quick-reply-checkbox').prop('disabled', false);
-                // }
             }
         }
     }
