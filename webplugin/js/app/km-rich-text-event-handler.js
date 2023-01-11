@@ -959,9 +959,12 @@ Snap.richMsgEventHandler = {
                     $('.quick-reply-checkbox[data-selector="all of above"]').prop('disabled', true);
                 }
             } else {
-                if (!$('.quick-reply-checkbox[data-selector="anytime"]:checked').length 
-                    || !$('.quick-reply-checkbox:checked').not('[data-selector="anytime"]').length) {
-                    $('.quick-reply-checkbox').prop('disabled', false);
+                if (!$('.quick-reply-checkbox[data-selector="anytime"]:checked').length) {
+                    $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('disabled', false);
+                }
+                if (!$('.quick-reply-checkbox:checked').not('[data-selector="anytime"]').length) {
+                    $('.quick-reply-checkbox[data-selector="anytime"]').prop('disabled', false);
+                    $('.quick-reply-checkbox[data-selector="all of above"]').prop('disabled', false);
                 }
             }
         }
