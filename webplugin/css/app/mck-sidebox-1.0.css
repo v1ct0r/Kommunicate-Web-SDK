@@ -2253,9 +2253,9 @@ mck-sidebox .mck-group-member-list li a:hover {
     font-size: 14px;
     min-height: 20px;
     padding: 10px 14px 12px;
-    max-width: 70%; /* all browsers */
-    max-width: -moz-calc(85% - 58px); /* Firefox 4+ */
-    max-width: calc(85% - 58px); /* IE9+ and future browsers */
+    /* max-width: 70%;
+    max-width: -moz-calc(85% - 58px);
+    max-width: calc(85% - 58px); */
     border-radius: 5px;
     -webkit-align-self: flex-end;
     -ms-flex-item-align: end;
