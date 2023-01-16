@@ -878,7 +878,7 @@ Snap.markup.getActionableFormMarkup = function (options) {
                     (isActionObject && item.action.postBackToSnap) || false;
                 options.label = item.name || item.label;
                 options.message =
-                    item.message || (isActionObject && item.action.message);
+                    item.message || item.name || (isActionObject && item.action.message);
                 options.payload[index].className = 'km-cta-button';
                 options.buttons.push(item);
                 options.payload.splice(index, 1);
