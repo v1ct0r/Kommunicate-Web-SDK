@@ -1640,6 +1640,12 @@ var userOverride = {
                     payload: params.payload,
                     metadata: params.metadata || {},
                 };
+                if(params.messageType = 5 && typeof obj.field === 'string'){
+                    let messageTemplateArr = params.messageTemplate.split('\n');
+                    if(result.length > 1){
+                        params.messageTemplate = new Map().set("choices", messageTemplateArr)
+                    }
+                }
                 $applozic.extend(messagePxy.metadata, {
                     MESSAGE_TEMPLATE: params.messageTemplate,
                 });
