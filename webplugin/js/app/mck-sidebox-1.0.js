@@ -1631,9 +1631,9 @@ var userOverride = {
                     return 'invalid message type';
                 }
                 message = $applozic.trim(message);
-                if(params.messageType = 5 && typeof obj.field === 'string'){
-                    var messageTemplateArr = params.messageTemplate.split('\n');
-                }
+                // if(params.messageType = 5 && typeof obj.field === 'string'){
+                //     var messageTemplateArr = params.messageTemplate.split('\n');
+                // }
                 var messagePxy = {
                     type: params.messageType,
                     contentType: params.type,
@@ -1641,7 +1641,6 @@ var userOverride = {
                     buttonId: params.buttonId,
                     payload: params.payload,
                     metadata: params.metadata || {},
-                    formData: messageTemplateArr || {},
                 };
                 $applozic.extend(messagePxy.metadata, {
                     MESSAGE_TEMPLATE: params.messageTemplate,
