@@ -944,8 +944,8 @@ Snap.richMsgEventHandler = {
         } catch{}
     },
     changeCheckbox: function(e){
-        let rule = e.target.getAttribute("data-rule");
-        if(rule === 's1'){
+        // let rule = e.target.getAttribute("data-rule");
+        // if(rule === 's1'){
             if (e.target.checked) {
                 if (e.target.getAttribute('data-selector') === "anytime") {
                     $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('checked', false);
@@ -967,6 +967,6 @@ Snap.richMsgEventHandler = {
                     $('.quick-reply-checkbox[data-selector="all of above"]').prop('disabled', false);
                 }
             }
-        }
+        // }
     }
 };

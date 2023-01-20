@@ -842,7 +842,7 @@ Snap.markup.getActionableFormMarkup = function (options) {
                 });
                 resultPayload.forEach(el => {
                     el.rule = carrentPayload[0].section_rule
-                    el.ruleSelector = el.value.toLocaleLowerCase().replace(/[0-9]/gi,'')
+                    // el.ruleSelector = el.value.toLocaleLowerCase().replace(/[0-9]/gi,'')
                 });
                 options.payload[0].options = resultPayload.concat()
                 options.payload[0].type = carrentPayload[0].section_type
@@ -887,10 +887,15 @@ Snap.markup.getActionableFormMarkup = function (options) {
                     SnapConstants.FORM_SUPPORTED_FIELDS.indexOf(item.type) !=
                     -1;
                 options.payload[index][item.type] = true;
+                if (Array.isArray(options.payload[index].options)) {
+                    options.payload[index].options.forEach(el => {
+                        el.ruleSelector = el.value.toLocaleLowerCase().replace(/[0-9]/gi,'')
+                    });
+                }
                 try {
                     options.payload[index].className = (item.label || item.name)
                         .toLowerCase()
-                        .replace(/ +/g, '');
+                        .replace(/ +/g, '');         
                 } catch (e) {
                     console.log(e);
                 }
