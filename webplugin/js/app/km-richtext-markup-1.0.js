@@ -431,7 +431,7 @@ Snap.markup = {
                                             {{#options}}
                                                     <li tabindex="-1">
                                                         <label class="mck-form-label" tabindex="-1">
-                                                            <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true" class="quick-reply-checkbox" data-rule="{{rule}}" data-selector="{{ruleSelector || value.toLocaleLowerCase()}}">
+                                                            <input type="checkbox" name="{{name}}" value="{{value}}" tabindex="3" aria-hidden="true" class="quick-reply-checkbox" data-rule="{{rule}}" data-selector="{{ruleSelector}}">
                                                             {{label}}
                                                         </label>
                                                     </li>                                       
@@ -883,6 +883,13 @@ Snap.markup.getActionableFormMarkup = function (options) {
                 options.buttons.push(item);
                 options.payload.splice(index, 1);
             } else {
+                if (options.payload[index].type === "checkbox" && 
+                    options.payload[index].hasOwnProperty('options') && 
+                    Array.isArray(options.payload[index].options)) {
+                        options.payload[index].options.forEach(el => {
+                            el.ruleSelector = el.value.toLocaleLowerCase().replace(/[0-9]/gi,'')
+                        });
+                }
                 options.payload[index].supported =
                     SnapConstants.FORM_SUPPORTED_FIELDS.indexOf(item.type) !=
                     -1;
