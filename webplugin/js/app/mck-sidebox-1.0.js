@@ -652,31 +652,37 @@ var userOverride = {
         };
 
         _this.mckLaunchSideboxChat = function () {
-            snapCommons.setWidgetStateOpen(true);
-            !POPUP_WIDGET &&
+            const chatContext = SnapUtils.getSettings('KM_CHAT_CONTEXT');
+
+            if(Object.hasOwn(chatContext, 'trigger')) {
+                snapCommons.setWidgetStateOpen(true);
+                !POPUP_WIDGET &&
                 $applozic('#mck-sidebox-launcher')
-                    .removeClass('vis')
-                    .addClass('n-vis');
-            SNAP_VERSION === 'v2' &&
-                Snap.setDefaultIframeConfigForOpenChat(POPUP_WIDGET);
-            SnapUI.showChat();
-            $applozic('#mck-away-msg-box').removeClass('vis').addClass('n-vis');
-            mckMessageService.loadConversationWithAgents(
-                {
-                    groupName: DEFAULT_GROUP_NAME,
-                    agentId: DEFAULT_AGENT_ID,
-                    botIds: DEFAULT_BOT_IDS,
-                },
-                function (data) {
-                    console.log('conversation created successfully');
-                    SnapUI.activateTypingField();
-                }
-            );
-            $applozic('#mck-msg-preview-visual-indicator').hasClass('vis')
-                ? $applozic('#mck-msg-preview-visual-indicator')
-                      .removeClass('vis')
-                      .addClass('n-vis')
-                : '';
+                .removeClass('vis')
+                        .addClass('n-vis');
+                SNAP_VERSION === 'v2' &&
+                    Snap.setDefaultIframeConfigForOpenChat(POPUP_WIDGET);
+                SnapUI.showChat();
+                $applozic('#mck-away-msg-box').removeClass('vis').addClass('n-vis');
+                mckMessageService.loadConversationWithAgents(
+                    {
+                        groupName: DEFAULT_GROUP_NAME,
+                        agentId: DEFAULT_AGENT_ID,
+                        botIds: DEFAULT_BOT_IDS,
+                    },
+                    function (data) {
+                        console.log('conversation created successfully');
+                        SnapUI.activateTypingField();
+                    }
+                );
+                $applozic('#mck-msg-preview-visual-indicator').hasClass('vis')
+                    ? $applozic('#mck-msg-preview-visual-indicator')
+                          .removeClass('vis')
+                          .addClass('n-vis')
+                    : '';
+            } else {
+                $applozic('#mck-sidebox-launcher').addClass('n-vis')
+            }
         };
         _this.openChat = function (params) {
             mckMessageService.openChat(params);

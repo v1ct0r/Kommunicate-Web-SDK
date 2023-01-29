@@ -566,14 +566,17 @@ function ApplozicSidebox() {
     function preLoadLauncherIconInterval() {
         var launcherInterval = setInterval(function () {
             if (document.getElementById('mck-sidebox-launcher')) {
-                document
+                // const chatContext = SnapUtils.getSettings('KM_CHAT_CONTEXT');
+                // if(Object.hasOwn(chatContext, 'trigger')) {
+                    document
                     .getElementById('mck-sidebox-launcher')
                     .classList.remove('n-vis');
                 document
                     .getElementById('mck-sidebox-launcher')
                     .classList.add('km-launcher-animation');
+                }
                 clearInterval(launcherInterval);
-            }
+            // }
         }, 100);
     }
 
