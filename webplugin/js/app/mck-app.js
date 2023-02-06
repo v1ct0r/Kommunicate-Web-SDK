@@ -566,8 +566,6 @@ function ApplozicSidebox() {
     function preLoadLauncherIconInterval() {
         var launcherInterval = setInterval(function () {
             if (document.getElementById('mck-sidebox-launcher')) {
-                // const chatContext = SnapUtils.getSettings('KM_CHAT_CONTEXT');
-                // if(Object.hasOwn(chatContext, 'trigger')) {
                     document
                     .getElementById('mck-sidebox-launcher')
                     .classList.remove('n-vis');

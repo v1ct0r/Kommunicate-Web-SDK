@@ -653,8 +653,9 @@ var userOverride = {
 
         _this.mckLaunchSideboxChat = function () {
             const chatContext = SnapUtils.getSettings('KM_CHAT_CONTEXT');
+            const objectHasProperty = chatContext.hasOwnProperty("trigger")
 
-            if(Object.hasOwn(chatContext, 'trigger')) {
+            if(objectHasProperty) {
                 snapCommons.setWidgetStateOpen(true);
                 !POPUP_WIDGET &&
                 $applozic('#mck-sidebox-launcher')
@@ -684,6 +685,8 @@ var userOverride = {
                 $applozic('#mck-sidebox-launcher').addClass('n-vis')
             }
         };
+
+
         _this.openChat = function (params) {
             mckMessageService.openChat(params);
         };
