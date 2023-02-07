@@ -89,6 +89,7 @@ function showSessionAlert() {
 
 window.sessionTimeoutInitializer = () => {
   var delay = 600000 //10 minutes delay
+  // var delay = 10000;
   var hash = window.location.hash.substr(1);
   const excludeAppId = "e7b8fe8886f7f8830785d893e3d36fd1";
 
@@ -102,6 +103,6 @@ window.sessionTimeoutInitializer = () => {
     let domain = document.domain
     let isNeedToAddDot = !checkIfDomainIsIP(findCookieDomain(domain))
     document.cookie = `${getCookieFullName("km_id")}; domain=${isNeedToAddDot ? '.' : ''}${findCookieDomain(domain)}; expires=${new Date(0).toUTCString()}`;
-    window.location.replace(window.location.origin + "#timeout");
+    window.location.replace(window.location.href.split('?s=')[0] + "#timeout");
   }, delay);
 };
