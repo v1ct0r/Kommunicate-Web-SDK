@@ -53,7 +53,7 @@ const configEnv = {
             applozicBaseUrl: 'https://rxinfo-qa.aetna.com',
             snapBaseUrl: 'https://rxinfo-qa.aetna.com',
             botPlatformApi: 'https://rxinfo-qa.aetna.com',
-            hostUrl: 'https://rxinfo-qa.aetna.com',
+            hostUrl: 'https://pdpstaging.onehealthlink.com',
             sendUserBehaviorInfoUrl: 'https://ohl5011637183.gera-it-dev.com/frontend_interaction_behavior',
         },
         pluginProperties: {
