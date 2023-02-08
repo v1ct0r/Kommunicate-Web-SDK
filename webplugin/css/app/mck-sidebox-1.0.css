@@ -2240,6 +2240,10 @@ mck-sidebox .mck-group-member-list li a:hover {
     font-size: 16px!important;
     line-height: 24px!important;
 }
+.free-user-time-item-wrapper {
+    display: flex;
+    gap: 10px;
+}
 
 .mck-msg-content img {
     max-width: 225px !important;

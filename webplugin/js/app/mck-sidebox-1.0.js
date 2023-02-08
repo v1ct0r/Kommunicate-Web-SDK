@@ -8729,7 +8729,7 @@ var userOverride = {
                     }
                 }
 
-                if (msg.message || msg.metadata.templateId === '14') {
+                if (msg.message || msg.metadata.templateId === '14' || msg.metadata.templateId === '10') {
                     append
                         ? $applozic
                             .tmpl('messageTemplate', msgList)
@@ -9057,7 +9057,7 @@ var userOverride = {
                   msg.contentType === 0
                 ) {
                     var nodes = emoji_template.split('<br/>');
-                    for (var i = 0; i < nodes.length; i++) {
+                    for (let i = 0; i < nodes.length; i++) {
                         if (nodes[i] === '') {
                             var x = d.createElement('BR');
                         } else {
@@ -9067,7 +9067,23 @@ var userOverride = {
                                 target: '_blank',
                             });
                         }
-                        $textMessage.append(x);
+
+                        if(String(msg.message).match(/(0am|0pm|Anytime)/)) {
+                            const textWrapper = d.createElement("div");
+                            const checkMarkImg = d.createElement("img");
+                            const time = d.createElement("div");
+
+                            time.textContent = nodes[i];
+                            textWrapper.classList = "free-user-time-item-wrapper";
+                            checkMarkImg.src = "https://healthgen-demo.onehealthlink.com/snap/check-mark.svg";
+
+                            textWrapper.append(checkMarkImg, time);
+                            $textMessage
+                            .append(textWrapper)
+                        } else {
+                            $textMessage.append(x)
+                        }
+
                         if(Array.isArray(arrayOfAllMessages) && !newMessageArray){
                             // setTimeout(function () {
                                 Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0));
