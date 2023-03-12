@@ -1749,6 +1749,15 @@ mck-sidebox .mck-group-member-list li a:hover {
     height: 300px;
 }
 
+.watermark {
+    position: absolute;
+    bottom: 50%;
+    opacity: 0.1;
+    font-size: 19px;
+    transform: rotate(-35deg);
+    font-size: 31px;
+}
+
 .mck-box-body .mck-message-inner {
     position: absolute;
     background-color: #ffffff;
