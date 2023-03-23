@@ -9078,21 +9078,7 @@ var userOverride = {
                             });
                         }
 
-                        if(String(msg.message).match(/(0am|0pm|Anytime)/)) {
-                            const textWrapper = d.createElement("div");
-                            const checkMarkImg = d.createElement("img");
-                            const time = d.createElement("div");
-
-                            time.textContent = nodes[i];
-                            textWrapper.classList = "free-user-time-item-wrapper";
-                            checkMarkImg.src = "https://healthgen-demo.onehealthlink.com/snap/check-mark.svg";
-
-                            textWrapper.append(checkMarkImg, time);
-                            $textMessage
-                            .append(textWrapper)
-                        } else {
-                            $textMessage.append(x)
-                        }
+                        $textMessage.append(x)
 
                         if(Array.isArray(arrayOfAllMessages) && !newMessageArray){
                             // setTimeout(function () {
