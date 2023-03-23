@@ -11,7 +11,7 @@ services:
       dockerfile: Dockerfile.frontend.mapd
     volumes:
       - node_modules:/usr/local/chat/node_modules/
-      # - ./server/config/config-env.js:/usr/local/chat/server/config/config-env.js
+      - ./server/config/config-env.js:/usr/local/chat/server/config/config-env.js
     ports:
       - 4030:3030
     command: [ 'node', 'app', 'upload=false' ]
