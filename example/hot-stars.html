@@ -98,7 +98,7 @@
       </div>
     </main>
     <footer aria-hidden="true">
-      <div>&#169;2022 Aetna Inc.</div>
+      <div>&#169;2023 Aetna Inc.</div>
     </footer>
     
     <script defer type="text/javascript">
@@ -128,7 +128,6 @@
                 ".mck-back-btn-container, #mck-btn-attach-box {display: none !important;}";
 
               Snap.customizeWidgetCss(customCss);
-              Snap.launchConversation();
               Snap.updateSettings({
                 defaultGroupName: "Conversations",
                 KM_CHAT_CONTEXT: {
@@ -136,6 +135,7 @@
                   userTimezone: timezone,
                 },
               });
+              Snap.launchConversation();
             },
           };
 
