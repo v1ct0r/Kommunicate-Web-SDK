@@ -2,172 +2,104 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'self';font-src 'self'; img-src 'self' data: https:; style-src 'self' ; script-src 'self'" -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap"
       rel="stylesheet"
-    />
+    /> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-      :root {
-        --color-blue: #29519e;
-        --color-grey: #e6e5eb;
-        --color-text: #333;
-        --color-text-secondary: #979797;
-      }
-      html {
-        font-family: "DM Sans", Arial, Helvetica, sans-serif;
-        font-size: 16px;
-        line-height: 130%;
-      }
-      body {
-        padding: 0;
+      html, body, div, span, img {
         margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        font-family: "Lato", sans-serif;
+        vertical-align: baseline;
+        line-height: 1;
       }
       * {
         box-sizing: border-box;
       }
-      .fluid {
-        float: none !important;
-        width: 100% !important;
-        height: 100vh;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        max-width: 100% !important;
-        position: relative !important;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        padding: 0;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 1) 0%,
-          rgba(81, 174, 213, 0.25) 100%
-        );
+      body{
+        background-color: rgba(126, 125, 125, 0.1);
       }
-      .header {
-        width: 100%;
-        padding: 20px 30px;
+      header {
         display: block;
+        height: 80px;
+        width: 100%;
+        background-color: #ffff;
       }
-      .logo {
-        width: 350px;
+      header {
+        padding: 16px 20px;
       }
-      .logo img {
-        max-width: 100%;
+      main {
+        padding: 80px 40px 60px;
       }
-      .container {
-        max-width: 1140px;
-        padding: 20px;
-        margin: 0 auto;
-        /* color: #fff; */
-        position: relative;
-        z-index: 3;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      .text {
+        max-width: 650px;
+        padding: 60px 50px;
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 1.6;
+        color: #5a2e6f;
+        background-color: #fff;
+        border-top: 4px solid #6A407F;
       }
-      .container .title {
-        font-size: 64px;
-        font-weight: 700;
-        line-height: 130%;
-        letter-spacing: 0.5;
-        color: var(--color-blue);
-      }
-      .container .subtitle {
-        font-size: 32px;
-        line-height: 130%;
-        color: rgb(81, 174, 213);
-        letter-spacing: 0.5;
-      }
-      .mackup {
-        width: 320px;
-      }
-      .mackup img {
-        max-width: 100%;
-      }
-      .wave {
-      }
-      .wave svg {
-        position: absolute;
+      footer {
+        display: block;
+        position: fixed;
         width: 100%;
         bottom: 0;
-        left: 0;
       }
-      .wave-top svg {
-        position: absolute;
+      footer div {
+        height: 50px;
         width: 100%;
-        top: 0;
-        left: 0;
+        padding: 18px 20px;
+        background-color: #6A407F;
+        color: #fff;
       }
-      .footer {
-        position: absolute;
-        width: 100%;
-        bottom: 4px;
-        left: 4px;
+      @media (max-width: 440px) {
+        main {
+          padding: 60px 20px 60px;
+        }
+        .text {
+          padding: 40px 32px;
+          font-size: 28px;
+          line-height: 1.6;
+        }
+      }
+      .mck-sidebox-launcher {
+        box-shadow: 0px 0px 0px 5px white!important;
       }
     </style>
+    <script>
+      window.onload = () => {
+        let iframeName = document.getElementById('snap-widget-iframe');
+        let iframeContent = iframeName.contentDocument;
+        iframeContent.body.innerHTML = iframeContent.body.innerHTML + '<style>.mck-sidebox-launcher {box-shadow: 0px 0px 0px 5px white!important;}</style>';
+      }
+    </script>
     <script type="text/javascript" src="index.js"></script>
   </head>
   <body>
-    <div class="fluid">
-      <div class="header">
-        <div class="logo">
-          <img src="/img/OHL-Logo-header.png" alt="" />
-        </div>
+    <header>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 242.66667 48" height="48" width="242.66667">
+        <g id="g10" transform="matrix(1,0,0,-1,0,40)">
+          <g id="g12">
+            <g clip-path="url(#clipPath18)" id="g14"><path id="path20" style="fill:#77309a;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 179.335,27.835 c 0.372,0 0.701,0.037 0.701,0.475 0,0.364 -0.358,0.408 -0.657,0.408 h -0.598 v -0.883 z m -0.554,-1.714 h -0.496 v 3.02 h 1.145 c 0.73,0 1.102,-0.255 1.102,-0.869 0,-0.546 -0.336,-0.772 -0.788,-0.824 l 0.846,-1.327 h -0.562 l -0.781,1.291 h -0.466 z m 0.54,3.814 c -1.182,0 -2.101,-0.925 -2.101,-2.253 0,-1.24 0.803,-2.253 2.101,-2.253 1.167,0 2.086,0.919 2.086,2.253 0,1.328 -0.919,2.253 -2.086,2.253 z m 0,-4.981 c -1.569,0 -2.685,1.174 -2.685,2.728 0,1.641 1.24,2.728 2.685,2.728 1.429,0 2.67,-1.087 2.67,-2.728 0,-1.641 -1.241,-2.728 -2.67,-2.728 z M 10.848,31.978 c 1.151,0 2.305,-0.442 3.183,-1.322 l 5.232,-5.232 5.225,5.225 c 0.881,0.884 2.033,1.327 3.187,1.327 1.148,0 2.296,-0.44 3.174,-1.322 l 6.353,-6.353 c 1.755,-1.755 1.76,-4.603 0.004,-6.357 L 19.263,0 1.32,17.944 c -1.759,1.755 -1.759,4.605 -0.007,6.357 l 6.358,6.356 c 0.876,0.882 2.028,1.321 3.177,1.321 m 107.07,-25.083 0.384,-6.214 c -0.734,-0.212 -2.958,-0.647 -5.977,-0.647 -6.202,0 -9.504,2.611 -9.504,8.984 0,4.994 0.095,10.471 0.144,13.471 H 99.75 c 0.056,1.355 -0.02,3.289 0,4.712 4.825,0.801 6.347,3.517 7.052,8.799 h 5.304 c -0.186,-2.176 -0.35,-5.333 -0.353,-7.471 h 5.634 v -6.042 h -5.723 v -10.87 c 0,-4.214 0.852,-5.362 3.749,-5.362 0.9,0 1.964,0.279 2.505,0.64 z m 29.608,6.748 c 0,2.362 0.049,5.504 0.049,5.504 0,7.07 -3.102,10.245 -11.867,10.245 -4.92,0 -8.426,-0.863 -13.921,-0.863 0.308,-4.963 0.319,-11.094 0.296,-14.886 0.024,-3.865 -0.128,-10.78 -0.296,-13.009 h 9.418 c -0.215,2.237 -0.404,8.67 -0.379,13.009 0,2.469 0.033,5.46 0.128,9.473 0.936,0.323 2.129,0.562 3.421,0.562 3.298,0 4.36,-1.547 4.36,-5.798 0,0 0.049,-2.665 0.049,-4.237 0,-3.865 -0.127,-10.78 -0.296,-13.009 h 9.421 c -0.219,2.237 -0.408,8.67 -0.383,13.009 z M 80.91,17.368 c 0,3.918 1.244,6.795 4.839,6.795 2.036,0 3.354,-1.068 3.354,-3.009 0,-2.731 -1.817,-3.998 -5.602,-3.998 -0.915,0 -1.882,0.015 -2.591,0.073 z M 54.974,5.478 c -3.002,0 -4.283,1.002 -4.283,3.514 0,2.416 1.625,3.792 5.725,3.792 0.381,0 0.842,0.015 1.172,-0.021 C 57.566,10.42 57.515,7.688 57.647,5.792 56.937,5.602 55.889,5.478 54.974,5.478 Z m 33.463,0.27 c -4.855,0 -7.477,2.533 -7.477,6.531 v 0.191 c 0.865,-0.044 2.585,-0.066 3.596,-0.066 8.669,0 13.121,2.716 13.121,8.567 0,5.052 -3.668,8.406 -11.642,8.406 -9.658,0 -13.524,-4.313 -14.396,-12.03 -1.413,0.088 -2.95,0.124 -5.052,0.131 0,0.417 0.007,0.842 0.007,1.274 0,7.828 -3.243,10.661 -11.876,10.661 -4.218,0 -7.945,-0.629 -10.215,-1.552 l 0.337,-6.246 c 1.977,1.055 4.928,2.065 7.733,2.065 3.954,0 5.154,-1.625 5.154,-5.543 L 57.72,17.559 c -0.271,0.007 -0.967,0.014 -1.347,0.014 -9.841,0 -14.396,-2.98 -14.396,-8.501 0,-5.689 2.834,-9.035 10.896,-9.035 4.253,0 8.45,0.6 13.861,0.6 -0.396,2.277 -0.41,5.557 -0.41,7.813 0,1.186 0.058,2.607 0.124,4.218 2.306,-0.023 4.012,-0.081 5.133,-0.132 C 72.409,3.383 77.153,0 87.024,0 90.67,0 94.36,0.622 96.293,1.523 L 95.956,7.769 C 94.038,6.656 91.366,5.748 88.437,5.748 Z m 75.696,-0.27 c -3.009,0 -4.283,1.002 -4.283,3.514 0,2.416 1.626,3.792 5.727,3.792 0.373,0 0.834,0.015 1.164,-0.021 -0.015,-2.343 -0.074,-5.075 0.065,-6.971 -0.71,-0.19 -1.765,-0.314 -2.673,-0.314 z m 11.35,2.972 c 0,2.526 0.263,6.114 0.263,10.302 0,7.828 -3.236,10.661 -11.869,10.661 -4.224,0 -7.944,-0.629 -10.214,-1.552 l 0.336,-6.246 c 1.978,1.055 4.921,2.065 7.733,2.065 3.954,0 5.147,-1.625 5.147,-5.543 v -0.578 c -0.278,0.007 -0.966,0.014 -1.346,0.014 -9.849,0 -14.396,-2.98 -14.396,-8.501 0,-5.689 2.833,-9.035 10.896,-9.035 4.254,0 8.449,0.6 13.853,0.6 -0.389,2.277 -0.403,5.557 -0.403,7.813"></path></g></g></g></svg>
+    </header>
+    <main aria-hidden="true">
+      <div class="text">
+        This webpage is for Aetna Medicare Solution plan education program.
       </div>
-      <div class="container">
-        <div>
-          <div class="title">HealthGEN</div>
-          <!--          <div class="subtitle">For Test Purpose ONLY</div>-->
-        </div>
-
-        <!--        <div class="mackup">-->
-        <!--          <img src="/img/portrait.png" alt="" />-->
-        <!--        </div>-->
-      </div>
-      <div class="wave">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 320"
-          style="margin-bottom: 5px"
-        >
-          <path
-            fill="#51AED5"
-            fill-opacity="0.1"
-            d="M0,288L30,245.3C60,203,120,117,180,101.3C240,85,300,139,360,133.3C420,128,480,64,540,32C600,0,660,0,720,26.7C780,53,840,107,900,112C960,117,1020,75,1080,90.7C1140,107,1200,181,1260,202.7C1320,224,1380,192,1410,176L1440,160L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"
-          ></path>
-        </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-          <path
-            fill="#51AED5"
-            fill-opacity="0.5"
-            d="M0,288L30,245.3C60,203,120,117,180,101.3C240,85,300,139,360,133.3C420,128,480,64,540,32C600,0,660,0,720,26.7C780,53,840,107,900,112C960,117,1020,75,1080,90.7C1140,107,1200,181,1260,202.7C1320,224,1380,192,1410,176L1440,160L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"
-          ></path>
-        </svg>
-
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-          <path
-            fill="#29519E"
-            fill-opacity="0.9"
-            d="M0,96L34.3,80C68.6,64,137,32,206,58.7C274.3,85,343,171,411,213.3C480,256,549,256,617,234.7C685.7,213,754,171,823,176C891.4,181,960,235,1029,229.3C1097.1,224,1166,160,1234,138.7C1302.9,117,1371,139,1406,149.3L1440,160L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"
-          ></path>
-        </svg>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 320"
-          style="margin-bottom: 5px"
-        >
-          <path
-            fill="#29519E"
-            fill-opacity="0.1"
-            d="M0,96L34.3,80C68.6,64,137,32,206,58.7C274.3,85,343,171,411,213.3C480,256,549,256,617,234.7C685.7,213,754,171,823,176C891.4,181,960,235,1029,229.3C1097.1,224,1166,160,1234,138.7C1302.9,117,1371,139,1406,149.3L1440,160L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"
-          ></path>
-        </svg>
-      </div>
-      <div class="footer">
-        ApplicationId: <u>HyvLoCnXcLOFXGddlMGgZMD2HrisDWBrEwGCtklY3wo</u>
-      </div>
-    </div>
+    </main>
+    <footer aria-hidden="true">
+      <div>&#169;2022 Aetna Inc.</div>
+    </footer>
 
     <script defer type="text/javascript">
       var urlParams = getParams(window.location.search);
@@ -183,7 +115,7 @@
             hidePostCTA: true,
             appSettings: {
               chatWidget: {
-                primaryColor: "#29529D",
+                primaryColor: "#754794",
               },
             },
             onInit: function () {
