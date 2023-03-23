@@ -8059,16 +8059,18 @@ var userOverride = {
                     );
                     showMoreDateTime = data.createdAtTime;
                 } else if (append && MCK_BOT_MESSAGE_DELAY !== 0){
-                    let messageArrNoPayload = data.message.filter(e => !e.metadata || !e.metadata.hasOwnProperty('text_input_hint'));
+                    let messageArrNoPayload = 
+                    data.message
+                    .filter(e => !e.metadata || !e.metadata.hasOwnProperty('text_input_hint'))
+                    .sort((a,b) => a.createdAtTime - b.createdAtTime);
                     let messageArrPayload = data.message.filter(e => e.metadata && e.metadata.hasOwnProperty('text_input_hint'));
-                    // if (messageArrPayload.length > 1) {
-                    //     let messageArrPayloadRest = messageArrPayload.slice(1);
-                    //     messageArrPayloadRest.forEach(e => {
-                    //         delete e.metadata.text_input_hint
-                    //     });
-                        // messageArrPayload = [...messageArrPayload.slice(0, -1), ...messageArrPayloadRest]
-                    // }
-                    let sortedMessageArr = [...messageArrNoPayload, messageArrPayload[0]];
+                    let sortedMessageArr = [];
+                    
+                    if(messageArrPayload[0] !== undefined) {
+                        sortedMessageArr = [...messageArrNoPayload, messageArrPayload[0]];
+                    } else {
+                        sortedMessageArr = [...messageArrNoPayload];
+                    }
                     ALStorage.updateMckMessageArray(sortedMessageArr);
                     $applozic.each(sortedMessageArr, function (i, message) {
                             if (!(typeof message.to === 'undefined')) {
@@ -8516,9 +8518,16 @@ var userOverride = {
                     Snap.isRichTextMessage(msg.metadata) ||
                     msg.contentType == 3;
                 var kmRichTextMarkupVisibility = richText ? 'vis' : 'n-vis';
-                var kmRichTextMarkup = richText
+                
+                //conditional to check if message is processed in queue, because if invoke getRichTextMessageTemplate function
+                //twice we will have calendar without Confirm button
+                var kmRichTextMarkup = '';
+                if (!processMessageInQueue) {
+                    kmRichTextMarkup = richText
                     ? Snap.getRichTextMessageTemplate(msg)
                     : '';
+
+                }
 
                 var containerType = Snap.getContainerTypeForRichMessage(msg);
                 var attachment = Snap.isAttachment(msg);
@@ -8679,6 +8688,7 @@ var userOverride = {
                 }
 
                 if (
+                    !processMessageInQueue && 
                     (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider'))
                     || kmRichTextMarkup.includes('km-btn-hidden-form')
                     || kmRichTextMarkup.includes('km-cta-multi-button-links-container')
@@ -11924,6 +11934,39 @@ var userOverride = {
                         _this.procesMessageTimerDelay();
                     } else {
                         Snap.changeTextInputState(currentMessageObject, 300);
+
+                        if(currentMessageObject.metadata.contentType == 300 &&
+                            $quick_reply_container.children().length < 1) {
+                            var richText =
+                            Snap.isRichTextMessage(currentMessageObject.metadata) ||
+                            currentMessageObject.contentType == 3;
+                            var kmRichTextMarkupVisibility = richText ? 'vis' : 'n-vis';
+                            var kmRichTextMarkup = richText
+                                ? Snap.getRichTextMessageTemplate(currentMessageObject)
+                                : '';
+
+                                setTimeout(function () {
+                                    $quick_reply_container.empty();
+                                    if (currentMessageObject.metadata.is_close_conversation !== 'true') {
+                                        $quick_reply_container.append(
+                                            $applozic(kmRichTextMarkup)
+                                        );
+                                    }
+                                    Snap.changeVisibilityStateForElement(
+                                        $quick_reply_container,
+                                        'show'
+                                    );
+
+                                    $mck_msg_inner.animate(
+                                        {
+                                            scrollTop: $mck_msg_inner.prop('scrollHeight'),
+                                        },
+                                        0
+                                    );
+                                    _this.initDatepicker();
+                                }, MCK_BOT_MESSAGE_DELAY + 1500)
+
+                        }
                     }
                     if (message) {
                         message.classList.remove('n-vis');
