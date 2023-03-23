@@ -1,0 +1,249 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'self';font-src 'self'; img-src 'self' data: https:; style-src 'self' ; script-src 'self'" -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --color-blue: #29519e;
+        --color-grey: #e6e5eb;
+        --color-text: #333;
+        --color-text-secondary: #979797;
+      }
+      html {
+        font-family: "DM Sans", Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        line-height: 130%;
+      }
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      .fluid {
+        float: none !important;
+        width: 100% !important;
+        height: 100vh;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        max-width: 100% !important;
+        position: relative !important;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 1) 0%,
+          rgba(81, 174, 213, 0.25) 100%
+        );
+      }
+      .header {
+        width: 100%;
+        padding: 20px 30px;
+        display: block;
+      }
+      .logo {
+        width: 350px;
+      }
+      .logo img {
+        max-width: 100%;
+      }
+      .container {
+        max-width: 1140px;
+        padding: 20px;
+        margin: 0 auto;
+        /* color: #fff; */
+        position: relative;
+        z-index: 3;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .container .title {
+        font-size: 64px;
+        font-weight: 700;
+        line-height: 130%;
+        letter-spacing: 0.5;
+        color: var(--color-blue);
+      }
+      .container .subtitle {
+        font-size: 32px;
+        line-height: 130%;
+        color: rgb(81, 174, 213);
+        letter-spacing: 0.5;
+      }
+      .mackup {
+        width: 320px;
+      }
+      .mackup img {
+        max-width: 100%;
+      }
+      .wave {
+      }
+      .wave svg {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+      }
+      .wave-top svg {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+      }
+      .footer {
+        position: absolute;
+        width: 100%;
+        bottom: 4px;
+        left: 4px;
+      }
+    </style>
+    <script type="text/javascript" src="index.js"></script>
+  </head>
+  <body>
+    <div class="fluid">
+      <div class="header">
+        <div class="logo">
+          <img src="/img/OHL-Logo-header.png" alt="" />
+        </div>
+      </div>
+      <div class="container">
+        <div>
+          <div class="title">HealthGEN</div>
+          <!--          <div class="subtitle">For Test Purpose ONLY</div>-->
+        </div>
+
+        <!--        <div class="mackup">-->
+        <!--          <img src="/img/portrait.png" alt="" />-->
+        <!--        </div>-->
+      </div>
+      <div class="wave">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 320"
+          style="margin-bottom: 5px"
+        >
+          <path
+            fill="#51AED5"
+            fill-opacity="0.1"
+            d="M0,288L30,245.3C60,203,120,117,180,101.3C240,85,300,139,360,133.3C420,128,480,64,540,32C600,0,660,0,720,26.7C780,53,840,107,900,112C960,117,1020,75,1080,90.7C1140,107,1200,181,1260,202.7C1320,224,1380,192,1410,176L1440,160L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"
+          ></path>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+          <path
+            fill="#51AED5"
+            fill-opacity="0.5"
+            d="M0,288L30,245.3C60,203,120,117,180,101.3C240,85,300,139,360,133.3C420,128,480,64,540,32C600,0,660,0,720,26.7C780,53,840,107,900,112C960,117,1020,75,1080,90.7C1140,107,1200,181,1260,202.7C1320,224,1380,192,1410,176L1440,160L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"
+          ></path>
+        </svg>
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+          <path
+            fill="#29519E"
+            fill-opacity="0.9"
+            d="M0,96L34.3,80C68.6,64,137,32,206,58.7C274.3,85,343,171,411,213.3C480,256,549,256,617,234.7C685.7,213,754,171,823,176C891.4,181,960,235,1029,229.3C1097.1,224,1166,160,1234,138.7C1302.9,117,1371,139,1406,149.3L1440,160L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"
+          ></path>
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 320"
+          style="margin-bottom: 5px"
+        >
+          <path
+            fill="#29519E"
+            fill-opacity="0.1"
+            d="M0,96L34.3,80C68.6,64,137,32,206,58.7C274.3,85,343,171,411,213.3C480,256,549,256,617,234.7C685.7,213,754,171,823,176C891.4,181,960,235,1029,229.3C1097.1,224,1166,160,1234,138.7C1302.9,117,1371,139,1406,149.3L1440,160L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"
+          ></path>
+        </svg>
+      </div>
+      <div class="footer">
+        ApplicationId: <u>HyvLoCnXcLOFXGddlMGgZMD2HrisDWBrEwGCtklY3wo</u>
+      </div>
+    </div>
+
+    <script defer type="text/javascript">
+      var urlParams = getParams(window.location.search);
+
+      if (urlParams["s"] !== undefined) {
+        (function (d, m) {
+          var date = new Date();
+          var timezone = date.toString().split(" ")[5];
+          var snapSettings = {
+            appId: "HyvLoCnXcLOFXGddlMGgZMD2HrisDWBrEwGCtklY3wo",
+            popupWidget: true,
+            automaticChatOpenOnNavigation: false,
+            hidePostCTA: true,
+            appSettings: {
+              chatWidget: {
+                primaryColor: "#29529D",
+              },
+            },
+            onInit: function () {
+              var customCss =
+                ".mck-back-btn-container, #mck-btn-attach-box {display: none !important;}";
+
+              Snap.customizeWidgetCss(customCss);
+              Snap.launchConversation();
+              Snap.updateSettings({
+                defaultGroupName: "Conversations",
+                KM_CHAT_CONTEXT: {
+                  trigger: urlParams["s"],
+                  userTimezone: timezone,
+                },
+              });
+            },
+          };
+
+          if (urlParams["userId"] !== undefined) {
+            snapSettings["userId"] = urlParams["userId"];
+          }
+          /* To enable functionality to save a user ID, just delete sessionTimeoutInitializer in index.js file and
+        uncomment the following lines: */
+
+          // else if (getCookieValue("km_id")) {
+          //   snapSettings["userId"] = getCookieValue("km_id");
+          // }
+          else {
+            snapSettings["userId"] =
+              Math.random().toString(36).substring(2, 15) +
+              Math.random().toString(36).substring(2, 15);
+          }
+
+          var s = document.createElement("script");
+          s.type = "text/javascript";
+          s.async = true;
+          s.src = "/v2/snap.app";
+          var h = document.getElementsByTagName("head")[0];
+          h.appendChild(s);
+          window.snap = m;
+          m._globals = snapSettings;
+        })(document, window.snap || {});
+      }
+
+      showSessionAlert();
+
+      document.addEventListener(
+        "visibilitychange",
+        function () {
+          if (document.hidden) {
+            // do nothing
+          } else {
+            var ifr = window.document.getElementById("snap-widget-iframe");
+            if (ifr !== null) {
+              ifr.contentWindow.Applozic.ALSocket.reconnect();
+            }
+          }
+        },
+        false
+      );
+    </script>
+  </body>
+</html>
