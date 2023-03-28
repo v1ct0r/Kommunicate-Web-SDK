@@ -9272,6 +9272,7 @@ var userOverride = {
                     inline[i].type = 'text';
                     inline[i].setAttribute("pattern","\d*");
                     inline[i].setAttribute("inputmode","numeric");
+                    inline[i].setAttribute("placeholder", "Click here")
                 }
             };
             _this.addContactForSearchList = function (contact, $listId) {
