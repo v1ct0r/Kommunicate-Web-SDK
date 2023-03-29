@@ -11921,17 +11921,15 @@ var userOverride = {
                         _this.procesMessageTimerDelay();
                     } else {
                         Snap.changeTextInputState(currentMessageObject, 300);
-
-                        if(currentMessageObject.metadata.contentType == 300 &&
-                            $quick_reply_container.children().length < 1) {
-                            var richText =
+                        let richText =
                             Snap.isRichTextMessage(currentMessageObject.metadata) ||
                             currentMessageObject.contentType == 3;
-                            var kmRichTextMarkupVisibility = richText ? 'vis' : 'n-vis';
-                            var kmRichTextMarkup = richText
-                                ? Snap.getRichTextMessageTemplate(currentMessageObject)
-                                : '';
 
+                        let kmRichTextMarkup = richText
+                            ? Snap.getRichTextMessageTemplate(currentMessageObject)
+                            : '';
+                        if(kmRichTextMarkup &&
+                            $quick_reply_container.children().length < 1) {
                                 setTimeout(function () {
                                     $quick_reply_container.empty();
                                     if (currentMessageObject.metadata.is_close_conversation !== 'true') {

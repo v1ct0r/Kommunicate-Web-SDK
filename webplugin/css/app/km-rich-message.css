@@ -1565,3 +1565,8 @@ input.inline {
     font-size: 19px!important;
     padding: 6px 8px;
 }
+
+input.inline::placeholder {
+    color: #000000;
+    font-size: 20px;
+}
