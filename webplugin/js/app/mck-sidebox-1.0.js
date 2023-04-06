@@ -9179,6 +9179,8 @@ var userOverride = {
             };
             _this.initDatepicker = function () {
                 var popupDate = $applozic(".popup");
+                w.console.log(popupDate);
+                popupDate.attr("placeholder", "Click here");
                 var inline = $applozic(".inline");
                 var enableMins = popupDate.attr('enable_mins') || true;
                 var hideWeekend = popupDate.attr('data-hideweekend') === 'true';
