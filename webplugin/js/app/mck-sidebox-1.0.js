@@ -652,6 +652,7 @@ var userOverride = {
         };
 
         _this.mckLaunchSideboxChat = function () {
+            snap._globals.initialTime = new Date().getTime();
             const chatContext = SnapUtils.getSettings('KM_CHAT_CONTEXT');
             const objectHasProperty = chatContext.hasOwnProperty("trigger")
 
@@ -2708,7 +2709,7 @@ var userOverride = {
                 );
                 function closeChatBox() {
                     snapCommons.setWidgetStateOpen(false);
-                    mckMessageService.closeSideBox();
+                    mckMessageService.closeSideBox(false);
                     popUpcloseButton.style.display = 'none';
                     snapIframe.classList.add('km-iframe-closed');
                     snapIframe.classList.remove(
@@ -5058,7 +5059,7 @@ var userOverride = {
                     Fr.voice.stop();
                 }
             );
-            _this.closeSideBox = function () {
+            _this.closeSideBox = function (sendStatistics = true) {
                 snapCommons.setWidgetStateOpen(false);
                 MCK_MAINTAIN_ACTIVE_CONVERSATION_STATE &&
                     SnapUtils.removeItemFromLocalStorage(
@@ -5104,20 +5105,29 @@ var userOverride = {
                 $mck_msg_inner.data('mck-name', '');
                 $mck_msg_inner.data('mck-conversationid', '');
 
-                const alreadyRenderedMessages = $applozic('#mck-message-cell .mck-message-inner').children();
-                const lastRenderedMessageText = alreadyRenderedMessages[alreadyRenderedMessages.length - 1].innerText;
+                if(sendStatistics && !snap._globals.statiscticIsSent) {
+                    snap._globals.statiscticIsSent = true;
+                    const browserInfo = detect.parse(navigator.userAgent); 
 
+                    const body = {
+                        userId: snap._globals.userId,
+                        lastRenderedMessage: snap._globals.lastRenderedMessageText,
+                        timeFromStartToMessagerender: snap._globals.timeToShowFisrtMessage,
+                        browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`
+                    }
 
-                fetch('https://50.116.37.183:1016/frontend_interaction_behavior', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({messageText: lastRenderedMessageText})
-                }).catch(error => {
-                    w.console.log(error)
-                    throw error
-                })
+                    fetch('https://devpython.onehealthlink.com/frontend_interaction_behavior', {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({body})
+                    }).catch(error => {
+                        w.console.log(error)
+                        throw error
+                    })
+                }
 
                 if (conversationId) {
                     var conversationPxy = MCK_CONVERSATION_MAP[conversationId];
@@ -11971,6 +11981,18 @@ var userOverride = {
                         }
                     }
                     if (message) {
+                        if(!snap._globals.timeToShowFisrtMessage) {
+                            snap._globals.timeToShowFisrtMessage = _this.calculateUserShowFirstMessageTime();
+                        }
+
+
+                        const alreadyRenderedMessages = 
+                        Array.from($applozic('#mck-message-cell .mck-message-inner')
+                        .children()).filter( node => node.className !== 'km-typing-wrapper');
+            
+                        let lastRenderedMessageText = alreadyRenderedMessages[alreadyRenderedMessages.length - 1].innerText.trim();
+                        snap._globals.lastRenderedMessageText =  lastRenderedMessageText;
+
                         message.classList.remove('n-vis');
                         if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
                           && !currentMessageObject.metadata.is_close_conversation)  {
@@ -12005,6 +12027,11 @@ var userOverride = {
 
                 }, MCK_BOT_MESSAGE_DELAY);
             };
+
+            _this.calculateUserShowFirstMessageTime = function() {
+                const miliseconds = new Date().getTime() - snap._globals.initialTime;
+                return ((miliseconds % 60000) / 1000)
+            }
 
             _this.getMessageFeed = function (message) {
                 var messageFeed = {};
