@@ -1567,6 +1567,8 @@ input.inline {
 }
 
 input.inline::placeholder {
-    color: #000000;
+    font-size: 20px;
+}
+input[name|="Date"]::placeholder {
     font-size: 20px;
 }
