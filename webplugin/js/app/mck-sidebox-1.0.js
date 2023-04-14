@@ -8088,7 +8088,9 @@ var userOverride = {
                     data.message
                     .filter(e => !e.metadata || !e.metadata.hasOwnProperty('text_input_hint'))
                     .sort((a,b) => a.createdAtTime - b.createdAtTime);
-                    let messageArrPayload = data.message.filter(e => e.metadata && e.metadata.hasOwnProperty('text_input_hint'));
+                    let messageArrPayload = data.message
+                    .filter(e => e.metadata && e.metadata.hasOwnProperty('text_input_hint'))
+                    .sort((a,b) => b.createdAtTime - a.createdAtTime);;
                     let sortedMessageArr = [];
                     
                     if(messageArrPayload[0] !== undefined) {
