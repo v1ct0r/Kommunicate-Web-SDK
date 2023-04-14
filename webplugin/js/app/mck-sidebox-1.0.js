@@ -5110,6 +5110,7 @@ var userOverride = {
                     const browserInfo = detect.parse(navigator.userAgent); 
                     const body = {
                         sender_id: snap._globals.userId,
+                        group_id: CURRENT_GROUP_DATA.tabId.toString(),
                         lastRenderedMessage: snap._globals.lastRenderedMessageText,
                         time_from_start_to_message_render: snap._globals.timeToShowFisrtMessage,
                         browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`
