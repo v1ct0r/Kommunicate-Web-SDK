@@ -5108,11 +5108,10 @@ var userOverride = {
                 if(sendStatistics && !snap._globals.statiscticIsSent) {
                     snap._globals.statiscticIsSent = true;
                     const browserInfo = detect.parse(navigator.userAgent); 
-
                     const body = {
-                        userId: snap._globals.userId,
+                        sender_id: snap._globals.userId,
                         lastRenderedMessage: snap._globals.lastRenderedMessageText,
-                        timeFromStartToMessagerender: snap._globals.timeToShowFisrtMessage,
+                        time_from_start_to_message_render: snap._globals.timeToShowFisrtMessage,
                         browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`
                     }
 
