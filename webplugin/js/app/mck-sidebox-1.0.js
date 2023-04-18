@@ -7437,6 +7437,7 @@ var userOverride = {
 
         function MckMessageLayout() {
             var _this = this;
+            let alreadyRenderedRepliesKeys = [];
             var emojiTimeoutId = '';
             var $mck_search = $applozic('#mck-search');
             var $mck_msg_to = $applozic('#mck-msg-to');
@@ -8089,9 +8090,15 @@ var userOverride = {
                     .filter(e => !e.metadata || !e.metadata.hasOwnProperty('text_input_hint'))
                     .sort((a,b) => a.createdAtTime - b.createdAtTime);
                     let messageArrPayload = data.message
-                    .filter(e => e.metadata && e.metadata.hasOwnProperty('text_input_hint'))
-                    .sort((a,b) => b.createdAtTime - a.createdAtTime);;
+                    .filter(e => e.metadata && e.metadata.hasOwnProperty('text_input_hint'));
                     let sortedMessageArr = [];
+
+                    if(!!alreadyRenderedRepliesKeys.length) {
+                        messageArrPayload = 
+                        messageArrPayload.filter(({key}) => !alreadyRenderedRepliesKeys.includes(key))
+                    }
+                    messageArrPayload[0] && alreadyRenderedRepliesKeys.push(messageArrPayload[0].key);
+
                     
                     if(messageArrPayload[0] !== undefined) {
                         sortedMessageArr = [...messageArrNoPayload, messageArrPayload[0]];
