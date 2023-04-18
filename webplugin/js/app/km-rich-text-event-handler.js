@@ -849,13 +849,16 @@ Snap.richMsgEventHandler = {
     processClickOnButtonItem: function (e) {
         e.preventDefault();
         var target = e.currentTarget;
-        var reply = target.dataset.reply;
-        var type = target.dataset.type;
-        var languageCode = target.dataset.languagecode;
+        let {reply, type, languagecode, context} = target.dataset
+        // var reply = target.dataset.reply;
+        // var type = target.dataset.type;
+        // var languageCode = target.dataset.languagecode;
         var metadata = (target.dataset && target.dataset.metadata) || {};
+        
         metadata.KM_BUTTON_CLICKED = true;
+        metadata.currentContext = context;
         if (type && type == 'quick_reply') {
-            languageCode && Snap.updateUserLanguage(languageCode);
+            languagecode && Snap.updateUserLanguage(languagecode);
             var messagePxy = {
                 message: reply, //message to send
                 metadata: metadata,
