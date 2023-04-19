@@ -652,6 +652,7 @@ var userOverride = {
         };
 
         _this.mckLaunchSideboxChat = function () {
+            snap._globals.initialTime = new Date().getTime();
             const chatContext = SnapUtils.getSettings('KM_CHAT_CONTEXT');
             const objectHasProperty = chatContext.hasOwnProperty("trigger")
 
@@ -2708,7 +2709,7 @@ var userOverride = {
                 );
                 function closeChatBox() {
                     snapCommons.setWidgetStateOpen(false);
-                    mckMessageService.closeSideBox();
+                    mckMessageService.closeSideBox(false);
                     popUpcloseButton.style.display = 'none';
                     snapIframe.classList.add('km-iframe-closed');
                     snapIframe.classList.remove(
@@ -5058,7 +5059,7 @@ var userOverride = {
                     Fr.voice.stop();
                 }
             );
-            _this.closeSideBox = function () {
+            _this.closeSideBox = function (sendStatistics = true) {
                 snapCommons.setWidgetStateOpen(false);
                 MCK_MAINTAIN_ACTIVE_CONVERSATION_STATE &&
                     SnapUtils.removeItemFromLocalStorage(
@@ -5103,6 +5104,31 @@ var userOverride = {
                 $mck_msg_inner.data('mck-topicid', '');
                 $mck_msg_inner.data('mck-name', '');
                 $mck_msg_inner.data('mck-conversationid', '');
+
+                if(sendStatistics && !snap._globals.statiscticIsSent) {
+                    snap._globals.statiscticIsSent = true;
+                    const browserInfo = detect.parse(navigator.userAgent); 
+                    const body = {
+                        sender_id: snap._globals.userId,
+                        group_id: CURRENT_GROUP_DATA.tabId.toString(),
+                        lastRenderedMessage: snap._globals.lastRenderedMessageText,
+                        time_from_start_to_message_render: snap._globals.timeToShowFisrtMessage,
+                        browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`
+                    }
+
+                    fetch('https://devpython.onehealthlink.com/frontend_interaction_behavior', {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({body})
+                    }).catch(error => {
+                        w.console.log(error)
+                        throw error
+                    })
+                }
+
                 if (conversationId) {
                     var conversationPxy = MCK_CONVERSATION_MAP[conversationId];
                     if (typeof conversationPxy === 'object') {
@@ -5513,7 +5539,6 @@ var userOverride = {
 
                     fetch(url, {
                         method: 'POST',
-                        mode: 'no-cors',
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -7412,6 +7437,7 @@ var userOverride = {
 
         function MckMessageLayout() {
             var _this = this;
+            let alreadyRenderedRepliesKeys = [];
             var emojiTimeoutId = '';
             var $mck_search = $applozic('#mck-search');
             var $mck_msg_to = $applozic('#mck-msg-to');
@@ -8059,16 +8085,26 @@ var userOverride = {
                     );
                     showMoreDateTime = data.createdAtTime;
                 } else if (append && MCK_BOT_MESSAGE_DELAY !== 0){
-                    let messageArrNoPayload = data.message.filter(e => !e.metadata || !e.metadata.hasOwnProperty('text_input_hint'));
-                    let messageArrPayload = data.message.filter(e => e.metadata && e.metadata.hasOwnProperty('text_input_hint'));
-                    if (messageArrPayload.length > 1) {
-                        let messageArrPayloadRest = messageArrPayload.slice(1);
-                        messageArrPayloadRest.forEach(e => {
-                            delete e.metadata.text_input_hint
-                        });
-                        messageArrPayload = [...messageArrPayload.slice(0, -1), ...messageArrPayloadRest]
+                    let messageArrNoPayload = 
+                    data.message
+                    .filter(e => !e.metadata || !e.metadata.hasOwnProperty('text_input_hint'))
+                    .sort((a,b) => a.createdAtTime - b.createdAtTime);
+                    let messageArrPayload = data.message
+                    .filter(e => e.metadata && e.metadata.hasOwnProperty('text_input_hint'));
+                    let sortedMessageArr = [];
+
+                    if(!!alreadyRenderedRepliesKeys.length) {
+                        messageArrPayload = 
+                        messageArrPayload.filter(({key}) => !alreadyRenderedRepliesKeys.includes(key))
                     }
-                    let sortedMessageArr = [...messageArrNoPayload, ...messageArrPayload];
+                    messageArrPayload[0] && alreadyRenderedRepliesKeys.push(messageArrPayload[0].key);
+
+                    
+                    if(messageArrPayload[0] !== undefined) {
+                        sortedMessageArr = [...messageArrNoPayload, messageArrPayload[0]];
+                    } else {
+                        sortedMessageArr = [...messageArrNoPayload];
+                    }
                     ALStorage.updateMckMessageArray(sortedMessageArr);
                     $applozic.each(sortedMessageArr, function (i, message) {
                             if (!(typeof message.to === 'undefined')) {
@@ -8516,9 +8552,16 @@ var userOverride = {
                     Snap.isRichTextMessage(msg.metadata) ||
                     msg.contentType == 3;
                 var kmRichTextMarkupVisibility = richText ? 'vis' : 'n-vis';
-                var kmRichTextMarkup = richText
+                
+                //conditional to check if message is processed in queue, because if invoke getRichTextMessageTemplate function
+                //twice we will have calendar without Confirm button
+                var kmRichTextMarkup = '';
+                if (!processMessageInQueue) {
+                    kmRichTextMarkup = richText
                     ? Snap.getRichTextMessageTemplate(msg)
                     : '';
+
+                }
 
                 var containerType = Snap.getContainerTypeForRichMessage(msg);
                 var attachment = Snap.isAttachment(msg);
@@ -8679,6 +8722,7 @@ var userOverride = {
                 }
 
                 if (
+                    !processMessageInQueue && 
                     (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider'))
                     || kmRichTextMarkup.includes('km-btn-hidden-form')
                     || kmRichTextMarkup.includes('km-cta-multi-button-links-container')
@@ -9068,21 +9112,7 @@ var userOverride = {
                             });
                         }
 
-                        if(String(msg.message).match(/(0am|0pm|Anytime)/)) {
-                            const textWrapper = d.createElement("div");
-                            const checkMarkImg = d.createElement("img");
-                            const time = d.createElement("div");
-
-                            time.textContent = nodes[i];
-                            textWrapper.classList = "free-user-time-item-wrapper";
-                            checkMarkImg.src = "https://healthgen-demo.onehealthlink.com/snap/check-mark.svg";
-
-                            textWrapper.append(checkMarkImg, time);
-                            $textMessage
-                            .append(textWrapper)
-                        } else {
-                            $textMessage.append(x)
-                        }
+                        $textMessage.append(x)
 
                         if(Array.isArray(arrayOfAllMessages) && !newMessageArray){
                             // setTimeout(function () {
@@ -9183,6 +9213,8 @@ var userOverride = {
             };
             _this.initDatepicker = function () {
                 var popupDate = $applozic(".popup");
+                w.console.log(popupDate);
+                popupDate.attr("placeholder", "Click here");
                 var inline = $applozic(".inline");
                 var enableMins = popupDate.attr('enable_mins') || true;
                 var hideWeekend = popupDate.attr('data-hideweekend') === 'true';
@@ -9274,6 +9306,7 @@ var userOverride = {
                     inline[i].type = 'text';
                     inline[i].setAttribute("pattern","\d*");
                     inline[i].setAttribute("inputmode","numeric");
+                    inline[i].setAttribute("placeholder", "Click here")
                 }
             };
             _this.addContactForSearchList = function (contact, $listId) {
@@ -11924,8 +11957,51 @@ var userOverride = {
                         _this.procesMessageTimerDelay();
                     } else {
                         Snap.changeTextInputState(currentMessageObject, 300);
+                        let richText =
+                            Snap.isRichTextMessage(currentMessageObject.metadata) ||
+                            currentMessageObject.contentType == 3;
+
+                        let kmRichTextMarkup = richText
+                            ? Snap.getRichTextMessageTemplate(currentMessageObject)
+                            : '';
+                        if(kmRichTextMarkup &&
+                            $quick_reply_container.children().length < 1) {
+                                setTimeout(function () {
+                                    $quick_reply_container.empty();
+                                    if (currentMessageObject.metadata.is_close_conversation !== 'true') {
+                                        $quick_reply_container.append(
+                                            $applozic(kmRichTextMarkup)
+                                        );
+                                    }
+                                    Snap.changeVisibilityStateForElement(
+                                        $quick_reply_container,
+                                        'show'
+                                    );
+
+                                    $mck_msg_inner.animate(
+                                        {
+                                            scrollTop: $mck_msg_inner.prop('scrollHeight'),
+                                        },
+                                        0
+                                    );
+                                    _this.initDatepicker();
+                                }, MCK_BOT_MESSAGE_DELAY )
+
+                        }
                     }
                     if (message) {
+                        if(!snap._globals.timeToShowFisrtMessage) {
+                            snap._globals.timeToShowFisrtMessage = _this.calculateUserShowFirstMessageTime();
+                        }
+
+
+                        const alreadyRenderedMessages = 
+                        Array.from($applozic('#mck-message-cell .mck-message-inner')
+                        .children()).filter( node => node.className !== 'km-typing-wrapper');
+            
+                        let lastRenderedMessageText = alreadyRenderedMessages[alreadyRenderedMessages.length - 1].innerText.trim();
+                        snap._globals.lastRenderedMessageText =  lastRenderedMessageText;
+
                         message.classList.remove('n-vis');
                         if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
                           && !currentMessageObject.metadata.is_close_conversation)  {
@@ -11960,6 +12036,11 @@ var userOverride = {
 
                 }, MCK_BOT_MESSAGE_DELAY);
             };
+
+            _this.calculateUserShowFirstMessageTime = function() {
+                const miliseconds = new Date().getTime() - snap._globals.initialTime;
+                return ((miliseconds % 60000) / 1000)
+            }
 
             _this.getMessageFeed = function (message) {
                 var messageFeed = {};

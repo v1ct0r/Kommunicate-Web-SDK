@@ -1565,3 +1565,10 @@ input.inline {
     font-size: 19px!important;
     padding: 6px 8px;
 }
+
+input.inline::placeholder {
+    font-size: 20px;
+}
+input[name|="Date"]::placeholder {
+    font-size: 20px;
+}
