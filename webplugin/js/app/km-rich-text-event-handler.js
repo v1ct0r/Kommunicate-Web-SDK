@@ -921,7 +921,8 @@ Snap.richMsgEventHandler = {
             button_type: `${buttonType}`.trim(),
             button_url: `${e.target.dataset.url}`.trim(),
             timestamp: new Date().getTime(),
-            payload: buttonAction.payload
+            payload: buttonAction.payload,
+            event_type: 'click button'
         };
         w.console.log(behaviorInfo);
         Snap.richMsgEventHandler.sendUserBehaviorInfo(behaviorInfo);
