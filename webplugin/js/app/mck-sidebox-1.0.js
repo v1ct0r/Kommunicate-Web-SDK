@@ -5116,7 +5116,9 @@ var userOverride = {
                         browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`
                     }
 
-                    fetch('https://devpython.onehealthlink.com/frontend_interaction_behavior', {
+                    const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
+
+                    fetch( url, {
                         method: 'POST',
                         mode: 'no-cors',
                         headers: {
@@ -5535,7 +5537,7 @@ var userOverride = {
             };
             _this.sendUserBehaviorInfo = function(data){
                 try{
-                    const url = Snap.getSendUserBehaviorInfoUrl();
+                    const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
 
                     fetch(url, {
                         method: 'POST',
