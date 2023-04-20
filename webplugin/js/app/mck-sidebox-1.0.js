@@ -5543,8 +5543,9 @@ var userOverride = {
 
                     fetch(url, {
                         method: 'POST',
+                        mode: 'no-cors',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
                         },
                         body: JSON.stringify(data)
                     }).catch(error => {
