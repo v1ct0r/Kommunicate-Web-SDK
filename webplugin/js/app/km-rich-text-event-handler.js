@@ -929,7 +929,7 @@ Snap.richMsgEventHandler = {
     },
     sendUserBehaviorInfo: function(data){
         try{
-            const url = Snap.getSendUserBehaviorInfoUrl();
+            const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
 
             fetch(url, {
                 method: 'POST',

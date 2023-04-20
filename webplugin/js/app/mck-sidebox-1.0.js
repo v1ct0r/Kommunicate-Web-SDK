@@ -5116,9 +5116,10 @@ var userOverride = {
                         browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
                         event_type: 'button click'
                     }
-                    const url = Snap.getSendUserBehaviorInfoUrl();
 
-                    fetch(url, {
+                    const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
+
+                    fetch( url, {
                         method: 'POST',
                         mode: 'no-cors',
                         headers: {
@@ -5513,7 +5514,6 @@ var userOverride = {
                     url: locationMessage,
                     session_id: messagePxy.conversationId || messagePxy.key,
                     browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
-                    event_type: messagePxy.contentType,
                     message_id: CURRENT_GROUP_DATA.messageId,
                     button_id: localButtonId,
                     button_name: messagePxy.message,
@@ -5523,7 +5523,7 @@ var userOverride = {
                     payload: localPayload,
                     event_type: 'quit chat'
                 }
-                
+
                 _this.sendUserBehaviorInfo(behaviorInfo);
 
                 $mck_box_form.removeClass('mck-text-req');
@@ -5538,7 +5538,7 @@ var userOverride = {
             };
             _this.sendUserBehaviorInfo = function(data){
                 try{
-                    const url = Snap.getSendUserBehaviorInfoUrl();
+                    const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
 
                     fetch(url, {
                         method: 'POST',
@@ -7440,6 +7440,7 @@ var userOverride = {
 
         function MckMessageLayout() {
             var _this = this;
+            let alreadyRenderedRepliesKeys = [];
             var emojiTimeoutId = '';
             var $mck_search = $applozic('#mck-search');
             var $mck_msg_to = $applozic('#mck-msg-to');
@@ -8091,8 +8092,16 @@ var userOverride = {
                     data.message
                     .filter(e => !e.metadata || !e.metadata.hasOwnProperty('text_input_hint'))
                     .sort((a,b) => a.createdAtTime - b.createdAtTime);
-                    let messageArrPayload = data.message.filter(e => e.metadata && e.metadata.hasOwnProperty('text_input_hint'));
+                    let messageArrPayload = data.message
+                    .filter(e => e.metadata && e.metadata.hasOwnProperty('text_input_hint'));
                     let sortedMessageArr = [];
+
+                    if(!!alreadyRenderedRepliesKeys.length) {
+                        messageArrPayload = 
+                        messageArrPayload.filter(({key}) => !alreadyRenderedRepliesKeys.includes(key))
+                    }
+                    messageArrPayload[0] && alreadyRenderedRepliesKeys.push(messageArrPayload[0].key);
+
                     
                     if(messageArrPayload[0] !== undefined) {
                         sortedMessageArr = [...messageArrNoPayload, messageArrPayload[0]];
@@ -11951,17 +11960,15 @@ var userOverride = {
                         _this.procesMessageTimerDelay();
                     } else {
                         Snap.changeTextInputState(currentMessageObject, 300);
-
-                        if(currentMessageObject.metadata.contentType == 300 &&
-                            $quick_reply_container.children().length < 1) {
-                            var richText =
+                        let richText =
                             Snap.isRichTextMessage(currentMessageObject.metadata) ||
                             currentMessageObject.contentType == 3;
-                            var kmRichTextMarkupVisibility = richText ? 'vis' : 'n-vis';
-                            var kmRichTextMarkup = richText
-                                ? Snap.getRichTextMessageTemplate(currentMessageObject)
-                                : '';
 
+                        let kmRichTextMarkup = richText
+                            ? Snap.getRichTextMessageTemplate(currentMessageObject)
+                            : '';
+                        if(kmRichTextMarkup &&
+                            $quick_reply_container.children().length < 1) {
                                 setTimeout(function () {
                                     $quick_reply_container.empty();
                                     if (currentMessageObject.metadata.is_close_conversation !== 'true') {
@@ -11981,7 +11988,7 @@ var userOverride = {
                                         0
                                     );
                                     _this.initDatepicker();
-                                }, MCK_BOT_MESSAGE_DELAY + 1500)
+                                }, MCK_BOT_MESSAGE_DELAY )
 
                         }
                     }
