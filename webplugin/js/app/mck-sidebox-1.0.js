@@ -5113,7 +5113,8 @@ var userOverride = {
                         group_id: CURRENT_GROUP_DATA.tabId.toString(),
                         lastRenderedMessage: snap._globals.lastRenderedMessageText,
                         time_from_start_to_message_render: snap._globals.timeToShowFisrtMessage,
-                        browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`
+                        browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
+                        event_type: 'quit chat'
                     }
 
                     const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
@@ -5124,7 +5125,7 @@ var userOverride = {
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({body})
+                        body: JSON.stringify(body)
                     }).catch(error => {
                         w.console.log(error)
                         throw error
@@ -5520,7 +5521,8 @@ var userOverride = {
                     button_type: messagePxy.type,
                     button_url: tabId,
                     timestamp: message.createdAtTime,
-                    payload: localPayload
+                    payload: localPayload,
+                    event_type: 'click button'
                 }
                 w.console.log(behaviorInfo);
                 _this.sendUserBehaviorInfo(behaviorInfo);
