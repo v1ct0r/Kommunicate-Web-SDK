@@ -827,11 +827,14 @@ Snap.markup.getActionableFormMarkup = function (options) {
     let isActionObject = false;
     let metadata = options;
 
-    if (metadata && metadata.payload) {
-        let payload =
-            typeof metadata.payload == 'string'
-                ? JSON.parse(metadata.payload)
-                : {};
+    if (metadata && metadata.payload && Object.keys(metadata.payload).length > 0) {
+        let payload = {};
+        if(typeof metadata.payload == 'string') {
+            payload = JSON.parse(metadata.payload)
+        } else {
+            payload = metadata.payload
+        }
+        
         metadata.payload = payload;
         metadata.buttons = [];
         if (metadata.payload[0].type === "checkbox-multi_section") {

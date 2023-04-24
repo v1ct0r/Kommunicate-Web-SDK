@@ -8560,16 +8560,16 @@ var userOverride = {
                 
                 //conditional to check if message is processed in queue, because if invoke getRichTextMessageTemplate function
                 //twice we will have calendar without Confirm button
-                const kmRichTextMarkup = richText
-                ? Snap.getRichTextMessageTemplate(msg)
-                : '';
-                // if (!processMessageInQueue) {
-                    // kmRichTextMarkup = richText
-                    // ? Snap.getRichTextMessageTemplate(msg)
-                    // : '';
-                // }
+                let kmRichTextMarkup = '';
+                const containerType = Snap.getContainerTypeForRichMessage(msg);
+                if (!processMessageInQueue || 
+                    (containerType && containerType.includes('km-slick-container'))) {
+                    kmRichTextMarkup = richText
+                    ? Snap.getRichTextMessageTemplate(msg)
+                    : '';
+                }
 
-                var containerType = Snap.getContainerTypeForRichMessage(msg);
+                
                 var attachment = Snap.isAttachment(msg);
                 msg.fileMeta &&
                     msg.fileMeta.size &&
