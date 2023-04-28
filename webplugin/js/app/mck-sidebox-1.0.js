@@ -11991,7 +11991,7 @@ var userOverride = {
                                         0
                                     );
                                     _this.initDatepicker();
-                                }, MCK_BOT_MESSAGE_DELAY )
+                                }, 500 )
 
                         }
                     }
