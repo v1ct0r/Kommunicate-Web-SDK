@@ -904,6 +904,29 @@ Snap.richMsgEventHandler = {
     handleEmail: function (e) {
         const email = e.target.getAttribute("data-email");
         window.open('mailto:' + email, "_blank");
+
+        const browserInfo = detect.parse(navigator.userAgent); 
+        const body = {
+            sender_id: snap._globals.userId,
+            group_id: CURRENT_GROUP_DATA.tabId.toString(),
+            browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
+            event_type: 'click email',
+            email_name: email
+        }
+
+        const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
+
+        fetch( url, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        }).catch(error => {
+            w.console.log(error)
+            throw error
+        })
     },
     formUserBehaviorInfo: function(e){
         document.activeElement.blur();
@@ -924,7 +947,8 @@ Snap.richMsgEventHandler = {
             button_type: `${buttonType}`.trim(),
             button_url: `${e.target.dataset.url}`.trim(),
             timestamp: new Date().getTime(),
-            payload: buttonAction.payload
+            payload: buttonAction.payload,
+            event_type: 'click button'
         };
         w.console.log(behaviorInfo);
         Snap.richMsgEventHandler.sendUserBehaviorInfo(behaviorInfo);
@@ -932,7 +956,7 @@ Snap.richMsgEventHandler = {
     },
     sendUserBehaviorInfo: function(data){
         try{
-            const url = Snap.getSendUserBehaviorInfoUrl();
+            const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
 
             fetch(url, {
                 method: 'POST',

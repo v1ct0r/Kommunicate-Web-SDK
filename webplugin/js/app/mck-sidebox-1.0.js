@@ -5114,17 +5114,18 @@ var userOverride = {
                         lastRenderedMessage: snap._globals.lastRenderedMessageText,
                         time_from_start_to_message_render: snap._globals.timeToShowFisrtMessage,
                         browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
-                        event_type: 'button click'
+                        event_type: 'quit chat'
                     }
-                    const url = Snap.getSendUserBehaviorInfoUrl();
 
-                    fetch(url, {
+                    const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
+
+                    fetch( url, {
                         method: 'POST',
                         mode: 'no-cors',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({body})
+                        body: JSON.stringify(body)
                     }).catch(error => {
                         w.console.log(error)
                         throw error
@@ -5521,9 +5522,9 @@ var userOverride = {
                     button_url: tabId,
                     timestamp: message.createdAtTime,
                     payload: localPayload,
-                    event_type: 'quit chat'
+                    event_type: 'click button'
                 }
-                
+                w.console.log(behaviorInfo);
                 _this.sendUserBehaviorInfo(behaviorInfo);
 
                 $mck_box_form.removeClass('mck-text-req');
@@ -5538,12 +5539,13 @@ var userOverride = {
             };
             _this.sendUserBehaviorInfo = function(data){
                 try{
-                    const url = Snap.getSendUserBehaviorInfoUrl();
+                    const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
 
                     fetch(url, {
                         method: 'POST',
+                        mode: 'no-cors',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
                         },
                         body: JSON.stringify(data)
                     }).catch(error => {
@@ -8558,15 +8560,16 @@ var userOverride = {
                 
                 //conditional to check if message is processed in queue, because if invoke getRichTextMessageTemplate function
                 //twice we will have calendar without Confirm button
-                var kmRichTextMarkup = '';
-                if (!processMessageInQueue) {
+                let kmRichTextMarkup = '';
+                const containerType = Snap.getContainerTypeForRichMessage(msg);
+                if (!processMessageInQueue || 
+                    (containerType && containerType.includes('km-slick-container'))) {
                     kmRichTextMarkup = richText
                     ? Snap.getRichTextMessageTemplate(msg)
                     : '';
-
                 }
 
-                var containerType = Snap.getContainerTypeForRichMessage(msg);
+                
                 var attachment = Snap.isAttachment(msg);
                 msg.fileMeta &&
                     msg.fileMeta.size &&
@@ -11967,7 +11970,7 @@ var userOverride = {
                         let kmRichTextMarkup = richText
                             ? Snap.getRichTextMessageTemplate(currentMessageObject)
                             : '';
-                        if(kmRichTextMarkup &&
+                        if(kmRichTextMarkup && !kmRichTextMarkup.includes('km-div-slider') &&
                             $quick_reply_container.children().length < 1) {
                                 setTimeout(function () {
                                     $quick_reply_container.empty();
@@ -11988,7 +11991,7 @@ var userOverride = {
                                         0
                                     );
                                     _this.initDatepicker();
-                                }, MCK_BOT_MESSAGE_DELAY )
+                                }, 500 )
 
                         }
                     }

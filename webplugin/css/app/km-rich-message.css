@@ -1567,8 +1567,14 @@ input.inline {
 }
 
 input.inline::placeholder {
+    color: #000000;
+    font-size: 20px;
+}
+input.flatpickr-input::placeholder {
+    color: #000000;
     font-size: 20px;
 }
 input[name|="Date"]::placeholder {
+    color: #000000;
     font-size: 20px;
 }
