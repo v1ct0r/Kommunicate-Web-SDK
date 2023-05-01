@@ -85,9 +85,9 @@ Snap.attachEvents = function ($applozic) {
         Snap.attachmentEventHandler.handleSendingAttachment
     );
     $applozic(messageCellQuickReplySelector).on(
-      'touchstart click',
-      '.email',
-      Snap.richMsgEventHandler.handleEmail
+        'touchstart click',
+        '.email',
+        Snap.richMsgEventHandler.handleEmail
     );
     $applozic(messageCellQuickReplySelector).on(
         'click',
@@ -99,6 +99,16 @@ Snap.attachEvents = function ($applozic) {
         '.quick-reply-checkbox',
         Snap.richMsgEventHandler.changeCheckbox
     );
+    $applozic(messageCellQuickReplySelector).on(
+        'click',
+        '.list-button',
+        Snap.richMsgEventHandler.openLeftBox
+    );
+    $applozic('.close-left-box').on(
+        'click',
+        Snap.richMsgEventHandler.closeLeftBox
+    );
+    
 };
 
 /**
@@ -386,6 +396,70 @@ Snap.richMsgEventHandler = {
     svg: {
         arrow:
             '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="11" viewBox="0 0 10 19"><path fill="#5B5959" fill-rule="evenodd" d="M9.076 18.266c.21.2.544.2.753 0a.53.53 0 0 0 0-.753L1.524 9.208 9.829.903a.53.53 0 0 0 0-.752.546.546 0 0 0-.753 0L.026 9.208l9.05 9.058z"/></svg>',
+    },
+    closeLeftBox: function () {
+        $applozic('.left-box').remove();
+    },
+    getDesktopBoxLayout: function (styles) {
+        const { width, height } = styles;
+        return `<div style="height: ${height};width: ${width}" class="left-box leftOpen">
+                    <div class="box-wrapper">
+                        <div class="close-left-box">
+                            <svg class="close-svg" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                                <path d="M0 0h24v24H0z" fill="none" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>`;
+    },
+    getMobileBoxLayout: function () {
+        return `<div class="left-box left-box-sm mobile-box">
+                    <div class="box-wrapper">
+                        <div class="close-left-box">
+                            <svg class="close-svg" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                                <path d="M0 0h24v24H0z" fill="none" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>`;
+    },
+    initLeftSideBox: function () {
+                
+            if(parent.document.body.clientWidth <= 600) {
+                    $applozic
+                    .tmpl(this.getMobileBoxLayout())
+                    .appendTo('.mck-box-open');
+            } else {
+                parent.document.getElementById('snap-widget-iframe').style.width =
+                $applozic('#mck-sidebox').width() * 2 + 50;
+
+                // $applozic('#mck-sidebox').width(leftBoxStyles.width);
+                // $applozic('#mck-sidebox').height(leftBoxStyles.height);
+                // $applozic('.mck-box-dialog').width('100%');
+                const leftBoxStyles = {
+                    height: $applozic('#mck-sidebox').height(),
+                    width: $applozic('#mck-sidebox').width(),
+                };
+
+                $applozic(this.getDesktopBoxLayout(leftBoxStyles)).prependTo('.mck-box-open');
+            }
+        
+            $applozic('.close-left-box').on('click', () => {
+                $applozic('.left-box').remove();
+            })
+    },
+    openLeftBox: () => {
+        
+        w.console.log(this);
+        if ($applozic('.left-box').length > 0) {
+            this.Snap.richMsgEventHandler.closeLeftBox();
+        } else {
+            const bindedFunction = this.Snap.richMsgEventHandler.initLeftSideBox.bind(this.Snap.richMsgEventHandler);
+            bindedFunction();
+                
+        }
     },
     initializeSlick: function ($cardMessageContainer) {
         if ($cardMessageContainer.length > 0) {
@@ -692,7 +766,9 @@ Snap.richMsgEventHandler = {
         var messagePxy = {};
         var msgMetadata = {};
 
-        var template = mainMessageTemplate ? mainMessageTemplate.substring(0, mainMessageTemplate.length - 1) : 'The form was sent without data.';
+        var template = mainMessageTemplate
+            ? mainMessageTemplate.substring(0, mainMessageTemplate.length - 1)
+            : 'The form was sent without data.';
 
         //message to send
         messagePxy.message = replyText;
@@ -804,7 +880,7 @@ Snap.richMsgEventHandler = {
             message: message, //message to send
             metadata: metadata,
             buttonId: buttonId,
-            payload: payload
+            payload: payload,
         };
         document
             .getElementById('mck-text-box')
@@ -849,12 +925,12 @@ Snap.richMsgEventHandler = {
     processClickOnButtonItem: function (e) {
         e.preventDefault();
         var target = e.currentTarget;
-        let {reply, type, languagecode, context} = target.dataset
+        let { reply, type, languagecode, context } = target.dataset;
         // var reply = target.dataset.reply;
         // var type = target.dataset.type;
         // var languageCode = target.dataset.languagecode;
         var metadata = (target.dataset && target.dataset.metadata) || {};
-        
+
         metadata.KM_BUTTON_CLICKED = true;
         metadata.currentContext = context;
         if (type && type == 'quick_reply') {
@@ -902,45 +978,48 @@ Snap.richMsgEventHandler = {
         return new RegExp(str).test(value);
     },
     handleEmail: function (e) {
-        const email = e.target.getAttribute("data-email");
-        window.open('mailto:' + email, "_blank");
+        const email = e.target.getAttribute('data-email');
+        window.open('mailto:' + email, '_blank');
 
-        const browserInfo = detect.parse(navigator.userAgent); 
+        const browserInfo = detect.parse(navigator.userAgent);
         const body = {
             sender_id: snap._globals.userId,
             group_id: CURRENT_GROUP_DATA.tabId.toString(),
             browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
             event_type: 'click email',
-            email_name: email
-        }
+            email_name: email,
+        };
 
-        const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
+        const url =
+            'https://devpython.onehealthlink.com/frontend_interaction_behavior';
 
-        fetch( url, {
+        fetch(url, {
             method: 'POST',
             mode: 'no-cors',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(body)
-        }).catch(error => {
-            w.console.log(error)
-            throw error
-        })
+            body: JSON.stringify(body),
+        }).catch((error) => {
+            w.console.log(error);
+            throw error;
+        });
     },
-    formUserBehaviorInfo: function(e){
+    formUserBehaviorInfo: function (e) {
         document.activeElement.blur();
         const browserInfo = detect.parse(navigator.userAgent);
         const buttonId = e.target.dataset.buttonid;
         const buttonType = e.target.dataset.buttontype;
-        const buttonAction = e.target.dataset.buttonaction ? JSON.parse(decodeURIComponent(e.target.dataset.buttonaction)) : {};
+        const buttonAction = e.target.dataset.buttonaction
+            ? JSON.parse(decodeURIComponent(e.target.dataset.buttonaction))
+            : {};
         const behaviorInfo = {
             sender_id: snap._globals.userId,
             group_id: CURRENT_GROUP_DATA.tabId.toString(),
-            url: "",
-            session_id: "",
+            url: '',
+            session_id: '',
             browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
-            event_type: "follow the link",
+            event_type: 'follow the link',
             message_id: CURRENT_GROUP_DATA.messageId,
             button_id: `${buttonId}`.trim(),
             button_name: `${e.target.title}`.trim(),
@@ -948,52 +1027,88 @@ Snap.richMsgEventHandler = {
             button_url: `${e.target.dataset.url}`.trim(),
             timestamp: new Date().getTime(),
             payload: buttonAction.payload,
-            event_type: 'click button'
+            event_type: 'click button',
         };
         w.console.log(behaviorInfo);
         Snap.richMsgEventHandler.sendUserBehaviorInfo(behaviorInfo);
         window.Applozic.ALSocket.reconnect();
     },
-    sendUserBehaviorInfo: function(data){
-        try{
-            const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
+    sendUserBehaviorInfo: function (data) {
+        try {
+            const url =
+                'https://devpython.onehealthlink.com/frontend_interaction_behavior';
 
             fetch(url, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data)
-            }).catch(error => {
-                throw error
-            })
-        } catch{}
+                body: JSON.stringify(data),
+            }).catch((error) => {
+                throw error;
+            });
+        } catch {}
     },
-    changeCheckbox: function(e){
+    changeCheckbox: function (e) {
         // let rule = e.target.getAttribute("data-rule");
         // if(rule === 's1'){
-            if (e.target.checked) {
-                if (e.target.getAttribute('data-selector') === "anytime") {
-                    $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('checked', false);
-                    $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('disabled', true);
-                } else if (e.target.getAttribute('data-selector') === "all of above") {
-                    $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('checked', true);
-                } else {
-                    $('.quick-reply-checkbox[data-selector="anytime"]').prop('checked', false);
-                    $('.quick-reply-checkbox[data-selector="anytime"]').prop('disabled', true);
-                    $('.quick-reply-checkbox[data-selector="all of above"]').prop('checked', false);
-                    $('.quick-reply-checkbox[data-selector="all of above"]').prop('disabled', true);
-                }
+        if (e.target.checked) {
+            if (e.target.getAttribute('data-selector') === 'anytime') {
+                $('.quick-reply-checkbox')
+                    .not('[data-selector="anytime"]')
+                    .prop('checked', false);
+                $('.quick-reply-checkbox')
+                    .not('[data-selector="anytime"]')
+                    .prop('disabled', true);
+            } else if (
+                e.target.getAttribute('data-selector') === 'all of above'
+            ) {
+                $('.quick-reply-checkbox')
+                    .not('[data-selector="anytime"]')
+                    .prop('checked', true);
             } else {
-                if (!$('.quick-reply-checkbox[data-selector="anytime"]:checked').length) {
-                    $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('disabled', false);
-                }
-                if (!$('.quick-reply-checkbox:checked').not('[data-selector="anytime"]').length) {
-                    $('.quick-reply-checkbox[data-selector="anytime"]').prop('disabled', false);
-                    $('.quick-reply-checkbox[data-selector="all of above"]').prop('disabled', false);
-                }
+                $('.quick-reply-checkbox[data-selector="anytime"]').prop(
+                    'checked',
+                    false
+                );
+                $('.quick-reply-checkbox[data-selector="anytime"]').prop(
+                    'disabled',
+                    true
+                );
+                $('.quick-reply-checkbox[data-selector="all of above"]').prop(
+                    'checked',
+                    false
+                );
+                $('.quick-reply-checkbox[data-selector="all of above"]').prop(
+                    'disabled',
+                    true
+                );
             }
+        } else {
+            if (
+                !$('.quick-reply-checkbox[data-selector="anytime"]:checked')
+                    .length
+            ) {
+                $('.quick-reply-checkbox')
+                    .not('[data-selector="anytime"]')
+                    .prop('disabled', false);
+            }
+            if (
+                !$('.quick-reply-checkbox:checked').not(
+                    '[data-selector="anytime"]'
+                ).length
+            ) {
+                $('.quick-reply-checkbox[data-selector="anytime"]').prop(
+                    'disabled',
+                    false
+                );
+                $('.quick-reply-checkbox[data-selector="all of above"]').prop(
+                    'disabled',
+                    false
+                );
+            }
+        }
         // }
-    }
+    },
 };
