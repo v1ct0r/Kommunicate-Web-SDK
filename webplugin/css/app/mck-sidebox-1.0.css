@@ -86,6 +86,73 @@
     z-index: 22435001 !important;
 }
 
+.left-box {
+    background: #ffffff;
+    position: fixed;
+    right: 25px;
+    bottom: 7px;
+    top: 0;
+    border-radius: 8px;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.left-box .box-wrapper {
+    position: relative;
+}
+.close-left-box {
+    top: -10px;
+    left: -10px;
+    width: 50px;
+    height: 50px;
+    z-index: 5;
+    position: absolute;
+    transition: all 0.1s ease-in-out;
+    border-radius: 30px;
+    background-color: #7D32AA;
+    cursor: pointer;
+}
+
+.close-svg {
+    transform: translate(14px , 15px)
+}
+
+@media (max-width: 600px) {
+    .left-box {
+        right: 0!important;
+        bottom: 0;
+        top: 0;
+        left: 0!important;
+        border-radius: 8px!important;
+        height: 100% !important;
+        max-height: 100%!important;
+        z-index: 23435000!important;
+        opacity: 1;
+    }
+}
+.mobile-box {
+    animation: kmOpeningAnimation .3s cubic-bezier(.25,.1,.25,1);
+}
+.leftOpen {
+    display: block;
+    animation-name: showLeftSidebox;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes showLeftSidebox {
+    0% {
+        opacity: 0;
+        
+    }
+    
+    100% {
+        opacity: 1;
+        transform: translateX(-400px);
+    }
+}
+
 .mck-sidebox {
     position: fixed !important;
     right: 29px !important;
@@ -2271,9 +2338,9 @@ mck-sidebox .mck-group-member-list li a:hover {
     max-width: -moz-calc(85% - 58px);
     max-width: calc(85% - 58px); */
     border-radius: 5px;
-    -webkit-align-self: flex-end;
+    /* -webkit-align-self: flex-end; */
     -ms-flex-item-align: end;
-    align-self: flex-end;
+    /* align-self: flex-end; */
     -webkit-animation-name: slideFromRight;
     animation-name: slideFromRight;
     background: #dcf8c6;
@@ -4114,9 +4181,10 @@ mck-sidebox .mck-group-member-list li a:hover {
     .mck-sidebox {
         right: 25px !important;
         bottom: 8px;
+        top: 0;
     }
     .mck-sidebox.fade.in {
-        width: 300px;
+        /* width: 300px; */
     }
     .mck-sidebox .mck-box-sm,
     .mck-box .mck-box-md {
@@ -4251,9 +4319,10 @@ mck-sidebox .mck-group-member-list li a:hover {
     .emoji-menu {
         /* width:379px !important; */
     }
-    .mck-sidebox.fade.in {
+    /* .mck-sidebox.fade.in,
+    .left-box {
         width: 379px;
-    }
+    } */
     .mck-box .mck-box-sm {
         width: 379px;
         height: 600px;
@@ -4267,6 +4336,13 @@ mck-sidebox .mck-group-member-list li a:hover {
     }
     .mck-loc-box input {
         width: calc(100% - 10px);
+    }
+}
+
+@media (max-width: 600px) {
+    .mck-sidebox.fade.in,
+    .left-box {
+        width: 100% !important;
     }
 }
 
@@ -4778,8 +4854,38 @@ div#mck-tab-title.mck-tab-title {
     border-radius: 6px;
 }
 
+.list-view-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+.list-view-button {
+    color: #7D32AA !important;
+    width: fit-content;
+    cursor: pointer;
+    margin: 4px 8px 4px 0;
+    padding: 4px 9px !important;
+    font-size: 14px;
+    text-align: left;
+    transition: 0.3s;
+    word-break: break-word;
+    line-height: 14px;
+    white-space: normal;
+    border-color: #7D32AA;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: white !important;
+}
+.list-view-button:hover {
+    color: white !important;
+    border-color: #7D32AA;
+    background-color: #7D32AA !important;
+}
+
 .km-conversation-container-right {
     margin-left: 65px;
+    display: flex;
+    flex-direction: column;
 }
 
 .km-talk-to-human-div {
@@ -4885,7 +4991,8 @@ div#mck-tab-title.mck-tab-title {
 }
 
 @media only screen and (max-width: 600px) {
-    .mck-sidebox {
+    .mck-sidebox,
+    .left-box  {
         right: 0px !important;
         bottom: 0px;
         top: 0;
@@ -4894,7 +5001,8 @@ div#mck-tab-title.mck-tab-title {
         height: auto;
         max-height: 100% !important;
     }
-    .mck-sidebox.fade.in {
+    .mck-sidebox.fade.in
+    .left-box {
         width: 100%;
         height: auto;
         max-height: 100% !important;

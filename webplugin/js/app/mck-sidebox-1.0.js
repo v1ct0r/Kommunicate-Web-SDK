@@ -3757,6 +3757,7 @@ var userOverride = {
             });
 
             _this.init = function () {
+            
                 var mck_text_box = document.getElementById('mck-text-box');
 
                 $applozic.template('oflTemplate', offlineblk);
@@ -7587,6 +7588,10 @@ var userOverride = {
                 '<div class="blk-lg-12">' +
                 '<div class="mck-msg-avator blk-lg-3">{{html msgImgExpr}}</div>' +
                 '<div class ="km-conversation-container-right">' +
+                '<div class ="list-view-buttons">' +
+                '<button class="list-view-button list-button">List view</button>' +
+                '<button class="list-view-button map-button">Show on map</button>' +
+                '</div>' +
                 '<div class="mck-msg-box ${msgClassExpr} ${msgBoxColor}">' +
                 '<div class="move-right mck-msg-text"></div>' +
                 '<div class="mck-msg-reply mck-verticalLine ${msgReplyToVisibleExpr}">' +
