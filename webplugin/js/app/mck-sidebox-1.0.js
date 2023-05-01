@@ -596,8 +596,7 @@ var userOverride = {
             5: MCK_LABELS['emoji.hover.text'].average,
             10: MCK_LABELS['emoji.hover.text'].great,
         };
-        var
-          MCK_BOT_MESSAGE_DELAY =
+        var MCK_BOT_MESSAGE_DELAY =
             WIDGET_SETTINGS && WIDGET_SETTINGS.botMessageDelayInterval
                 ? WIDGET_SETTINGS.botMessageDelayInterval
                 : 0;
@@ -654,18 +653,20 @@ var userOverride = {
         _this.mckLaunchSideboxChat = function () {
             snap._globals.initialTime = new Date().getTime();
             const chatContext = SnapUtils.getSettings('KM_CHAT_CONTEXT');
-            const objectHasProperty = chatContext.hasOwnProperty("trigger")
+            const objectHasProperty = chatContext.hasOwnProperty('trigger');
 
-            if(objectHasProperty) {
+            if (objectHasProperty) {
                 snapCommons.setWidgetStateOpen(true);
                 !POPUP_WIDGET &&
-                $applozic('#mck-sidebox-launcher')
-                .removeClass('vis')
+                    $applozic('#mck-sidebox-launcher')
+                        .removeClass('vis')
                         .addClass('n-vis');
                 SNAP_VERSION === 'v2' &&
                     Snap.setDefaultIframeConfigForOpenChat(POPUP_WIDGET);
                 SnapUI.showChat();
-                $applozic('#mck-away-msg-box').removeClass('vis').addClass('n-vis');
+                $applozic('#mck-away-msg-box')
+                    .removeClass('vis')
+                    .addClass('n-vis');
                 mckMessageService.loadConversationWithAgents(
                     {
                         groupName: DEFAULT_GROUP_NAME,
@@ -683,10 +684,9 @@ var userOverride = {
                           .addClass('n-vis')
                     : '';
             } else {
-                $applozic('#mck-sidebox-launcher').addClass('n-vis')
+                $applozic('#mck-sidebox-launcher').addClass('n-vis');
             }
         };
-
 
         _this.openChat = function (params) {
             mckMessageService.openChat(params);
@@ -832,7 +832,13 @@ var userOverride = {
             }
             document.addEventListener('keydown', function (e) {
                 console.log(e);
-                if (e.key === 'Tab' || e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                if (
+                    e.key === 'Tab' ||
+                    e.key === 'ArrowRight' ||
+                    e.key === 'ArrowLeft' ||
+                    e.key === 'ArrowUp' ||
+                    e.key === 'ArrowDown'
+                ) {
                     document.body.classList.add('accesibility');
                 } else {
                     document.body.classList.remove('accesibility');
@@ -911,7 +917,8 @@ var userOverride = {
             var params = {
                 tabId: optns.userId,
                 isGroup: false,
-            };getQuickRepliesTemplate
+            };
+            getQuickRepliesTemplate;
             var params = {};
             if (optns.userId) {
                 params.tabId = userId;
@@ -1576,7 +1583,6 @@ var userOverride = {
             }
         };
         _this.sendMessage = function (params) {
-            
             if (typeof params === 'object') {
                 params = $applozic.extend(
                     true,
@@ -3594,7 +3600,7 @@ var userOverride = {
                           'n-vis'
                       );
                 document.activeElement.blur();
-                $applozic("input").blur();
+                $applozic('input').blur();
             };
             _this.toggleMediaOptions = function (el) {
                 var text = '';
@@ -5105,31 +5111,34 @@ var userOverride = {
                 $mck_msg_inner.data('mck-name', '');
                 $mck_msg_inner.data('mck-conversationid', '');
 
-                if(sendStatistics && !snap._globals.statiscticIsSent) {
+                if (sendStatistics && !snap._globals.statiscticIsSent) {
                     snap._globals.statiscticIsSent = true;
-                    const browserInfo = detect.parse(navigator.userAgent); 
+                    const browserInfo = detect.parse(navigator.userAgent);
                     const body = {
                         sender_id: snap._globals.userId,
                         group_id: CURRENT_GROUP_DATA.tabId.toString(),
-                        lastRenderedMessage: snap._globals.lastRenderedMessageText,
-                        time_from_start_to_message_render: snap._globals.timeToShowFisrtMessage,
+                        lastRenderedMessage:
+                            snap._globals.lastRenderedMessageText,
+                        time_from_start_to_message_render:
+                            snap._globals.timeToShowFisrtMessage,
                         browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
-                        event_type: 'quit chat'
-                    }
+                        event_type: 'quit chat',
+                    };
 
-                    const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
+                    const url =
+                        'https://devpython.onehealthlink.com/frontend_interaction_behavior';
 
-                    fetch( url, {
+                    fetch(url, {
                         method: 'POST',
                         mode: 'no-cors',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify(body)
-                    }).catch(error => {
-                        w.console.log(error)
-                        throw error
-                    })
+                        body: JSON.stringify(body),
+                    }).catch((error) => {
+                        w.console.log(error);
+                        throw error;
+                    });
                 }
 
                 if (conversationId) {
@@ -5493,18 +5502,24 @@ var userOverride = {
 
                 const browserInfo = detect.parse(navigator.userAgent);
                 let localButtonId = messagePxy.buttonId;
-                let localPayload = messagePxy.payload ? messagePxy.payload : message.metadata.payload;
+                let localPayload = messagePxy.payload
+                    ? messagePxy.payload
+                    : message.metadata.payload;
 
                 if (localPayload && typeof localPayload === 'string') {
                     localPayload = JSON.parse(localPayload);
-                } else if (!!localPayload){
+                } else if (!!localPayload) {
                     localPayload = {};
                 }
 
-                if(!localButtonId && messagePxy.message && localPayload){
-                    let localPayloadArray = localPayload.elements ? localPayload.elements : localPayload;
-                    if(localPayloadArray && Array.isArray(localPayloadArray)){
-                        localButtonId = localPayloadArray.find(e => e.title === messagePxy.message).button_id;
+                if (!localButtonId && messagePxy.message && localPayload) {
+                    let localPayloadArray = localPayload.elements
+                        ? localPayload.elements
+                        : localPayload;
+                    if (localPayloadArray && Array.isArray(localPayloadArray)) {
+                        localButtonId = localPayloadArray.find(
+                            (e) => e.title === messagePxy.message
+                        ).button_id;
                     }
                 }
 
@@ -5522,8 +5537,8 @@ var userOverride = {
                     button_url: tabId,
                     timestamp: message.createdAtTime,
                     payload: localPayload,
-                    event_type: 'click button'
-                }
+                    event_type: 'click button',
+                };
                 w.console.log(behaviorInfo);
                 _this.sendUserBehaviorInfo(behaviorInfo);
 
@@ -5537,9 +5552,10 @@ var userOverride = {
                 FILE_META = [];
                 delete TAB_MESSAGE_DRAFT[contact.contactId];
             };
-            _this.sendUserBehaviorInfo = function(data){
-                try{
-                    const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
+            _this.sendUserBehaviorInfo = function (data) {
+                try {
+                    const url =
+                        'https://devpython.onehealthlink.com/frontend_interaction_behavior';
 
                     fetch(url, {
                         method: 'POST',
@@ -5547,11 +5563,11 @@ var userOverride = {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify(data)
-                    }).catch(error => {
-                        throw error
-                    })
-                } catch{}
+                        body: JSON.stringify(data),
+                    }).catch((error) => {
+                        throw error;
+                    });
+                } catch {}
             };
             _this.sendForwardMessage = function (forwardMessageKey) {
                 var forwardMessage = ALStorage.getMessageByKey(
@@ -8089,66 +8105,41 @@ var userOverride = {
                         isValidated
                     );
                     showMoreDateTime = data.createdAtTime;
-                } else if (append && MCK_BOT_MESSAGE_DELAY !== 0){
-                    let messageArrNoPayload = 
-                    data.message
-                    .filter(e => !e.metadata || !e.metadata.hasOwnProperty('text_input_hint'))
-                    .sort((a,b) => a.createdAtTime - b.createdAtTime);
-                    let messageArrPayload = data.message
-                    .filter(e => e.metadata && e.metadata.hasOwnProperty('text_input_hint'));
+                } else if (append && MCK_BOT_MESSAGE_DELAY !== 0) {
+                    let messageArrNoPayload = data.message
+                        .filter(
+                            (e) =>
+                                !e.metadata ||
+                                !e.metadata.hasOwnProperty('text_input_hint')
+                        )
+                        .sort((a, b) => a.createdAtTime - b.createdAtTime);
+                    let messageArrPayload = data.message.filter(
+                        (e) =>
+                            e.metadata &&
+                            e.metadata.hasOwnProperty('text_input_hint')
+                    );
                     let sortedMessageArr = [];
 
-                    if(!!alreadyRenderedRepliesKeys.length) {
-                        messageArrPayload = 
-                        messageArrPayload.filter(({key}) => !alreadyRenderedRepliesKeys.includes(key))
+                    if (!!alreadyRenderedRepliesKeys.length) {
+                        messageArrPayload = messageArrPayload.filter(
+                            ({ key }) =>
+                                !alreadyRenderedRepliesKeys.includes(key)
+                        );
                     }
-                    messageArrPayload[0] && alreadyRenderedRepliesKeys.push(messageArrPayload[0].key);
+                    messageArrPayload[0] &&
+                        alreadyRenderedRepliesKeys.push(
+                            messageArrPayload[0].key
+                        );
 
-                    
-                    if(messageArrPayload[0] !== undefined) {
-                        sortedMessageArr = [...messageArrNoPayload, messageArrPayload[0]];
+                    if (messageArrPayload[0] !== undefined) {
+                        sortedMessageArr = [
+                            ...messageArrNoPayload,
+                            messageArrPayload[0],
+                        ];
                     } else {
                         sortedMessageArr = [...messageArrNoPayload];
                     }
                     ALStorage.updateMckMessageArray(sortedMessageArr);
-                    $applozic.each(sortedMessageArr, function (i, message) {
-                            if (!(typeof message.to === 'undefined')) {
-                                !enableAttachment &&
-                                    (enableAttachment =
-                                        typeof message.metadata === 'object' &&
-                                        message.metadata.KM_ENABLE_ATTACHMENT
-                                            ? message.metadata.KM_ENABLE_ATTACHMENT
-                                            : '');
-                                    _this.addMessage(
-                                        message,
-                                        contact,
-                                        append,
-                                        false,
-                                        isValidated,
-                                        enableAttachment,
-                                        function () {
-                                            _this.processMessageInQueue(
-                                                message
-                                            );
-                                        },
-                                        null,
-                                        data.message,
-                                        true,
-                                        false,
-                                        true
-                                    );
-                                // Snap.appendEmailToIframe(message);
-                                // showMoreDateTime = message.createdAtTime;
-                                // allowReload &&
-                                //     !scroll &&
-                                //     message.contentType != 10 &&
-                                //     (scroll = true);
-                                // window.Applozic.ALSocket.reconnect();
-                            }
-                    });
-                } else {
-                    ALStorage.updateMckMessageArray(data.message);
-                    let sortedMessageArr = data.message.sort((a, b) => b.createdAtTime - a.createdAtTime);
                     $applozic.each(sortedMessageArr, function (i, message) {
                         if (!(typeof message.to === 'undefined')) {
                             !enableAttachment &&
@@ -8157,17 +8148,55 @@ var userOverride = {
                                     message.metadata.KM_ENABLE_ATTACHMENT
                                         ? message.metadata.KM_ENABLE_ATTACHMENT
                                         : '');
-                                _this.addMessage(
-                                    message,
-                                    contact,
-                                    append,
-                                    false,
-                                    isValidated,
-                                    enableAttachment,
-                                    null,
-                                    allowReload,
-                                    data.message
-                                );
+                            _this.addMessage(
+                                message,
+                                contact,
+                                append,
+                                false,
+                                isValidated,
+                                enableAttachment,
+                                function () {
+                                    _this.processMessageInQueue(message);
+                                },
+                                null,
+                                data.message,
+                                true,
+                                false,
+                                true
+                            );
+                            // Snap.appendEmailToIframe(message);
+                            // showMoreDateTime = message.createdAtTime;
+                            // allowReload &&
+                            //     !scroll &&
+                            //     message.contentType != 10 &&
+                            //     (scroll = true);
+                            // window.Applozic.ALSocket.reconnect();
+                        }
+                    });
+                } else {
+                    ALStorage.updateMckMessageArray(data.message);
+                    let sortedMessageArr = data.message.sort(
+                        (a, b) => b.createdAtTime - a.createdAtTime
+                    );
+                    $applozic.each(sortedMessageArr, function (i, message) {
+                        if (!(typeof message.to === 'undefined')) {
+                            !enableAttachment &&
+                                (enableAttachment =
+                                    typeof message.metadata === 'object' &&
+                                    message.metadata.KM_ENABLE_ATTACHMENT
+                                        ? message.metadata.KM_ENABLE_ATTACHMENT
+                                        : '');
+                            _this.addMessage(
+                                message,
+                                contact,
+                                append,
+                                false,
+                                isValidated,
+                                enableAttachment,
+                                null,
+                                allowReload,
+                                data.message
+                            );
                             Snap.appendEmailToIframe(message);
                             showMoreDateTime = message.createdAtTime;
                             allowReload &&
@@ -8557,19 +8586,24 @@ var userOverride = {
                     Snap.isRichTextMessage(msg.metadata) ||
                     msg.contentType == 3;
                 var kmRichTextMarkupVisibility = richText ? 'vis' : 'n-vis';
-                
+
                 //conditional to check if message is processed in queue, because if invoke getRichTextMessageTemplate function
                 //twice we will have calendar without Confirm button
                 let kmRichTextMarkup = '';
                 const containerType = Snap.getContainerTypeForRichMessage(msg);
-                if (!processMessageInQueue || 
-                    (containerType && containerType.includes('km-slick-container'))) {
+                if (
+                    !processMessageInQueue ||
+                    (containerType &&
+                        (containerType.includes('km-slick-container') ||
+                            msg.metadata.templateId ==
+                                SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
+                                    .VIDEO))
+                ) {
                     kmRichTextMarkup = richText
-                    ? Snap.getRichTextMessageTemplate(msg)
-                    : '';
+                        ? Snap.getRichTextMessageTemplate(msg)
+                        : '';
                 }
 
-                
                 var attachment = Snap.isAttachment(msg);
                 msg.fileMeta &&
                     msg.fileMeta.size &&
@@ -8635,9 +8669,11 @@ var userOverride = {
                 //     return ;
                 // }
 
-                var isLastSavedMessageInDialog = arrayOfAllMessages
-                    && (arrayOfAllMessages[0] && arrayOfAllMessages[0].key)
-                    || (arrayOfAllMessages && arrayOfAllMessages.key);
+                var isLastSavedMessageInDialog =
+                    (arrayOfAllMessages &&
+                        arrayOfAllMessages[0] &&
+                        arrayOfAllMessages[0].key) ||
+                    (arrayOfAllMessages && arrayOfAllMessages.key);
                 var msgList = [
                     {
                         msgReply: replyMsg ? replyMsg.message + '\n' : '',
@@ -8711,7 +8747,7 @@ var userOverride = {
                 );
 
                 $quick_reply_container.empty();
-                
+
                 // if(Object.keys(msg.metadata).length === 0){
                 //     Snap.resetTextInputState();
                 // }
@@ -8720,18 +8756,23 @@ var userOverride = {
                     msg.message = msg.metadata.MESSAGE_TEMPLATE;
                 }
 
-                if(
-                    (!msg.message && kmRichTextMarkup.includes('km-chat-faq-list'))
-                    || (!msg.message && kmRichTextMarkup.includes('km-template-img'))
-                ){
+                if (
+                    (!msg.message &&
+                        kmRichTextMarkup.includes('km-chat-faq-list')) ||
+                    (!msg.message &&
+                        kmRichTextMarkup.includes('km-template-img'))
+                ) {
                     msg.message = 'no message';
                 }
 
                 if (
-                    !processMessageInQueue && 
-                    (kmRichTextMarkup.includes('km-quick-replies') && !kmRichTextMarkup.includes('km-div-slider'))
-                    || kmRichTextMarkup.includes('km-btn-hidden-form')
-                    || kmRichTextMarkup.includes('km-cta-multi-button-links-container')
+                    (!processMessageInQueue &&
+                        kmRichTextMarkup.includes('km-quick-replies') &&
+                        !kmRichTextMarkup.includes('km-div-slider')) ||
+                    kmRichTextMarkup.includes('km-btn-hidden-form') ||
+                    kmRichTextMarkup.includes(
+                        'km-cta-multi-button-links-container'
+                    )
                     // || kmRichTextMarkup.includes('km-chat-faq-list')
                 ) {
                     //don't need to append buttons to the messageTemplate arrea,
@@ -8753,7 +8794,8 @@ var userOverride = {
 
                     //need to append reply buttons only from the last message (last message is the first element in arrayOfAllMessages)
                     if (
-                        (isLastSavedMessageInDialog === msg.key)  || !arrayOfAllMessages
+                        isLastSavedMessageInDialog === msg.key ||
+                        !arrayOfAllMessages
                     ) {
                         setTimeout(function () {
                             $quick_reply_container.empty();
@@ -8763,32 +8805,37 @@ var userOverride = {
                                 );
                             }
                             Snap.changeVisibilityStateForElement(
-                              $quick_reply_container,
-                              'show'
+                                $quick_reply_container,
+                                'show'
                             );
 
                             $mck_msg_inner.animate(
-                              {
-                                  scrollTop: $mck_msg_inner.prop('scrollHeight'),
-                              },
-                              0
+                                {
+                                    scrollTop: $mck_msg_inner.prop(
+                                        'scrollHeight'
+                                    ),
+                                },
+                                0
                             );
                             _this.initDatepicker();
-                        }, MCK_BOT_MESSAGE_DELAY + 1500)
-
+                        }, MCK_BOT_MESSAGE_DELAY + 1500);
                     }
                 }
 
-                if (msg.message || msg.metadata.templateId === '14' || msg.metadata.templateId === '10') {
+                if (
+                    msg.message ||
+                    msg.metadata.templateId === '14' ||
+                    msg.metadata.templateId === '10'
+                ) {
                     append
                         ? $applozic
-                            .tmpl('messageTemplate', msgList)
-                            .appendTo('#mck-message-cell .mck-message-inner')
+                              .tmpl('messageTemplate', msgList)
+                              .appendTo('#mck-message-cell .mck-message-inner')
                         : $applozic
-                            .tmpl('messageTemplate', msgList)
-                            .prependTo(
-                                '#mck-message-cell .mck-message-inner'
-                            );
+                              .tmpl('messageTemplate', msgList)
+                              .prependTo(
+                                  '#mck-message-cell .mck-message-inner'
+                              );
                 }
 
                 if (
@@ -9088,23 +9135,24 @@ var userOverride = {
                     '.' + replyId + ' .mck-msg-content'
                 );
 
-                if ( showWithoutDelay ||
-                  (!processMessageInQueue &&
-                    $quick_reply_container.children().length > 0)
+                if (
+                    showWithoutDelay ||
+                    (!processMessageInQueue &&
+                        $quick_reply_container.children().length > 0)
                 ) {
                     Snap.changeVisibilityStateForElement(
-                      $applozic('#quick-reply-container'),
-                      'show'
+                        $applozic('#quick-reply-container'),
+                        'show'
                     );
                 } else {
                     Snap.changeVisibilityStateForElement(
                         $applozic('#quick-reply-container'),
                         'hide'
-                      );
+                    );
                 }
                 if (
-                  emoji_template.indexOf('emoji-inner') === -1 &&
-                  msg.contentType === 0
+                    emoji_template.indexOf('emoji-inner') === -1 &&
+                    msg.contentType === 0
                 ) {
                     var nodes = emoji_template.split('<br/>');
                     for (let i = 0; i < nodes.length; i++) {
@@ -9118,11 +9166,18 @@ var userOverride = {
                             });
                         }
 
-                        $textMessage.append(x)
+                        $textMessage.append(x);
 
-                        if(Array.isArray(arrayOfAllMessages) && !newMessageArray){
+                        if (
+                            Array.isArray(arrayOfAllMessages) &&
+                            !newMessageArray
+                        ) {
                             // setTimeout(function () {
-                                Snap.changeTextInputState(arrayOfAllMessages.find(v => Object.keys(v.metadata).length !== 0));
+                            Snap.changeTextInputState(
+                                arrayOfAllMessages.find(
+                                    (v) => Object.keys(v.metadata).length !== 0
+                                )
+                            );
                             // }, MCK_BOT_MESSAGE_DELAY + 1000)
                         }
                         // setTimeout(function () {
@@ -9150,8 +9205,12 @@ var userOverride = {
                             "div[data-msgkey='" + msg.key + "'] .km-div-slider"
                         )
                     );
-                    $applozic(".tns-controls button[data-controls='prev']").attr('aria-label', 'card slide button');
-                    $applozic(".tns-controls button[data-controls='next']").attr('aria-label', 'card slide button');
+                    $applozic(
+                        ".tns-controls button[data-controls='prev']"
+                    ).attr('aria-label', 'card slide button');
+                    $applozic(
+                        ".tns-controls button[data-controls='next']"
+                    ).attr('aria-label', 'card slide button');
                 }
 
                 if (msg.fileMeta) {
@@ -9218,102 +9277,200 @@ var userOverride = {
                 }
             };
             _this.initDatepicker = function () {
-                var popupDate = $applozic(".popup");
+                var popupDate = $applozic('.popup');
                 w.console.log(popupDate);
-                popupDate.attr("placeholder", "Click here");
-                var inline = $applozic(".inline");
+                popupDate.attr('placeholder', 'Click here');
+                var inline = $applozic('.inline');
                 var enableMins = popupDate.attr('enable_mins') || true;
                 var hideWeekend = popupDate.attr('data-hideweekend') === 'true';
                 var hideHoliday = popupDate.attr('data-hideholiday') === 'true';
                 var holidayVersion = popupDate.attr('data-holidayversion');
                 const holidayMap = new Map([
                     [
-                      "Aetna",
-                      [
-                        "12/31/2021",
-                        "1/17/2022",
-                        "5/30/2022",
-                        "7/4/2022",
-                        "9/5/2022",
-                        "10/10/2022",
-                        "11/11/2022",
-                        "11/24/2022",
-                        "12/26/2022",
-                        "1/2/2023",
-                        "1/16/2023",
-                        "5/29/2023",
-                        "7/4/2023",
-                        "9/4/2023",
-                        "10/9/2023",
-                        "11/10/2023",
-                        "11/23/2023",
-                        "12/25/2023",
-                        "1/1/2024"
-                      ],
-                    ],
-                  ]);
-                if (popupDate.length) for (let i=0; i<popupDate.length; i++) {
-                    flatpickr(popupDate[i], {
-                        enableTime: !(popupDate[i].type === 'date'),
-                        dateFormat: popupDate[i].type === 'date' ? "m/d/Y" : "m/d/Y H:i",
-                        disableMobile: true,
-                        minDate:  popupDate.attr('min') ? popupDate.attr('min') : '01/01/1900',
-                        maxDate: popupDate.attr('max') ? popupDate.attr('max') : '01/01/2099',
-                        minuteIncrement: 60,
-                        "disable": [
-                            function(date) {
-                                if(hideWeekend || hideHoliday){
-                                    if(date.getDay() === 0 || date.getDay() === 6){
-                                        return true
-                                    }
-                                    if(holidayVersion && hideHoliday && holidayMap.has(holidayVersion)){
-                                        let stringDate = date.toLocaleDateString("en-US");
-                                        return holidayMap.get(holidayVersion).indexOf(stringDate) !== -1
-                                    }
-                                }
-                                return false
-                            }
+                        'Aetna',
+                        [
+                            '12/31/2021',
+                            '1/17/2022',
+                            '5/30/2022',
+                            '7/4/2022',
+                            '9/5/2022',
+                            '10/10/2022',
+                            '11/11/2022',
+                            '11/24/2022',
+                            '12/26/2022',
+                            '1/2/2023',
+                            '1/16/2023',
+                            '5/29/2023',
+                            '7/4/2023',
+                            '9/4/2023',
+                            '10/9/2023',
+                            '11/10/2023',
+                            '11/23/2023',
+                            '12/25/2023',
+                            '1/1/2024',
                         ],
-                    });
-                    enableMins && $applozic(".flatpickr-minute").attr('disabled', 'true');
-                }
-                if (inline.length) for (let i=0; i<inline.length; i++) {
-                    const minYear =  (new Date(inline[i].getAttribute('min'))).getFullYear();
-                    const maxYear = (new Date(inline[i].getAttribute('max'))).getFullYear();
-                    const options = (inline[i].type === 'datetime-local') ?
-                      {
-                          mask: 'm/d/Y H:M A',
-                          pattern: 'm{/}`d{/}`Y `H:`M `A', // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
-                          blocks: {
-                              d: { mask: IMask.MaskedRange, from: 1, to: 31, placeholderChar: 'D', maxLength: 2, autofix: true },
-                              m: { mask: IMask.MaskedRange, from: 1, to: 12, placeholderChar: 'M', maxLength: 2, autofix: true },
-                              Y: { mask: IMask.MaskedRange, from: minYear || 1900, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
-                              M: { mask: IMask.MaskedRange,from: 0, to: 59, placeholderChar: 'm', maxLength: 2, autofix: true },
-                              H: { mask: IMask.MaskedRange, from: 0, to: 12, maxLength: 2, placeholderChar: 'h', autofix: true },
-                              A: { mask: IMask.MaskedEnum, maxLength: 2, enum: ["AM", "am", "PM", "pm", "aM", "Am", "pM", "Pm"] }
-                          },
-                          autofix: true,
-                          lazy: false,
-                          overwrite: false,
-                      } :
-                      {
-                          mask: 'M/d/Y',
-                          pattern: 'M/`dd/`d',  // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
-                          blocks: {
-                              d: { mask: IMask.MaskedRange, from: 1, to: 31, placeholderChar: 'D', maxLength: 2, autofix: true },
-                              M: { mask: IMask.MaskedRange, from: 1, to: 12, placeholderChar: 'M', maxLength: 2, autofix: true },
-                              Y: { mask: IMask.MaskedRange, from: minYear || 1900, to: maxYear || 2099,  placeholderChar: 'Y', autofix: true },
-                          },
-                          autofix: true,
-                          lazy: false,
-                          overwrite: true
-                      }
-                    const dateMask = IMask(inline[i], options);
-                    inline[i].type = 'text';
-                    inline[i].setAttribute("pattern","\d*");
-                    inline[i].setAttribute("inputmode","numeric");
-                    inline[i].setAttribute("placeholder", "Click here")
-                }
+                    ],
+                ]);
+                if (popupDate.length)
+                    for (let i = 0; i < popupDate.length; i++) {
+                        flatpickr(popupDate[i], {
+                            enableTime: !(popupDate[i].type === 'date'),
+                            dateFormat:
+                                popupDate[i].type === 'date'
+                                    ? 'm/d/Y'
+                                    : 'm/d/Y H:i',
+                            disableMobile: true,
+                            minDate: popupDate.attr('min')
+                                ? popupDate.attr('min')
+                                : '01/01/1900',
+                            maxDate: popupDate.attr('max')
+                                ? popupDate.attr('max')
+                                : '01/01/2099',
+                            minuteIncrement: 60,
+                            disable: [
+                                function (date) {
+                                    if (hideWeekend || hideHoliday) {
+                                        if (
+                                            date.getDay() === 0 ||
+                                            date.getDay() === 6
+                                        ) {
+                                            return true;
+                                        }
+                                        if (
+                                            holidayVersion &&
+                                            hideHoliday &&
+                                            holidayMap.has(holidayVersion)
+                                        ) {
+                                            let stringDate = date.toLocaleDateString(
+                                                'en-US'
+                                            );
+                                            return (
+                                                holidayMap
+                                                    .get(holidayVersion)
+                                                    .indexOf(stringDate) !== -1
+                                            );
+                                        }
+                                    }
+                                    return false;
+                                },
+                            ],
+                        });
+                        enableMins &&
+                            $applozic('.flatpickr-minute').attr(
+                                'disabled',
+                                'true'
+                            );
+                    }
+                if (inline.length)
+                    for (let i = 0; i < inline.length; i++) {
+                        const minYear = new Date(
+                            inline[i].getAttribute('min')
+                        ).getFullYear();
+                        const maxYear = new Date(
+                            inline[i].getAttribute('max')
+                        ).getFullYear();
+                        const options =
+                            inline[i].type === 'datetime-local'
+                                ? {
+                                      mask: 'm/d/Y H:M A',
+                                      pattern: 'm{/}`d{/}`Y `H:`M `A', // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
+                                      blocks: {
+                                          d: {
+                                              mask: IMask.MaskedRange,
+                                              from: 1,
+                                              to: 31,
+                                              placeholderChar: 'D',
+                                              maxLength: 2,
+                                              autofix: true,
+                                          },
+                                          m: {
+                                              mask: IMask.MaskedRange,
+                                              from: 1,
+                                              to: 12,
+                                              placeholderChar: 'M',
+                                              maxLength: 2,
+                                              autofix: true,
+                                          },
+                                          Y: {
+                                              mask: IMask.MaskedRange,
+                                              from: minYear || 1900,
+                                              to: maxYear || 2099,
+                                              placeholderChar: 'Y',
+                                              autofix: true,
+                                          },
+                                          M: {
+                                              mask: IMask.MaskedRange,
+                                              from: 0,
+                                              to: 59,
+                                              placeholderChar: 'm',
+                                              maxLength: 2,
+                                              autofix: true,
+                                          },
+                                          H: {
+                                              mask: IMask.MaskedRange,
+                                              from: 0,
+                                              to: 12,
+                                              maxLength: 2,
+                                              placeholderChar: 'h',
+                                              autofix: true,
+                                          },
+                                          A: {
+                                              mask: IMask.MaskedEnum,
+                                              maxLength: 2,
+                                              enum: [
+                                                  'AM',
+                                                  'am',
+                                                  'PM',
+                                                  'pm',
+                                                  'aM',
+                                                  'Am',
+                                                  'pM',
+                                                  'Pm',
+                                              ],
+                                          },
+                                      },
+                                      autofix: true,
+                                      lazy: false,
+                                      overwrite: false,
+                                  }
+                                : {
+                                      mask: 'M/d/Y',
+                                      pattern: 'M/`dd/`d', // Pattern mask with defined blocks, default is 'd{.}`m{.}`Y
+                                      blocks: {
+                                          d: {
+                                              mask: IMask.MaskedRange,
+                                              from: 1,
+                                              to: 31,
+                                              placeholderChar: 'D',
+                                              maxLength: 2,
+                                              autofix: true,
+                                          },
+                                          M: {
+                                              mask: IMask.MaskedRange,
+                                              from: 1,
+                                              to: 12,
+                                              placeholderChar: 'M',
+                                              maxLength: 2,
+                                              autofix: true,
+                                          },
+                                          Y: {
+                                              mask: IMask.MaskedRange,
+                                              from: minYear || 1900,
+                                              to: maxYear || 2099,
+                                              placeholderChar: 'Y',
+                                              autofix: true,
+                                          },
+                                      },
+                                      autofix: true,
+                                      lazy: false,
+                                      overwrite: true,
+                                  };
+                        const dateMask = IMask(inline[i], options);
+                        inline[i].type = 'text';
+                        inline[i].setAttribute('pattern', 'd*');
+                        inline[i].setAttribute('inputmode', 'numeric');
+                        inline[i].setAttribute('placeholder', 'Click here');
+                    }
             };
             _this.addContactForSearchList = function (contact, $listId) {
                 var groupUserCount = contact.userCount;
@@ -11930,10 +12087,14 @@ var userOverride = {
                     ),
                     message;
                 var currentMessageObject = ALStorage.getMessageByKey(
-                  MCK_BOT_MESSAGE_QUEUE[0]
+                    MCK_BOT_MESSAGE_QUEUE[0]
                 );
-                currentMessageObject.message && mckMessageLayout.messageClubbing(false);
-                if (!document.querySelector('.km-typing-wrapper') && currentMessageObject.message) {
+                currentMessageObject.message &&
+                    mckMessageLayout.messageClubbing(false);
+                if (
+                    !document.querySelector('.km-typing-wrapper') &&
+                    currentMessageObject.message
+                ) {
                     $mck_msg_inner.append(
                         '<div class="km-typing-wrapper"><div class="km-typing-indicator"></div><div class="km-typing-indicator"></div><div class="km-typing-indicator"></div></div>'
                     );
@@ -11946,7 +12107,6 @@ var userOverride = {
                 }
 
                 setTimeout(function () {
-
                     message = messageContainer.querySelector(
                         'div[data-msgkey="' + MCK_BOT_MESSAGE_QUEUE[0] + '"]'
                     );
@@ -11964,72 +12124,96 @@ var userOverride = {
                     } else {
                         Snap.changeTextInputState(currentMessageObject, 300);
                         let richText =
-                            Snap.isRichTextMessage(currentMessageObject.metadata) ||
-                            currentMessageObject.contentType == 3;
+                            Snap.isRichTextMessage(
+                                currentMessageObject.metadata
+                            ) || currentMessageObject.contentType == 3;
 
                         let kmRichTextMarkup = richText
-                            ? Snap.getRichTextMessageTemplate(currentMessageObject)
+                            ? Snap.getRichTextMessageTemplate(
+                                  currentMessageObject
+                              )
                             : '';
-                        if(kmRichTextMarkup && !kmRichTextMarkup.includes('km-div-slider') &&
-                            $quick_reply_container.children().length < 1) {
-                                setTimeout(function () {
-                                    $quick_reply_container.empty();
-                                    if (currentMessageObject.metadata.is_close_conversation !== 'true') {
-                                        $quick_reply_container.append(
-                                            $applozic(kmRichTextMarkup)
-                                        );
-                                    }
-                                    Snap.changeVisibilityStateForElement(
-                                        $quick_reply_container,
-                                        'show'
+                        if (
+                            kmRichTextMarkup &&
+                            !kmRichTextMarkup.includes('km-div-slider') &&
+                            !kmRichTextMarkup.includes(
+                                'mck-rich-video-container'
+                            ) &&
+                            $quick_reply_container.children().length < 1
+                        ) {
+                            setTimeout(function () {
+                                $quick_reply_container.empty();
+                                if (
+                                    currentMessageObject.metadata
+                                        .is_close_conversation !== 'true'
+                                ) {
+                                    $quick_reply_container.append(
+                                        $applozic(kmRichTextMarkup)
                                     );
+                                }
+                                Snap.changeVisibilityStateForElement(
+                                    $quick_reply_container,
+                                    'show'
+                                );
 
-                                    $mck_msg_inner.animate(
-                                        {
-                                            scrollTop: $mck_msg_inner.prop('scrollHeight'),
-                                        },
-                                        0
-                                    );
-                                    _this.initDatepicker();
-                                }, 500 )
-
+                                $mck_msg_inner.animate(
+                                    {
+                                        scrollTop: $mck_msg_inner.prop(
+                                            'scrollHeight'
+                                        ),
+                                    },
+                                    0
+                                );
+                                _this.initDatepicker();
+                            }, 500);
                         }
                     }
                     if (message) {
-                        if(!snap._globals.timeToShowFisrtMessage) {
+                        if (!snap._globals.timeToShowFisrtMessage) {
                             snap._globals.timeToShowFisrtMessage = _this.calculateUserShowFirstMessageTime();
                         }
 
+                        const alreadyRenderedMessages = Array.from(
+                            $applozic(
+                                '#mck-message-cell .mck-message-inner'
+                            ).children()
+                        ).filter(
+                            (node) => node.className !== 'km-typing-wrapper'
+                        );
 
-                        const alreadyRenderedMessages = 
-                        Array.from($applozic('#mck-message-cell .mck-message-inner')
-                        .children()).filter( node => node.className !== 'km-typing-wrapper');
-            
-                        let lastRenderedMessageText = alreadyRenderedMessages[alreadyRenderedMessages.length - 1].innerText.trim();
-                        snap._globals.lastRenderedMessageText =  lastRenderedMessageText;
+                        let lastRenderedMessageText = alreadyRenderedMessages[
+                            alreadyRenderedMessages.length - 1
+                        ].innerText.trim();
+                        snap._globals.lastRenderedMessageText = lastRenderedMessageText;
 
                         message.classList.remove('n-vis');
-                        if ($quick_reply_container.children().length > 0 && MCK_BOT_MESSAGE_QUEUE.length < 1
-                          && !currentMessageObject.metadata.is_close_conversation)  {
+                        if (
+                            $quick_reply_container.children().length > 0 &&
+                            MCK_BOT_MESSAGE_QUEUE.length < 1 &&
+                            !currentMessageObject.metadata.is_close_conversation
+                        ) {
                             Snap.changeVisibilityStateForElement(
-                              $applozic('#quick-reply-container'),
-                              'show'
+                                $applozic('#quick-reply-container'),
+                                'show'
                             );
                         } else {
                             Snap.changeVisibilityStateForElement(
-                              $applozic('#quick-reply-container'),
-                              'hide'
+                                $applozic('#quick-reply-container'),
+                                'hide'
                             );
                         }
 
                         $mck_msg_inner.animate(
-                          {
-                              scrollTop: $mck_msg_inner.prop('scrollHeight'),
-                          },
-                          0
+                            {
+                                scrollTop: $mck_msg_inner.prop('scrollHeight'),
+                            },
+                            0
                         );
                     }
-                    if (currentMessageObject.metadata.is_close_conversation || !(currentMessageObject.metadata.payload) )  {
+                    if (
+                        currentMessageObject.metadata.is_close_conversation ||
+                        !currentMessageObject.metadata.payload
+                    ) {
                         $quick_reply_container.empty();
                         $applozic('#mck-text-box').empty();
                         Snap.changeVisibilityStateForElement(
@@ -12038,15 +12222,15 @@ var userOverride = {
                         );
                     }
                     var audioGet = document.getElementById('audioGet');
-                    (currentMessageObject.message && audioGet) && audioGet.play();
-
+                    currentMessageObject.message && audioGet && audioGet.play();
                 }, MCK_BOT_MESSAGE_DELAY);
             };
 
-            _this.calculateUserShowFirstMessageTime = function() {
-                const miliseconds = new Date().getTime() - snap._globals.initialTime;
-                return ((miliseconds % 60000) / 1000)
-            }
+            _this.calculateUserShowFirstMessageTime = function () {
+                const miliseconds =
+                    new Date().getTime() - snap._globals.initialTime;
+                return (miliseconds % 60000) / 1000;
+            };
 
             _this.getMessageFeed = function (message) {
                 var messageFeed = {};
@@ -15251,7 +15435,9 @@ var userOverride = {
                 } else {
                     // $mck_preview_msg_content.html('');
                     //$mck_msg_preview_visual_indicator_text.html('');
-                    const $badge_count = document.getElementById('applozic-badge-count');
+                    const $badge_count = document.getElementById(
+                        'applozic-badge-count'
+                    );
                     --$badge_count.innerHTML;
                 }
                 if (message.fileMetaKey) {
@@ -16030,8 +16216,9 @@ var userOverride = {
                                         conversationStatus.toUpperCase()
                                     ]);
                             CURRENT_GROUP_DATA.tabId = resp.message.groupId;
-                            if(resp.message.metadata.message_id){
-                                CURRENT_GROUP_DATA.messageId = resp.message.metadata.message_id;
+                            if (resp.message.metadata.message_id) {
+                                CURRENT_GROUP_DATA.messageId =
+                                    resp.message.metadata.message_id;
                             }
                             CURRENT_GROUP_DATA.conversationStatus =
                                 Snap.conversationHelper.status[
@@ -16072,8 +16259,9 @@ var userOverride = {
                             resp.message.metadata
                         ) {
                             CURRENT_GROUP_DATA.tabId = resp.message.groupId;
-                            if(resp.message.metadata.message_id){
-                                CURRENT_GROUP_DATA.messageId = resp.message.metadata.message_id;
+                            if (resp.message.metadata.message_id) {
+                                CURRENT_GROUP_DATA.messageId =
+                                    resp.message.metadata.message_id;
                             }
                             if (
                                 resp.message.metadata.KM_STATUS ===
