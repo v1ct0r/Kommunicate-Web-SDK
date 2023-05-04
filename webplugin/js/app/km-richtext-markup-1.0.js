@@ -907,11 +907,16 @@ Snap.markup.getActionableFormMarkup = function (options) {
     }
 };
 Snap.markup.getCarouselMarkup = function (options) {
-    var cardList = [];
-    var cardHtml = {};
-    var headerImageClass,
+    
+    if(snap._globals.carouselPayload) {
+        return Mustache.to_html(Snap.markup.getCarouselTemplate(), snap._globals.carouselPayload);
+    }
+
+    let cardList = [];
+    let cardHtml = {};
+    let headerImageClass,
         carouselInfoWrapperClass;
-    var createCardFooter = function (buttons, sessionOptions) {
+    let createCardFooter = function (buttons, sessionOptions) {
         var cardFooter = '';
         var requestType;
         for (var i = 0; i < buttons.length; i++) {
@@ -973,13 +978,14 @@ Snap.markup.getCarouselMarkup = function (options) {
         return cardFooter;
     };
     if (options && options.payload) {
-        var cards =
+        snap._globals.coordinates = options.coordinates;
+        let cards =
             typeof options.payload == 'string'
                 ? JSON.parse(options.payload)
                 : [];
         options.payload = cards;
-        for (var i = 0; i < cards.length; i++) {
-            var item = cards[i];
+        for (let i = 0; i < cards.length; i++) {
+            let item = cards[i];
             carouselInfoWrapperClass = item.header && item.header.pageSrc
                 ? ''
                 : 'km-carousel-card-info-wrapper-without-header';
@@ -1000,8 +1006,10 @@ Snap.markup.getCarouselMarkup = function (options) {
             cardList[i] = $applozic.extend([], cardHtml);
             cardList[i].url = item.url;
         }
+        snap._globals.carouselPayload = { payload: cardList };
     }
-    var cardCarousel = { payload: cardList };
+
+    let cardCarousel = { payload: cardList };
 
     return Mustache.to_html(Snap.markup.getCarouselTemplate(), cardCarousel);
 };
