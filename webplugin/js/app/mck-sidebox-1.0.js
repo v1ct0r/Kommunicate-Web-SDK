@@ -7588,10 +7588,6 @@ var userOverride = {
                 '<div class="blk-lg-12">' +
                 '<div class="mck-msg-avator blk-lg-3">{{html msgImgExpr}}</div>' +
                 '<div class ="km-conversation-container-right">' +
-                '<div class ="list-view-buttons">' +
-                '<button class="list-view-button list-button">List view</button>' +
-                '<button class="list-view-button map-button">Show on map</button>' +
-                '</div>' +
                 '<div class="mck-msg-box ${msgClassExpr} ${msgBoxColor}">' +
                 '<div class="move-right mck-msg-text"></div>' +
                 '<div class="mck-msg-reply mck-verticalLine ${msgReplyToVisibleExpr}">' +
@@ -8596,6 +8592,8 @@ var userOverride = {
                 //twice we will have calendar without Confirm button
                 let kmRichTextMarkup = '';
                 const containerType = Snap.getContainerTypeForRichMessage(msg);
+                
+
                 if (
                     !processMessageInQueue ||
                     (containerType &&
@@ -8829,8 +8827,8 @@ var userOverride = {
 
                 if (
                     msg.message ||
-                    msg.metadata.templateId === '14' ||
-                    msg.metadata.templateId === '10'
+                    msg.metadata.templateId === SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.VIDEO ||
+                    msg.metadata.templateId === SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL
                 ) {
                     append
                         ? $applozic
@@ -8841,6 +8839,13 @@ var userOverride = {
                               .prependTo(
                                   '#mck-message-cell .mck-message-inner'
                               );
+                }
+                if(msg.metadata.templateId === SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL) {
+                    $applozic(`
+                    <div class ="list-view-buttons">
+                        <button class="list-view-button list-button">Show filters</button> 
+                        <button class="list-view-button map-button">Show on map</button>
+                    </div>`).appendTo('.km-slick-container');
                 }
 
                 if (

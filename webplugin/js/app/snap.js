@@ -474,8 +474,8 @@ $applozic.extend(true, Snap, {
     },
     getContainerTypeForRichMessage: function (message) {
         // this method is obsolete, not in use. use km-div-slider to get slide effect
-        var metadata = message.metadata;
-        var sliderClass = 'km-slick-container ';
+        const metadata = message.metadata;
+         sliderClass = 'km-slick-container ';
         metadata.templateId ==
             SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL &&
             metadata.payload &&

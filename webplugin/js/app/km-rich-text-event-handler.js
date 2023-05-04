@@ -394,6 +394,9 @@ Snap.richMsgEventHandler = {
     },
     closeLeftBox: function () {
         $applozic('.left-box').remove();
+        w.console.log(w.slider);
+        w.slider.destroy();
+        w.console.log(w.slider);
     },
     getDesktopBoxLayout: function (styles) {
         const { width, height } = styles;
@@ -444,41 +447,144 @@ Snap.richMsgEventHandler = {
             })
     },
     showMapBox: () => {
-        // this.Snap.richMsgEventHandler.openLeftBox();
-        const head= document.getElementsByTagName('head')[0];
-        const script= document.createElement('script');
-        script.type= 'text/javascript';
-        script.src= 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBg9_RbO1w_xgzcss-p3oAmQ8QhthsW2v0&map_ids=6a4519983a205786&callback=initMap';
-        head.appendChild(script);
-        $applozic('<div id="map_canvas"></div>').appendTo('.box-wrapper');
-        // &callback=initMap
-        w.console.log("SCRIPT ADDED")
-        w.console.log(w);
-        // w.console.log(this)
-        // w.console.log(window);
-        w.initMap = function() {
-            // console.log(window);
-            const myLatlng = new google.maps.LatLng(49.988358, 36.232845);
-            const zoom = 15;
-            
-            const myOptions = {
+        let markersData =  snap._globals.coordinates;
+        let infoWindow = null;
+
+        const sliderLayout = Snap.markup.getCarouselMarkup(snap._globals.carouselPayload);
+        
+        $applozic('<div class="box-slider km-slick-container km-slider-multiple-cards-container"></div>')
+        .appendTo('.box-wrapper');
+        $applozic(sliderLayout).appendTo('.box-slider');
+
+        w.slider = this.Snap.richMsgEventHandler.addCarousel();
+        
+        if(!document.getElementById('map-script')) {
+            const head= document.getElementsByTagName('head')[0];
+            const script= document.createElement('script');
+            script.type= 'text/javascript';
+            script.id = 'map-script'
+            script.src= 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBg9_RbO1w_xgzcss-p3oAmQ8QhthsW2v0&map_ids=6a4519983a205786&callback=initMap';
+            head.appendChild(script);
+            w.initMap = function() {
+                const {lat, long} = snap._globals.coordinates[0];
+                const newLat = +lat - 0.25
+                w.console.log(lat, newLat)
+                const myLatlng = new google.maps.LatLng(newLat, long);
+                const zoom = 9;
                 
-                zoom,
-                maxZoom: zoom + 2,
-                minZoom: zoom - 2,
-                center: myLatlng,
-                mapTypeControl: false,
-                scaleControl: false,
-                navigationControl: false,
-                streetViewControl: false,
-                fullscreenControl: false,
-                zoomControl: false,
-                mapId: '6a4519983a205786',
+                const myOptions = {
+                    
+                    zoom,
+                    // maxZoom: zoom + 2,
+                    // minZoom: zoom - 5,
+                    center: myLatlng,
+                    mapTypeControl: false,
+                    scaleControl: false,
+                    navigationControl: false,
+                    streetViewControl: false,
+                    fullscreenControl: false,
+                    zoomControl: false,
+                    mapId: '6a4519983a205786',
+                }
+                $applozic('<div id="map_canvas"></div>').appendTo('.box-wrapper');
+                map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                infoWindow = new google.maps.InfoWindow();
+    
+                google.maps.event.addListener(map, 'click', function() {
+                    infoWindow.close();
+                });
+    
+                addMarkers(map);
             }
-            map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-            // addMarker(map);
+
+        } else {
+            w.initMap();
         }
 
+        function addMarkers(map) {
+            let markers = [];
+            markersData = markersData.map( item => ({...item, color: '#fff'}));
+    
+            markersData.forEach( ({lat, long, color, title}) => {
+                const marker = new google.maps.Marker({
+                    map: map,
+                    position: new google.maps.LatLng(lat, long),
+                    icon: pinSymbol(color),
+                    originalColor: color,
+                    title
+                });
+                marker.addListener('click', () => {
+                    const index = markers.findIndex((item) => item.getPosition().lat() == marker.getPosition().lat());
+                    w.slider.goTo(index);
+                    changeColor(marker, markers);
+                    infoWindow.setContent(marker.getTitle());
+                    infoWindow.open(map, marker);
+                });
+                markers.push(marker);
+                w.console.log('MARKER CREATED');
+            })
+
+            changeColor(markers[0], markers);
+            changeIconColorOnSliderToggle("[data-controls='prev']", markers);
+            changeIconColorOnSliderToggle("[data-controls='next']", markers);
+        }
+
+        function changeIconColorOnSliderToggle(attribute, markersArr) {
+            $applozic(`.box-slider ${attribute}`).on('click', () => {
+                const index = attribute.includes('prev') ? w.slider.getInfo().index - 1 : w.slider.getInfo().index + 1;
+                const marker = markersArr[index];
+                changeColor(marker, markersArr);
+                // panToNewCanter(marker);
+            })
+        }
+    
+        function pinSymbol(color) {
+            return {
+                path: 'M21.4321 11.75C21.4321 10.6009 21.2067 9.46312 20.7686 8.40152C20.3306 7.33992 19.6886 6.37533 18.8792 5.56282C18.0699 4.7503 17.109 4.10578 16.0515 3.66605C14.9941 3.22633 13.8607 3 12.7161 3C11.5714 3 10.438 3.22633 9.38056 3.66605C8.32308 4.10578 7.36223 4.7503 6.55287 5.56282C5.74351 6.37533 5.10149 7.33992 4.66347 8.40152C4.22545 9.46312 4 10.6009 4 11.75C4 13.4838 4.51051 15.0963 5.37589 16.4563H5.36593C8.30449 21.075 12.7161 28 12.7161 28L20.0662 16.4563H20.0575C20.9545 15.0517 21.4315 13.4184 21.4321 11.75ZM12.7161 15.5C11.7254 15.5 10.7752 15.1049 10.0747 14.4017C9.37416 13.6984 8.9806 12.7446 8.9806 11.75C8.9806 10.7554 9.37416 9.80161 10.0747 9.09835C10.7752 8.39509 11.7254 8 12.7161 8C13.7068 8 14.6569 8.39509 15.3574 9.09835C16.058 9.80161 16.4515 10.7554 16.4515 11.75C16.4515 12.7446 16.058 13.6984 15.3574 14.4017C14.6569 15.1049 13.7068 15.5 12.7161 15.5Z',
+                fillColor: color,
+                fillOpacity: 1,
+                strokeColor: '#c5c5c5',
+                strokeWeight: 2,
+                scale: 1
+            };
+        }
+    
+        function restoreColors(markersArr) {
+            for (let i=0; i<markersArr.length; i++) {
+                markersArr[i].setIcon(pinSymbol(markersArr[i].originalColor));
+            }
+        }
+
+        function changeColor(marker, markersArr) {
+            restoreColors(markersArr);
+            marker.setIcon(pinSymbol('#7D32AA'));
+        }
+    
+        function panToNewCanter(marker) {
+            const newCenterMap = new google.maps.LatLng(marker.getPosition().lat(), marker.getPosition().lng());
+            map.panTo(newCenterMap);
+        }
+
+    },
+
+    addCarousel: function() {
+        return tns({
+            container: $applozic('.box-slider .km-div-slider')[0],
+            items: 2,
+            gutter: 15,
+            slideBy: 1,
+            loop: false,
+            center: true,
+            controlsText: [
+                Snap.richMsgEventHandler.svg.arrow,
+                Snap.richMsgEventHandler.svg.arrow,
+            ],
+            mouseDrag: false,
+            arrowKeys: true,
+            onInit: function () {
+                console.log('tiny-slider initilized');
+            },
+        });
     },
     openLeftBox: () => {
         
@@ -493,12 +599,13 @@ Snap.richMsgEventHandler = {
     },
     initializeSlick: function ($cardMessageContainer) {
         if ($cardMessageContainer.length > 0) {
-            var slider = tns({
+            const slider = tns({
                 container: $cardMessageContainer[0],
-                edgePadding: 60,
-                items: 1,
-                slideBy: 'page',
+                items: 2,
+                gutter: 15,
+                slideBy: 1,
                 loop: false,
+                center: true,
                 controlsText: [
                     Snap.richMsgEventHandler.svg.arrow,
                     Snap.richMsgEventHandler.svg.arrow,
