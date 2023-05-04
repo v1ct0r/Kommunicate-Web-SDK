@@ -101,14 +101,9 @@ Snap.attachEvents = function ($applozic) {
     );
     $applozic(messageCellQuickReplySelector).on(
         'click',
-        '.list-button',
+        '.map-button',
         Snap.richMsgEventHandler.openLeftBox
     );
-    $applozic('.close-left-box').on(
-        'click',
-        Snap.richMsgEventHandler.closeLeftBox
-    );
-    
 };
 
 /**
@@ -431,13 +426,11 @@ Snap.richMsgEventHandler = {
                     $applozic
                     .tmpl(this.getMobileBoxLayout())
                     .appendTo('.mck-box-open');
+                    
             } else {
                 parent.document.getElementById('snap-widget-iframe').style.width =
                 $applozic('#mck-sidebox').width() * 2 + 50;
 
-                // $applozic('#mck-sidebox').width(leftBoxStyles.width);
-                // $applozic('#mck-sidebox').height(leftBoxStyles.height);
-                // $applozic('.mck-box-dialog').width('100%');
                 const leftBoxStyles = {
                     height: $applozic('#mck-sidebox').height(),
                     width: $applozic('#mck-sidebox').width(),
@@ -450,15 +443,52 @@ Snap.richMsgEventHandler = {
                 $applozic('.left-box').remove();
             })
     },
+    showMapBox: () => {
+        // this.Snap.richMsgEventHandler.openLeftBox();
+        const head= document.getElementsByTagName('head')[0];
+        const script= document.createElement('script');
+        script.type= 'text/javascript';
+        script.src= 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBg9_RbO1w_xgzcss-p3oAmQ8QhthsW2v0&map_ids=6a4519983a205786&callback=initMap';
+        head.appendChild(script);
+        $applozic('<div id="map_canvas"></div>').appendTo('.box-wrapper');
+        // &callback=initMap
+        w.console.log("SCRIPT ADDED")
+        w.console.log(w);
+        // w.console.log(this)
+        // w.console.log(window);
+        w.initMap = function() {
+            // console.log(window);
+            const myLatlng = new google.maps.LatLng(49.988358, 36.232845);
+            const zoom = 15;
+            
+            const myOptions = {
+                
+                zoom,
+                maxZoom: zoom + 2,
+                minZoom: zoom - 2,
+                center: myLatlng,
+                mapTypeControl: false,
+                scaleControl: false,
+                navigationControl: false,
+                streetViewControl: false,
+                fullscreenControl: false,
+                zoomControl: false,
+                mapId: '6a4519983a205786',
+            }
+            map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            // addMarker(map);
+        }
+
+    },
     openLeftBox: () => {
         
-        w.console.log(this);
+        // w.console.log();
         if ($applozic('.left-box').length > 0) {
             this.Snap.richMsgEventHandler.closeLeftBox();
         } else {
             const bindedFunction = this.Snap.richMsgEventHandler.initLeftSideBox.bind(this.Snap.richMsgEventHandler);
             bindedFunction();
-                
+            this.Snap.richMsgEventHandler.showMapBox();
         }
     },
     initializeSlick: function ($cardMessageContainer) {

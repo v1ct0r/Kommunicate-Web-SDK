@@ -99,6 +99,12 @@
 
 .left-box .box-wrapper {
     position: relative;
+    height: 100%;
+}
+
+.left-box #map_canvas {
+    height: 100%;
+    width: 100%;
 }
 .close-left-box {
     top: -10px;
