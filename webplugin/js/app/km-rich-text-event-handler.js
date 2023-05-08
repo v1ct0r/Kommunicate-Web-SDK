@@ -467,8 +467,7 @@ Snap.richMsgEventHandler = {
             head.appendChild(script);
             w.initMap = function() {
                 const {lat, long} = snap._globals.coordinates[0];
-                const newLat = +lat - 0.25
-                w.console.log(lat, newLat)
+                const newLat = +lat - 0.25;
                 const myLatlng = new google.maps.LatLng(newLat, long);
                 const zoom = 9;
                 
