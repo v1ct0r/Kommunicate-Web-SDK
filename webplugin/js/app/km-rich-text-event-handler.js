@@ -102,7 +102,7 @@ Snap.attachEvents = function ($applozic) {
     $applozic(messageCellQuickReplySelector).on(
         'click',
         '.map-button',
-        Snap.richMsgEventHandler.openLeftBox
+        Snap.richMsgEventHandler.showMapBox
     );
 };
 
@@ -424,6 +424,11 @@ Snap.richMsgEventHandler = {
                 </div>`;
     },
     initLeftSideBox: function () {
+
+        if ($applozic('.left-box').length > 0) {
+            this.Snap.richMsgEventHandler.closeLeftBox();
+            return;
+        }
                 
             if(parent.document.body.clientWidth <= 600) {
                     $applozic
@@ -447,6 +452,7 @@ Snap.richMsgEventHandler = {
             })
     },
     showMapBox: () => {
+        this.Snap.richMsgEventHandler.initLeftSideBox();
         let markersData =  snap._globals.coordinates;
         let infoWindow = null;
 
@@ -584,17 +590,6 @@ Snap.richMsgEventHandler = {
                 console.log('tiny-slider initilized');
             },
         });
-    },
-    openLeftBox: () => {
-        
-        // w.console.log();
-        if ($applozic('.left-box').length > 0) {
-            this.Snap.richMsgEventHandler.closeLeftBox();
-        } else {
-            const bindedFunction = this.Snap.richMsgEventHandler.initLeftSideBox.bind(this.Snap.richMsgEventHandler);
-            bindedFunction();
-            this.Snap.richMsgEventHandler.showMapBox();
-        }
     },
     initializeSlick: function ($cardMessageContainer) {
         if ($cardMessageContainer.length > 0) {
