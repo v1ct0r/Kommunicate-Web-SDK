@@ -983,6 +983,7 @@ Snap.markup.getCarouselMarkup = function (options) {
     };
     if (options && options.payload) {
         snap._globals.coordinates = options.coordinates;
+        snap._globals.filters = options.filters;
         let cards =
             typeof options.payload == 'string'
                 ? JSON.parse(options.payload)

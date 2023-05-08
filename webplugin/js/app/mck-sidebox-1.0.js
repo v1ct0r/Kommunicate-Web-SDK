@@ -8843,8 +8843,8 @@ var userOverride = {
                 if(msg.metadata.templateId === SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL) {
                     $applozic(`
                     <div class ="list-view-buttons">
-                        <button class="list-view-button list-button">Show filters</button> 
-                        <button class="list-view-button map-button">Show on map</button>
+                        <button class="list-view-button filters-button">Filter & Sort</button> 
+                        <button class="list-view-button map-button">Show on Map</button>
                     </div>`).appendTo('.km-slick-container');
                 }
 
