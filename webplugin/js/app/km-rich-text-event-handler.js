@@ -104,6 +104,11 @@ Snap.attachEvents = function ($applozic) {
         '.map-button',
         Snap.richMsgEventHandler.showMapBox
     );
+    $applozic(messageCellQuickReplySelector).on(
+        'click',
+        '.filters-button',
+        Snap.richMsgEventHandler.showFilters
+    );
 };
 
 /**
@@ -394,9 +399,6 @@ Snap.richMsgEventHandler = {
     },
     closeLeftBox: function () {
         $applozic('.left-box').remove();
-        w.console.log(w.slider);
-        w.slider.destroy();
-        w.console.log(w.slider);
     },
     getDesktopBoxLayout: function (styles) {
         const { width, height } = styles;
@@ -571,7 +573,6 @@ Snap.richMsgEventHandler = {
         }
 
     },
-
     addCarousel: function() {
         return tns({
             container: $applozic('.box-slider .km-div-slider')[0],
@@ -590,6 +591,105 @@ Snap.richMsgEventHandler = {
                 console.log('tiny-slider initilized');
             },
         });
+    },
+    initDropdown: function(data) {},
+    initSort: function(data) {},
+    showFilters: function() {
+        Snap.richMsgEventHandler.initLeftSideBox();
+        $applozic(`
+        <div class="filters-container">
+        <div class="title">All filters</div>
+        <div class="dropdowns-container"></div>
+        <div class="filter-buttons">
+        <button class="submit-btn">Submit</button>
+        <button class="reset-btn">Reset</button>
+        </div></div>`).appendTo('.box-wrapper');
+
+        const filters = snap._globals.filters;
+        filters.sort = [
+            {label: 'Best for Your Plan'},
+            {label: 'Distance'},
+            {label: 'Patient Rating'},
+            {label: 'Name: A to Z'},
+            {label: 'Name: Z to A'}
+        ];
+        w.console.log(filters);
+        const parentSelectButtonLayout = 
+        '<div class="dropdown"> <div id="${name}" class="select-btn">' +
+        '<span class="btn-text">${parentName}</span><span class="arrow-dwn">' + 
+        ' <svg xmlns="http://www.w3.org/2000/svg" height="1792" viewBox="0 0 1792 1792" width="1792"><path d="M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z"/></svg></span>' + 
+        '</div> <ul id="${listId}" class="list-items"></ul> </div>';
+        const checkBoxMarkup = '<li id="${label}" class="item"><span class="checkbox"></span><span class="item-text">${label}</span></li>';
+
+        filters.dropdowns.forEach( dropdown => {
+            $.tmpl(parentSelectButtonLayout, dropdown ).appendTo('.dropdowns-container');
+            $.template( "movieTemplate", checkBoxMarkup );
+
+            $.tmpl( "movieTemplate", dropdown.children )
+            .appendTo( '#' + dropdown.listId );
+
+            const selectBtn = $("#" + dropdown.name)
+            const items = $("#" + dropdown.listId + " .item");
+            selectBtn.on("click", () => {
+                selectBtn.toggleClass("open");
+            });
+
+            items.each(function() {
+                $(this).on('click', () => {
+                    $(this).toggleClass('checked');
+                }) 
+            })
+
+        })
+
+        const sortBoxLayout = `
+        <div class="sort-container">
+        <div class="title">Sort by</div>
+            <ul class="sort-list"></ul>
+        </div>
+        `
+        const radioButtonItem = 
+        '<li class="item"><input data-label=${label} type="radio" id="contactChoice1"name="contact" value="email"><label for="contactChoice1">${label}</label> </li>';
+            $.tmpl(sortBoxLayout).insertBefore('.filter-buttons');
+            $.template( "radioButtonItemTemplate", radioButtonItem );
+
+            $.tmpl( "radioButtonItemTemplate", filters.sort )
+            .appendTo('.sort-list');
+
+
+
+        $('.submit-btn').on('click', submitForm);
+        $('.reset-btn').on('click', resetForm);
+
+        function submitForm() {
+            const messageKey = $applozic(
+                "#mck-message-cell .mck-message-inner div[name='message']:last-child"
+            ).data('msgkey');
+            const message = ALStorage.getMessageByKey(messageKey);
+            const {groupId, type, source} = message;
+            const arr = [];
+            $('.item.checked').each(function() {
+                arr.push($(this).text())
+            })
+            if(filters.sort) {
+                arr.push($('input[type="radio"]:checked').next().text())
+            }
+            const payload = {
+                filters: arr,
+                groupId,
+                type,
+                source
+            }
+            w.console.log(payload.filters);
+            Snap.richMsgEventHandler.closeLeftBox();
+        }
+
+        function resetForm() {
+            $('.item.checked').each(function() {
+                $(this).removeClass('checked');
+            })
+        }
+        
     },
     initializeSlick: function ($cardMessageContainer) {
         if ($cardMessageContainer.length > 0) {

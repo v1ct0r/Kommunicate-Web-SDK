@@ -94,13 +94,172 @@
     top: 0;
     border-radius: 8px;
     opacity: 0;
-    overflow: hidden;
+    overflow: auto;
+}
+.filter-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0 30px 0;
+}
+
+.filter-buttons button {
+    width: 47%;
+    cursor: pointer;
+    border: 1px solid #754794;
+    border-radius: 8px;
+    color: #754794;
+    padding: 5px 0;
+    background: transparent;
+}
+.filter-buttons button:hover {
+    background-color: #754794;
+    color: #ffffff;
 }
 
 .left-box .box-wrapper {
     position: relative;
     height: 100%;
+    font-family: Roboto,sans-serif;
 }
+
+.filters-container{
+    width: 95%;
+    margin: 0 auto 30px;
+    padding-top: 40px;
+}
+.dropdowns-container {
+    position: relative;
+    background-color: rgba(126, 125, 125, 0.1);
+    padding: 5px 10px 15px 10px;
+    border-radius: 8px;
+}
+
+.filters-container .title {
+    font-weight: 700;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+.select-btn{
+    display: flex;
+    height: 35px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    cursor: pointer;
+    margin-top: 5px;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.select-btn.open {
+    border-bottom: 1px solid #754794;
+}
+.select-btn .btn-text{
+    font-size: 17px;
+    font-weight: 400;
+    color: #333;
+    font-weight: 700;
+
+}
+.select-btn .arrow-dwn{
+    display: flex;
+    height: 30px;
+    width: 30px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.select-btn .arrow-dwn svg {
+    width: 100%;
+    height: 100%;
+    fill: #754794;
+}
+.select-btn.open .arrow-dwn{
+    transform: rotate(-180deg);
+}
+
+.list-items{
+    position: relative;
+    padding: 5px 16px;
+    margin-top: 0;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+.select-btn.open ~ .list-items{
+    display: block;
+}
+.list-items .item{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    height: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+    padding: 0 15px;
+    border-radius: 8px;
+}
+.list-items .item:hover{
+    background-color: #e7edfe;
+}
+.item .item-text{
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+}
+.item .checkbox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 16px;
+    width: 16px;
+    border-radius: 4px;
+    margin-right: 12px;
+    border: 1.5px solid #c0c0c0;
+    transition: all 0.3s ease-in-out;
+}
+.item.checked .checkbox{
+    background-color: #754794;
+    border-color: #754794;
+}
+.checkbox .check-icon{
+    color: #fff;
+    font-size: 11px;
+    transform: scale(0);
+    transition: all 0.2s ease-in-out;
+}
+.item.checked .check-icon{
+    transform: scale(1);
+}
+
+input[type="radio"]:checked {
+    accent-color: rgb(117, 71, 148, 0.3);
+}
+
+input[type="radio"] {
+    accent-color: rgb(117, 71, 148, 0.3);
+    background-color: #c0c0c0;
+    cursor: pointer;
+}
+.sort-container {
+    margin-top: 10px;
+}
+.sort-list {
+    background-color: rgb(117, 71, 148, 0.2);
+    border-radius: 4px;
+    padding: 5px 10px;
+
+}
+.sort-list .item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
 .left-box .box-slider {
     position: absolute;
     bottom: 0;
