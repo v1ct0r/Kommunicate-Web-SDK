@@ -475,9 +475,9 @@ Snap.richMsgEventHandler = {
             head.appendChild(script);
             w.initMap = function() {
                 const {lat, long} = snap._globals.coordinates[0];
-                const newLat = +lat - 0.25;
+                const newLat = +lat - 1;
                 const myLatlng = new google.maps.LatLng(newLat, long);
-                const zoom = 9;
+                const zoom = 7;
                 
                 const myOptions = {
                     
@@ -678,9 +678,10 @@ Snap.richMsgEventHandler = {
                 filters: arr,
                 groupId,
                 type,
-                source
+                source,
+                key: mckUtils.randomId(),
             }
-            w.console.log(payload.filters);
+            w.console.log(payload);
             Snap.richMsgEventHandler.closeLeftBox();
         }
 
