@@ -912,9 +912,9 @@ Snap.markup.getActionableFormMarkup = function (options) {
 };
 Snap.markup.getCarouselMarkup = function (options) {
     
-    if(snap._globals.carouselPayload) {
-        return Mustache.to_html(Snap.markup.getCarouselTemplate(), snap._globals.carouselPayload);
-    }
+    // if(snap._globals.carouselPayload) {
+    //     return Mustache.to_html(Snap.markup.getCarouselTemplate(), snap._globals.carouselPayload);
+    // }
 
     let cardList = [];
     let cardHtml = {};
@@ -981,7 +981,7 @@ Snap.markup.getCarouselMarkup = function (options) {
         }
         return cardFooter;
     };
-    if (options && options.payload) {
+    if (options && options.payload && typeof options.payload === 'string') {
         snap._globals.coordinates = options.coordinates;
         snap._globals.filters = options.filters;
         let cards =

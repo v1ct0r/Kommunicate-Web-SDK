@@ -398,6 +398,8 @@ Snap.richMsgEventHandler = {
             '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="11" viewBox="0 0 10 19"><path fill="#5B5959" fill-rule="evenodd" d="M9.076 18.266c.21.2.544.2.753 0a.53.53 0 0 0 0-.753L1.524 9.208 9.829.903a.53.53 0 0 0 0-.752.546.546 0 0 0-.753 0L.026 9.208l9.05 9.058z"/></svg>',
     },
     closeLeftBox: function () {
+        w.console.log($('#map-script'))
+        $('#map-script').remove();
         $applozic('.left-box').remove();
     },
     getDesktopBoxLayout: function (styles) {
@@ -450,7 +452,7 @@ Snap.richMsgEventHandler = {
             }
         
             $applozic('.close-left-box').on('click', () => {
-                $applozic('.left-box').remove();
+                Snap.richMsgEventHandler.closeLeftBox();
             })
     },
     showMapBox: () => {
@@ -458,7 +460,7 @@ Snap.richMsgEventHandler = {
         let markersData =  snap._globals.coordinates;
         let infoWindow = null;
 
-        const sliderLayout = Snap.markup.getCarouselMarkup(snap._globals.carouselPayload);
+        const sliderLayout = Mustache.to_html(Snap.markup.getCarouselTemplate(), snap._globals.carouselPayload);
         
         $applozic('<div class="box-slider km-slick-container km-slider-multiple-cards-container"></div>')
         .appendTo('.box-wrapper');
@@ -466,7 +468,7 @@ Snap.richMsgEventHandler = {
 
         w.slider = this.Snap.richMsgEventHandler.addCarousel();
         
-        if(!document.getElementById('map-script')) {
+        
             const head= document.getElementsByTagName('head')[0];
             const script= document.createElement('script');
             script.type= 'text/javascript';
@@ -474,10 +476,11 @@ Snap.richMsgEventHandler = {
             script.src= 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBg9_RbO1w_xgzcss-p3oAmQ8QhthsW2v0&map_ids=6a4519983a205786&callback=initMap';
             head.appendChild(script);
             w.initMap = function() {
+                w.console.log(snap._globals.coordinates);
                 const {lat, long} = snap._globals.coordinates[0];
-                const newLat = +lat - 1;
+                const newLat = +lat - 0.5;
                 const myLatlng = new google.maps.LatLng(newLat, long);
-                const zoom = 7;
+                const zoom = 9;
                 
                 const myOptions = {
                     
@@ -504,44 +507,38 @@ Snap.richMsgEventHandler = {
                 addMarkers(map);
             }
 
-        } else {
-            w.initMap();
-        }
-
         function addMarkers(map) {
             let markers = [];
             markersData = markersData.map( item => ({...item, color: '#fff'}));
-    
-            markersData.forEach( ({lat, long, color, title}) => {
+            markersData.forEach( ({lat, long, color, title}, i) => {
                 const marker = new google.maps.Marker({
                     map: map,
                     position: new google.maps.LatLng(lat, long),
                     icon: pinSymbol(color),
                     originalColor: color,
-                    title
+                    title,
+                    id: i
                 });
                 marker.addListener('click', () => {
-                    const index = markers.findIndex((item) => item.getPosition().lat() == marker.getPosition().lat());
-                    w.slider.goTo(index);
                     changeColor(marker, markers);
+                    w.slider.goTo(marker.id);
                     infoWindow.setContent(marker.getTitle());
                     infoWindow.open(map, marker);
                 });
                 markers.push(marker);
-                w.console.log('MARKER CREATED');
             })
 
             changeColor(markers[0], markers);
-            changeIconColorOnSliderToggle("[data-controls='prev']", markers);
-            changeIconColorOnSliderToggle("[data-controls='next']", markers);
+            changeIconColorOnSliderToggle("[data-controls='prev']", markers, infoWindow);
+            changeIconColorOnSliderToggle("[data-controls='next']", markers, infoWindow);
         }
 
-        function changeIconColorOnSliderToggle(attribute, markersArr) {
+        function changeIconColorOnSliderToggle(attribute, markersArr, infoWindow) {
             $applozic(`.box-slider ${attribute}`).on('click', () => {
                 const index = attribute.includes('prev') ? w.slider.getInfo().index - 1 : w.slider.getInfo().index + 1;
                 const marker = markersArr[index];
                 changeColor(marker, markersArr);
-                // panToNewCanter(marker);
+                infoWindow.close();
             })
         }
     
