@@ -120,6 +120,13 @@
     position: relative;
     height: 100%;
     font-family: Roboto,sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.left-box .km-slider-multiple-cards-container .tns-controls button:first-child {
+    left: 22%;
 }
 
 .filters-container{
@@ -261,12 +268,18 @@ input[type="radio"] {
 
 
 .left-box .box-slider {
-    position: absolute;
+    /* position: absolute; */
     bottom: 0;
-    width: 100%;
-    margin-left: 0 !important;
     bottom: 10px;
     z-index: 10;
+}
+
+.left-box .km-slider-multiple-cards-container {
+    margin-left: -100px;
+    position: relative;
+}
+.left-box .km-card-message-container {
+    margin-left: 0;
 }
 .km-carousel-card-header-container {
     background: white;
@@ -312,6 +325,7 @@ input[type="radio"] {
 .left-box #map_canvas {
     height: 100%;
     width: 100%;
+    position: absolute;
 }
 .close-left-box {
     top: -10px;
@@ -5071,7 +5085,7 @@ div#mck-tab-title.mck-tab-title {
     display: flex;
     gap: 15px;
     margin-bottom: 10px;
-    margin-left: 100px;
+    margin-left: 160px;
     margin-top: 20px;
 }
 .list-view-button {
