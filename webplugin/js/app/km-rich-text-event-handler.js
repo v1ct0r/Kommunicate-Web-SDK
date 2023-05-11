@@ -460,14 +460,7 @@ Snap.richMsgEventHandler = {
         let markersData =  snap._globals.coordinates;
         let infoWindow = null;
 
-        const sliderLayout = Mustache.to_html(Snap.markup.getCarouselTemplate(), snap._globals.carouselPayload);
-        
-        $applozic('<div class="box-slider km-slick-container km-slider-multiple-cards-container"></div>')
-        .appendTo('.box-wrapper');
-        $applozic(sliderLayout).appendTo('.box-slider');
-
-        w.slider = this.Snap.richMsgEventHandler.addCarousel();
-        
+        const sliderLayout = Mustache.to_html(Snap.markup.getCarouselTemplate(), snap._globals.carouselPayload);    
         
             const head= document.getElementsByTagName('head')[0];
             const script= document.createElement('script');
@@ -478,7 +471,7 @@ Snap.richMsgEventHandler = {
             w.initMap = function() {
                 w.console.log(snap._globals.coordinates);
                 const {lat, long} = snap._globals.coordinates[0];
-                const newLat = +lat - 0.5;
+                const newLat = +lat - 0.3;
                 const myLatlng = new google.maps.LatLng(newLat, long);
                 const zoom = 9;
                 
@@ -498,6 +491,14 @@ Snap.richMsgEventHandler = {
                 }
                 $applozic('<div id="map_canvas"></div>').appendTo('.box-wrapper');
                 map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+                $applozic('<div class="box-slider km-slick-container km-slider-multiple-cards-container"></div>')
+                .appendTo('.box-wrapper');
+                $applozic(sliderLayout).appendTo('.box-slider');
+
+                w.slider = this.Snap.richMsgEventHandler.addCarousel();
+
+
                 infoWindow = new google.maps.InfoWindow();
     
                 google.maps.event.addListener(map, 'click', function() {
@@ -601,6 +602,7 @@ Snap.richMsgEventHandler = {
         <button class="submit-btn">Submit</button>
         <button class="reset-btn">Reset</button>
         </div></div>`).appendTo('.box-wrapper');
+        $(".box-wrapper").css("display", "block");
 
         const filters = snap._globals.filters;
         filters.sort = [
