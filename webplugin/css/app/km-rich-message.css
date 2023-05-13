@@ -1305,6 +1305,7 @@
     margin: 0;
     background-color: white;
     line-height: 18px;
+    color: #29529D !important;
 }
 .km-carousel-card-footer {
     border-bottom: 1px outset rgba(255, 255, 255, 0.4);
