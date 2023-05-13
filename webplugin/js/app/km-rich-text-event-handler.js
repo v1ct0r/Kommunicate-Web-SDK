@@ -562,7 +562,7 @@ Snap.richMsgEventHandler = {
 
         function changeColor(marker, markersArr) {
             restoreColors(markersArr);
-            marker.setIcon(pinSymbol('#7D32AA'));
+            marker.setIcon(pinSymbol('#29529D'));
         }
     
         function panToNewCanter(marker) {

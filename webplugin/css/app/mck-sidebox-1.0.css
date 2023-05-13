@@ -105,14 +105,14 @@
 .filter-buttons button {
     width: 47%;
     cursor: pointer;
-    border: 1px solid #754794;
+    border: 1px solid #29529d;
     border-radius: 8px;
-    color: #754794;
+    color: #29529d;
     padding: 5px 0;
     background: transparent;
 }
 .filter-buttons button:hover {
-    background-color: #754794;
+    background-color: #29529d;
     color: #ffffff;
 }
 
@@ -158,7 +158,7 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 .select-btn.open {
-    border-bottom: 1px solid #754794;
+    border-bottom: 1px solid #29529d;
 }
 .select-btn .btn-text{
     font-size: 16px;
@@ -181,7 +181,7 @@
 .select-btn .arrow-dwn svg {
     width: 100%;
     height: 100%;
-    fill: #754794;
+    fill: #29529d;
 }
 .select-btn.open .arrow-dwn{
     transform: rotate(-180deg);
@@ -209,7 +209,7 @@
     border-radius: 8px;
 }
 .list-items .item:hover{
-    background-color: rgb(117,71,148,.2);
+    background-color: #DAE3F3;
 }
 .item .item-text{
     font-size: 16px;
@@ -228,8 +228,8 @@
     transition: all 0.3s ease-in-out;
 }
 .item.checked .checkbox{
-    background-color: #754794;
-    border-color: #754794;
+    background-color: #29529D;
+    border-color: #29529D;
 }
 .checkbox .check-icon{
     color: #fff;
@@ -254,7 +254,7 @@ input[type="radio"] {
     margin-top: 10px;
 }
 .sort-list {
-    background-color: rgb(117, 71, 148, 0.2);
+    background-color: #DAE3F3;
     border-radius: 4px;
     padding: 5px 10px;
 
@@ -336,7 +336,7 @@ input[type="radio"] {
     position: absolute;
     transition: all 0.1s ease-in-out;
     border-radius: 30px;
-    background-color: #7D32AA;
+    background-color: #29529D;
     cursor: pointer;
 }
 
@@ -5089,7 +5089,7 @@ div#mck-tab-title.mck-tab-title {
     margin-top: 20px;
 }
 .list-view-button {
-    color: #7D32AA !important;
+    color:  #29529d !important;
     width: fit-content;
     cursor: pointer;
     margin: 4px 8px 4px 0;
@@ -5100,15 +5100,15 @@ div#mck-tab-title.mck-tab-title {
     word-break: break-word;
     line-height: 14px;
     white-space: normal;
-    border-color: #7D32AA;
+    border-color: #29529d;
     border-width: 1px;
     border-radius: 5px;
     background-color: white !important;
 }
 .list-view-button:hover {
     color: white !important;
-    border-color: #7D32AA;
-    background-color: #7D32AA !important;
+    border-color: #29529D;
+    background-color: #29529D !important;
 }
 
 .km-conversation-container-right {
