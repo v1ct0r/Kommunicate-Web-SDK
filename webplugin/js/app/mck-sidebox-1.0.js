@@ -5126,19 +5126,7 @@ var userOverride = {
                         event_type: 'quit chat',
                     };
 
-                    const url = Snap.getSendUserBehaviorInfoUrl();
-
-                    fetch(url, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(body),
-                    }).catch((error) => {
-                        w.console.log(error);
-                        throw error;
-                    });
+                    Snap.richMsgEventHandler.sendUserBehaviorInfo(body)
                 }
 
                 if (conversationId) {
