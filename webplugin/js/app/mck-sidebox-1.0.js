@@ -5117,7 +5117,7 @@ var userOverride = {
                         event_type: 'quit chat'
                     }
 
-                    const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
+                    const url = Snap.getSendUserBehaviorInfoUrl();
 
                     fetch( url, {
                         method: 'POST',
@@ -5538,7 +5538,7 @@ var userOverride = {
             };
             _this.sendUserBehaviorInfo = function(data){
                 try{
-                    const url = 'https://devpython.onehealthlink.com/frontend_interaction_behavior';
+                    const url = Snap.getSendUserBehaviorInfoUrl();
 
                     fetch(url, {
                         method: 'POST',
