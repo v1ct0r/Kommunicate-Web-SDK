@@ -1221,8 +1221,7 @@ Snap.richMsgEventHandler = {
             email_name: email,
         };
 
-        const url =
-            'https://devpython.onehealthlink.com/frontend_interaction_behavior';
+        const url = Snap.getSendUserBehaviorInfoUrl();
 
         fetch(url, {
             method: 'POST',
@@ -1266,8 +1265,7 @@ Snap.richMsgEventHandler = {
     },
     sendUserBehaviorInfo: function (data) {
         try {
-            const url =
-                'https://devpython.onehealthlink.com/frontend_interaction_behavior';
+            const url = Snap.getSendUserBehaviorInfoUrl();
 
             fetch(url, {
                 method: 'POST',
