@@ -8826,14 +8826,6 @@ var userOverride = {
                                   '#mck-message-cell .mck-message-inner'
                               );
                 }
-                if(
-                    msg.metadata.templateId === SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL) {
-                    $applozic(`
-                    <div class ="list-view-buttons">
-                        <button class="list-view-button filters-button">Filter & Sort</button> 
-                        <button class="list-view-button map-button">Show on Map</button>
-                    </div>`).appendTo('.km-slick-container');
-                }
 
                 if (
                     msg.contentType ==

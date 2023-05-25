@@ -388,8 +388,17 @@ Snap.markup = {
             <div class="km-carousel-card-footer"><div class="km-cta-multi-button-container">{{{footer}}}</div></div>
             </div>
             {{/payload}}
-        </div>`;
+
+        </div>
+        <div class ="list-view-buttons">
+                {{#filterButtons}}
+                * {{.}}
+                {{/filterButtons}}
+             </div>
+        `;
     },
+    // <button class="list-view-button filters-button">Filter & Sort</button> 
+    //                     <button class="list-view-button map-button">Show on Map</button>
     getButtonListTemplate: function () {
         return `{{#buttons}}<button type="button" tabindex="3" aria-label="{{action.payload.title}}" class="km-carousel-card-button {{{class}}}">{{action.payload.title}}</button>{{/buttons}}`;
     },
@@ -911,10 +920,6 @@ Snap.markup.getActionableFormMarkup = function (options) {
     }
 };
 Snap.markup.getCarouselMarkup = function (options) {
-    
-    // if(snap._globals.carouselPayload) {
-    //     return Mustache.to_html(Snap.markup.getCarouselTemplate(), snap._globals.carouselPayload);
-    // }
 
     let cardList = [];
     let cardHtml = {};
@@ -981,14 +986,19 @@ Snap.markup.getCarouselMarkup = function (options) {
         }
         return cardFooter;
     };
-    if (options && options.payload && typeof options.payload === 'string') {
-        snap._globals.coordinates = options.coordinates;
-        snap._globals.filters = options.filters;
+    let carousel = options && options.payload && options.payload.carousel;
+    let carouselButtons = options && options.payload.filterButtons && JSON.parse(options.payload.filterButtons);
+    if (options && options.payload.carousel && typeof options.payload.carousel === 'string') {
+        if  (options.coordinates) {
+            snap._globals.coordinates = options.coordinates;
+            snap._globals.filters = options.filters;
+        }
+        
         let cards =
-            typeof options.payload == 'string'
-                ? JSON.parse(options.payload)
+            typeof carousel == 'string'
+                ? JSON.parse(carousel)
                 : [];
-        options.payload = cards;
+        // options.payload = cards;
         for (let i = 0; i < cards.length; i++) {
             let item = cards[i];
             carouselInfoWrapperClass = item.header && item.header.pageSrc
@@ -1011,10 +1021,10 @@ Snap.markup.getCarouselMarkup = function (options) {
             cardList[i] = $applozic.extend([], cardHtml);
             cardList[i].url = item.url;
         }
-        snap._globals.carouselPayload = { payload: cardList };
+        snap._globals.carouselPayload = { payload: cardList, filterButtons: carouselButtons };
     }
 
-    let cardCarousel = { payload: cardList };
+    let cardCarousel = { payload: cardList, filterButtons: carouselButtons };
 
     return Mustache.to_html(Snap.markup.getCarouselTemplate(), cardCarousel);
 };
