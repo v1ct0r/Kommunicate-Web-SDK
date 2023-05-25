@@ -695,7 +695,7 @@ Snap.richMsgEventHandler = {
         if ($cardMessageContainer.length > 0) {
             const slider = tns({
                 container: $cardMessageContainer[0],
-                items: 2,
+                items: 1.5,
                 gutter: 15,
                 slideBy: 1,
                 loop: false,
