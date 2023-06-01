@@ -52,7 +52,7 @@ function KmCustomTheme() {
                 primaryColor +
                 ' !important;} ' +
                 '.km-custom-widget-stroke { stroke: ' +
-                '#29529d' +
+                primaryColor +
                 ' !important;} ';
 
             // Pass all classes you want to create in a single array.
