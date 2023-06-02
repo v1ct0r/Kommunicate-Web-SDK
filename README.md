@@ -132,4 +132,3 @@ You can copy the below script and replace the required parameters manually. Note
 ## Technical Documentation:
 
 Please check out the detailed [documentation](https://docs.snap.io/docs/web-installation.html) for more features, implementation and customizations.
-.
