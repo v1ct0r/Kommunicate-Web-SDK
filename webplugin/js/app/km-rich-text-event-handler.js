@@ -1219,6 +1219,7 @@ Snap.richMsgEventHandler = {
             browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
             event_type: 'click email',
             email_name: email,
+            conversation_key: SnapUtils.getSettings('KM_CHAT_CONTEXT').trigger
         };
 
         Snap.richMsgEventHandler.sendUserBehaviorInfo(body);
@@ -1246,8 +1247,8 @@ Snap.richMsgEventHandler = {
             timestamp: new Date().getTime(),
             payload: buttonAction.payload,
             event_type: 'click button',
+            conversation_key: SnapUtils.getSettings('KM_CHAT_CONTEXT').trigger
         };
-        w.console.log(behaviorInfo);
         Snap.richMsgEventHandler.sendUserBehaviorInfo(behaviorInfo);
         window.Applozic.ALSocket.reconnect();
     },
