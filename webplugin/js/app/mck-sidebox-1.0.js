@@ -5124,8 +5124,9 @@ var userOverride = {
                             snap._globals.timeToShowFisrtMessage,
                         browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
                         event_type: 'quit chat',
+                        conversation_key: SnapUtils.getSettings('KM_CHAT_CONTEXT').trigger
                     };
-
+                 
                     Snap.richMsgEventHandler.sendUserBehaviorInfo(body)
                 }
 
@@ -5472,22 +5473,6 @@ var userOverride = {
                     });
                 }
 
-                // const behaviorInfo = {
-                //     sender_id: snap._globals.userId,
-                //     group_id: contact.contactId,
-                //     url: '',
-                //     session_id: messagePxy.conversationId || messagePxy.key,
-                //     browser_parameter: {},
-                //     event_type: '',
-                //     message_id: message.key,
-                //     button_id: '0' + messagePxy.message,
-                //     button_name: messagePxy.message,
-                //     button_type: messagePxy.type,
-                //     button_url: '',
-                //     timestamp: message.createdAtTime,
-                //     payload: message.metadata.payload
-                // }
-
                 const browserInfo = detect.parse(navigator.userAgent);
                 let localButtonId = messagePxy.buttonId;
                 let localPayload = messagePxy.payload
@@ -5526,9 +5511,9 @@ var userOverride = {
                     timestamp: message.createdAtTime,
                     payload: localPayload,
                     event_type: 'click button',
+                    conversation_key: SnapUtils.getSettings('KM_CHAT_CONTEXT').trigger
                 };
-                w.console.log(behaviorInfo);
-                _this.sendUserBehaviorInfo(behaviorInfo);
+                Snap.richMsgEventHandler.sendUserBehaviorInfo(behaviorInfo);
 
                 $mck_box_form.removeClass('mck-text-req');
                 $mck_msg_sbmt.attr('disabled', false);
@@ -5539,22 +5524,6 @@ var userOverride = {
                 mckMessageLayout.clearMessageField(true);
                 FILE_META = [];
                 delete TAB_MESSAGE_DRAFT[contact.contactId];
-            };
-            _this.sendUserBehaviorInfo = function (data) {
-                try {
-                    const url = Snap.getSendUserBehaviorInfoUrl();
-
-                    fetch(url, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(data),
-                    }).catch((error) => {
-                        throw error;
-                    });
-                } catch {}
             };
             _this.sendForwardMessage = function (forwardMessageKey) {
                 var forwardMessage = ALStorage.getMessageByKey(
