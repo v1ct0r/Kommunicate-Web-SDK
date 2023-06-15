@@ -388,8 +388,17 @@ Snap.markup = {
             <div class="km-carousel-card-footer"><div class="km-cta-multi-button-container">{{{footer}}}</div></div>
             </div>
             {{/payload}}
-        </div>`;
+
+        </div>
+        <div class ="list-view-buttons">
+                {{#filterButtons}}
+                * {{.}}
+                {{/filterButtons}}
+             </div>
+        `;
     },
+    // <button class="list-view-button filters-button">Filter & Sort</button> 
+    //                     <button class="list-view-button map-button">Show on Map</button>
     getButtonListTemplate: function () {
         return `{{#buttons}}<button type="button" tabindex="3" aria-label="{{action.payload.title}}" class="km-carousel-card-button {{{class}}}">{{action.payload.title}}</button>{{/buttons}}`;
     },
@@ -907,11 +916,12 @@ Snap.markup.getActionableFormMarkup = function (options) {
     }
 };
 Snap.markup.getCarouselMarkup = function (options) {
-    var cardList = [];
-    var cardHtml = {};
-    var headerImageClass,
+
+    let cardList = [];
+    let cardHtml = {};
+    let headerImageClass,
         carouselInfoWrapperClass;
-    var createCardFooter = function (buttons, sessionOptions) {
+    let createCardFooter = function (buttons, sessionOptions) {
         var cardFooter = '';
         var requestType;
         for (var i = 0; i < buttons.length; i++) {
@@ -972,14 +982,21 @@ Snap.markup.getCarouselMarkup = function (options) {
         }
         return cardFooter;
     };
-    if (options && options.payload) {
-        var cards =
-            typeof options.payload == 'string'
-                ? JSON.parse(options.payload)
+    let carousel = options && options.payload && options.payload.carousel;
+    let carouselButtons = options && options.payload.filterButtons && JSON.parse(options.payload.filterButtons);
+    if (options && options.payload.carousel && typeof options.payload.carousel === 'string') {
+        if  (options.coordinates) {
+            snap._globals.coordinates = options.coordinates;
+            snap._globals.filters = options.filters;
+        }
+        
+        let cards =
+            typeof carousel == 'string'
+                ? JSON.parse(carousel)
                 : [];
-        options.payload = cards;
-        for (var i = 0; i < cards.length; i++) {
-            var item = cards[i];
+        // options.payload = cards;
+        for (let i = 0; i < cards.length; i++) {
+            let item = cards[i];
             carouselInfoWrapperClass = item.header && item.header.pageSrc
                 ? ''
                 : 'km-carousel-card-info-wrapper-without-header';
@@ -1000,8 +1017,10 @@ Snap.markup.getCarouselMarkup = function (options) {
             cardList[i] = $applozic.extend([], cardHtml);
             cardList[i].url = item.url;
         }
+        snap._globals.carouselPayload = { payload: cardList, filterButtons: carouselButtons };
     }
-    var cardCarousel = { payload: cardList };
+
+    let cardCarousel = { payload: cardList, filterButtons: carouselButtons };
 
     return Mustache.to_html(Snap.markup.getCarouselTemplate(), cardCarousel);
 };

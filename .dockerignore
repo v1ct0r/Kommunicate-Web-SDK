@@ -1,0 +1,10 @@
+/Dockerfile
+/.github
+/.husky
+/.vscode
+**/README*
+/snap-script-example
+/rich-messages-code-sample
+/node_modules
+/example
+/custom-bot-server-code-sample

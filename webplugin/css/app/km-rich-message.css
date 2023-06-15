@@ -105,9 +105,10 @@
     /*overflow-x: hidden;*/
     /* margin-right: 0px; */
     margin: 0;
-    width: 315px;
+    /* width: 10; */
+    margin-left: 80px;
     padding-left: 0;
-    max-width: 100%;
+    /* max-width: 100%; */
     transform: translateX(-10px);
 }
 .km-next-card-btn,
@@ -556,6 +557,9 @@
 }
 .km-border-less-container button {
     display: inline-block !important;
+}
+.km-slick-container  {
+    margin-left: -90px !important;
 }
 .km-slick-container .tns-controls button {
     position: absolute;
@@ -1217,9 +1221,9 @@
     margin-left: 10px;
 }
 .km-carousel-card-template {
-    max-width: 240px;
-    width: 240px !important;
-    margin: 8px 4px 0 10px;
+    /* max-width: 240px;
+    width: 240px !important; */
+    margin: 0 !important;
     position: relative;
 }
 .tns-slider .km-carousel-card-template {
@@ -1298,11 +1302,12 @@
 .km-carousel-card-footer .km-cta-button,
 .km-carousel-card-footer .km-cta-multi-button-container button {
     width: 100%;
-    height: 36px;
+    min-height: 36px;
     border-color: #e7e4e4;
     border-bottom: none;
     margin: 0;
     background-color: white;
+    line-height: 18px;
 }
 .km-carousel-card-footer {
     border-bottom: 1px outset rgba(255, 255, 255, 0.4);
@@ -1340,6 +1345,8 @@
     height: auto;
     white-space: pre-line;
     text-overflow: ellipsis;
+    font-size: 13px;
+    font-family: Roboto,sans-serif;
 }
 /*.km-carousel-card-description:before {*/
 /*    content: '...';*/
@@ -1415,7 +1422,7 @@
     border-bottom: none;
 }
 .km-slider-multiple-cards-container {
-    margin-left: -65px;
+    margin-left: -160px;
 }
 .km-cta-multi-button-container .km-quick-replies.km-carousel-card-button {
     border-color: #e7e4e4;
@@ -1564,4 +1571,19 @@
 input.inline {
     font-size: 19px!important;
     padding: 6px 8px;
+}
+
+input.inline::placeholder {
+    font-size: 20px;
+}
+input[name|="Date"]::placeholder {
+    font-size: 20px;
+}
+input.flatpickr-input::placeholder {
+    color: #000000;
+    font-size: 20px;
+}
+input[name|="Date"]::placeholder {
+    color: #000000;
+    font-size: 20px;
 }
