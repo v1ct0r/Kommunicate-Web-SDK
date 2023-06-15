@@ -12,7 +12,7 @@ Don't accept direct commits, only pushes (force push) from *release-** branches.
 
 ## release-* branches
 *release-** is a set of branches which are canditates for merging into master (*production*) and tested at *staging* server
-Accepts pull-requests from *develop* branch.
+Accepts pull-requests from *develop* branch
 
 ## develop branch
 *develop* is the main branch for development and deployment to *demo* server (former custom-rich-cards).
