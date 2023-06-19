@@ -85,9 +85,9 @@ Snap.attachEvents = function ($applozic) {
         Snap.attachmentEventHandler.handleSendingAttachment
     );
     $applozic(messageCellQuickReplySelector).on(
-      'touchstart click',
-      '.email',
-      Snap.richMsgEventHandler.handleEmail
+        'touchstart click',
+        '.email',
+        Snap.richMsgEventHandler.handleEmail
     );
     $applozic(messageCellQuickReplySelector).on(
         'click',
@@ -98,6 +98,16 @@ Snap.attachEvents = function ($applozic) {
         'click',
         '.quick-reply-checkbox',
         Snap.richMsgEventHandler.changeCheckbox
+    );
+    $applozic(messageCellQuickReplySelector).on(
+        'click',
+        '.map-button',
+        Snap.richMsgEventHandler.showMapBox
+    );
+    $applozic(messageCellQuickReplySelector).on(
+        'click',
+        '.filters-button',
+        Snap.richMsgEventHandler.showFilters
     );
 };
 
@@ -387,14 +397,309 @@ Snap.richMsgEventHandler = {
         arrow:
             '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="11" viewBox="0 0 10 19"><path fill="#5B5959" fill-rule="evenodd" d="M9.076 18.266c.21.2.544.2.753 0a.53.53 0 0 0 0-.753L1.524 9.208 9.829.903a.53.53 0 0 0 0-.752.546.546 0 0 0-.753 0L.026 9.208l9.05 9.058z"/></svg>',
     },
+    closeLeftBox: function () {
+        w.console.log($('#map-script'))
+        $('#map-script').remove();
+        $applozic('.left-box').remove();
+    },
+    getDesktopBoxLayout: function (styles) {
+        const { width, height } = styles;
+        return `<div style="height: ${height};width: ${width}" class="left-box leftOpen">
+                    <div class="box-wrapper">
+                        <div class="close-left-box">
+                            <svg class="close-svg" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                                <path d="M0 0h24v24H0z" fill="none" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>`;
+    },
+    getMobileBoxLayout: function () {
+        return `<div class="left-box left-box-sm mobile-box">
+                    <div class="box-wrapper">
+                        <div class="close-left-box">
+                            <svg class="close-svg" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                                <path d="M0 0h24v24H0z" fill="none" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>`;
+    },
+    initLeftSideBox: function () {
+
+        if ($applozic('.left-box').length > 0) {
+            this.Snap.richMsgEventHandler.closeLeftBox();
+            return;
+        }
+                
+            if(parent.document.body.clientWidth <= 600) {
+                    $applozic
+                    .tmpl(this.getMobileBoxLayout())
+                    .appendTo('.mck-box-open');
+                    
+            } else {
+                parent.document.getElementById('snap-widget-iframe').style.width =
+                $applozic('#mck-sidebox').width() * 2 + 50;
+
+                const leftBoxStyles = {
+                    height: $applozic('#mck-sidebox').height(),
+                    width: $applozic('#mck-sidebox').width(),
+                };
+
+                $applozic(this.getDesktopBoxLayout(leftBoxStyles)).prependTo('.mck-box-open');
+            }
+        
+            $applozic('.close-left-box').on('click', () => {
+                Snap.richMsgEventHandler.closeLeftBox();
+            })
+    },
+    showMapBox: () => {
+        this.Snap.richMsgEventHandler.initLeftSideBox();
+        let markersData =  snap._globals.coordinates;
+        let infoWindow = null;
+
+        const sliderLayout = Mustache.to_html(Snap.markup.getCarouselTemplate(), snap._globals.carouselPayload);    
+        
+            const head= document.getElementsByTagName('head')[0];
+            const script= document.createElement('script');
+            script.type= 'text/javascript';
+            script.id = 'map-script'
+            script.src= 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBg9_RbO1w_xgzcss-p3oAmQ8QhthsW2v0&map_ids=6a4519983a205786&callback=initMap';
+            head.appendChild(script);
+            w.initMap = function() {
+                w.console.log(snap._globals.coordinates);
+                const {lat, long} = snap._globals.coordinates[0];
+                const newLat = +lat - 0.3;
+                const myLatlng = new google.maps.LatLng(newLat, long);
+                const zoom = 9;
+                
+                const myOptions = {
+                    
+                    zoom,
+                    // maxZoom: zoom + 2,
+                    // minZoom: zoom - 5,
+                    center: myLatlng,
+                    mapTypeControl: false,
+                    scaleControl: false,
+                    navigationControl: false,
+                    streetViewControl: false,
+                    fullscreenControl: false,
+                    zoomControl: false,
+                    mapId: '6a4519983a205786',
+                }
+                $applozic('<div id="map_canvas"></div>').appendTo('.box-wrapper');
+                map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+                $applozic('<div class="box-slider km-slick-container km-slider-multiple-cards-container"></div>')
+                .appendTo('.box-wrapper');
+                $applozic(sliderLayout).appendTo('.box-slider');
+
+                w.slider = this.Snap.richMsgEventHandler.addCarousel();
+
+
+                infoWindow = new google.maps.InfoWindow();
+    
+                google.maps.event.addListener(map, 'click', function() {
+                    infoWindow.close();
+                });
+    
+                addMarkers(map);
+            }
+
+        function addMarkers(map) {
+            let markers = [];
+            markersData = markersData.map( item => ({...item, color: '#fff'}));
+            markersData.forEach( ({lat, long, color, title}, i) => {
+                const marker = new google.maps.Marker({
+                    map: map,
+                    position: new google.maps.LatLng(lat, long),
+                    icon: pinSymbol(color),
+                    originalColor: color,
+                    title,
+                    id: i
+                });
+                marker.addListener('click', () => {
+                    changeColor(marker, markers);
+                    w.slider.goTo(marker.id);
+                    infoWindow.setContent(marker.getTitle());
+                    infoWindow.open(map, marker);
+                });
+                markers.push(marker);
+            })
+
+            changeColor(markers[0], markers);
+            changeIconColorOnSliderToggle("[data-controls='prev']", markers, infoWindow);
+            changeIconColorOnSliderToggle("[data-controls='next']", markers, infoWindow);
+        }
+
+        function changeIconColorOnSliderToggle(attribute, markersArr, infoWindow) {
+            $applozic(`.box-slider ${attribute}`).on('click', () => {
+                const index = attribute.includes('prev') ? w.slider.getInfo().index - 1 : w.slider.getInfo().index + 1;
+                const marker = markersArr[index];
+                changeColor(marker, markersArr);
+                infoWindow.close();
+            })
+        }
+    
+        function pinSymbol(color) {
+            return {
+                path: 'M21.4321 11.75C21.4321 10.6009 21.2067 9.46312 20.7686 8.40152C20.3306 7.33992 19.6886 6.37533 18.8792 5.56282C18.0699 4.7503 17.109 4.10578 16.0515 3.66605C14.9941 3.22633 13.8607 3 12.7161 3C11.5714 3 10.438 3.22633 9.38056 3.66605C8.32308 4.10578 7.36223 4.7503 6.55287 5.56282C5.74351 6.37533 5.10149 7.33992 4.66347 8.40152C4.22545 9.46312 4 10.6009 4 11.75C4 13.4838 4.51051 15.0963 5.37589 16.4563H5.36593C8.30449 21.075 12.7161 28 12.7161 28L20.0662 16.4563H20.0575C20.9545 15.0517 21.4315 13.4184 21.4321 11.75ZM12.7161 15.5C11.7254 15.5 10.7752 15.1049 10.0747 14.4017C9.37416 13.6984 8.9806 12.7446 8.9806 11.75C8.9806 10.7554 9.37416 9.80161 10.0747 9.09835C10.7752 8.39509 11.7254 8 12.7161 8C13.7068 8 14.6569 8.39509 15.3574 9.09835C16.058 9.80161 16.4515 10.7554 16.4515 11.75C16.4515 12.7446 16.058 13.6984 15.3574 14.4017C14.6569 15.1049 13.7068 15.5 12.7161 15.5Z',
+                fillColor: color,
+                fillOpacity: 1,
+                strokeColor: '#c5c5c5',
+                strokeWeight: 2,
+                scale: 1
+            };
+        }
+    
+        function restoreColors(markersArr) {
+            for (let i=0; i<markersArr.length; i++) {
+                markersArr[i].setIcon(pinSymbol(markersArr[i].originalColor));
+            }
+        }
+
+        function changeColor(marker, markersArr) {
+            restoreColors(markersArr);
+            marker.setIcon(pinSymbol('#29529D'));
+        }
+    
+        function panToNewCanter(marker) {
+            const newCenterMap = new google.maps.LatLng(marker.getPosition().lat(), marker.getPosition().lng());
+            map.panTo(newCenterMap);
+        }
+
+    },
+    addCarousel: function() {
+        return tns({
+            container: $applozic('.box-slider .km-div-slider')[0],
+            items: 2,
+            gutter: 15,
+            slideBy: 1,
+            loop: false,
+            center: true,
+            controlsText: [
+                Snap.richMsgEventHandler.svg.arrow,
+                Snap.richMsgEventHandler.svg.arrow,
+            ],
+            mouseDrag: false,
+            arrowKeys: true,
+            onInit: function () {
+                console.log('tiny-slider initilized');
+            },
+        });
+    },
+    initDropdown: function(data) {},
+    initSort: function(data) {},
+    showFilters: function() {
+        Snap.richMsgEventHandler.initLeftSideBox();
+        $applozic(`
+        <div class="filters-container">
+        <div class="title">All filters</div>
+        <div class="dropdowns-container"></div>
+        <div class="filter-buttons">
+        <button class="submit-btn">Submit</button>
+        <button class="reset-btn">Reset</button>
+        </div></div>`).appendTo('.box-wrapper');
+        $(".box-wrapper").css("display", "block");
+
+        const filters = snap._globals.filters;
+        filters.sort = [
+            {label: 'Best for Your Plan'},
+            {label: 'Distance'},
+            {label: 'Patient Rating'},
+            {label: 'Name: A to Z'},
+            {label: 'Name: Z to A'}
+        ];
+        w.console.log(filters);
+        const parentSelectButtonLayout = 
+        '<div class="dropdown"> <div id="${name}" class="select-btn">' +
+        '<span class="btn-text">${parentName}</span><span class="arrow-dwn">' + 
+        ' <svg xmlns="http://www.w3.org/2000/svg" height="1792" viewBox="0 0 1792 1792" width="1792"><path d="M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z"/></svg></span>' + 
+        '</div> <ul id="${listId}" class="list-items"></ul> </div>';
+        const checkBoxMarkup = '<li id="${label}" class="item"><span class="checkbox"></span><span class="item-text">${label}</span></li>';
+
+        filters.dropdowns.forEach( dropdown => {
+            $.tmpl(parentSelectButtonLayout, dropdown ).appendTo('.dropdowns-container');
+            $.template( "movieTemplate", checkBoxMarkup );
+
+            $.tmpl( "movieTemplate", dropdown.children )
+            .appendTo( '#' + dropdown.listId );
+
+            const selectBtn = $("#" + dropdown.name)
+            const items = $("#" + dropdown.listId + " .item");
+            selectBtn.on("click", () => {
+                selectBtn.toggleClass("open");
+            });
+
+            items.each(function() {
+                $(this).on('click', () => {
+                    $(this).toggleClass('checked');
+                }) 
+            })
+
+        })
+
+        const sortBoxLayout = `
+        <div class="sort-container">
+        <div class="title">Sort by</div>
+            <ul class="sort-list"></ul>
+        </div>
+        `
+        const radioButtonItem = 
+        '<li class="item"><input data-label=${label} type="radio" id="contactChoice1"name="contact" value="email"><label for="contactChoice1">${label}</label> </li>';
+            $.tmpl(sortBoxLayout).insertBefore('.filter-buttons');
+            $.template( "radioButtonItemTemplate", radioButtonItem );
+
+            $.tmpl( "radioButtonItemTemplate", filters.sort )
+            .appendTo('.sort-list');
+
+
+
+        $('.submit-btn').on('click', submitForm);
+        $('.reset-btn').on('click', resetForm);
+
+        function submitForm() {
+            const messageKey = $applozic(
+                "#mck-message-cell .mck-message-inner div[name='message']:last-child"
+            ).data('msgkey');
+            const message = ALStorage.getMessageByKey(messageKey);
+            const {groupId, type, source} = message;
+            const arr = [];
+            $('.item.checked').each(function() {
+                arr.push($(this).text())
+            })
+            if(filters.sort) {
+                arr.push($('input[type="radio"]:checked').next().text())
+            }
+            const payload = {
+                filters: arr,
+                groupId,
+                type,
+                source,
+                key: mckUtils.randomId(),
+            }
+            w.console.log(payload);
+            Snap.richMsgEventHandler.closeLeftBox();
+        }
+
+        function resetForm() {
+            $('.item.checked').each(function() {
+                $(this).removeClass('checked');
+            })
+        }
+        
+    },
     initializeSlick: function ($cardMessageContainer) {
         if ($cardMessageContainer.length > 0) {
-            var slider = tns({
+            const slider = tns({
                 container: $cardMessageContainer[0],
-                edgePadding: 60,
-                items: 1,
-                slideBy: 'page',
+                items: 1.5,
+                gutter: 15,
+                slideBy: 1,
                 loop: false,
+                center: true,
                 controlsText: [
                     Snap.richMsgEventHandler.svg.arrow,
                     Snap.richMsgEventHandler.svg.arrow,
@@ -692,7 +997,9 @@ Snap.richMsgEventHandler = {
         var messagePxy = {};
         var msgMetadata = {};
 
-        var template = mainMessageTemplate ? mainMessageTemplate.substring(0, mainMessageTemplate.length - 1) : 'The form was sent without data.';
+        var template = mainMessageTemplate
+            ? mainMessageTemplate.substring(0, mainMessageTemplate.length - 1)
+            : 'The form was sent without data.';
 
         //message to send
         messagePxy.message = replyText;
@@ -804,7 +1111,7 @@ Snap.richMsgEventHandler = {
             message: message, //message to send
             metadata: metadata,
             buttonId: buttonId,
-            payload: payload
+            payload: payload,
         };
         document
             .getElementById('mck-text-box')
@@ -849,13 +1156,16 @@ Snap.richMsgEventHandler = {
     processClickOnButtonItem: function (e) {
         e.preventDefault();
         var target = e.currentTarget;
-        var reply = target.dataset.reply;
-        var type = target.dataset.type;
-        var languageCode = target.dataset.languagecode;
+        let { reply, type, languagecode, context } = target.dataset;
+        // var reply = target.dataset.reply;
+        // var type = target.dataset.type;
+        // var languageCode = target.dataset.languagecode;
         var metadata = (target.dataset && target.dataset.metadata) || {};
+
         metadata.KM_BUTTON_CLICKED = true;
+        metadata.currentContext = context;
         if (type && type == 'quick_reply') {
-            languageCode && Snap.updateUserLanguage(languageCode);
+            languagecode && Snap.updateUserLanguage(languagecode);
             var messagePxy = {
                 message: reply, //message to send
                 metadata: metadata,
@@ -899,74 +1209,124 @@ Snap.richMsgEventHandler = {
         return new RegExp(str).test(value);
     },
     handleEmail: function (e) {
-        const email = e.target.getAttribute("data-email");
-        window.open('mailto:' + email, "_blank");
+        const email = e.target.getAttribute('data-email');
+        window.open('mailto:' + email, '_blank');
+
+        const browserInfo = detect.parse(navigator.userAgent);
+        const body = {
+            sender_id: snap._globals.userId,
+            group_id: CURRENT_GROUP_DATA.tabId.toString(),
+            browser: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
+            event_type: 'click email',
+            email_name: email,
+            conversation_key: SnapUtils.getSettings('KM_CHAT_CONTEXT').trigger
+        };
+
+        Snap.richMsgEventHandler.sendUserBehaviorInfo(body);
     },
-    formUserBehaviorInfo: function(e){
+    formUserBehaviorInfo: function (e) {
         document.activeElement.blur();
         const browserInfo = detect.parse(navigator.userAgent);
         const buttonId = e.target.dataset.buttonid;
         const buttonType = e.target.dataset.buttontype;
-        const buttonAction = e.target.dataset.buttonaction ? JSON.parse(decodeURIComponent(e.target.dataset.buttonaction)) : {};
+        const buttonAction = e.target.dataset.buttonaction
+            ? JSON.parse(decodeURIComponent(e.target.dataset.buttonaction))
+            : {};
         const behaviorInfo = {
             sender_id: snap._globals.userId,
             group_id: CURRENT_GROUP_DATA.tabId.toString(),
-            url: "",
-            session_id: "",
+            url: '',
+            session_id: '',
             browser_parameter: `${browserInfo.browser.family} ${browserInfo.browser.version}`,
-            event_type: "follow the link",
+            event_type: 'follow the link',
             message_id: CURRENT_GROUP_DATA.messageId,
             button_id: `${buttonId}`.trim(),
             button_name: `${e.target.title}`.trim(),
             button_type: `${buttonType}`.trim(),
             button_url: `${e.target.dataset.url}`.trim(),
             timestamp: new Date().getTime(),
-            payload: buttonAction.payload
+            payload: buttonAction.payload,
+            event_type: 'click button',
+            conversation_key: SnapUtils.getSettings('KM_CHAT_CONTEXT').trigger
         };
-        w.console.log(behaviorInfo);
         Snap.richMsgEventHandler.sendUserBehaviorInfo(behaviorInfo);
         window.Applozic.ALSocket.reconnect();
     },
-    sendUserBehaviorInfo: function(data){
-        try{
+    sendUserBehaviorInfo: function (data) {
+        try {
             const url = Snap.getSendUserBehaviorInfoUrl();
 
             fetch(url, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data)
-            }).catch(error => {
-                throw error
-            })
-        } catch{}
+                body: JSON.stringify(data),
+            }).catch((error) => {
+                throw error;
+            });
+        } catch {}
     },
-    changeCheckbox: function(e){
+    changeCheckbox: function (e) {
         // let rule = e.target.getAttribute("data-rule");
         // if(rule === 's1'){
-            if (e.target.checked) {
-                if (e.target.getAttribute('data-selector') === "anytime") {
-                    $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('checked', false);
-                    $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('disabled', true);
-                } else if (e.target.getAttribute('data-selector') === "all of above") {
-                    $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('checked', true);
-                } else {
-                    $('.quick-reply-checkbox[data-selector="anytime"]').prop('checked', false);
-                    $('.quick-reply-checkbox[data-selector="anytime"]').prop('disabled', true);
-                    $('.quick-reply-checkbox[data-selector="all of above"]').prop('checked', false);
-                    $('.quick-reply-checkbox[data-selector="all of above"]').prop('disabled', true);
-                }
+        if (e.target.checked) {
+            if (e.target.getAttribute('data-selector') === 'anytime') {
+                $('.quick-reply-checkbox')
+                    .not('[data-selector="anytime"]')
+                    .prop('checked', false);
+                $('.quick-reply-checkbox')
+                    .not('[data-selector="anytime"]')
+                    .prop('disabled', true);
+            } else if (
+                e.target.getAttribute('data-selector') === 'all of above'
+            ) {
+                $('.quick-reply-checkbox')
+                    .not('[data-selector="anytime"]')
+                    .prop('checked', true);
             } else {
-                if (!$('.quick-reply-checkbox[data-selector="anytime"]:checked').length) {
-                    $('.quick-reply-checkbox').not('[data-selector="anytime"]').prop('disabled', false);
-                }
-                if (!$('.quick-reply-checkbox:checked').not('[data-selector="anytime"]').length) {
-                    $('.quick-reply-checkbox[data-selector="anytime"]').prop('disabled', false);
-                    $('.quick-reply-checkbox[data-selector="all of above"]').prop('disabled', false);
-                }
+                $('.quick-reply-checkbox[data-selector="anytime"]').prop(
+                    'checked',
+                    false
+                );
+                $('.quick-reply-checkbox[data-selector="anytime"]').prop(
+                    'disabled',
+                    true
+                );
+                $('.quick-reply-checkbox[data-selector="all of above"]').prop(
+                    'checked',
+                    false
+                );
+                $('.quick-reply-checkbox[data-selector="all of above"]').prop(
+                    'disabled',
+                    true
+                );
             }
+        } else {
+            if (
+                !$('.quick-reply-checkbox[data-selector="anytime"]:checked')
+                    .length
+            ) {
+                $('.quick-reply-checkbox')
+                    .not('[data-selector="anytime"]')
+                    .prop('disabled', false);
+            }
+            if (
+                !$('.quick-reply-checkbox:checked').not(
+                    '[data-selector="anytime"]'
+                ).length
+            ) {
+                $('.quick-reply-checkbox[data-selector="anytime"]').prop(
+                    'disabled',
+                    false
+                );
+                $('.quick-reply-checkbox[data-selector="all of above"]').prop(
+                    'disabled',
+                    false
+                );
+            }
+        }
         // }
-    }
+    },
 };

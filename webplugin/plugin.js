@@ -41,6 +41,8 @@ var kmCustomIframe =
     '   border-radius: 0px;' +
     '   height: 100% !important;' +
     '   width: 100% !important;' +
+    '   min-width: 100% !important;' +
+    '   max-width: 100% !important;' +
     '   max-height: 100% !important;' +
     '} } \n' +
     '.km-iframe-notification{ ' +
@@ -54,7 +56,7 @@ var kmCustomIframe =
     '} \n ' +
     '.km-iframe-dimension-with-popup{ ' +
     '    height: 700px; ' +
-    '    width: 442px; ' +
+    '    min-width: 442px; ' +
     '} \n ' +
     '.km-iframe-closed{ ' +
     '    height: 75px; ' +
@@ -151,15 +153,12 @@ function createSnapIframe() {
     snapIframe.innerHTML =
         '<a href="https://www.snap.io/"> Snap Live chat </a>';
     var iframeDocument =
-        snapIframe.contentDocument ||
-        snapIframe.contentWindow.document;
+        snapIframe.contentDocument || snapIframe.contentWindow.document;
     snapIframe.contentWindow.snap = window.snap;
 
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
         // Do Firefox-related activities
-        var testClick = window.document.getElementById(
-            'snap-widget-iframe'
-        );
+        var testClick = window.document.getElementById('snap-widget-iframe');
         testClick.onload = function () {
             injectJquery();
         };
@@ -177,19 +176,15 @@ function addSnapPluginToIframe() {
         addableWindow = window;
         addableDocument = document;
     } else {
-        var snapIframe = window.document.getElementById(
-            'snap-widget-iframe'
-        );
+        var snapIframe = window.document.getElementById('snap-widget-iframe');
         var iframeDocument =
-            snapIframe.contentDocument ||
-            snapIframe.contentWindow.document;
+            snapIframe.contentDocument || snapIframe.contentWindow.document;
         addableWindow = snapIframe.contentWindow;
         addableDocument = iframeDocument;
     }
     addableWindow.applozic =
-        (isV1Script()
-            ? addableWindow.snap
-            : snapIframe.contentWindow.snap) || {};
+        (isV1Script() ? addableWindow.snap : snapIframe.contentWindow.snap) ||
+        {};
     addableWindow.MCK_CONTEXTPATH = MCK_CONTEXTPATH;
     addableWindow.MCK_STATICPATH = MCK_STATICPATH;
     addableWindow.MCK_ONINIT = '';
@@ -244,12 +239,9 @@ function injectJquery() {
         addableWindow = window;
         addableDocument = document;
     } else {
-        var snapIframe = window.document.getElementById(
-            'snap-widget-iframe'
-        );
+        var snapIframe = window.document.getElementById('snap-widget-iframe');
         var iframeDocument =
-            snapIframe.contentDocument ||
-            snapIframe.contentWindow.document;
+            snapIframe.contentDocument || snapIframe.contentWindow.document;
         addableWindow = snapIframe.contentWindow;
         addableDocument = iframeDocument;
     }

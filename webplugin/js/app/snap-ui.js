@@ -682,6 +682,12 @@ SnapUI = {
         $applozic('.mck-conversation').removeClass('n-vis').addClass('vis');
         $applozic('#km-faq').removeClass('n-vis').addClass('vis');
         $applozic('#mck-msg-new').attr('disabled', false);
+
+        if (snap._globals.enableWaterMark === true) {
+            $applozic('#mck-message-cell').append(`
+            <div class="watermark">One Health Link Proprietary</div>
+        `)}
+
         if (
             $applozic(
                 "#mck-message-cell .mck-message-inner div[name='message']"
