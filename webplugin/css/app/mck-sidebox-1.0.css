@@ -6770,6 +6770,7 @@ body.accesibility :focus {
     width: 40px;
     height: 40px;
     position: relative;
+    display: none;
   }
   .progress-label {
     font-size: 12px;
