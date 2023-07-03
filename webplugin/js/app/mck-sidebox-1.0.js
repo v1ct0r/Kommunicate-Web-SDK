@@ -7515,6 +7515,9 @@ var userOverride = {
             var $mck_conversation_header = $applozic(
                 '#mck-conversation-header'
             );
+            let $mck_conversation_progress_circle = $applozic('#destination');
+            
+            let $mck_conversation_progress_label = $applozic('.progress-label'); 
             var $mck_no_conversations = $applozic('#mck-no-conversations');
 
             var $mck_conversation_list = $applozic('#mck-conversation-list');
@@ -8340,6 +8343,22 @@ var userOverride = {
                 if (!Snap.visibleMessage(msg)) return;
 
                 // if(msg.message && msg.message.match(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g)) return;
+
+                if (msg.metadata.header_bar) {
+                    w.console.log($applozic('.progress-wrapper'));
+                    $applozic('.progress-wrapper').css('display', 'block');
+                    let radius = Number($mck_conversation_progress_circle.attr('r'));
+                    let circumference = radius * 2 * Math.PI;
+                    const label = msg.metadata.header_bar.status_info[1].progress_label;
+                    $mck_conversation_progress_circle.css('strokeDasharray', `${circumference} ${circumference}`);
+                    setProgress(msg.metadata.header_bar.status_info[1].progress * 100, label);
+
+                    function setProgress(percent, label) {
+                        const offset = circumference - percent / 100 * circumference;
+                        $mck_conversation_progress_circle.css('strokeDashoffset', offset);
+                        $mck_conversation_progress_label.text(label);
+                        }
+                }
 
                 if (
                     typeof msg.metadata === 'object' &&
