@@ -6766,6 +6766,31 @@ body.accesibility :focus {
     }
 }
 
+.progress-wrapper {
+    width: 40px;
+    height: 40px;
+    position: relative;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: #FFFF;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .progress-ring__circle {
+    transition: 0.55s stroke-dashoffset;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+  }
+  
+  .inner {
+    stroke-opacity: 0.3;
+    stroke: white;
+  }
+
 /* Chat launcher animation for initial load Code Ends */
 
 .km-conversation-header-title-container {
