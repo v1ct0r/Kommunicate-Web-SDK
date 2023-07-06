@@ -515,14 +515,22 @@ Snap.markup = {
     getVideoTemplate: function () {
     return `<div class="mck-rich-video-container">
     {{#payload}}
-        {{#source}}
-            <iframe width="{{width}}" height="{{height}}" src="{{url}}" url="{{url}}" class= "mck-rich-video-iframe"></iframe>
-        {{/source}}
-        {{^source}}
-            <video width="{{width}}" height="{{height}}" controls class= "mck-rich-video">
-                <source src="{{url}}" type="{{type}}">
-            </video>
-        {{/source}}
+        <video width="{{width}}" height="{{height}}" controls class= "mck-rich-video">
+            <source src="{{url}}" type="{{type}}">
+        </video>
+        {{#caption}}
+            <div class="km-template-video-caption-wrapper" style="width:{{width}};">
+                <p class="km-template-video-caption">{{caption}}</p>
+            </div>
+        {{/caption}}
+    {{/payload}}
+    </div>`;
+    },
+
+    getYoutubeVideoTemplate: function() {
+        return `<div class="mck-rich-video-container">
+    {{#payload}}
+        <iframe width="{{width}}" height="{{height}}" src="{{url}}" url="{{url}}" class= "mck-rich-video-iframe"></iframe>
         {{#caption}}
             <div class="km-template-video-caption-wrapper" style="width:{{width}};">
                 <p class="km-template-video-caption">{{caption}}</p>
@@ -1135,7 +1143,12 @@ Snap.markup.getVideoMarkup = function (options) {
             video.height = video.height || '250px';
         }
         options.payload = payload;
-        return Mustache.to_html(Snap.markup.getVideoTemplate(), options);
+        if (options.payload[0].url.includes('www.youtube.com')) {
+            return Mustache.to_html(Snap.markup.getYoutubeVideoTemplate(), options);
+        } else {
+            return Mustache.to_html(Snap.markup.getVideoTemplate(), options);
+        }
+        
     }
     return '';
 };
