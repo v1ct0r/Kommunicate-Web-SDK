@@ -8345,7 +8345,6 @@ var userOverride = {
                 // if(msg.message && msg.message.match(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g)) return;
 
                 if (msg.metadata.header_bar) {
-                    w.console.log($applozic('.progress-wrapper'));
                     $applozic('.progress-wrapper').css('display', 'block');
                     let radius = Number($mck_conversation_progress_circle.attr('r'));
                     let circumference = radius * 2 * Math.PI;
@@ -8572,9 +8571,10 @@ var userOverride = {
                     !processMessageInQueue ||
                     (containerType &&
                         (containerType.includes('km-slick-container') ||
-                            msg.metadata.templateId ==
-                                SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                                    .VIDEO))
+                            msg.metadata.templateId ===
+                                SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.VIDEO ||
+                                msg.metadata.templateId ===
+                                SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.IMAGE))
                 ) {
                     kmRichTextMarkup = richText
                         ? Snap.getRichTextMessageTemplate(msg)
@@ -8802,6 +8802,7 @@ var userOverride = {
                 if (
                     msg.message ||
                     msg.metadata.templateId === SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.VIDEO ||
+                    msg.metadata.templateId === SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.IMAGE ||
                     msg.metadata.templateId === SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL
                 ) {
                     append
