@@ -8348,9 +8348,11 @@ var userOverride = {
                     $applozic('.progress-wrapper').css('display', 'block');
                     let radius = Number($mck_conversation_progress_circle.attr('r'));
                     let circumference = radius * 2 * Math.PI;
-                    const label = msg.metadata.header_bar.status_info[1].progress_label;
+                    const progress_object = 
+                    msg.metadata.header_bar.status_info.find(el => el.type === 'progress_circle');
+                    const label = progress_object.progress_label;
                     $mck_conversation_progress_circle.css('strokeDasharray', `${circumference} ${circumference}`);
-                    setProgress(msg.metadata.header_bar.status_info[1].progress * 100, label);
+                    setProgress(progress_object.progress * 100, label);
 
                     function setProgress(percent, label) {
                         const offset = circumference - percent / 100 * circumference;
