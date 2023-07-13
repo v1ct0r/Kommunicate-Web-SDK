@@ -392,7 +392,7 @@ Snap.markup = {
         </div>
         <div class ="list-view-buttons">
                 {{#filterButtons}}
-                * {{.}}
+                 {{{.}}}
                 {{/filterButtons}}
              </div>
         `;
@@ -995,11 +995,13 @@ Snap.markup.getCarouselMarkup = function (options) {
         return cardFooter;
     };
     let carousel = options && options.payload && options.payload.carousel;
-    let carouselButtons = options && options.payload.filterButtons && JSON.parse(options.payload.filterButtons);
+    // let carouselButtons = options && options.payload.filterButtons && JSON.parse(options.payload.filterButtons);
+    let carouselButtons = options.payload.filterButtons;
+    w.console.log('DEPLOYED');
     if (options && options.payload.carousel && typeof options.payload.carousel === 'string') {
-        if  (options.coordinates) {
-            snap._globals.coordinates = options.coordinates;
-            snap._globals.filters = options.filters;
+        if  (options.payload.coordinates) {
+            snap._globals.coordinates = options.payload.coordinates;
+            snap._globals.filters = options.payload.filters;
         }
         
         let cards =
