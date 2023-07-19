@@ -506,9 +506,12 @@ Snap.markup = {
                             {{/.}}
                         {{/payload}}
                     </div>
-                        {{#buttons}}
-                            <button type="{{type}}" tabindex="4" class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button" data-requesttype="{{requestType}}" title="{{message}}" data-post-back-to-snap="{{postBackToSnap}}">{{label}}</button>      
-                        {{/buttons}}   
+                        
+                            {{#buttons}}
+                                <button type="{{type}}" tabindex="4" class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button" data-requesttype="{{requestType}}" title="{{message}}" data-post-back-to-snap="{{postBackToSnap}}">{{name}}</button>      
+                            {{/buttons}} 
+						
+                          
                 </form>   
             </div>`;
     },
@@ -846,14 +849,14 @@ Snap.markup.getActionableFormMarkup = function (options) {
 
     if (metadata && metadata.payload && Object.keys(metadata.payload).length > 0) {
         let payload = {};
-        if(typeof metadata.payload == 'string') {
-            payload = JSON.parse(metadata.payload)
-        } else {
-            payload = metadata.payload
-        }
-        
-        metadata.payload = payload;
+        if(typeof metadata.payload === 'string') {
+            w.console.log('PAYLAOD: ', JSON.parse(metadata.payload))
+            metadata.payload = JSON.parse(metadata.payload)
+        } 
         metadata.buttons = [];
+        // metadata.payload.forEach((item, i) => w.console.log('ITEM: ', item));
+        
+    
         if (metadata.payload[0].type === "checkbox-multi_section") {
             let carrentPayload = payload[0].data.options
             if (carrentPayload && Array.isArray(carrentPayload)) {
@@ -874,20 +877,26 @@ Snap.markup.getActionableFormMarkup = function (options) {
             }
         }
         if (snapCommons.isObject(metadata.payload[0].data) && metadata.payload[0].subtype !== "checkbox-multi_section") {
+            w.console.log('CATCH CONDITIONAL!!!');
             metadata.payload = metadata.payload.map(function (item) {
                 data = {};
                 data.type = item.type;
-                for (var key in item.data) {
+                for (let key in item.data) {
                     if (item.data.hasOwnProperty(key)) {
                         data[key] = item.data[key];
                     }
                 }
+                if(!item.data) {
+                    return item;
+                }
                 return data;
             });
         }
+
+        w.console.log(options);
         metadata.payload.forEach(function (item, index) {
             if (item.type == 'submit') {
-                isActionObject = snapCommons.isObject(item.action);
+                isActionObject = snapCommons.isObject(item.action) || snapCommons.isObject(item.action);
                 metadata.actionUrl =
                     item.formAction ||
                     (isActionObject && item.action.formAction) ||
@@ -897,15 +906,22 @@ Snap.markup.getActionableFormMarkup = function (options) {
                     (isActionObject && item.action.requestType);
                 metadata.postBackToSnap =
                     (isActionObject && item.action.postBackToSnap) || false;
-                metadata.label = item.name || item.label;
-                metadata.message =
-                    item.message || item.name || (isActionObject && item.action.message);
-                metadata.payload[index].className = 'km-cta-button';
+                // metadata.label = item.name || item.label;
+                // metadata.message =
+                //     item.message || item.name || (isActionObject && item.action.message);
+                // metadata.payload[index].className = 'km-cta-button';
                 metadata.buttons.push(item);
+            } 
+            else if(item.type == 'quickReply') {
+                metadata.buttons.push({
+                    ...item,
+                    name: item.title,
+                    type: 'submit'
+                });
                 metadata.payload.splice(index, 1);
-            } else {
-                if (metadata.payload[index].type === "checkbox" && 
-                    metadata.payload[index].hasOwnProperty('options') && 
+            }
+            else if(metadata.payload[index].type === "checkbox") {
+                if ( metadata.payload[index].hasOwnProperty('options') && 
                     Array.isArray(metadata.payload[index].options)) {
                         metadata.payload[index].options.forEach(el => {
                             el.ruleSelector = el.value.toLocaleLowerCase().replace(/[0-9]/gi,'')
@@ -924,6 +940,10 @@ Snap.markup.getActionableFormMarkup = function (options) {
                 }
             }
         });
+
+        metadata.payload = metadata.payload.filter(item => item.type !== 'submit' && item.type !== 'quickReply');
+        //remove buttons from payload array, because of buttons were moved to buttons array
+        
         return Mustache.to_html(Snap.markup.getFormTemplate(metadata.needLimitHeight), metadata);
     }
 };

@@ -856,7 +856,9 @@ Snap.richMsgEventHandler = {
         var requestType = target.dataset.requesttype;
         var buttonType = target.dataset.buttontype || target.type;
         var mainMessageTemplate = '';
-        var form =
+        w.console.log(document.querySelector('.km-btn-hidden-form'))
+        // w.console.log(document.querySelector('.km-btn-hidden-form')[0])
+        var form = 
             target.parentElement.getElementsByClassName(
                 'km-btn-hidden-form'
             )[0] || target.parentElement;
@@ -987,6 +989,7 @@ Snap.richMsgEventHandler = {
             xhr.open('POST', form.action);
             xhr.send(JSON.stringify(data));
         } else {
+            w.console.log('FORM: ', form)
             !isActionableForm && form.submit(); // called for submit button
             isActionableForm &&
                 SnapUtils.isURL(form.action) &&
