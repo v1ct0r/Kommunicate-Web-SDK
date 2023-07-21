@@ -856,24 +856,22 @@ Snap.richMsgEventHandler = {
         var requestType = target.dataset.requesttype;
         var buttonType = target.dataset.buttontype || target.type;
         var mainMessageTemplate = '';
-        w.console.log(document.querySelector('.km-btn-hidden-form'))
-        // w.console.log(document.querySelector('.km-btn-hidden-form')[0])
         var form = 
             target.parentElement.getElementsByClassName(
                 'km-btn-hidden-form'
             )[0] || target.parentElement;
-        if (buttonType != 'submit') {
-            return;
+        if (buttonType === 'quickReply') {
+            form.reset();
         }
-        var data = {};
-        var postBackData = {};
-        var isActionableForm =
+        let data = {};
+        let postBackData = {};
+        let isActionableForm =
             form.className.indexOf('mck-actionable-form') != -1;
-        var postBackToSnap = isActionableForm
+        let postBackToSnap = isActionableForm
             ? JSON.parse(target.dataset.postBackToSnap.toLowerCase())
             : false;
-        var replyText = target.title || target.innerHTML;
-        var formElements = [];
+        let replyText = target.title || target.innerHTML;
+        let formElements = [];
         formElements = Array.prototype.concat.apply(
             formElements,
             form.getElementsByTagName('input')
@@ -886,21 +884,21 @@ Snap.richMsgEventHandler = {
             formElements,
             form.getElementsByTagName('textarea')
         );
-        var name = '';
-        var type = '';
-        var value = '';
+        let name = '';
+        let type = '';
+        let value = '';
         for (var i = 0; i < formElements.length; i++) {
             name = formElements[i].name;
             type = formElements[i].type;
             value = formElements[i].value;
 
-            var isCheckboxOrRadio = type === 'radio' || type === 'checkbox';
+            let isCheckboxOrRadio = type === 'radio' || type === 'checkbox';
             let wrapper = isCheckboxOrRadio
                 ? formElements[i].closest('.mck-form-radio-wrapper')
                       .previousElementSibling
                 : formElements[i].closest('.mck-form-text-wrapper');
 
-            var labelText = isCheckboxOrRadio
+            let labelText = isCheckboxOrRadio
                 ? wrapper.textContent
                 : wrapper.querySelector('label').textContent;
 
@@ -997,10 +995,10 @@ Snap.richMsgEventHandler = {
                     // console.log("ResponseText:" + data);
                 });
         }
-        var messagePxy = {};
-        var msgMetadata = {};
+        let messagePxy = {};
+        let msgMetadata = {};
 
-        var template = mainMessageTemplate
+        let template = mainMessageTemplate
             ? mainMessageTemplate.substring(0, mainMessageTemplate.length - 1)
             : 'The form was sent without data.';
 
@@ -1011,7 +1009,7 @@ Snap.richMsgEventHandler = {
         isActionableForm &&
             requestType == SnapConstants.POST_BACK_TO_BOT_PLATFORM &&
             (msgMetadata['KM_CHAT_CONTEXT'] = { formData: data });
-        var formDataMessageTemplate =
+        let formDataMessageTemplate =
             postBackToSnap &&
             Snap.markup.getFormDataMessageTemplate(postBackData);
         formDataMessageTemplate &&

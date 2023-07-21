@@ -508,7 +508,14 @@ Snap.markup = {
                     </div>
                         
                             {{#buttons}}
-                                <button type="{{type}}" tabindex="4" class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button" data-requesttype="{{requestType}}" title="{{message}}" data-post-back-to-snap="{{postBackToSnap}}">{{name}}</button>      
+                                <button
+                                  type="submit"
+                                  tabindex="4"
+                                  class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button"
+                                  data-requesttype="{{requestType}}"
+                                  data-buttontype="{{type}}"
+                                  title="{{message}}"
+                                  data-post-back-to-snap="{{postBackToSnap}}">{{name}}</button>      
                             {{/buttons}} 
 						
                           
@@ -916,7 +923,6 @@ Snap.markup.getActionableFormMarkup = function (options) {
                 metadata.buttons.push({
                     ...item,
                     name: item.title,
-                    type: 'submit'
                 });
                 metadata.payload.splice(index, 1);
             }
