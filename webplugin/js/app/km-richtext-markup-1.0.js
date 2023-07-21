@@ -514,6 +514,7 @@ Snap.markup = {
                                   class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button"
                                   data-requesttype="{{requestType}}"
                                   data-buttontype="{{type}}"
+                                  data-buttontitle="{{message}}"
                                   title="{{message}}"
                                   data-post-back-to-snap="{{postBackToSnap}}">{{name}}</button>      
                             {{/buttons}} 

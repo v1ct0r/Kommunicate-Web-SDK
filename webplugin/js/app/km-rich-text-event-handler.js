@@ -853,14 +853,14 @@ Snap.richMsgEventHandler = {
         var validString = '';
         var inputElement = '';
         var target = e.target || e.srcElement;
-        var requestType = target.dataset.requesttype;
-        var buttonType = target.dataset.buttontype || target.type;
+        let { buttontype, buttontitle} = target.dataset;
+        let requestType = target.dataset.requesttype;
         var mainMessageTemplate = '';
         var form = 
             target.parentElement.getElementsByClassName(
                 'km-btn-hidden-form'
             )[0] || target.parentElement;
-        if (buttonType === 'quickReply') {
+        if (buttontype === 'quickReply') {
             form.reset();
         }
         let data = {};
@@ -998,9 +998,15 @@ Snap.richMsgEventHandler = {
         let messagePxy = {};
         let msgMetadata = {};
 
-        let template = mainMessageTemplate
-            ? mainMessageTemplate.substring(0, mainMessageTemplate.length - 1)
-            : 'The form was sent without data.';
+        let template = '';
+        //  = mainMessageTemplate
+        //     ? mainMessageTemplate.substring(0, mainMessageTemplate.length - 1)
+        //     : 'The form was sent without data.';
+        if(mainMessageTemplate) {
+            template = mainMessageTemplate.substring(0, mainMessageTemplate.length - 1);
+        } else {
+            template = buttontitle
+        }
 
         //message to send
         messagePxy.message = replyText;
@@ -1008,7 +1014,9 @@ Snap.richMsgEventHandler = {
 
         isActionableForm &&
             requestType == SnapConstants.POST_BACK_TO_BOT_PLATFORM &&
+            buttontype === 'submit' &&
             (msgMetadata['KM_CHAT_CONTEXT'] = { formData: data });
+
         let formDataMessageTemplate =
             postBackToSnap &&
             Snap.markup.getFormDataMessageTemplate(postBackData);
