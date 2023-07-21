@@ -853,7 +853,7 @@ Snap.richMsgEventHandler = {
         var validString = '';
         var inputElement = '';
         var target = e.target || e.srcElement;
-        let { buttontype, buttontitle} = target.dataset;
+        let { buttontype, buttontitle, customcontext} = target.dataset;
         let requestType = target.dataset.requesttype;
         var mainMessageTemplate = '';
         var form = 
@@ -1016,6 +1016,10 @@ Snap.richMsgEventHandler = {
             requestType == SnapConstants.POST_BACK_TO_BOT_PLATFORM &&
             buttontype === 'submit' &&
             (msgMetadata['KM_CHAT_CONTEXT'] = { formData: data });
+        
+            if(customcontext) {
+                msgMetadata['KM_CHAT_CONTEXT'] = JSON.parse(customcontext);
+            }
 
         let formDataMessageTemplate =
             postBackToSnap &&

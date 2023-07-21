@@ -514,6 +514,7 @@ Snap.markup = {
                                   class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button"
                                   data-requesttype="{{requestType}}"
                                   data-buttontype="{{type}}"
+                                  data-customcontext="{{replyMetadata}}"
                                   data-buttontitle="{{message}}"
                                   title="{{message}}"
                                   data-post-back-to-snap="{{postBackToSnap}}">{{name}}</button>      
@@ -885,7 +886,6 @@ Snap.markup.getActionableFormMarkup = function (options) {
             }
         }
         if (snapCommons.isObject(metadata.payload[0].data) && metadata.payload[0].subtype !== "checkbox-multi_section") {
-            w.console.log('CATCH CONDITIONAL!!!');
             metadata.payload = metadata.payload.map(function (item) {
                 data = {};
                 data.type = item.type;
@@ -924,6 +924,7 @@ Snap.markup.getActionableFormMarkup = function (options) {
                 metadata.buttons.push({
                     ...item,
                     name: item.title,
+                    replyMetadata: JSON.stringify(item.replyMetadata['KM_CHAT_CONTEXT'])
                 });
                 metadata.payload.splice(index, 1);
             }
