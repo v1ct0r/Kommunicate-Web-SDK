@@ -849,18 +849,23 @@ Snap.richMsgEventHandler = {
     },
 
     handleRichButtonClick: function (e) {
-        var validationResults = [];
-        var validString = '';
-        var inputElement = '';
-        var target = e.target || e.srcElement;
-        let { buttontype, buttontitle, customcontext} = target.dataset;
+        let validationResults = [];
+        let validString = '';
+        let inputElement = '';
+        let target = e.target || e.srcElement;
+        let { buttontitle, customcontext} = target.dataset;
+        let buttonType = target.type || target.dataset.buttontype;
         let requestType = target.dataset.requesttype;
-        var mainMessageTemplate = '';
-        var form = 
+        let mainMessageTemplate = '';
+        let form = 
             target.parentElement.getElementsByClassName(
                 'km-btn-hidden-form'
             )[0] || target.parentElement;
-        if (buttontype === 'quickReply') {
+        if (buttonType === 'button') {
+            return;
+        }
+
+        if (buttonType === 'quickReply') {
             form.reset();
         }
         let data = {};
@@ -887,7 +892,7 @@ Snap.richMsgEventHandler = {
         let name = '';
         let type = '';
         let value = '';
-        for (var i = 0; i < formElements.length; i++) {
+        for (let i = 0; i < formElements.length; i++) {
             name = formElements[i].name;
             type = formElements[i].type;
             value = formElements[i].value;
@@ -978,7 +983,7 @@ Snap.richMsgEventHandler = {
         //     data.Date = newDate.toLocaleDateString("en-US");
         // }
         if (requestType == 'json') {
-            var xhr = new XMLHttpRequest();
+            let xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     // for success response : this.responseText
@@ -987,8 +992,8 @@ Snap.richMsgEventHandler = {
             xhr.open('POST', form.action);
             xhr.send(JSON.stringify(data));
         } else {
-            w.console.log('FORM: ', form)
-            !isActionableForm && form.submit(); // called for submit button
+        
+            isActionableForm && form.submit(); // called for submit button
             isActionableForm &&
                 SnapUtils.isURL(form.action) &&
                 $applozic.post(form.action, data).done(function (data) {
@@ -1014,7 +1019,7 @@ Snap.richMsgEventHandler = {
 
         isActionableForm &&
             requestType == SnapConstants.POST_BACK_TO_BOT_PLATFORM &&
-            buttontype === 'submit' &&
+            buttonType === 'submit' &&
             (msgMetadata['KM_CHAT_CONTEXT'] = { formData: data });
         
             if(customcontext) {

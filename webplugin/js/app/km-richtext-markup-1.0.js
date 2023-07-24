@@ -509,7 +509,7 @@ Snap.markup = {
                         
                             {{#buttons}}
                                 <button
-                                  type="submit"
+                                  type="{{type}}"
                                   tabindex="4"
                                   class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button"
                                   data-requesttype="{{requestType}}"
