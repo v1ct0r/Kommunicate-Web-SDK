@@ -854,7 +854,7 @@ Snap.richMsgEventHandler = {
         let inputElement = '';
         let target = e.target || e.srcElement;
         let { buttontitle, customcontext} = target.dataset;
-        let buttonType = target.type || target.dataset.buttontype;
+        let buttonType = target.getAttribute('type')|| target.dataset.buttontype;
         let requestType = target.dataset.requesttype;
         let mainMessageTemplate = '';
         let form = 
@@ -864,7 +864,7 @@ Snap.richMsgEventHandler = {
         if (buttonType === 'button') {
             return;
         }
-
+        
         if (buttonType === 'quickReply') {
             form.reset();
         }

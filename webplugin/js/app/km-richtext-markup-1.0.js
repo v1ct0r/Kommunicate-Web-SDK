@@ -859,7 +859,6 @@ Snap.markup.getActionableFormMarkup = function (options) {
     if (metadata && metadata.payload && Object.keys(metadata.payload).length > 0) {
         let payload = {};
         if(typeof metadata.payload === 'string') {
-            w.console.log('PAYLAOD: ', JSON.parse(metadata.payload))
             metadata.payload = JSON.parse(metadata.payload)
         } 
         metadata.buttons = [];
@@ -901,7 +900,6 @@ Snap.markup.getActionableFormMarkup = function (options) {
             });
         }
 
-        w.console.log(options);
         metadata.payload.forEach(function (item, index) {
             if (item.type == 'submit') {
                 isActionObject = snapCommons.isObject(item.action) || snapCommons.isObject(item.action);
