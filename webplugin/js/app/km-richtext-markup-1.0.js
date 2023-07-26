@@ -337,7 +337,7 @@ Snap.markup = {
          <div class="km-faq-list--footer">
                  <div class="km-faq-list--footer_button-container">
                     {{#buttons}}
-                        <button type="button" tabindex="3" aria-label="{{name}}" class="{{buttonClass}} km-cta-button km-custom-widget-border-color km-custom-widget-text-color km-add-more-rooms {{handlerClass}} km-faq-list-link-button" data-type ="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-url={{href}} data-target={{target}} data-reply="{{dataReply}}">{{name}}</button>
+                        <button type="button" tabindex="3" data-context="{{action.currentContext}}" aria-label="{{name}}" class="{{buttonClass}} km-cta-button km-custom-widget-border-color km-custom-widget-text-color km-add-more-rooms {{handlerClass}} km-faq-list-link-button" data-type ="{{dataType}}" data-hidePostCTA="{{hidePostCTA}}" data-metadata = "{{replyMetadata}}" data-languageCode = "{{updateLanguage}}" data-url={{href}} data-target={{target}} data-reply="{{dataReply}}">{{name}}</button>
                     {{/buttons}}  
              </div>
          </div>
@@ -392,7 +392,7 @@ Snap.markup = {
         </div>
         <div class ="list-view-buttons">
                 {{#filterButtons}}
-                * {{.}}
+                 {{{.}}}
                 {{/filterButtons}}
              </div>
         `;
@@ -506,23 +506,43 @@ Snap.markup = {
                             {{/.}}
                         {{/payload}}
                     </div>
-                        {{#buttons}}
-                            <button type="{{type}}" tabindex="4" class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button" data-requesttype="{{requestType}}" title="{{message}}" data-post-back-to-snap="{{postBackToSnap}}">{{label}}</button>      
-                        {{/buttons}}   
+                        
+                            {{#buttons}}
+                                <button
+                                  type="{{type}}"
+                                  tabindex="4"
+                                  class="km-cta-button km-custom-widget-text-color km-custom-widget-border-color mck-form-submit-button"
+                                  data-requesttype="{{requestType}}"
+                                  data-buttontype="{{type}}"
+                                  data-customcontext="{{replyMetadata}}"
+                                  data-buttontitle="{{message}}"
+                                  title="{{message}}"
+                                  data-post-back-to-snap="{{postBackToSnap}}">{{name}}</button>      
+                            {{/buttons}} 
+						
+                          
                 </form>   
             </div>`;
     },
     getVideoTemplate: function () {
     return `<div class="mck-rich-video-container">
     {{#payload}}
-        {{#source}}
-            <iframe width="{{width}}" height="{{height}}" src="{{url}}" url="{{url}}" class= "mck-rich-video-iframe"></iframe>
-        {{/source}}
-        {{^source}}
-            <video width="{{width}}" height="{{height}}" controls class= "mck-rich-video">
-                <source src="{{url}}" type="{{type}}">
-            </video>
-        {{/source}}
+        <video width="{{width}}" height="{{height}}" controls class= "mck-rich-video">
+            <source src="{{url}}" type="{{type}}">
+        </video>
+        {{#caption}}
+            <div class="km-template-video-caption-wrapper" style="width:{{width}};">
+                <p class="km-template-video-caption">{{caption}}</p>
+            </div>
+        {{/caption}}
+    {{/payload}}
+    </div>`;
+    },
+
+    getYoutubeVideoTemplate: function() {
+        return `<div class="mck-rich-video-container">
+    {{#payload}}
+        <iframe width="{{width}}" height="{{height}}" src="{{url}}" url="{{url}}" class= "mck-rich-video-iframe"></iframe>
         {{#caption}}
             <div class="km-template-video-caption-wrapper" style="width:{{width}};">
                 <p class="km-template-video-caption">{{caption}}</p>
@@ -831,18 +851,21 @@ Snap.markup.getHtmlMessageMarkups = function (message) {
     return '';
 };
 Snap.markup.getActionableFormMarkup = function (options) {
-    var action = {};
-    var data = {};
-    var isActionObject = false;
+    let action = {};
+    let data = {};
+    let isActionObject = false;
+    let metadata = options;
 
-    if (options && options.payload) {
-        var payload =
-            typeof options.payload == 'string'
-                ? JSON.parse(options.payload)
-                : {};
-        options.payload = payload;
-        options.buttons = [];
-        if (options.payload[0].type === "checkbox-multi_section") {
+    if (metadata && metadata.payload && Object.keys(metadata.payload).length > 0) {
+        let payload = {};
+        if(typeof metadata.payload === 'string') {
+            metadata.payload = JSON.parse(metadata.payload)
+        } 
+        metadata.buttons = [];
+        // metadata.payload.forEach((item, i) => w.console.log('ITEM: ', item));
+        
+    
+        if (metadata.payload[0].type === "checkbox-multi_section") {
             let carrentPayload = payload[0].data.options
             if (carrentPayload && Array.isArray(carrentPayload)) {
                 let resultPayload = [];
@@ -853,58 +876,69 @@ Snap.markup.getActionableFormMarkup = function (options) {
                     el.rule = carrentPayload[0].section_rule
                     el.ruleSelector = el.value.toLocaleLowerCase().replace(/[0-9]/gi,'')
                 });
-                options.payload[0].options = resultPayload.concat()
-                options.payload[0].type = carrentPayload[0].section_type
-                options.payload[0].subtype = "checkbox-multi_section"
-                if(!options.payload[1].hasOwnProperty('name') && options.payload[1].data.hasOwnProperty('name')){
-                    options.payload[1].name = options.payload[1].data.name
+                metadata.payload[0].options = resultPayload.concat()
+                metadata.payload[0].type = carrentPayload[0].section_type
+                metadata.payload[0].subtype = "checkbox-multi_section"
+                if(!metadata.payload[1].hasOwnProperty('name') && metadata.payload[1].data.hasOwnProperty('name')){
+                    metadata.payload[1].name = metadata.payload[1].data.name
                 }
             }
         }
-        if (snapCommons.isObject(options.payload[0].data) && options.payload[0].subtype !== "checkbox-multi_section") {
-            options.payload = options.payload.map(function (item) {
+        if (snapCommons.isObject(metadata.payload[0].data) && metadata.payload[0].subtype !== "checkbox-multi_section") {
+            metadata.payload = metadata.payload.map(function (item) {
                 data = {};
                 data.type = item.type;
-                for (var key in item.data) {
+                for (let key in item.data) {
                     if (item.data.hasOwnProperty(key)) {
                         data[key] = item.data[key];
                     }
                 }
+                if(!item.data) {
+                    return item;
+                }
                 return data;
             });
         }
-        options.payload.forEach(function (item, index) {
+
+        metadata.payload.forEach(function (item, index) {
             if (item.type == 'submit') {
-                isActionObject = snapCommons.isObject(item.action);
-                options.actionUrl =
+                isActionObject = snapCommons.isObject(item.action) || snapCommons.isObject(item.action);
+                metadata.actionUrl =
                     item.formAction ||
                     (isActionObject && item.action.formAction) ||
                     'javascript:void(0);';
-                options.requestType =
+                metadata.requestType =
                     item.requestType ||
                     (isActionObject && item.action.requestType);
-                options.postBackToSnap =
+                metadata.postBackToSnap =
                     (isActionObject && item.action.postBackToSnap) || false;
-                options.label = item.name || item.label;
-                options.message =
-                    item.message || item.name || (isActionObject && item.action.message);
-                options.payload[index].className = 'km-cta-button';
-                options.buttons.push(item);
-                options.payload.splice(index, 1);
-            } else {
-                if (options.payload[index].type === "checkbox" && 
-                    options.payload[index].hasOwnProperty('options') && 
-                    Array.isArray(options.payload[index].options)) {
-                        options.payload[index].options.forEach(el => {
+                // metadata.label = item.name || item.label;
+                // metadata.message =
+                //     item.message || item.name || (isActionObject && item.action.message);
+                // metadata.payload[index].className = 'km-cta-button';
+                metadata.buttons.push(item);
+            } 
+            else if(item.type == 'quickReply') {
+                metadata.buttons.push({
+                    ...item,
+                    name: item.title,
+                    replyMetadata: JSON.stringify(item.replyMetadata['KM_CHAT_CONTEXT'])
+                });
+                metadata.payload.splice(index, 1);
+            }
+            else if(metadata.payload[index].type === "checkbox") {
+                if ( metadata.payload[index].hasOwnProperty('options') && 
+                    Array.isArray(metadata.payload[index].options)) {
+                        metadata.payload[index].options.forEach(el => {
                             el.ruleSelector = el.value.toLocaleLowerCase().replace(/[0-9]/gi,'')
                         });
                 }
-                options.payload[index].supported =
+                metadata.payload[index].supported =
                     SnapConstants.FORM_SUPPORTED_FIELDS.indexOf(item.type) !=
                     -1;
-                options.payload[index][item.type] = true;
+                metadata.payload[index][item.type] = true;
                 try {
-                    options.payload[index].className = (item.label || item.name)
+                    metadata.payload[index].className = (item.label || item.name)
                         .toLowerCase()
                         .replace(/ +/g, '');         
                 } catch (e) {
@@ -912,7 +946,11 @@ Snap.markup.getActionableFormMarkup = function (options) {
                 }
             }
         });
-        return Mustache.to_html(Snap.markup.getFormTemplate(options.needLimitHeight), options);
+
+        metadata.payload = metadata.payload.filter(item => item.type !== 'submit' && item.type !== 'quickReply');
+        //remove buttons from payload array, because of buttons were moved to buttons array
+        
+        return Mustache.to_html(Snap.markup.getFormTemplate(metadata.needLimitHeight), metadata);
     }
 };
 Snap.markup.getCarouselMarkup = function (options) {
@@ -983,11 +1021,13 @@ Snap.markup.getCarouselMarkup = function (options) {
         return cardFooter;
     };
     let carousel = options && options.payload && options.payload.carousel;
-    let carouselButtons = options && options.payload.filterButtons && JSON.parse(options.payload.filterButtons);
+    // let carouselButtons = options && options.payload.filterButtons && JSON.parse(options.payload.filterButtons);
+    let carouselButtons = options.payload.filterButtons;
+    w.console.log('DEPLOYED');
     if (options && options.payload.carousel && typeof options.payload.carousel === 'string') {
-        if  (options.coordinates) {
-            snap._globals.coordinates = options.coordinates;
-            snap._globals.filters = options.filters;
+        if  (options.payload.coordinates) {
+            snap._globals.coordinates = options.payload.coordinates;
+            snap._globals.filters = options.payload.filters;
         }
         
         let cards =
@@ -1131,7 +1171,12 @@ Snap.markup.getVideoMarkup = function (options) {
             video.height = video.height || '250px';
         }
         options.payload = payload;
-        return Mustache.to_html(Snap.markup.getVideoTemplate(), options);
+        if (options.payload[0].url.includes('www.youtube.com')) {
+            return Mustache.to_html(Snap.markup.getYoutubeVideoTemplate(), options);
+        } else {
+            return Mustache.to_html(Snap.markup.getVideoTemplate(), options);
+        }
+        
     }
     return '';
 };

@@ -849,29 +849,34 @@ Snap.richMsgEventHandler = {
     },
 
     handleRichButtonClick: function (e) {
-        var validationResults = [];
-        var validString = '';
-        var inputElement = '';
-        var target = e.target || e.srcElement;
-        var requestType = target.dataset.requesttype;
-        var buttonType = target.dataset.buttontype || target.type;
-        var mainMessageTemplate = '';
-        var form =
+        let validationResults = [];
+        let validString = '';
+        let inputElement = '';
+        let target = e.target || e.srcElement;
+        let { buttontitle, customcontext} = target.dataset;
+        let buttonType = target.getAttribute('type')|| target.dataset.buttontype;
+        let requestType = target.dataset.requesttype;
+        let mainMessageTemplate = '';
+        let form = 
             target.parentElement.getElementsByClassName(
                 'km-btn-hidden-form'
             )[0] || target.parentElement;
-        if (buttonType != 'submit') {
+        if (buttonType === 'button') {
             return;
         }
-        var data = {};
-        var postBackData = {};
-        var isActionableForm =
+        
+        if (buttonType === 'quickReply') {
+            form.reset();
+        }
+        let data = {};
+        let postBackData = {};
+        let isActionableForm =
             form.className.indexOf('mck-actionable-form') != -1;
-        var postBackToSnap = isActionableForm
+        let postBackToSnap = isActionableForm
             ? JSON.parse(target.dataset.postBackToSnap.toLowerCase())
             : false;
-        var replyText = target.title || target.innerHTML;
-        var formElements = [];
+        let replyText = target.title || target.innerHTML;
+        let formElements = [];
         formElements = Array.prototype.concat.apply(
             formElements,
             form.getElementsByTagName('input')
@@ -884,21 +889,21 @@ Snap.richMsgEventHandler = {
             formElements,
             form.getElementsByTagName('textarea')
         );
-        var name = '';
-        var type = '';
-        var value = '';
-        for (var i = 0; i < formElements.length; i++) {
+        let name = '';
+        let type = '';
+        let value = '';
+        for (let i = 0; i < formElements.length; i++) {
             name = formElements[i].name;
             type = formElements[i].type;
             value = formElements[i].value;
 
-            var isCheckboxOrRadio = type === 'radio' || type === 'checkbox';
+            let isCheckboxOrRadio = type === 'radio' || type === 'checkbox';
             let wrapper = isCheckboxOrRadio
                 ? formElements[i].closest('.mck-form-radio-wrapper')
                       .previousElementSibling
                 : formElements[i].closest('.mck-form-text-wrapper');
 
-            var labelText = isCheckboxOrRadio
+            let labelText = isCheckboxOrRadio
                 ? wrapper.textContent
                 : wrapper.querySelector('label').textContent;
 
@@ -978,7 +983,7 @@ Snap.richMsgEventHandler = {
         //     data.Date = newDate.toLocaleDateString("en-US");
         // }
         if (requestType == 'json') {
-            var xhr = new XMLHttpRequest();
+            let xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     // for success response : this.responseText
@@ -987,19 +992,26 @@ Snap.richMsgEventHandler = {
             xhr.open('POST', form.action);
             xhr.send(JSON.stringify(data));
         } else {
-            !isActionableForm && form.submit(); // called for submit button
+        
+            isActionableForm && form.submit(); // called for submit button
             isActionableForm &&
                 SnapUtils.isURL(form.action) &&
                 $applozic.post(form.action, data).done(function (data) {
                     // console.log("ResponseText:" + data);
                 });
         }
-        var messagePxy = {};
-        var msgMetadata = {};
+        let messagePxy = {};
+        let msgMetadata = {};
 
-        var template = mainMessageTemplate
-            ? mainMessageTemplate.substring(0, mainMessageTemplate.length - 1)
-            : 'The form was sent without data.';
+        let template = '';
+        //  = mainMessageTemplate
+        //     ? mainMessageTemplate.substring(0, mainMessageTemplate.length - 1)
+        //     : 'The form was sent without data.';
+        if(mainMessageTemplate) {
+            template = mainMessageTemplate.substring(0, mainMessageTemplate.length - 1);
+        } else {
+            template = buttontitle
+        }
 
         //message to send
         messagePxy.message = replyText;
@@ -1007,8 +1019,14 @@ Snap.richMsgEventHandler = {
 
         isActionableForm &&
             requestType == SnapConstants.POST_BACK_TO_BOT_PLATFORM &&
+            buttonType === 'submit' &&
             (msgMetadata['KM_CHAT_CONTEXT'] = { formData: data });
-        var formDataMessageTemplate =
+        
+            if(customcontext) {
+                msgMetadata['KM_CHAT_CONTEXT'] = JSON.parse(customcontext);
+            }
+
+        let formDataMessageTemplate =
             postBackToSnap &&
             Snap.markup.getFormDataMessageTemplate(postBackData);
         formDataMessageTemplate &&

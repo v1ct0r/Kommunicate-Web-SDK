@@ -1,3 +1,24 @@
+# Branch Schema
+[git flow link](https://nvie.com/posts/a-successful-git-branching-model/)
+
+## master branch
+*master* is a production branch MAPD (production-mapd in old repository). Production server will use that branch as a source for deploy.
+Don't accept direct commits.
+Accepts pull-requests from *hotfix-** and *release-** branches
+
+## staging branch
+*staging* is a pointer for code for staging deployment (current *release-** branch). Stage can be force re-written by one of *release-**
+Don't accept direct commits, only pushes (force push) from *release-** branches. (staging-mapd in old repository)
+
+## release-* branches
+*release-** is a set of branches which are canditates for merging into master (*production*) and tested at *staging* server
+Accepts pull-requests from *develop* branch.
+
+## develop branch
+*develop* is the main branch for development and deployment to *demo* server (former custom-rich-cards).
+
+![Git Flow Pic](https://nvie.com/img/git-model@2x.png "")
+
 # Snap | [Demo](https://www.snap.io/livechat-demo?appId=snap-support) | [Docs](https://docs.snap.io/docs/web-installation.html)
 
 <img src="https://snap-prod.s3.amazonaws.com/logo/Header.jpg" />
@@ -132,3 +153,4 @@ You can copy the below script and replace the required parameters manually. Note
 ## Technical Documentation:
 
 Please check out the detailed [documentation](https://docs.snap.io/docs/web-installation.html) for more features, implementation and customizations.
+.
