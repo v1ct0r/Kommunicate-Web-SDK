@@ -7516,8 +7516,8 @@ var userOverride = {
                 '#mck-conversation-header'
             );
             let $mck_conversation_progress_circle = $applozic('#destination');
-            
-            let $mck_conversation_progress_label = $applozic('.progress-label'); 
+
+            let $mck_conversation_progress_label = $applozic('.progress-label');
             var $mck_no_conversations = $applozic('#mck-no-conversations');
 
             var $mck_conversation_list = $applozic('#mck-conversation-list');
@@ -8345,11 +8345,10 @@ var userOverride = {
                 // if(msg.message && msg.message.match(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g)) return;
 
                 if (msg.metadata.header_bar) {
-                    w.console.log($applozic('.progress-wrapper'));
                     $applozic('.progress-wrapper').css('display', 'block');
                     let radius = Number($mck_conversation_progress_circle.attr('r'));
                     let circumference = radius * 2 * Math.PI;
-                    const progress_object = 
+                    const progress_object =
                     msg.metadata.header_bar.status_info.find(el => el.type === 'progress_circle');
                     const label = progress_object.progress_label;
                     $mck_conversation_progress_circle.css('strokeDasharray', `${circumference} ${circumference}`);
@@ -8574,9 +8573,10 @@ var userOverride = {
                     !processMessageInQueue ||
                     (containerType &&
                         (containerType.includes('km-slick-container') ||
-                            msg.metadata.templateId ==
-                                SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE
-                                    .VIDEO))
+                            msg.metadata.templateId ===
+                                SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.VIDEO ||
+                                msg.metadata.templateId ===
+                                SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.IMAGE))
                 ) {
                     kmRichTextMarkup = richText
                         ? Snap.getRichTextMessageTemplate(msg)
@@ -8804,6 +8804,7 @@ var userOverride = {
                 if (
                     msg.message ||
                     msg.metadata.templateId === SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.VIDEO ||
+                    msg.metadata.templateId === SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.IMAGE ||
                     msg.metadata.templateId === SnapConstants.ACTIONABLE_MESSAGE_TEMPLATE.CARD_CAROUSEL
                 ) {
                     append
@@ -9257,7 +9258,6 @@ var userOverride = {
             };
             _this.initDatepicker = function () {
                 var popupDate = $applozic('.popup');
-                w.console.log(popupDate);
                 popupDate.attr('placeholder', 'Click here');
                 var inline = $applozic('.inline');
                 var enableMins = popupDate.attr('enable_mins') || true;

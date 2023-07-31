@@ -1529,6 +1529,13 @@
     margin-top: 5px;
     text-align: left;
 }
+.mck-form-submit-button {
+    display: block;
+    width: 170px;
+    margin: auto !important;
+    margin-top: 10px !important;
+
+}
 .mck-form-template-wrapper form {
     margin: 0px;
 }
@@ -1574,9 +1581,7 @@ input.inline {
 }
 
 input.inline::placeholder {
-    font-size: 20px;
-}
-input[name|="Date"]::placeholder {
+    color: #000000;
     font-size: 20px;
 }
 input.flatpickr-input::placeholder {
